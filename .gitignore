@@ -1,0 +1,125 @@
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Testing
+.mypy_cache/
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+htmlcov/
+.hypothesis/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# mypy and type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Environment files with secrets
+.env
+.env.*
+.env.local
+.env.production
+.env.test
+
+# Configuration files with sensitive account identifiers and credentials
+config/adapters*.yaml
+config/auth.yaml
+config/*/auth.yaml
+config/*/adapters*.yaml
+
+# Private authentication keys and tokens
+*.key
+*.pem
+*secret*
+*credential*
+*token*
+
+# Environment-specific state (live/test broadcasts, messages, logs)
+source-info/*/
+state/
+*.jsonl
+
+# Temporary and backup files
+*.tmps
+*.temp
+*.bak
+*.backup
+*.yml.backup
+*.yaml.backup
+*.log
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated/test outputs
+mock-source-data/
+
+# CLEARDoc Versions
+CLEARDocsV*
+
+# Configuration and sensitive files
+config/
+
+# Local test and development data (transient)
+data/
+
+# Scratchpad and temporary notes
+scratchpad.md
