@@ -234,6 +234,8 @@ python compose_resume.py \
   --validate
 ```
 
+**Status**: Implementation scaffolded — `scripts/compose_resume.py` created; unit tests for merge logic pass (2025-12-17).
+
 ---
 
 ##### T7: PDF Generation CLI
@@ -262,6 +264,8 @@ python build_resume.py \
 
 **Output**: `james-valeii-senior-engineer-20251217.pdf`
 
+**Status**: `scripts/build_resume.py` implemented with dry-run and metadata sidecar; integration tests for dry-run pass. `resumed` invocation is mocked in tests (2025-12-17).
+
 ---
 
 ##### T8: CI/CD Pipeline
@@ -282,6 +286,8 @@ Automate validation and PDF generation on content changes.
 - Push to `main` branch
 - Pull requests modifying `content/`
 - Manual workflow dispatch
+
+**Status**: CI workflow added at `.github/workflows/ci.yml` to run tests and perform a dry-run build; artifacts uploaded when present (2025-12-17).
 
 ---
 
