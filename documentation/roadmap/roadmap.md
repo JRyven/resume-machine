@@ -72,75 +72,15 @@ For guidance on updating this roadmap, see [How to Use This Roadmap](#how-to-use
 
 ---
 
-### Tasks
+### 🔄 In Progress
+⚠️ **LIMIT**: Maximum 1 projects in this section
 
-#### 🔄 In Progress
-⚠️ **LIMIT**: Maximum 2 tasks in this section
-
-[No tasks currently in progress.]
-
----
-
-#### 📋 Backlog
-
-##### T1: Environment Setup & Dependencies
-**Dependencies**: None
-
-Install and verify all required tooling for the resume automation pipeline.
-
-**Acceptance Criteria**:
-- [ ] Node.js ≥18 installed and verified (`node --version`)
-- [ ] Package manager available (npm or pnpm)
-- [ ] Python 3.10+ installed with pip
-- [ ] Virtual environment created: `python -m venv .venv`
-- [ ] Git configured for version control
-- [ ] `resumed` installed globally: `npm install -g resumed`
-- [ ] Verify resumed works: `resumed --version`
-
-**Validation**:
-```bash
-node --version  # Should show v18+
-python --version  # Should show 3.10+
-resumed --version  # Should show current version
-```
-
----
-
-##### T2: MCP Server Setup & Verification
-**Dependencies**: T1 (Environment Setup)
-
-Clone and configure the JSON Resume MCP server for AI-assisted editing.
-
-**Acceptance Criteria**:
-- [ ] Clone `jsonresume/mcp` repository
-- [ ] Install MCP dependencies: `npm install`
-- [ ] Verify MCP server builds successfully
-- [ ] Test MCP server with sample resume.json
-- [ ] Document MCP endpoints and capabilities
-- [ ] Configure MCP server for local development
-
-**Validation**:
-```bash
-cd jsonresume-mcp
-npm install
-npm run build
-npm test  # Verify all tests pass
-```
-
----
-
-##### T3: Theme Selection & Baseline
-**Dependencies**: T1 (Environment Setup)
+#### Project: Theme Selection & Baseline
+**Dependencies**: (Environment Setup)
 
 Select and validate a resume theme for consistent PDF generation.
-
-**Acceptance Criteria**:
-- [ ] List available `resumed` themes: `resumed themes`
 - [ ] Test 3-5 themes with your resume.json
 - [ ] Select final theme based on: typography, spacing, ATS compatibility
-- [ ] Generate baseline PDF from current resume
-- [ ] Store baseline as `artifacts/baseline-resume.pdf`
-- [ ] Document theme choice rationale in `docs/theme-selection.md`
 
 **Decision Factors**:
 - Typography quality (EB Garamond support preferred)
@@ -148,22 +88,20 @@ Select and validate a resume theme for consistent PDF generation.
 - ATS-friendly structure
 - Minimal visual noise
 
+
 ---
 
-##### T4: Theme Customization & Freeze
-**Dependencies**: T3 (Theme Selection)
+### 📋 Backlog
+
+#### Project: Theme Customization & Freeze
+**Dependencies**: (Theme Selection)
 
 Fork selected theme, apply custom EB Garamond styling, and freeze for production use.
 
-**Acceptance Criteria**:
+**Tasks**:
 - [ ] Fork theme into `themes/valeii-professional/`
-- [ ] Replace fonts with EB Garamond (Google Fonts or local)
-- [ ] Adjust typography scale to match current resume
-- [ ] Test with sample content variations (short/long bullets)
 - [ ] Verify no layout breaks with edge cases
 - [ ] Generate comparison PDF against baseline
-- [ ] Commit frozen theme with documentation
-- [ ] Tag theme version: `v1.0.0`
 
 **Testing Checklist**:
 - Single-line vs multi-line bullets
@@ -171,79 +109,12 @@ Fork selected theme, apply custom EB Garamond styling, and freeze for production
 - 3 skills vs 30 skills
 - Various text lengths in summaries
 
----
-
-#### 📦 Backlog
-
-##### T5: Content Model Design
-**Dependencies**: T2 (MCP Setup)
-
-Design YAML content architecture supporting base + role-specific composition.
-
-**Acceptance Criteria**:
-- [ ] Create `content/base.yaml` with static fields (name, contact, education)
-- [ ] Create `content/fragments/` directory structure
-- [ ] Design fragment schema for: experience, skills, projects
-- [ ] Document composition strategy in `docs/content-model.md`
-- [ ] Create example fragments for 2-3 role types
-- [ ] Validate all YAML against JSON Resume schema
-- [ ] Write unit tests for composition logic
-
-**File Structure**:
-```
-content/
-├── base.yaml                 # Static: identity, contact, education
-├── fragments/
-│   ├── experience/
-│   │   ├── goop.yaml
-│   │   ├── no-borders.yaml
-│   │   └── boiling-pot.yaml
-│   ├── skills/
-│   │   ├── full-stack.yaml
-│   │   ├── leadership.yaml
-│   │   └── ecommerce.yaml
-│   └── roles/
-│       ├── senior-engineer.yaml
-│       ├── tech-lead.yaml
-│       └── founder.yaml
-```
-
----
-
-##### T6: Composition Engine
-**Dependencies**: T5 (Content Model)
-
-Implement Python script to merge YAML fragments into valid JSON Resume.
-
-**Acceptance Criteria**:
-- [ ] Create `scripts/compose_resume.py`
-- [ ] Implement YAML loading with validation
-- [ ] Implement merge strategy for fragments
-- [ ] Add JSON Resume schema validation
-- [ ] Support role-specific composition via CLI args
-- [ ] Handle merge conflicts gracefully
-- [ ] Write comprehensive tests (pytest)
-- [ ] Document usage in `docs/composition.md`
-
-**CLI Interface**:
-```bash
-python compose_resume.py \
-  --base content/base.yaml \
-  --role content/roles/senior-engineer.yaml \
-  --output build/resume.json \
-  --validate
-```
-
-**Status**: Implementation scaffolded — `scripts/compose_resume.py` created; unit tests for merge logic pass (2025-12-17).
-
----
-
-##### T7: PDF Generation CLI
-**Dependencies**: T4 (Theme Freeze), T6 (Composition Engine)
+#### Project: PDF Generation CLI
+**Dependencies**: (Theme Freeze), T6 (Composition Engine)
 
 Create unified CLI wrapper for the complete resume generation pipeline.
 
-**Acceptance Criteria**:
+**Tasks**:
 - [ ] Create `scripts/build_resume.py`
 - [ ] Integrate composition engine
 - [ ] Call `resumed` with frozen theme
@@ -266,14 +137,12 @@ python build_resume.py \
 
 **Status**: `scripts/build_resume.py` implemented with dry-run and metadata sidecar; integration tests for dry-run pass. `resumed` invocation is mocked in tests (2025-12-17).
 
----
-
-##### T8: CI/CD Pipeline
-**Dependencies**: T7 (PDF Generation CLI)
+#### Project: CI/CD Pipeline
+**Dependencies**: (PDF Generation CLI)
 
 Automate validation and PDF generation on content changes.
 
-**Acceptance Criteria**:
+**Tasks**:
 - [ ] Create GitHub Actions workflow (or equivalent)
 - [ ] Run schema validation on YAML changes
 - [ ] Build all role-specific PDFs
@@ -289,14 +158,47 @@ Automate validation and PDF generation on content changes.
 
 **Status**: CI workflow added at `.github/workflows/ci.yml` to run tests and perform a dry-run build; artifacts uploaded when present (2025-12-17).
 
----
+#### Project: Documentation & Handoff
+**Dependencies**: (MCP Integration)
 
-##### T9: MCP Integration & Testing
-**Dependencies**: T2 (MCP Setup), T7 (PDF Generation)
+Create comprehensive documentation for the complete system.
+
+**Tasks**:
+- [ ] Write `README.md` with quick start guide
+- [ ] Document all CLI commands and options
+- [ ] Create troubleshooting guide
+- [ ] Document MCP integration patterns
+- [ ] Write contribution guidelines
+- [ ] Create architecture diagram
+- [ ] Record demo video (optional)
+- [ ] Publish to internal wiki/docs site
+
+#### Project1: MCP Server Setup & Verification
+**Dependencies**: (Environment Setup)
+
+Clone and configure the JSON Resume MCP server for AI-assisted editing.
+
+**Tasks**:
+- [ ] Clone `jsonresume/mcp` repository
+- [ ] Install MCP dependencies: `npm install`
+- [ ] Verify MCP server builds successfully
+- [ ] Test MCP server with sample resume.json
+- [ ] Document MCP endpoints and capabilities
+- [ ] Configure MCP server for local development
+
+```bash
+cd jsonresume-mcp
+npm install
+npm run build
+npm test  # Verify all tests pass
+```
+
+#### Project: MCP Integration & Testing
+**Dependencies**: (MCP Setup), T7 (PDF Generation)
 
 Integrate MCP server with resume workflow for AI-assisted editing.
 
-**Acceptance Criteria**:
+**Tasks**:
 - [ ] Configure MCP server to read from `content/` directory
 - [ ] Test CRUD operations on resume sections
 - [ ] Verify AI assistant can modify structured fields
@@ -310,60 +212,83 @@ Integrate MCP server with resume workflow for AI-assisted editing.
 - "Update my skills to include more DevOps tools"
 - "Create a variant resume focusing on e-commerce experience"
 
----
-
-##### T10: Documentation & Handoff
-**Dependencies**: T9 (MCP Integration)
-
-Create comprehensive documentation for the complete system.
-
-**Acceptance Criteria**:
-- [ ] Write `README.md` with quick start guide
-- [ ] Document all CLI commands and options
-- [ ] Create troubleshooting guide
-- [ ] Document MCP integration patterns
-- [ ] Write contribution guidelines
-- [ ] Create architecture diagram
-- [ ] Record demo video (optional)
-- [ ] Publish to internal wiki/docs site
 
 ---
 
-#### ✅ Complete
+### ✅ Complete
 
-[No completed tasks yet.]
+#### Project: Environment Setup & Dependencies
+**Dependencies**: None
+
+Install and verify all required tooling for the resume automation pipeline.
+
+**Tasks**:
+- [x] Node.js ≥18 installed and verified (`node --version`)
+- [x] Package manager available (npm or pnpm)
+- [x] Python 3.10+ installed with pip
+- [x] Virtual environment created: `python -m venv .venv`
+- [x] Git configured for version control
+- [x] `resumed` installed globally: `npm install -g resumed`
+- [x] Verify resumed works: `resumed --version`
+
+**Status**: Completed (resumed installed, Python venv created, requirements validated) — 2025-12-18
+
+**Validation**:
+```bash
+node --version  # Should show v18+
+python --version  # Should show 3.10+
+resumed --version  # Should show current version
+```
+
+#### Project: Content Model Design
+**Dependencies**: (MCP Setup)
+
+Design YAML content architecture supporting base + role-specific composition.
+
+**Tasks**:
+- [x] Create `content/base.yaml` with static fields (name, contact, education)
+- [x] Create `content/fragments/` directory structure
+- [x] Design fragment schema for: experience, skills, projects
+- [x] Document composition strategy in `docs/content-model.md`
+**File Structure**:
+```
+│   ├── experience/
+│   │   ├── goop.yaml
+│   │   ├── no-borders.yaml
+│   │   └── boiling-pot.yaml
+│   ├── skills/
+│   │   ├── full-stack.yaml
+│   │   ├── leadership.yaml
+│       ├── tech-lead.yaml
+│       └── founder.yaml
+```
+
+Implement Python script to merge YAML fragments into valid JSON Resume.
+
+**Tasks**:
+- [x] Create `scripts/compose_resume.py`
+- [x] Implement YAML loading with validation
+- [x] Handle merge conflicts gracefully
+- [x] Write comprehensive tests (pytest)
+
+**Validation**:
+
+```bash
+python compose_resume.py \
+  --base content/base.yaml \
+  --output build/resume.json \
+  --validate
+```
+
+**Status**: Implementation scaffolded — `scripts/compose_resume.py` created; unit tests for merge logic pass (2025-12-17).
+
+- T6: Composition Engine — completed 2025-12-17
 
 ---
 
 #### 🚫 Rejected
 
 [No rejected tasks yet.]
-
----
-
-## Notes & Decisions
-
-### Font Management
-- **Decision**: Vendor fonts in theme directory to prevent environment variation
-- **Rationale**: Eliminates dependency on external CDNs and ensures deterministic builds
-- **Implementation**: Copy EB Garamond WOFF2 files to `themes/valeii-professional/fonts/`
-
-### Metadata Strategy
-- **Decision**: Avoid visible generation timestamps in resume body
-- **Rationale**: Prevents unnecessary PDF diffs and maintains clean presentation
-- **Implementation**: Store metadata in PDF properties or separate JSON file
-
-### Version Control
-- **Decision**: Store generated PDFs in `artifacts/` with `.gitignore`
-- **Rationale**: Keep repository clean, use CI for artifact distribution
-- **Exception**: Store `baseline-resume.pdf` for visual regression testing
-
-### Schema Validation
-- **Decision**: Validate against official JSON Resume schema on every build
-- **Rationale**: Ensures compatibility with all JSON Resume tools and themes
-- **Implementation**: Use `ajv` or `jsonschema` library in validation step
-
----
 
 ## Risk Register
 
