@@ -23,6 +23,9 @@ __pycache__/
 #supabase
 /supabase/
 
+#trubo
+.turbo
+
 # Vendor Docs
 /docs
 
@@ -41,6 +44,8 @@ dist/
 *.pdf
 *.zip
 *.tar.gz
+*.tar.zst
+*-meta.json
 
 # Editor settings
 .vscode/

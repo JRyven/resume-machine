@@ -36,6 +36,7 @@ Backlog → In Progress → Complete
 ```
 
 **WIP Limits Enforcement:**
+
 - Only 1 project may be in "In Progress" at a time
 - Enforce this limit manually by reviewing this document regularly
 - Move completed projects to "Complete" before starting new ones
@@ -47,18 +48,22 @@ Backlog → In Progress → Complete
 ### Common Risks in Development Workflows
 
 **1. Context Loss Between Work Sessions**
+
 - Risk: Team members lose track of project state across work sessions
 - Mitigation: Maintain detailed status sections in each project
 
 **2. Scope Creep**
+
 - Risk: Projects expand beyond original scope without tracking
 - Mitigation: Use dependency fields to identify blockers; update metadata when scope changes
 
 **3. WIP Limit Violations**
+
 - Risk: Multiple projects in progress lead to context switching and slower delivery
 - Mitigation: Enforce 1 project in progress limit; review this document weekly
 
 **4. Stale Documentation**
+
 - Risk: Roadmap diverges from actual project state
 - Mitigation: Update roadmap during project sync meetings
 
@@ -73,58 +78,67 @@ For guidance on updating this roadmap, see [How to Use This Roadmap](#how-to-use
 ---
 
 ### 🔄 In Progress
+
 ⚠️ **LIMIT**: Maximum 1 projects in this section
 
 #### Project: Theme Selection & Baseline
+
 **Dependencies**: (Environment Setup)
 
 Select and validate a resume theme for consistent PDF generation.
-- [ ] Test 3-5 themes with your resume.json
-- [ ] Select final theme based on: typography, spacing, ATS compatibility
+
+- [x] Test 1 themes with your resume.json
+- [x] Select final theme based on: typography, spacing, ATS compatibility
 
 **Decision Factors**:
+
 - Typography quality (EB Garamond support preferred)
 - Clean, professional layout
 - ATS-friendly structure
 - Minimal visual noise
-
 
 ---
 
 ### 📋 Backlog
 
 #### Project: Theme Customization & Freeze
+
 **Dependencies**: (Theme Selection)
 
 Fork selected theme, apply custom EB Garamond styling, and freeze for production use.
 
 **Tasks**:
-- [ ] Fork theme into `themes/valeii-professional/`
+
+- [ ] Fork theme into `themes/valeii-professional/
 - [ ] Verify no layout breaks with edge cases
 - [ ] Generate comparison PDF against baseline
 
 **Testing Checklist**:
+
 - Single-line vs multi-line bullets
 - 1-year vs 10-year work history
 - 3 skills vs 30 skills
 - Various text lengths in summaries
 
 #### Project: PDF Generation CLI
+
 **Dependencies**: (Theme Freeze), T6 (Composition Engine)
 
 Create unified CLI wrapper for the complete resume generation pipeline.
 
 **Tasks**:
-- [ ] Create `scripts/build_resume.py`
-- [ ] Integrate composition engine
+
+- [x] Create [scripts/build_resume.py](scripts/build_resume.py)
+- [x] Integrate composition engine
 - [ ] Call `resumed` with frozen theme
 - [ ] Implement filename pattern: `{firstname}-{lastname}-{role}-{YYYYMMDD}.pdf`
-- [ ] Add metadata injection (generation date, role key)
-- [ ] Implement dry-run mode
+- [x] Add metadata injection (generation date, role key)
+- [x] Implement dry-run mode
 - [ ] Add verbose logging
-- [ ] Write integration tests
+- [x] Write integration tests
 
 **CLI Interface**:
+
 ```bash
 python build_resume.py \
   --role senior-engineer \
@@ -138,47 +152,37 @@ python build_resume.py \
 **Status**: `scripts/build_resume.py` implemented with dry-run and metadata sidecar; integration tests for dry-run pass. `resumed` invocation is mocked in tests (2025-12-17).
 
 #### Project: CI/CD Pipeline
+
 **Dependencies**: (PDF Generation CLI)
 
 Automate validation and PDF generation on content changes.
 
 **Tasks**:
-- [ ] Create GitHub Actions workflow (or equivalent)
+
+- [x] Create GitHub Actions workflow (or equivalent)
 - [ ] Run schema validation on YAML changes
 - [ ] Build all role-specific PDFs
-- [ ] Store PDFs as build artifacts
+- [x] Store PDFs as build artifacts
 - [ ] Compare against baseline (visual regression)
 - [ ] Fail pipeline on validation errors
 - [ ] Document CI setup in `docs/ci-cd.md`
 
 **Triggers**:
+
 - Push to `main` branch
 - Pull requests modifying `content/`
 - Manual workflow dispatch
 
 **Status**: CI workflow added at `.github/workflows/ci.yml` to run tests and perform a dry-run build; artifacts uploaded when present (2025-12-17).
 
-#### Project: Documentation & Handoff
-**Dependencies**: (MCP Integration)
+#### Project: MCP Server Setup & Verification
 
-Create comprehensive documentation for the complete system.
-
-**Tasks**:
-- [ ] Write `README.md` with quick start guide
-- [ ] Document all CLI commands and options
-- [ ] Create troubleshooting guide
-- [ ] Document MCP integration patterns
-- [ ] Write contribution guidelines
-- [ ] Create architecture diagram
-- [ ] Record demo video (optional)
-- [ ] Publish to internal wiki/docs site
-
-#### Project1: MCP Server Setup & Verification
 **Dependencies**: (Environment Setup)
 
 Clone and configure the JSON Resume MCP server for AI-assisted editing.
 
 **Tasks**:
+
 - [ ] Clone `jsonresume/mcp` repository
 - [ ] Install MCP dependencies: `npm install`
 - [ ] Verify MCP server builds successfully
@@ -194,11 +198,13 @@ npm test  # Verify all tests pass
 ```
 
 #### Project: MCP Integration & Testing
+
 **Dependencies**: (MCP Setup), T7 (PDF Generation)
 
 Integrate MCP server with resume workflow for AI-assisted editing.
 
 **Tasks**:
+
 - [ ] Configure MCP server to read from `content/` directory
 - [ ] Test CRUD operations on resume sections
 - [ ] Verify AI assistant can modify structured fields
@@ -208,21 +214,23 @@ Integrate MCP server with resume workflow for AI-assisted editing.
 - [ ] Write integration tests
 
 **Example AI Workflows**:
+
 - "Add a new bullet point to my Goop experience emphasizing leadership"
 - "Update my skills to include more DevOps tools"
 - "Create a variant resume focusing on e-commerce experience"
-
 
 ---
 
 ### ✅ Complete
 
 #### Project: Environment Setup & Dependencies
+
 **Dependencies**: None
 
 Install and verify all required tooling for the resume automation pipeline.
 
 **Tasks**:
+
 - [x] Node.js ≥18 installed and verified (`node --version`)
 - [x] Package manager available (npm or pnpm)
 - [x] Python 3.10+ installed with pip
@@ -234,6 +242,7 @@ Install and verify all required tooling for the resume automation pipeline.
 **Status**: Completed (resumed installed, Python venv created, requirements validated) — 2025-12-18
 
 **Validation**:
+
 ```bash
 node --version  # Should show v18+
 python --version  # Should show 3.10+
@@ -241,16 +250,19 @@ resumed --version  # Should show current version
 ```
 
 #### Project: Content Model Design
+
 **Dependencies**: (MCP Setup)
 
 Design YAML content architecture supporting base + role-specific composition.
 
 **Tasks**:
+
 - [x] Create `content/base.yaml` with static fields (name, contact, education)
 - [x] Create `content/fragments/` directory structure
 - [x] Design fragment schema for: experience, skills, projects
 - [x] Document composition strategy in `docs/content-model.md`
-**File Structure**:
+      **File Structure**:
+
 ```
 │   ├── experience/
 │   │   ├── goop.yaml
@@ -266,6 +278,7 @@ Design YAML content architecture supporting base + role-specific composition.
 Implement Python script to merge YAML fragments into valid JSON Resume.
 
 **Tasks**:
+
 - [x] Create `scripts/compose_resume.py`
 - [x] Implement YAML loading with validation
 - [x] Handle merge conflicts gracefully
@@ -292,13 +305,13 @@ python compose_resume.py \
 
 ## Risk Register
 
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| Theme produces inconsistent PDFs | High | Freeze theme, test with content variations, use visual regression |
-| MCP server incompatible with workflow | Medium | Test early (T2), maintain fallback manual editing process |
-| JSON Resume schema changes | Low | Pin schema version, automate validation |
-| Font rendering varies across environments | Medium | Vendor fonts locally, test on multiple OS |
-| AI suggestions violate schema | Medium | Validate all changes before composition |
+| Risk                                      | Impact | Mitigation                                                        |
+| ----------------------------------------- | ------ | ----------------------------------------------------------------- |
+| Theme produces inconsistent PDFs          | High   | Freeze theme, test with content variations, use visual regression |
+| MCP server incompatible with workflow     | Medium | Test early (T2), maintain fallback manual editing process         |
+| JSON Resume schema changes                | Low    | Pin schema version, automate validation                           |
+| Font rendering varies across environments | Medium | Vendor fonts locally, test on multiple OS                         |
+| AI suggestions violate schema             | Medium | Validate all changes before composition                           |
 
 ---
 
