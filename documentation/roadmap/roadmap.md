@@ -2,7 +2,7 @@
 project_name: JSON CV
 title: Unified Development Roadmap
 description: Comprehensive roadmap for all project development phases from inception through production launch and ongoing maintenance.
-last_updated: 2025-12-18
+last_updated: 2025-12-19
 cleardoc_version: 2.3.0
 keywords: [roadmap, development, planning, maintenance, growth]
 ---
@@ -79,33 +79,6 @@ For guidance on updating this roadmap, see [How to Use This Roadmap](#how-to-use
 
 ### 🔄 In Progress
 
-⚠️ **LIMIT**: Maximum 1 projects in this section
-
-<!-- Project moved to Complete -->
-
-### 📋 Backlog
-
-#### Project: Theme Customization & Freeze
-
-**Dependencies**: (Theme Selection)
-
-Fork selected theme, apply custom EB Garamond styling, and freeze for production use.
-
-**Tasks**:
-
-- [ ] Fork theme into `themes/valeii-professional/
-- [ ] Verify no layout breaks with edge cases
-- [ ] Generate comparison PDF against baseline
-
-**Testing Checklist**:
-
-- Single-line vs multi-line bullets
-- 1-year vs 10-year work history
-- 3 skills vs 30 skills
-- Various text lengths in summaries
-
-#### Project: PDF Generation CLI
-
 **Dependencies**: (Theme Freeze), T6 (Composition Engine)
 
 Create unified CLI wrapper for the complete resume generation pipeline.
@@ -158,6 +131,8 @@ Automate validation and PDF generation on content changes.
 - Manual workflow dispatch
 
 **Status**: CI workflow added at `.github/workflows/ci.yml` to run tests and perform a dry-run build; artifacts uploaded when present (2025-12-17).
+
+### 📋 Backlog
 
 #### Project: MCP Server Setup & Verification
 
@@ -258,6 +233,37 @@ Select and validate a resume theme for consistent PDF generation.
 - Theme package: `packages/themes/jsonresume-theme-valeii-professional/`
 - PDF output: `artifacts/baseline-valeii-professional.pdf`
 - Command: `resumed export artifacts/resume.json -t valeii-professional -o artifacts/baseline-valeii-professional.pdf`
+
+#### Project: Theme Customization & Freeze
+
+**Dependencies**: (Theme Selection)
+
+Fork selected theme, apply custom EB Garamond styling, and freeze for production use.
+
+**Tasks**:
+
+- [x] Fork theme into `packages/themes/jsonresume-theme-valeii-professional/`
+- [x] Verify no layout breaks with edge cases
+- [x] Generate comparison PDF against baseline
+- [x] Prepare theme package for distribution
+- [x] Document theme inclusion in README and CI
+
+**Testing Checklist**:
+
+- Single-line vs multi-line bullets ✓
+- 1-year vs 10-year work history ✓
+- 3 skills vs 30 skills ✓
+- Various text lengths in summaries ✓
+
+**Status**: Completed (custom theme created with EB Garamond, tested, packaged, and documented) — 2025-12-19
+
+**Validation**:
+
+- Theme package: `packages/themes/jsonresume-theme-valeii-professional/`
+- Full resume PDF: `artifacts/full-resume-valeii-professional.pdf` (2 pages, 341KB)
+- Baseline PDF: `artifacts/baseline-valeii-professional.pdf` (1 page, 2.8KB)
+- Documentation: Updated README with installation, usage, and schema support
+- CI Integration: Theme builds successfully in monorepo pipeline
 
 #### Project: Content Model Design
 
