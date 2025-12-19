@@ -2,7 +2,7 @@
 project_name: JSON CV
 title: Unified Development Roadmap
 description: Comprehensive roadmap for all project development phases from inception through production launch and ongoing maintenance.
-last_updated: 2025-12-17
+last_updated: 2025-12-18
 cleardoc_version: 2.3.0
 keywords: [roadmap, development, planning, maintenance, growth]
 ---
@@ -81,23 +81,7 @@ For guidance on updating this roadmap, see [How to Use This Roadmap](#how-to-use
 
 ⚠️ **LIMIT**: Maximum 1 projects in this section
 
-#### Project: Theme Selection & Baseline
-
-**Dependencies**: (Environment Setup)
-
-Select and validate a resume theme for consistent PDF generation.
-
-- [x] Test 1 themes with your resume.json
-- [x] Select final theme based on: typography, spacing, ATS compatibility
-
-**Decision Factors**:
-
-- Typography quality (EB Garamond support preferred)
-- Clean, professional layout
-- ATS-friendly structure
-- Minimal visual noise
-
----
+<!-- Project moved to Complete -->
 
 ### 📋 Backlog
 
@@ -248,6 +232,32 @@ node --version  # Should show v18+
 python --version  # Should show 3.10+
 resumed --version  # Should show current version
 ```
+
+#### Project: Theme Selection & Baseline
+
+**Dependencies**: (Environment Setup)
+
+Select and validate a resume theme for consistent PDF generation.
+
+**Tasks**:
+
+- [x] Test 1 themes with your resume.json
+- [x] Select final theme based on: typography, spacing, ATS compatibility
+
+**Decision Factors**:
+
+- Typography quality (EB Garamond support preferred)
+- Clean, professional layout
+- ATS-friendly structure
+- Minimal visual noise
+
+**Status**: Completed (custom valeii-professional theme created, PDF generated) — 2025-12-18
+
+**Validation**:
+
+- Theme package: `packages/themes/jsonresume-theme-valeii-professional/`
+- PDF output: `artifacts/baseline-valeii-professional.pdf`
+- Command: `resumed export artifacts/resume.json -t valeii-professional -o artifacts/baseline-valeii-professional.pdf`
 
 #### Project: Content Model Design
 
