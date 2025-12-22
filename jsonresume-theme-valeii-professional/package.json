@@ -1,0 +1,9 @@
+{
+  "name": "valeii-professional",
+  "version": "0.1.0",
+  "description": "Minimal local JSON Resume theme: Valeii Professional (Noto Serif Display, clean layout)",
+  "main": "index.js",
+  "type": "module",
+  "author": "",
+  "license": "MIT"
+}

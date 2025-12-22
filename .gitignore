@@ -18,7 +18,10 @@ __pycache__/
 /apps/
 
 # packages
-/packages/
+packages/*
+!packages/themes/
+packages/themes/*
+!packages/themes/jsonresume-theme-valeii-professional/
 
 #supabase
 /supabase/

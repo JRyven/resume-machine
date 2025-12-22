@@ -11,16 +11,40 @@ keywords: [user-guide, resume, json-resume, themes, export]
 
 This guide helps you get started with the JSON Resume platform. Learn to create professional resumes using JSON data and customizable themes.
 
----
 
-## Table of Contents
+## Launch
 
-1. [Getting Started](#getting-started)
-2. [Creating a Resume](#creating-a-resume)
-3. [Choosing Themes](#choosing-themes)
-4. [Exporting Resumes](#exporting-resumes)
-5. [Troubleshooting](#troubleshooting)
-6. [FAQ](#faq)
+To preview your theme edits locally in the browser (http://localhost:3001):
+
+1. **Install dependencies (if not done):**
+```bash
+pnpm install
+```
+
+2. **Build your theme (if you made changes):**
+```bash
+pnpm turbo run build --filter=valeii-professional
+```
+
+3. **Start the registry app:**
+```bash
+pnpm turbo run dev --filter=registry
+```
+
+or, if you have a script:
+```bash
+pnpm dev --filter=registry
+```
+
+4. **Open your browser and go to:**
+[http://localhost:3001](http://localhost:3001)
+
+You can now preview your resume and theme changes live. Any edits to your theme will require a rebuild and a browser refresh to see updates.
+
+## Generate PDF Resume
+```
+resumed artifacts/resume.json --theme ./themes/valeii-professional -o artifacts/baseline-valeii-professional.pdf
+```
 
 ---
 
@@ -80,6 +104,62 @@ Select from 50+ themes like Professional, Modern Classic, and Creative Studio. E
 
 ---
 
+### Advanced Theming
+
+To modify or clone the CV template (the valeii-professional theme), you'll work with the theme files in the monorepo's themes directory. Here's how:
+
+#### Modifying the Existing Template
+
+Primary File to Edit: index.js
+
+This file contains the render function that generates the HTML template. It uses resume data to build sections like header, experience, and skills. Edit this to change styling, layout, or content rendering.
+
+#### Supporting Files:
+
+- package.json - Update name/version if needed
+- README.md - Update documentation
+
+#### Cloning and Modifying the Template
+
+To create a new theme based on valeii-professional:
+
+1. Copy the Theme Directory:
+
+```
+cp -r packages/themes/jsonresume-theme-valeii-professional packages/themes/jsonresume-theme-your-new-name
+```
+
+2. Update Package Details:
+- Edit package.json:
+    - Change "name" to "jsonresume-theme-your-new-name"
+    - Update "description" and "version"
+
+3. Modify the Template:
+- Edit index.js to customize the HTML/CSS output
+- Update README.md with new theme details
+
+4. Integrate into the App:
+- Add the new theme to themeConfig.js (import and add to THEMES object)
+- Rebuild: pnpm build
+
+5. Test the New Theme:
+
+```
+resumed export artifacts/resume.json -t your-new-name -o test.pdf
+```
+
+#### Key Template Structure
+The index.js file builds HTML with:
+
+- Header Section: Name, contact info, summary
+- Experience Section: Work history with dates and highlights
+- Skills Section: Categorized skills as inline tags
+- Styling: Embedded CSS with EB Garamond fonts and responsive design
+
+For major changes, reference the JSON Resume theme API or existing themes in themes. Let me know if you need help with specific modifications!
+
+---
+
 ## Exporting Resumes
 
 ### Export Formats
@@ -135,19 +215,19 @@ Uses Puppeteer for accurate PDF generation. Ensure your resume data is valid JSO
 
 ## FAQ
 
-**Q: What is JSON Resume?**  
+**Q: What is JSON Resume?**
 A: A standard for resume data in JSON format, making resumes portable and themeable.
 
-**Q: Can I import my LinkedIn profile?**  
+**Q: Can I import my LinkedIn profile?**
 A: Not directly, but you can manually enter data or use third-party tools to convert.
 
-**Q: Are resumes private?**  
+**Q: Are resumes private?**
 A: Public resumes are shareable; private ones are only visible to you.
 
-**Q: How do I contribute a theme?**  
+**Q: How do I contribute a theme?**
 A: Follow the theme development guide in the docs, then submit a PR.
 
-**Q: Is the platform free?**  
+**Q: Is the platform free?**
 A: Yes, open-source and free to use.
 
 ---

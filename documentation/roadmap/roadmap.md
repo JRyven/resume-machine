@@ -87,11 +87,11 @@ Create unified CLI wrapper for the complete resume generation pipeline.
 
 - [x] Create [scripts/build_resume.py](scripts/build_resume.py)
 - [x] Integrate composition engine
-- [ ] Call `resumed` with frozen theme
-- [ ] Implement filename pattern: `{firstname}-{lastname}-{role}-{YYYYMMDD}.pdf`
+- [x] Call `resumed` with frozen theme
+- [x] Implement filename pattern: `{firstname}-{lastname}-{role}-{YYYYMMDD}.pdf`
 - [x] Add metadata injection (generation date, role key)
 - [x] Implement dry-run mode
-- [ ] Add verbose logging
+- [x] Add verbose logging
 - [x] Write integration tests
 
 **CLI Interface**:
@@ -238,7 +238,7 @@ Select and validate a resume theme for consistent PDF generation.
 
 **Dependencies**: (Theme Selection)
 
-Fork selected theme, apply custom EB Garamond styling, and freeze for production use.
+Fork selected theme, apply custom specialized Noto font styling, and freeze for production use.
 
 **Tasks**:
 
@@ -247,6 +247,10 @@ Fork selected theme, apply custom EB Garamond styling, and freeze for production
 - [x] Generate comparison PDF against baseline
 - [x] Prepare theme package for distribution
 - [x] Document theme inclusion in README and CI
+- [x] Integrate local specialized Noto fonts for offline rendering:
+  - Headers: Noto Serif Hentaigana Medium
+  - Body: Noto Sans Cypro Minoan Regular  
+  - Meta: Noto Serif Display Italic
 
 **Testing Checklist**:
 
@@ -255,15 +259,19 @@ Fork selected theme, apply custom EB Garamond styling, and freeze for production
 - 3 skills vs 30 skills ✓
 - Various text lengths in summaries ✓
 
-**Status**: Completed (custom theme created with EB Garamond, tested, packaged, and documented) — 2025-12-19
+**Status**: Completed (custom theme created with specialized Noto fonts, tested, packaged, and documented) — 2025-12-19
 
 **Validation**:
 
 - Theme package: `packages/themes/jsonresume-theme-valeii-professional/`
 - Full resume PDF: `artifacts/full-resume-valeii-professional.pdf` (2 pages, 341KB)
 - Baseline PDF: `artifacts/baseline-valeii-professional.pdf` (1 page, 2.8KB)
-- Documentation: Updated README with installation, usage, and schema support
+- Documentation: Updated README with installation, usage, schema support, and specialized font requirements
 - CI Integration: Theme builds successfully in monorepo pipeline
+- Font Integration: Local specialized Noto fonts loaded via @font-face for offline compatibility:
+  - Headers use Noto Serif Hentaigana Medium
+  - Body text uses Noto Sans Cypro Minoan Regular
+  - Meta elements use Noto Serif Display Italic
 
 #### Project: Content Model Design
 
