@@ -2,9 +2,9 @@ dz# JSON Resume Theme: Valeii Professional
 
 A minimal, ATS-friendly theme for JSON Resume, optimized for professional use with clean typography and layout.
 
-## Features
+ **Typography**: Uses only web-safe, ATS-friendly fonts: Arial, Helvetica, sans-serif for headings; Calibri, Arial, sans-serif for body text.
 
-- **Typography**: Noto Serif Display font family (local fonts included)
+ **ATS-Ready Fonts**: No custom or local fonts required; all fonts are web-safe and render consistently across platforms.
 - **Layout**: Clean, professional design with proper spacing
 - **ATS-Friendly**: Structured for applicant tracking systems
 - **Minimal Noise**: Focus on content without distractions
@@ -16,9 +16,15 @@ A minimal, ATS-friendly theme for JSON Resume, optimized for professional use wi
 
 This theme includes specialized Noto fonts locally for offline rendering and CI/CD stability:
 
-- `fonts/Noto_Serif_Hentaigana/static/NotoSerifHentaigana-Medium.ttf` (Headers - h1, h2, h3)
-- `fonts/Noto_Sans_Cypro_Minoan/NotoSansCyproMinoan-Regular.ttf` (Body text - p elements)
-- `fonts/Noto_Serif_Display/static/NotoSerifDisplay-Italic.ttf` (Meta text - dates, contact info)
+## Font Usage
+
+This theme uses only web-safe, ATS-friendly fonts:
+
+- **Headings (h1, h2, h3):** Helvetica, Arial, sans-serif
+- **Body text (p, li, etc):** Calibri, Arial, sans-serif
+- **Meta/italic text:** Times New Roman, Times, serif (for .italic class)
+
+No custom or local fonts are required. All fonts are available by default on major operating systems and browsers, ensuring consistent rendering and maximum compatibility with applicant tracking systems (ATS).
 
 Fonts are loaded via CSS `@font-face` declarations and do not require internet access.
 
@@ -61,7 +67,3 @@ Renders the following JSON Resume fields:
 - `basics`: name, label, email, phone, location.city, summary
 - `work[]`: company, position, startDate, endDate, highlights[]
 - `skills[]`: name, keywords[]
-
-## License
-
-MIT

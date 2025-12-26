@@ -79,34 +79,7 @@ For guidance on updating this roadmap, see [How to Use This Roadmap](#how-to-use
 
 ### 🔄 In Progress
 
-**Dependencies**: (Theme Freeze), T6 (Composition Engine)
-
-Create unified CLI wrapper for the complete resume generation pipeline.
-
-**Tasks**:
-
-- [x] Create [scripts/build_resume.py](scripts/build_resume.py)
-- [x] Integrate composition engine
-- [x] Call `resumed` with frozen theme
-- [x] Implement filename pattern: `{firstname}-{lastname}-{role}-{YYYYMMDD}.pdf`
-- [x] Add metadata injection (generation date, role key)
-- [x] Implement dry-run mode
-- [x] Add verbose logging
-- [x] Write integration tests
-
-**CLI Interface**:
-
-```bash
-python build_resume.py \
-  --role senior-engineer \
-  --output artifacts/ \
-  --validate \
-  --verbose
-```
-
-**Output**: `james-valeii-senior-engineer-20251217.pdf`
-
-**Status**: `scripts/build_resume.py` implemented with dry-run and metadata sidecar; integration tests for dry-run pass. `resumed` invocation is mocked in tests (2025-12-17).
+### 🔄 In Progress
 
 #### Project: CI/CD Pipeline
 
@@ -131,7 +104,6 @@ Automate validation and PDF generation on content changes.
 - Manual workflow dispatch
 
 **Status**: CI workflow added at `.github/workflows/ci.yml` to run tests and perform a dry-run build; artifacts uploaded when present (2025-12-17).
-
 ### 📋 Backlog
 
 #### Project: MCP Server Setup & Verification
@@ -178,7 +150,48 @@ Integrate MCP server with resume workflow for AI-assisted editing.
 - "Update my skills to include more DevOps tools"
 - "Create a variant resume focusing on e-commerce experience"
 
+#### Repair Linting
+
+You hit a pre-commit hook (husky + lint-staged). lint-staged tried to run ESLint/Prettier on staged files, failed because ESLint has no config, so the hook aborted and Git reverted the staged changes.
+
+Options to fix (pick one):
+
+Add a minimal ESLint config (recommended quick fix):
+```
+cat > .eslintrc.json <<'JSON'
+{
+  "env": { "es2021": true, "node": true, "browser": true },
+  "extends": ["eslint:recommended"],
+  "parserOptions": { "ecmaVersion": 2021, "sourceType": "module" },
+  "rules": {}
+}
+JSON
+
+git add .eslintrc.json
+git add -A
+git commit -m "v0.0.4 Pivot to monorepo"
+```
+
+Run the ESLint initializer (guided)
+```
+npm init @eslint/config
+# follow prompts, then:
+git add -A
+git commit -m "v0.0.4 Pivot to monorepo"
+```
+
+Diagnose lint-staged problems before committing:
+```
+npx lint-staged --debug
+# or run prettier/eslint manually to see errors:
+npx prettier --check .
+npx eslint --ext .js,.ts src/ || npx eslint --ext .js,.ts --fix src/
+```
+
 ---
+
+### ✅ Complete
+
 
 ### ✅ Complete
 
@@ -249,7 +262,7 @@ Fork selected theme, apply custom specialized Noto font styling, and freeze for 
 - [x] Document theme inclusion in README and CI
 - [x] Integrate local specialized Noto fonts for offline rendering:
   - Headers: Noto Serif Hentaigana Medium
-  - Body: Noto Sans Cypro Minoan Regular  
+  - Body: Noto Sans Cypro Minoan Regular
   - Meta: Noto Serif Display Italic
 
 **Testing Checklist**:

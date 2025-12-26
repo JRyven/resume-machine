@@ -4,181 +4,300 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>James Valeii — Resume</title>
+  
   <style>
-    /* Local Noto fonts */
-    @font-face {
-      font-family: 'Headers - Noto Serif Hentaigana';
-      src: url('fonts/Noto_Serif_Hentaigana/static/NotoSerifHentaigana-Medium.ttf') format('truetype');
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'Body - Noto Sans Cypro Minoan';
-      src: url('fonts/Noto_Sans_Cypro_Minoan/NotoSansCyproMinoan-Regular.ttf') format('truetype');
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: 'Italic - Noto Serif Display';
-      src: url('fonts/Noto_Serif_Display/static/NotoSerifDisplay-Italic.ttf') format('truetype');
-      font-weight: 400;
-      font-style: italic;
-      font-display: swap;
-    }
-
-    body {
-      font-family: 'Body - Noto Sans Cypro Minoan', sans-serif;
-      color: #111;
-      margin: 36px;
-      line-height: 1.35;
-    }
-
-    h1, h2, h3 {
-      font-family: 'Headers - Noto Serif Hentaigana', serif;
-    }
-
-    p {
-      font-family: 'Body - Noto Sans Cypro Minoan', sans-serif;
-    }
-
-    time, .meta, .contact {
-      font-family: 'Italic - Noto Serif Display', serif;
-      font-style: italic;
-    }
-
-    header {
+    .flex-between {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .head-top {
-      display: flex;
+      flex-direction: row;
+      align-items: center;
       justify-content: space-between;
-      align-items: flex-start;
+      gap: 6px;
+    }
+    body {
+      max-width: 800px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #000;
+      margin: 36px;
+      font-size: 16px;
+    }
+
+    .flex-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 6px;
+    }    
+    .head-top {
+      gap: 12px; 
+      margin-bottom: 12px;     
+    }
+    .head-top h1 {
+      margin-bottom: 0;
+    }
+    
+    h1, h2, h3 {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0 0 6px 0;
     }
 
     h1 {
-      font-size: 30px;
-      margin: 0;
+      font-size: 22px;
+    }
+    h2 {
+      font-size: 20px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: bold;
+    }  
+
+    p {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0 0 6px 0;
     }
 
-    .meta {
+    ul, ol{
+      margin: 0 0 6px 0;
+    }
+    li {
+      margin: 0 0 6px 0;
+    }   
+
+    .italic {
+      font-style: italic;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .sixteen {
+      font-size: 16px;
+    }
+    .fourteen {
+      font-size: 14px;
+    }      
+    .twelve {
       font-size: 12px;
-      color: #333;
-      margin-top: 6px;
     }
 
-    .summary {
-      background: transparent;
-      border-left: 3px solid #eee;
-      padding-left: 12px;
-      margin-top: 8px;
-      color: #222;
+    .mt10 { 
+      margin-top: 10px;
+    }
+    .mtn5 {
+      margin-top: -5px;
+    }
+
+    .mb0 {
+      margin-bottom: 0;
+    }
+    .mb12 {
+      margin-bottom: 12px;
+    }
+    .ml10 {
+      margin-left: 10px;
+    }
+    .mln10 {
+      margin-left: -10px;
     }
 
     main {
-      margin-top: 10px;
+      margin-bottom: 10px;
     }
-
-    h2 {
-      font-size: 14px;
-      margin: 18px 0 6px 0;
-      color: #111;
-      letter-spacing: 0.2px;
+      
+    section,
+    .work-item {
+      margin: 0 0 12px 0;
     }
-
-    section {
-      margin-top: 6px;
+    section > h2 {
+      margin: 0 0 6px 0;
     }
-
-    .work h3 {
-      font-size: 15px;
-      margin: 0;
+    section > h3 {
+      margin: 0 0 6px 0;
+    }        
+    
+    .head-details {
+      flex-grow: 1;
     }
-
+    
     time {
       display: block;
       font-size: 12px;
-      color: #666;
       margin-bottom: 6px;
     }
 
-    ul {
-      margin: 6px 0 0 18px;
-    }
-
-    li {
-      margin-bottom: 6px;
-    }
-
-    .skills-list {
-      display: block;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .skills-list li {
+    .bullet {
+      font-weight: bold;
       display: inline-block;
-      background: #f3f3f3;
-      padding: 4px 8px;
-      margin: 4px;
-      border-radius: 4px;
-      font-size: 12px;
+      width: 1em;
+      text-align: center;
     }
 
-    .contact {
-      font-size: 12px;
-      color: #333;
+    .cover-break {
+      border: none;
+      margin: 0;
+      height: 0;
+      background: none;
     }
 
     @media print {
-        @page {
-            margin: 20mm 15mm;
-        }
-
-        body {
-            margin: 0;
-        }
-
-        h2 {
-            page-break-after: avoid;
-        }
-
-        /* Remove or comment out these: */
-        /* section {
-            page-break-inside: avoid;
-        }
-
-        .work {
-            page-break-inside: avoid;
-        } */
+      @page {
+        margin: 20mm 15mm;
+      }
+      body {
+        margin: 0;
+      }
+      h2 {
+        page-break-after: avoid;
+      }
+      .cover-break {
+        page-break-after: always;
+        border: none;
+        margin: 0;
+        height: 0;
+        background: none;
+      }
     }
   </style>
+
 </head>
 <body>
-  <header>
-    <div class="head-top">
-      <div>
-        <h1>James Valeii</h1>
-        <div class="contact">Full-Stack Development Leader | Senior Engineer<br/><a href="mailto:hello@jamesvaleii.com">hello@jamesvaleii.com</a><br/>(226) 792-6659<br/>Waterloo</div>
+
+    
+      <section>
+        
+      <header>
+        <div class="head-top flex-between">
+          <h1>James Valeii</h1>
+          <p class="sixteen mb0">Senior Engineer</p>
+          <p class="italic twelve mb0">hello@jamesvaleii.com | (226) 792-6659 | Waterloo, Ontario</p>
+        </div>
+      </header>
+    
+        <div><p>Dear Automattic Team,</p><p>I am excited to apply for the Sales Engineer position. My motivation to join Automattic stems from a desire to return to my cooperative roots and contribute to a democratized internet. I am passionate about building ethical, sustainable digital solutions and want to be part of a team that is clear-eyed about the opportunities and responsibilities of AI.</p><p>Throughout my career, I have thrived in environments where the team is invested in both short-term objectives and long-term values. I am happiest when working with colleagues who are committed to excellent results, maintain high trust and support, and embrace learning and innovation. I love creating cool things, meeting new people, and being an early adopter of emerging technologies.</p><p>Conversely, I am least fulfilled in settings where success metrics are unclear, contributions are undervalued, and team interactions feel robotic. I believe that genuine collaboration and clear purpose are essential for meaningful work.</p><p>With over 13 years of experience leading technical teams and delivering solutions that drive measurable business impact, I am eager to bring my skills and values to Automattic. I look forward to the possibility of contributing to your mission and working alongside a team that shares my commitment to ethical, impactful technology.</p><p>Sincerely, James Valeii</p></div>
+      </section>
+      <hr class="cover-break" />
+    
+    
+      <header>
+        <div class="head-top flex-between">
+          <h1>James Valeii</h1>
+          <p class="sixteen mb0">Senior Engineer</p>
+          <p class="italic twelve mb0">hello@jamesvaleii.com | (226) 792-6659 | Waterloo, Ontario</p>
+        </div>
+      </header>
+    
+    <main>
+      
+    <section class="summary-section">
+      <h2>Abstract</h2>
+      <div class="summary fourteen"><p><b>Engineering leader with 13+ years experience building technical teams and platforms</b>, delivering solutions that drive measurable business impact. Elite PHP and JavaScript developer with deep knowledge of PIM and CMS architecture, extending beyond code to optimal platform configuration, efficient database structuring, and scalable system design. Combines hands-on development and strategic leadership, blending technical expertise with broad knowledge of interacting technologies and an entrepreneurial mindset to design complete systems and make informed build vs. buy decisions based on cost, capability, and long-term maintainability. Sensitive to workflow friction, cutting unnecessary steps to save time, reduce process frustration, and accelerate delivery.</p><p class="fourteen ml10"><span class="bullet mln10">•</span> Eliminated 97% engineering bottleneck at Goop; enabled 3x content output</p><p class="fourteen ml10"><span class="bullet mln10">•</span> Drove 625% account creation and $35 average order value increase at Goop</p><p class="fourteen ml10"><span class="bullet mln10">•</span> Led zero-downtime Shopify migration for site with 70M+ annual pageviews</p><p class="fourteen ml10"><span class="bullet mln10">•</span> Grew digital agency to $250K; scaled sites to 1M+ daily visits at <2s loads</p></div>
+    </section>
+  
+      
+    <section class="interests-section">
+      <h2>Areas of Expertise</h2>
+      <p class="twelve">Full-Stack Development, PHP & JavaScript Development, PIM & CMS Architecture, Scalable System Design, Technical Team Leadership, Project Management/Delivery, Strategic Decision-Making, E-Commerce Growth, API & SaaS Integrations, Shopify Integration/Migration, Database Structuring, Infrastructure & Hosting, Talent Development/Mentor, Performance Monitoring, Optimization/Automation</p>
+    </section>
+  
+      
+    <section class="experience-section">
+      <h2>Experience</h2>
+      
+      <div class="work-item">
+        <div class="flex-row mb12">
+          <h3 class="mb0">Goop</h3>
+          <p class="italic twelve mb0">— Santa Monica, California — 2022–Present</p>
+        </div>
+        <p class="bold">Technical Lead, PHP Engineer</p>
+        <p class="twelve">Lifestyle/wellness e-commerce brand with sophisticated, high-traffic platform handling 70M+ annual pageviews across WordPress/PHP, React, legacy systems, SaaS/API integrations, and REST endpoints. Hired to eliminate a multi-year editorial–engineering content bottleneck. Delivered self-service CMS tools and led WordPress–Shopify replatform; owned WordPress codebase, platform reliability, and cross-functional alignment.</p>
+        <p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Ended decade-long content bottleneck</b>; architected modular self-service CMS component library; achieved 100% editorial adoption in 3 months (vs. prior failed attempts). Reclaimed 97% of engineering bandwidth, freeing 2 engineers and 1 PM for strategic work; tripled content output without added headcount.</p><p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Drove record e-commerce growth</b>; designed content-gating auth layer that sparked 625% surge in account creations, 84% login growth, and $35 AOV uplift among converted users. Lifted site-wide conversion rate from 2.5% to 4.2% (Labor Day 2024 vs. 2025, per Shopify metrics) and slashed load times from 3s to sub-1s (above gold standard).</p><p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Led zero-downtime Shopify migration</b>; single-handedly engineered WordPress–Shopify integration; custom real-time sync plugin preserved inventory/data integrity across 70M+ pageviews with zero revenue loss.</p><p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Built cross-functional velocity</b>; embedded with product, science, and editorial teams; bring high curiosity across business domains (formulations, supply chain, and content strategy), informing priority queue, realistic deadlines, and feature design that users love. Turned siloed teams into true collaborators.</p><p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Mentored & scaled talent</b>; transformed junior developer from HTML/CSS to autonomous full-stack contributor in 6 months via pair-programming and rigorous code reviews; increased team capacity 20%.</p><p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Institutionalized quality & speed</b>; rolled out PHPUnit/Cypress and Rollbar/Grafana monitoring; cut MTTD from hours to minutes and caught 85% of issues pre-production. Created documentation system (PHPDocumentor, Confluence, and README standards); slashed local environment setup from 3-4 days to 1.</p>
       </div>
-    </div>
-    <div class="summary"><strong>Summary</strong><p style="margin:6px 0 0 0">Engineering leader with 13+ years experience building technical teams and platforms, delivering solutions that drive measurable business impact. Elite PHP and JavaScript developer with deep knowledge of PIM and CMS architecture, extending beyond code to optimal platform configuration, efficient database structuring, and scalable system design. Combines hands-on development and strategic leadership, blending technical expertise with broad knowledge of interacting technologies and an entrepreneurial mindset to design complete systems and make informed build vs. buy decisions based on cost, capability, and long-term maintainability. Sensitive to workflow friction, cutting unnecessary steps to save time, reduce process frustration, and accelerate delivery.</p></div>
-  </header>
-
-  <main>
-    <h2>Experience</h2>
-    <section class="work"><h3>Technical Lead, PHP Engineer — </h3><time>2022 — Present</time><ul><li>Ended decade-long content bottleneck; architected modular self-service CMS component library; achieved 100% editorial adoption in 3 months (vs. prior failed attempts). Reclaimed 97% of engineering bandwidth, freeing 2 engineers and 1 PM for strategic work; tripled content output without added headcount.</li><li>Drove record e-commerce growth; designed content-gating auth layer that sparked 625% surge in account creations, 84% login growth, and $35 AOV uplift among converted users. Lifted site-wide conversion rate from 2.5% to 4.2% (Labor Day 2024 vs. 2025, per Shopify metrics) and slashed load times from 3s to sub-1s (above gold standard).</li><li>Led zero-downtime Shopify migration: single-handedly engineered WordPress–Shopify integration; custom real-time sync plugin preserved inventory/data integrity across 70M+ pageviews with zero revenue loss.</li><li>Built cross-functional velocity; embedded with product, science, and editorial teams; bring high curiosity across business domains (formulations, supply chain, and content strategy), informing priority queue, realistic deadlines, and feature design that users love. Turned siloed teams into true collaborators.</li><li>Mentored & scaled talent; transformed junior developer from HTML/CSS to autonomous full-stack contributor in 6 months via pair-programming and rigorous code reviews; increased team capacity 20%.</li><li>Institutionalized quality & speed; rolled out PHPUnit/Cypress and Rollbar/Grafana monitoring; cut MTTD from hours to minutes and caught 85% of issues pre-production. Created documentation system (PHPDocumentor, Confluence, and README standards); slashed local environment setup from 3-4 days to 1.</li></ul></section><section class="work"><h3>Senior Software Engineer — </h3><time>2021 — 2022</time><ul><li>Architected automated merchandising workflow via CSV-WooCommerce integration for 8K+ SKUs, variants, and subscriptions; slashed daily management from 10–25% (1–2 hours) to 5%.</li><li>Built custom Google/Shipstation/Twilio SaaS integrations via independent build-vs-buy analysis; saved $45K annually and cut order processing 60%.</li><li>Led product, design, and business collaboration to launch 2 conversion-optimized e-commerce sites.</li></ul></section><section class="work"><h3>Founder & Software Engineer — </h3><time>2011 — 2021</time><ul><li>Architected unified WordPress for Chegg's ecosystem (EasyBib, BibMe, CiteThisForMe, CitationMachine) serving millions daily; aligned content, graphics, SEO, ad/analytics, and engineering across legacy patchwork.</li><li>Built/mentored 3-engineer team; established standards, reviews, and workflows while leading technical contributions; delivered white-label platforms for True Focus Media, SELO Group, and K2 Creative.</li><li>Scaled high-traffic sites to 1M+ daily visits with <2s load times via CDN/caching/database optimization.</li><li>Expanded offerings to strategic marketing, social automation, print materials, and nonprofit digital-education programs; served as 5-year web department for NLI and 7-year design/web department for KYNET.</li></ul></section>
-
-    <h2>Skills</h2>
-    <ul class="skills-list"><li>Languages & Frameworks: PHP, JavaScript, jQuery, Node.js, Python, SQL/MySQL, BASH, Flutter, React, HTML5, CSS/SASS, Tailwind, Bootstrap</li><li>DevOps, Infrastructure & Development: Docker, Kubernetes, AWS, Cloudflare, VPS hosting, REST APIs, Redis, Varnish, CI/CD, Git (GitHub/GitLab), SVN</li><li>Testing, QA & Observability: PHPDoc, PHPUnit, Jest, Cypress, XDebug, Grafana, Rollbar, Google Analytics, Looker</li><li>Platforms, Tools & Build Systems: Shopify, PIM & CMS Architecture, Composer, NPM, Webpack, VSCode, PHPStorm, Adobe Creative Suite, Figma, Sketch</li><li>Project Management & Collaboration: SCRUM/Agile, Jira, Confluence, Trello, Asana, Monday.com, Slack, Teams, Discord, Zoom, Google Workspace</li><li>Core Competencies: Full-Stack Development, PHP & JavaScript Development, PIM & CMS Architecture, Scalable System Design, Technical Team Leadership, Project Management/Delivery, Strategic Decision-Making, E-Commerce Growth, API & SaaS Integrations, Shopify Integration/Migration, Database Structuring, Infrastructure & Hosting, Talent Development/Mentor, Performance Monitoring, Optimization/Automation</li></ul>
-  </main>
+      <div style="page-break-before: always;"></div>
+    
+      <div class="work-item">
+        <div class="flex-row mb12">
+          <h3 class="mb0">No Borders Inc</h3>
+          <p class="italic twelve mb0">— Queen Creek, Arizona — 2021–2022</p>
+        </div>
+        <p class="bold">Senior Software Engineer</p>
+        <p class="twelve">Holding company scaling/selling e-commerce brands; 5 sites generated $5M+ revenue. Recruited as sole engineer to maintain/optimize full ecosystem of 5 e-commerce sites with 50K+ monthly visitors ($5M revenue); managed priorities, technical decisions, feature development, and maintenance.</p>
+        <p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Architected automated merchandising workflow</b> via CSV-WooCommerce integration for 8K+ SKUs, variants, and subscriptions; slashed daily management from 10–25% (1–2 hours) to 5%.</p><p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Built custom Google/Shipstation/Twilio SaaS integrations</b> via independent build-vs-buy analysis; saved $45K annually and cut order processing 60%.</p><p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Led product, design, and business collaboration</b> to launch 2 conversion-optimized e-commerce sites.</p>
+      </div>
+      
+    
+      <div class="work-item">
+        <div class="flex-row mb12">
+          <h3 class="mb0">Boiling Pot Media</h3>
+          <p class="italic twelve mb0">— Kalamazoo, Michigan — 2011–2021</p>
+        </div>
+        <p class="bold">Founder & Software Engineer</p>
+        <p class="twelve">Full-service digital agency delivering self-service WordPress solutions, hosting, social automation, and e-commerce. Founded solo and scaled agency as lead salesperson, architect, engineer, and client liaison; delivered 125+ international projects while managing sales, hiring/firing, finances, and 24/7 VPS infrastructure for 25+ hosted sites; grew to $250K revenue and strategically exited in most profitable year to refocus on technical leadership.</p>
+        <p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Architected unified WordPress for Chegg's ecosystem</b> (EasyBib, BibMe, CiteThisForMe, CitationMachine) serving millions daily; aligned content, graphics, SEO, ad/analytics, and engineering across legacy patchwork.</p><p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Built/mentored 3-engineer team</b>; established standards, reviews, and workflows while leading technical contributions; delivered white-label platforms for True Focus Media, SELO Group, and K2 Creative.</p><p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Scaled high-traffic sites to 1M+ daily visits with <2s load times</b> via CDN/caching/database optimization.</p><p class="fourteen ml10"><span class="bullet mln10">•</span> <b>Expanded offerings to strategic marketing, social automation</b>, print materials, and nonprofit digital-education programs; served as 5-year web department for NLI and 7-year design/web department for KYDNET.</p>
+      </div>
+      
+    
+    </section>
+  
+      
+    <section class="skills-section">
+      <h2>Skills</h2>
+      <h3 class="sixteen">Languages & Frameworks</h3>
+       <p class="twelve">PHP, JavaScript, jQuery, Node.js, Python, SQL/MySQL, BASH, Flutter, React, HTML5, CSS/SASS, Tailwind, Bootstrap</p><h3 class="sixteen">DevOps, Infrastructure & Development</h3>
+       <p class="twelve">Docker, Kubernetes, AWS, Cloudflare, VPS hosting, REST APIs, Redis, Varnish, CI/CD, Git (GitHub/GitLab), SVN</p><h3 class="sixteen">Testing, QA & Observability</h3>
+       <p class="twelve">PHPDoc, PHPUnit, Jest, Cypress, XDebug, Grafana, Rollbar, Google Analytics, Looker</p><h3 class="sixteen">Platforms, Tools & Build Systems</h3>
+       <p class="twelve">Shopify, PIM & CMS Architecture, Composer, NPM, Webpack, VSCode, PHPStorm, Adobe Creative Suite, Figma, Sketch</p><h3 class="sixteen">Project Management & Collaboration</h3>
+       <p class="twelve">SCRUM/Agile, Jira, Confluence, Trello, Asana, Monday.com, Slack, Teams, Discord, Zoom, Google Workspace</p>
+    </section>
+  
+      
+    <section class="projects-section">
+      <h2>Open Source & Community Leadership</h2>
+      <div class="project">
+          <p class="flex-row twelve">
+            <span class="bold">Creator, Maintainer</span> | <span>Toggle Admin Toolbar WordPress Plugin</span>
+          </p>
+          <p class="twelve mtn5">Adds admin toolbar visibility toggle on WordPress frontend</p>
+          
+        </div><div class="volunteer-role">
+          <p class="flex-row twelve">
+            <span class="bold">Web Development Committee Chair</span> | <span>Education for Employment Advisory Committee for KRESA</span> | <span>2017—2021</span>
+          </p>
+          
+        </div><div class="volunteer-role">
+          <p class="flex-row twelve">
+            <span class="bold">Board Member</span> | <span>Community Development Act Advisory Committee, City of Kalamazoo</span> | <span>2012—2014</span>
+          </p>
+          
+        </div><div class="volunteer-role">
+          <p class="flex-row twelve">
+            <span class="bold">Board Member</span> | <span>North American Students of Cooperation (NASCO) Properties</span> | <span>2007—2008</span>
+          </p>
+          
+        </div><div class="volunteer-role">
+          <p class="flex-row twelve">
+            <span class="bold">Co-Founder</span> | <span>Kalamazoo Collective Housing (KCH)</span> | <span>2006—2011</span>
+          </p>
+          
+        </div>
+    </section>
+  
+      
+    <section class="education-section">
+      <h2>Education</h2>
+      <div>
+        <p>
+          <span class="fourteen bold">BS, Double Major</span>
+          <span class="fourteen"> | Urban & Regional Planning, Rhetoric & Writing</span>
+          <span class="fourteen"> | Western Michigan University</span>
+        </p>
+      </div>
+    </section>
+  
+    </main>
+  
 </body>
 </html>
