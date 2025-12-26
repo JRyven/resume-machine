@@ -230,13 +230,34 @@ export const render = function (resume, options) {
       .split(/\n\s*\n/)
       .map(paragraph => `<p>${paragraph.replace(/\n/g, ' ').trim()}</p>`)
       .join('');
+    // Render links at the end
+    const links = renderLinks(basics);
     coverLetterSection = `
       <section>
         ${renderHeader({ title: coverLetter.title || 'Cover Letter', label, contact: contactInline, summary: null })}
-        <div>${coverLetterHtml}</div>
+        <div>
+          ${coverLetter.salutation ? `<p>${coverLetter.salutation}</p>` : ''}
+          ${coverLetterHtml}
+          ${coverLetter.conclusion ? `<p>${coverLetter.conclusion}</p>` : ''}
+          <div class="mt10">${links}</div>
+        </div>
       </section>
       <hr class="cover-break" />
     `;
+  }
+  // Render links (website, LinkedIn, GitHub, Stack Overflow)
+  function renderLinks(basics) {
+    if (!basics) return '';
+    const links = [];
+    if (basics.url) links.push(`<a href="${basics.url}">${basics.url}</a>`);
+    if (Array.isArray(basics.profiles)) {
+      for (const p of basics.profiles) {
+        if (p.url) {
+          links.push(`<a href="${p.url}">${p.url}</a>`);
+        }
+      }
+    }
+    return links.join(' | ');
   }
 
   // Summary
@@ -345,6 +366,7 @@ export const render = function (resume, options) {
     : '';
 
   // Compose the main content
+  const linksBlock = `<div class="mt10">${renderLinks(basics)}</div>`;
   const content = `
     ${coverLetterSection || renderHeader({ title: name, label, contact: contactInline })}
     <main>
@@ -378,6 +400,7 @@ export const render = function (resume, options) {
     className: 'education-section',
     content: educationBlock
   })}
+      ${linksBlock}
     </main>
   `;
 

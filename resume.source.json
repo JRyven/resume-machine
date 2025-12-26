@@ -1,14 +1,14 @@
 {
   "coverLetter": {
     "title": "James Valeii",
-    "salutation": "Dear Automattic Team,",
-    "content": "I am excited to apply for the Sales Engineer position. My motivation to join Automattic stems from a desire to return to my cooperative roots and contribute to a democratized internet. I am passionate about building ethical, sustainable digital solutions and want to be part of a team that is clear-eyed about the opportunities and responsibilities of AI.\n\nThroughout my career, I have thrived in environments where the team is invested in both short-term objectives and long-term values. I am happiest when working with colleagues who are committed to excellent results, maintain high trust and support, and embrace learning and innovation. I love creating cool things, meeting new people, and being an early adopter of emerging technologies.\n\nConversely, I am least fulfilled in settings where success metrics are unclear, contributions are undervalued, and team interactions feel robotic. I believe that genuine collaboration and clear purpose are essential for meaningful work.\n\nWith over 13 years of experience leading technical teams and delivering solutions that drive measurable business impact, I am eager to bring my skills and values to Automattic. I look forward to the possibility of contributing to your mission and working alongside a team that shares my commitment to ethical, impactful technology.",
+    "salutation": "Dear {{hiring_company}} Team,",
+    "content": "I am excited to apply for the {{hiring_position}} position. My motivation to join {{hiring_company}} stems from a desire to return to my cooperative roots and contribute to a democratized internet. I am passionate about building ethical, sustainable digital solutions and want to be part of a team that is clear-eyed about the opportunities and responsibilities of AI.\n\nThroughout my career, I have thrived in environments where the team is invested in both short-term objectives and long-term values. I am happiest when working with colleagues who are committed to excellent results, maintain high trust and support, and embrace learning and innovation. I love creating cool things, meeting new people, and being an early adopter of emerging technologies.\n\nConversely, I am least fulfilled in settings where success metrics are unclear, contributions are undervalued, and team interactions feel robotic. I believe that genuine collaboration and clear purpose are essential for meaningful work.\n\nWith over 13 years of experience leading technical teams and delivering solutions that drive measurable business impact, I am eager to bring my skills and values to {{hiring_company}}. I look forward to the possibility of contributing to your mission and working alongside a team that shares my commitment to ethical, impactful technology.",
     "conclusion": "Sincerely,\nJames Valeii"
   },
   "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
   "basics": {
     "name": "James Valeii",
-    "label": "Senior Engineer",
+    "label": "{{hiring_position}}",
     "image": "",
     "email": "hello@jamesvaleii.com",
     "phone": "(226) 792-6659",
@@ -44,7 +44,7 @@
       {
         "network": "Stack Overflow",
         "username": "jamesvaleii",
-        "url": "https://stackoverflow.com/users/2009171/james-valeii"
+        "url": "https://stackoverflow.com/users/2009171"
       }
     ]
   },
