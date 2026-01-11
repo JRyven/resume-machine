@@ -55,6 +55,11 @@ const STYLE_FUNCTION = () => `
       margin: 0 0 6px 0;
     }
 
+    /* Cover letter paragraphs: slightly increased line-height (~6% more) */
+    .cover-letter p {
+      line-height: 1.27;
+    }
+
     ul, ol{
       margin: 0 0 6px 0;
     }
@@ -88,17 +93,30 @@ const STYLE_FUNCTION = () => `
       margin-top: -5px;
     }
 
+    .mr2 {
+      margin-right: 2px;
+    }
+    .mr3 {
+      margin-right: 5px;
+    }
+
     .mb0 {
       margin-bottom: 0;
     }
     .mb12 {
       margin-bottom: 12px;
     }
+    .ml5 {
+      margin-left: 5px;
+    }
     .ml10 {
       margin-left: 10px;
     }
     .mln10 {
       margin-left: -10px;
+    }
+    .mln15 {
+      margin-left: -15px;
     }
 
     main {
@@ -177,7 +195,7 @@ function sectionBlock({ name, className, content }) {
 // format an array of strings as "• ..." with <br> between
 function formatBullets(arr) {
   // Each bullet gets its own <p> tag, with hanging indent for wrapped lines
-  return (arr || []).map(h => `<p class="fourteen ml10"><span class="bullet mln10">•</span> ${h.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>').replace(/\b(https?:\/\/\S+)/g, '$1')}</p>`).join('');
+  return (arr || []).map(h => `<p class="fourteen ml10"><span class="bullet mln15 mr2">•</span>${h.replace(/<b>(.*?)<\/b>/g, '<strong>$1<\/strong>').replace(/\b(https?:\/\/\S+)/g, '$1')}</p>`).join('');
 }
 
 // name function: Returns the page name/title
@@ -233,7 +251,7 @@ export const render = function (resume, options) {
     // Render links at the end
     const links = renderLinks(basics);
     coverLetterSection = `
-      <section>
+      <section class="cover-letter">
         ${renderHeader({ title: coverLetter.title || 'Cover Letter', label, contact: contactInline, summary: null })}
         <div>
           ${coverLetter.salutation ? `<p>${coverLetter.salutation}</p>` : ''}
@@ -368,7 +386,7 @@ export const render = function (resume, options) {
   // Compose the main content
   const linksBlock = `<div class="mt10">${renderLinks(basics)}</div>`;
   const content = `
-    ${coverLetterSection || renderHeader({ title: name, label, contact: contactInline })}
+    ${coverLetterSection}${renderHeader({ title: name, label, contact: contactInline })}
     <main>
       ${sectionBlock({
     name: 'Abstract',
