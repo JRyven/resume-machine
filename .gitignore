@@ -1,5 +1,6 @@
 # Ignore generated resume output
 public/index.html
+
 # Python
 .venv/
 venv/
@@ -203,3 +204,6 @@ scratchpad.md
 
 # Backup Initial Project
 /zbak-*
+
+# Job Data
+/jobbankjobs

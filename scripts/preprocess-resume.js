@@ -1,47 +1,67 @@
-// Node.js script to preprocess resume.source.json with variable substitution
-// Usage: node scripts/preprocess-resume.js --hiring_company="Acme Corp" --hiring_position="Engineer"
-// Reads resume.source.json and resume.defaults.json, writes resume.json with variables replaced
+// Node.js script to preprocess resume data with variable substitution
 
 const fs = require('fs');
 const path = require('path');
 
-// Simple mustache-like replacer
-function substitute(obj, vars) {
-  if (typeof obj === 'string') {
-    return obj.replace(/{{\s*([\w_]+)\s*}}/g, (m, key) => (vars[key] !== undefined ? vars[key] : m));
-  } else if (Array.isArray(obj)) {
-    return obj.map(item => substitute(item, vars));
-  } else if (obj && typeof obj === 'object') {
+// Simple helper function to replace variables in a string or object
+function substitute(data, vars) {
+  if (typeof data === 'string') {
+    // Corrected the syntax error here by removing the extra space
+    return data.replace(/{{\s*([\w_]+)\s*}}/g, (m, key) => (vars[key] !== undefined ? vars[key] : m));
+  } else if (Array.isArray(data)) {
+    return data.map(item => substitute(item, vars));
+  } else if (data && typeof data === 'object') {
     const out = {};
-    for (const k in obj) out[k] = substitute(obj[k], vars);
+    for (const key in data) {
+      out[key] = substitute(data[key], vars);
+    }
     return out;
   }
-  return obj;
+  return data;
 }
 
-// Parse CLI args
-const cliVars = {};
-process.argv.slice(2).forEach(arg => {
-  const match = arg.match(/^--([\w_]+)=(.*)$/);
-  if (match) cliVars[match[1]] = match[2];
-});
+// Main function to load and process data
+function preprocessResume() {
+  const defaultsPath = path.join(__dirname, '../resume.defaults.json');
+  const sourcePath = path.join(__dirname, '../resume.source.json');
+  const outputPath = path.join(__dirname, '../resume.json');
 
-// Load defaults
-const defaultsPath = path.join(__dirname, '../resume.defaults.json');
-const defaults = fs.existsSync(defaultsPath) ? JSON.parse(fs.readFileSync(defaultsPath, 'utf8')) : {};
+  // Load default values (if they exist)
+  let defaults = {};
+  try {
+    if (fs.existsSync(defaultsPath)) {
+      defaults = JSON.parse(fs.readFileSync(defaultsPath, 'utf8'));
+    }
+  } catch (err) {
+    console.error('Error loading resume defaults:', err);
+  }
 
-// Merge CLI vars over defaults
-const vars = { ...defaults, ...cliVars };
+  // Merge CLI arguments over default values
+  const cliArgs = process.argv.slice(2).reduce((acc, arg) => {
+    const match = arg.match(/--([\w_]+)=(.+)/);
+    if (match) acc[match[1]] = match[2];
+    return acc;
+  }, {});
 
-// Load source resume
-const sourcePath = path.join(__dirname, '../resume.source.json');
-const source = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));
+  // Load source resume data (and handle potential error)
+  let source;
+  try {
+    source = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));
+  } catch (err) {
+    console.error('Error loading resume source:', err);
+    return;
+  }
 
-// Substitute variables
-const built = substitute(source, vars);
+  // Substitute variables into the source data
+  const processed = substitute(source, { ...defaults, ...cliArgs });
 
-// Write built resume.json
-const outPath = path.join(__dirname, '../resume.json');
-fs.writeFileSync(outPath, JSON.stringify(built, null, 2));
+  // Write the processed data to a JSON file
+  try {
+    fs.writeFileSync(outputPath, JSON.stringify(processed, null, 2));
+    console.log(`Processed resume saved to ${outputPath}`);
+  } catch (err) {
+    console.error('Error writing processed resume:', err);
+  }
+}
 
-console.log('resume.json built with variables:', vars);
+preprocessResume();

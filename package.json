@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
-    "@repo/eslint-config-custom": "workspace:*",
+    "@repo/eslint-config-custom": "file:packages/eslint-config-custom",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "eslint": "^8",
@@ -29,12 +29,13 @@
   "packageManager": "pnpm@8.15.9",
   "name": "jsonresume.org",
   "dependencies": {
+    "puppeteer": "^23.7.1",
     "@changesets/cli": "^2.27.1",
     "dotenv": "^16.0.3",
     "next": "16.0.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "valeii-professional": "link:jsonresume-theme-valeii-professional"
+    "jsonresume-theme-valeii-professional": "file:../jsonresume-theme-valeii-professional"
   },
   "pnpm": {
     "overrides": {
@@ -67,5 +68,12 @@
       "webpack-dev-server@<=5.2.0": "^5.2.1",
       "styled-components": "^6.1.19"
     }
-  }
+  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
 }
