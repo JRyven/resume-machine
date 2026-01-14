@@ -1,21 +1,21 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Architecture Overview
 description: System architecture, design patterns, layer structure, and architectural principles.
-last_updated: 2025-12-17
+last_updated: [YYYY-MM-DD]
 cleardoc_version: 2.3.0
 keywords: [architecture, design-patterns, layers, principles]
 ---
 
 # Architecture Guide
 
-mailToMd system design and component architecture.
+[PROJECT_NAME] system design and component architecture.
 
 ---
 
 ## System Overview
 
-mailToMd processes email files (`.eml` format) from MailMate and converts them to Markdown for Obsidian vaults.
+[PROJECT_NAME] processes email files (`.eml` format) from MailMate and converts them to Markdown for Obsidian vaults.
 
 ### Processing Pipeline
 
@@ -44,12 +44,12 @@ Obsidian Vault (Markdown files)
 
 ## Core Components
 
-### 1. Configuration Management (`MailToMdConfig`)
+### 1. Configuration Management (`[PROJECT_NAME]Config`)
 
 **Responsibility:** Load and manage configuration settings
 
 **Key Methods:**
-- `__init__()` - Initialize with defaults, auto-load `mailToMd_python.config`
+- `__init__()` - Initialize with defaults, auto-load `[PROJECT_NAME]_python.config`
 - `_load_config()` - Parse Python config file
 - `_load_test_config()` - Load test configuration
 
@@ -245,7 +245,7 @@ Obsidian Vault (Markdown files)
 
 ---
 
-### 8. Logging (`MailToMdLogger`)
+### 8. Logging (`[PROJECT_NAME]Logger`)
 
 **Responsibility:** Centralized logging setup
 
@@ -263,7 +263,7 @@ Obsidian Vault (Markdown files)
 
 ```
 1. Configuration Load
-   ├─ Load mailToMd_python.config
+   ├─ Load [PROJECT_NAME]_python.config
    ├─ Apply defaults
    └─ Validate settings
 
@@ -343,11 +343,11 @@ Components don't depend on unused interfaces:
 ## Key Files
 
 ```
-mailToMd/
-├── mailToMd.py              # Main script (1380 lines)
+[PROJECT_NAME]/
+├── [PROJECT_NAME].py              # Main script (1380 lines)
 │   ├─ SimpleHTMLToMarkdown  # HTML to Markdown converter (203 lines)
-│   ├─ MailToMdConfig        # Configuration management
-│   ├─ MailToMdLogger        # Logging setup
+│   ├─ [PROJECT_NAME]Config        # Configuration management
+│   ├─ [PROJECT_NAME]Logger        # Logging setup
 │   ├─ EmailProcessor        # Orchestrator
 │   ├─ EmailContentExtractor # Content extraction
 │   ├─ TagGenerator          # YAML tag generation (145 lines)
@@ -361,7 +361,7 @@ mailToMd/
 ├── track_manager.py         # CLI utility (375 lines)
 │   └─ Command handlers
 │
-├── mailToMd_python.config   # Configuration with SUBJECT_CLEANUP_PATTERNS, IMPORT_CUTOFF_DATE
+├── [PROJECT_NAME]_python.config   # Configuration with SUBJECT_CLEANUP_PATTERNS, IMPORT_CUTOFF_DATE
 ├── logs/                    # Log directory
 ├── tracking_data/           # Import history
 └── tests/                   # Test suite

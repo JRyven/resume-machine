@@ -1,15 +1,15 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Command Reference
-description: All commands for mailToMd - import, tracking, rollback, and debugging
+description: All commands for [PROJECT_NAME] - import, tracking, rollback, and debugging
 last_updated: 2025-11-07
 clear_doc_version: 2.1.0
-keywords: [commands, cli, reference, mailToMd]
+keywords: [commands, cli, reference, [PROJECT_NAME]]
 ---
 
 # Command Reference
 
-Complete reference for all mailToMd commands.
+Complete reference for all [PROJECT_NAME] commands.
 
 ---
 
@@ -19,13 +19,13 @@ Complete reference for all mailToMd commands.
 
 ```bash
 # Standard import
-python3 mailToMd.py
+python3 [PROJECT_NAME].py
 
 # Test mode (uses test config, doesn't modify vault)
-python3 mailToMd.py --test
+python3 [PROJECT_NAME].py --test
 
 # Custom config
-python3 mailToMd.py --config /path/to/custom.config
+python3 [PROJECT_NAME].py --config /path/to/custom.config
 ```
 
 ---
@@ -101,8 +101,8 @@ python3 track_manager.py rollback --run-id "2025-10-12T04:53:18.987633"
 ```bash
 # Test configuration loading
 python3 -c "
-from mailToMd import MailToMdConfig
-config = MailToMdConfig()
+from [PROJECT_NAME] import [PROJECT_NAME]Config
+config = [PROJECT_NAME]Config()
 print(f'Mail dir: {config.mail_dir}')
 print(f'Vault: {config.obsidian_vault}')
 print(f'Includes: {config.includes}')
@@ -139,7 +139,7 @@ python3 tests/test.py
 
 ```bash
 # Check Python syntax
-python3 -m py_compile mailToMd.py
+python3 -m py_compile [PROJECT_NAME].py
 python3 -m py_compile import_tracker.py
 python3 -m py_compile track_manager.py
 ```
@@ -150,7 +150,7 @@ python3 -m py_compile track_manager.py
 
 ### Enable Debug Logging
 
-Edit `mailToMd_python.config`:
+Edit `[PROJECT_NAME]_python.config`:
 ```python
 MAIL_TO_MD_DEBUG = True
 ```
@@ -159,16 +159,16 @@ MAIL_TO_MD_DEBUG = True
 
 ```bash
 # Tail debug log
-tail -f logs/mailToMd_debug_*.log
+tail -f logs/[PROJECT_NAME]_debug_*.log
 
 # Tail error log
-tail -f logs/mailToMd_error_*.log
+tail -f logs/[PROJECT_NAME]_error_*.log
 
 # Search for errors
-grep "ERROR" logs/mailToMd_debug_*.log
+grep "ERROR" logs/[PROJECT_NAME]_debug_*.log
 
 # View recent entries
-tail -n 50 logs/mailToMd_debug_*.log
+tail -n 50 logs/[PROJECT_NAME]_debug_*.log
 ```
 
 ### Test Components
@@ -176,7 +176,7 @@ tail -n 50 logs/mailToMd_debug_*.log
 ```bash
 # Test subject decoding
 python3 -c "
-from mailToMd import FilenameUtils
+from [PROJECT_NAME] import FilenameUtils
 subject = '=?UTF-8?q?Test_Subject?='
 decoded = FilenameUtils.decode_subject(subject)
 print(f'Decoded: {decoded}')
@@ -184,7 +184,7 @@ print(f'Decoded: {decoded}')
 
 # Test destination mapping
 python3 -c "
-from mailToMd import DestinationMapper
+from [PROJECT_NAME] import DestinationMapper
 mapper = DestinationMapper()
 dest = mapper.find_destination('0-projects.mailbox/subproject.mailbox', '2025-11-07')
 print(f'Destination: {dest}')
@@ -202,7 +202,7 @@ print(f'Destination: {dest}')
 rm -rf tracking_data/*.json
 
 # Then run import again
-python3 mailToMd.py
+python3 [PROJECT_NAME].py
 ```
 
 ### Count Emails
@@ -216,10 +216,10 @@ find /path/to/mail/dir -name "*.eml" | wc -l
 
 ```bash
 # Profile script execution
-python3 -m cProfile -s cumulative mailToMd.py
+python3 -m cProfile -s cumulative [PROJECT_NAME].py
 
 # Time import run
-time python3 mailToMd.py
+time python3 [PROJECT_NAME].py
 ```
 
 ---

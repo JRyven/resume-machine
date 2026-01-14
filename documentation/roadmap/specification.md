@@ -1,8 +1,8 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Roadmap Specifications
 description: Specifications for writing and updating project roadmap documentation.
-last_updated: 2025-12-17
+last_updated: [YYYY-MM-DD]
 cleardoc_version: 2.3.0
 keywords: [roadmap, specifications]
 ---
@@ -13,23 +13,13 @@ keywords: [roadmap, specifications]
 
 This specification defines a dual-lifecycle task management system implemented in markdown outline format, designed for use with AI agents (LLMs) in software development workflows. The system manages **Projects** through a roadmap lifecycle while simultaneously managing **Tasks** within each project through a Kanban-like lifecycle.
 
-### Dual-Lifecycle Architecture
-
-The system operates on two distinct hierarchical levels:
-
-**Level 1: Roadmap Lifecycle (Projects)**
+**Roadmap Lifecycle (Projects)**
 Projects represent complete features, functionalities, or deliverables. They move through a linear roadmap with four stages: In Progress, Backlog, Complete, and Rejected. Projects are represented as H4 headings within H3 lifecycle stage sections.
-
-**Level 2: Kanban Lifecycle (Tasks)**
-Within each project, Tasks represent discrete units of work that move through their own three-stage lifecycle: In Progress, Backlog, and Complete. Tasks are represented as H5 headings within H5 lifecycle stage subsections under each project. Tasks contain Actions (minimal-scope work items) represented as markdown checkboxes.
 
 ### Work-In-Progress Limits
 
 To maintain focus and prevent context-switching, the system enforces strict WIP limits:
 - **Projects**: Maximum 1 project in "In Progress" at any time
-- **Tasks**: Maximum 2 tasks in "In Progress" per project at any time
-
-These limits must be enforced manually by the user when moving items between stages.
 
 ---
 
@@ -52,19 +42,19 @@ Each project is represented by an H4 heading with a descriptive name in brackets
 #### [Project Name]
 ```
 
-Immediately following the project heading is a horizontal rule (`---`) followed by a status section, followed by another horizontal rule. The status section contains paragraph-form information crucial for orienting both LLMs and human developers on the current state of the project. This may include code snippets, bulleted lists, ordered lists, and external references (URLs).
+Immediately following the project heading is a note enclosure (`'''`) followed by a status section, followed by another note enclosure. The status section contains paragraph-form information crucial for orienting both LLMs and human developers on the current state of the project. This may include code snippets, bulleted lists, ordered lists, and external references (URLs).
 
 ```markdown
 #### [Project Name]
----
+'''
 Current status and context information goes here. This can include multiple paragraphs, code examples, and references that help orient developers to the project's current state.
----
+'''
 ```
 
 Following the status section, projects include metadata fields formatted as `key: value` pairs:
 
 ```markdown
-created: 2025-12-17
+created: 2025-12-29
 dependencies: [markdown anchor links to prerequisite projects]
 priority: low|medium|high
 ```
@@ -97,7 +87,6 @@ The task heading is immediately followed by 1-2 sentences of information crucial
 Task metadata follows immediately after the task description:
 
 ```markdown
-assigned-to: [engineer specialization, e.g., "PHP Engineer"]
 dependencies: [markdown anchor links to prerequisite tasks]
 ```
 
@@ -128,13 +117,13 @@ Notes sections should not duplicate information already present in status sectio
 Every project in In Progress or Backlog status must include the following metadata immediately after its status section:
 
 ```markdown
-created: 2025-12-17
+created: 2025-12-29
 dependencies: [#anchor-to-project], [#another-project]
 priority: low|medium|high
 ```
 
 **Field Specifications:**
-- `created`: Date in ISO 8601 format (2025-12-17) indicating when the project was added to the roadmap
+- `created`: Date in ISO 8601 format (2025-12-29) indicating when the project was added to the roadmap
 - `dependencies`: Comma-separated list of markdown anchor links to other projects that must be completed before this project can be started. Use `none` if no dependencies exist
 - `priority`: One of three values: `low`, `medium`, or `high`
 
@@ -147,12 +136,10 @@ Projects in Complete or Rejected status retain only:
 Every task in In Progress or Backlog status must include the following metadata:
 
 ```markdown
-assigned-to: [engineer specialization]
 dependencies: [#anchor-to-task], [#another-task]
 ```
 
 **Field Specifications:**
-- `assigned-to`: A description of the required engineer specialization or role (e.g., "Frontend Engineer", "Database Architect", "PHP Engineer")
 - `dependencies`: Comma-separated list of markdown anchor links to other tasks that must be completed before this task can be started. Use `none` if no dependencies exist
 
 Tasks in Complete status retain no metadata.
@@ -204,7 +191,7 @@ The level of detail retained varies based on an item's lifecycle status:
 
 Code examples and extended explanatory information may appear at three levels:
 
-1. **Project Level**: Within the status section between horizontal rules
+1. **Project Level**: Within the status section between note enclosures
 2. **Task Level**: Immediately following the task heading and 1-2 sentence summary
 3. **Action Level**: Indented under the markdown checkbox
 
@@ -253,29 +240,6 @@ Projects move through the roadmap lifecycle according to these rules:
 **Backlog → Rejected:**
 - May occur at any time based on user decision
 - Same stripping rules as In Progress → Rejected
-
-### Task Movement Rules
-
-Tasks move through the Kanban lifecycle according to these rules:
-
-**Backlog → In Progress:**
-- Only permitted when fewer than 2 tasks occupy the In Progress section of that project (WIP limit: 2)
-- All task dependencies must be in Complete status
-- Task automatically moves when the system detects completion of dependencies and available capacity
-- Task retains all detail and metadata
-
-**In Progress → Complete:**
-- Automatically triggered when all actions under the task are checked (`- [x]`)
-- Upon moving, simplify action descriptions to single sentences if needed
-- Remove all code examples and extended paragraphs
-- Remove all metadata
-- Remove any notes sections
-- If this completion reduces In Progress tasks below the WIP limit, automatically promote the next Backlog task
-
-**Automatic Task Queue Advancement:**
-When a task moves from In Progress to Complete, the system should automatically move the highest-priority task from Backlog to In Progress, provided:
-- The WIP limit of 2 tasks has not been reached
-- All dependencies for that task are satisfied
 
 ### Adding New Items
 
@@ -350,28 +314,18 @@ PROJECT_REJECTED := PROJECT_HEADING + BRIEF_DESCRIPTION + PROJECT_METADATA_REJEC
 
 PROJECT_HEADING := "#### [" + PROJECT_NAME + "]" + NEWLINE
 
-STATUS_SECTION := "---" + NEWLINE + PARAGRAPH_CONTENT + "---" + NEWLINE
+STATUS_SECTION := "'''" + NEWLINE + PARAGRAPH_CONTENT + "'''" + NEWLINE
 
 PROJECT_METADATA_ACTIVE := "created: " + ISO_DATE + NEWLINE + "dependencies: " + DEPENDENCY_LIST + NEWLINE + "priority: " + PRIORITY_VALUE + NEWLINE
 
 PROJECT_METADATA_COMPLETE := "created: " + ISO_DATE + NEWLINE
 
 PROJECT_METADATA_REJECTED := "created: " + ISO_DATE + NEWLINE + "why: " + EXPLANATION_TEXT + NEWLINE
-
-NOTES_SECTION_PROJECT := "##### Notes" + NEWLINE + PARAGRAPH_CONTENT
 ```
 
 ### Task Structure Rules
 
 ```
-TASK_SECTIONS := IN_PROGRESS_TASKS + BACKLOG_TASKS + COMPLETE_TASKS
-
-IN_PROGRESS_TASKS := "##### In Progress" + NEWLINE + "⚠️ LIMIT: Maximum 2 tasks in this section" + NEWLINE + TASK_ACTIVE{0,2}
-
-BACKLOG_TASKS := "##### Backlog" + NEWLINE + TASK_ACTIVE*
-
-COMPLETE_TASKS := "##### Complete" + NEWLINE + TASK_COMPLETE*
-
 TASK_ACTIVE := TASK_HEADING + TASK_DESCRIPTION + TASK_METADATA_ACTIVE + ACTION_LIST + NOTES_SECTION_TASK?
 
 TASK_COMPLETE := TASK_HEADING + BRIEF_DESCRIPTION + ACTION_LIST_SIMPLE
@@ -379,10 +333,6 @@ TASK_COMPLETE := TASK_HEADING + BRIEF_DESCRIPTION + ACTION_LIST_SIMPLE
 TASK_HEADING := "##### [" + TASK_NAME + "]" + NEWLINE
 
 TASK_DESCRIPTION := SHORT_DESCRIPTION + (EXTENDED_PARAGRAPH | CODE_BLOCK)*
-
-TASK_METADATA_ACTIVE := "assigned-to: " + ROLE_DESCRIPTION + NEWLINE + "dependencies: " + DEPENDENCY_LIST + NEWLINE
-
-NOTES_SECTION_TASK := "####### Notes" + NEWLINE + PARAGRAPH_CONTENT
 ```
 
 ### Action Structure Rules
@@ -435,16 +385,15 @@ EXPLANATION_TEXT := Text explaining rationale, length ≤ 500 chars
 
 ### Validation Rules
 
-1. **WIP Limit Enforcement**: Parser must validate that "In Progress" project section contains ≤ 1 project
-2. **Task WIP Limit Enforcement**: Parser must validate that each project's "In Progress" task section contains ≤ 2 tasks
-3. **Date Format Validation**: All dates must match ISO 8601 format (2025-12-17)
-4. **Priority Validation**: Priority field must be exactly one of: low, medium, high
-5. **Dependency Resolution**: All anchor links in dependencies must resolve to existing headings in the document
-6. **Section Order Enforcement**: Project sections must appear in order: In Progress, Backlog, Complete, Rejected
-7. **Task Section Order Enforcement**: Task sections must appear in order: In Progress, Backlog, Complete
-8. **Metadata Completeness**: All active projects/tasks must have all required metadata fields
-9. **Checkbox Format**: All action items must use valid markdown checkbox syntax (- [ ] or - [x])
-10. **Heading Level Validation**: Validate correct heading hierarchy (H3→H4→H5→H6→H7)
+- **WIP Limit Enforcement**: Parser must validate that "In Progress" project section contains ≤ 1 project
+- **Date Format Validation**: All dates must match ISO 8601 format (2025-12-29)
+- **Priority Validation**: Priority field must be exactly one of: low, medium, high
+- **Dependency Resolution**: All anchor links in dependencies must resolve to existing headings in the document
+- **Section Order Enforcement**: Project sections must appear in order: In Progress, Backlog, Complete, Rejected
+- **Task Section Order Enforcement**: Task sections must appear in order: In Progress, Backlog, Complete
+- **Metadata Completeness**: All active projects/tasks must have all required metadata fields
+- **Checkbox Format**: All action items must use valid markdown checkbox syntax (- [ ] or - [x])
+- **Heading Level Validation**: Validate correct heading hierarchy (H3→H4→H5→H6→H7)
 
 ---
 
@@ -466,31 +415,25 @@ created: 2025-10-15
 dependencies: [#database-schema-setup]
 priority: high
 
-##### In Progress
-⚠️ LIMIT: Maximum 2 tasks in this section
-
 ##### [Implement JWT Token Generation]
 Create middleware to generate access and refresh tokens upon successful login. Access tokens expire in 15 minutes, refresh tokens in 7 days.
 
-```javascript
-function generateTokens(userId, roles) {
-  const accessToken = jwt.sign(
-    { userId, roles },
-    process.env.JWT_SECRET,
-    { expiresIn: '15m' }
-  );
-  return { accessToken, refreshToken };
-}
-```
-
-assigned-to: Backend Engineer
-dependencies: none
+  ```javascript
+  function generateTokens(userId, roles) {
+    const accessToken = jwt.sign(
+      { userId, roles },
+      process.env.JWT_SECRET,
+      { expiresIn: '15m' }
+    );
+    return { accessToken, refreshToken };
+  }
+  ```
 
 - [ ] [Create token generation utility]: Implement function to create JWT access and refresh tokens with appropriate expiration times and payload structure.
-    ```javascript
-    const jwt = require('jsonwebtoken');
-    const crypto = require('crypto');
-    ```
+  ```javascript
+  const jwt = require('jsonwebtoken');
+  const crypto = require('crypto');
+  ```
 - [ ] [Store refresh token in Redis]: Save refresh token to Redis with user ID as key and 7-day expiration.
     Use the node-redis client and set TTL to match token expiration.
 - [x] [Add token signing secret to environment]: Configure JWT_SECRET in .env file and validate it exists on application startup.
@@ -501,26 +444,16 @@ Consider rotating the JWT_SECRET periodically. May need to implement a key versi
 ##### [Create Authentication Middleware]
 Build Express middleware to validate JWT tokens on protected routes.
 
-assigned-to: Backend Engineer
-dependencies: [#implement-jwt-token-generation]
-
 - [ ] [Extract token from Authorization header]: Parse the Bearer token from incoming requests and handle missing or malformed headers gracefully.
 - [ ] [Verify token signature]: Use jwt.verify() to validate the token signature and expiration.
 - [ ] [Attach user data to request object]: After successful verification, attach decoded user ID and roles to req.user for downstream handlers.
 
-##### Backlog
-
 ##### [Implement Password Reset Flow]
 Allow users to request password reset via email with time-limited token.
-
-assigned-to: Backend Engineer
-dependencies: [#create-authentication-middleware]
 
 - [ ] [Generate reset token]: Create cryptographically secure random token and store with expiration in Redis.
 - [ ] [Send reset email]: Integrate with email service to send reset link to user.
 - [ ] [Validate and process reset]: Verify token validity and update user password in database.
-
-##### Complete
 ```
 
 ### After Completion (Moved to Complete)
@@ -530,8 +463,6 @@ dependencies: [#create-authentication-middleware]
 
 #### [User Authentication System]
 JWT-based authentication system with role-based access control. Implemented token generation, validation middleware, and password reset flow.
-
-created: 2025-10-15
 
 ##### [Implement JWT Token Generation]
 Created middleware to generate access and refresh tokens.
@@ -582,17 +513,14 @@ why: After prototyping, discovered that operational transformation complexity ex
 Status information goes here. Current state, recent changes, blockers, decisions. Can include code snippets, lists, and external references.
 
 ```language
-code examples
+optional code examples
 ```
 
 Additional context paragraphs as needed.
 '''
-created: 2025-12-17
+created: 2025-12-29
 dependencies: [#other-project], [#another-project] or none
 priority: low|medium|high
-
-##### In Progress
-⚠️ LIMIT: Maximum 2 tasks in this section
 
 ##### [Task Name]
 Brief 1-2 sentence description of the task.
@@ -603,20 +531,15 @@ Optional additional paragraphs explaining approach or context.
 optional code example
 ```
 
-assigned-to: Engineer Specialization
-dependencies: [#other-task] or none
-
 - [ ] [Action Name]: Brief description of this action.
-    Optional extended information.
-    ```language
-    optional code example
-    ```
+  Optional extended information.
+  ```language
+  optional code example
+  ```
 - [ ] [Action Name]: Brief description of this action.
 
 ####### Notes
 Optional task-specific notes that don't belong in the main description.
-
-##### Backlog
 
 ##### [Task Name]
 Brief 1-2 sentence description.
@@ -626,8 +549,6 @@ dependencies: [prerequisite-task] or none
 
 - [ ] [Action Name]: Brief description.
 - [ ] [Action Name]: Brief description.
-
-##### Complete
 
 ##### [Task Name]
 Brief description.
@@ -644,14 +565,6 @@ Optional project-level notes.
 '''
 Status and context information.
 '''
-created: 2025-12-17
-dependencies: [prerequisite-project] or none
-priority: low|medium|high
-
-##### In Progress
-⚠️ LIMIT: Maximum 2 tasks in this section
-
-##### Backlog
 
 ##### [Task Name]
 Description.
@@ -661,14 +574,12 @@ dependencies: none
 
 - [ ] [Action Name]: Description.
 
-##### Complete
-
 ### Complete
 
 #### [Project Name]
 Brief summary of what was completed.
 
-created: 2025-12-17
+created: 2025-12-29
 
 ##### [Task Name]
 Brief summary.
@@ -681,7 +592,7 @@ Brief summary.
 #### [Project Name]
 Brief description of what was attempted.
 
-created: 2025-12-17
+created: 2025-12-29
 why: Explanation of why this project was abandoned and what decision was made instead.
 ```
 
@@ -691,16 +602,16 @@ why: Explanation of why this project was abandoned and what decision was made in
 
 When working with this system, AI agents should:
 
-1. **Always validate structure** against the formal schema before making modifications
-2. **Check WIP limits** before suggesting moving items to In Progress
-3. **Verify dependencies** are satisfied before promoting tasks or projects
-4. **Preserve detail** for active work while stripping completed/rejected items
-5. **Use anchor links correctly** for all dependency references
-6. **Maintain date formats** in ISO 8601 (2025-12-17)
-7. **Keep action scope minimal** - if an action seems too large, break it into multiple actions
-8. **Update status sections regularly** to reflect current understanding
-9. **Check boxes as work completes** and trigger automatic task promotions
-10. **Document rejection rationale clearly** in the why field
+- **Always validate structure** against the formal schema before making modifications
+- **Check WIP limits** before suggesting moving items to In Progress
+- **Verify dependencies** are satisfied before promoting tasks or projects
+- **Preserve detail** for active work while stripping completed/rejected items
+- **Use anchor links correctly** for all dependency references
+- **Maintain date formats** in ISO 8601 (2025-12-29)
+- **Keep action scope minimal** - if an action seems too large, break it into multiple actions
+- **Update status sections regularly** to reflect current understanding
+- **Check boxes as work completes** and trigger automatic task promotions
+- **Document rejection rationale clearly** in the why field
 
 When asked to modify the roadmap, AI agents should:
 - Confirm the change doesn't violate WIP limits

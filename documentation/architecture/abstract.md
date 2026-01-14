@@ -1,8 +1,8 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Architecture Overview
 description: System architecture, design patterns, layer structure, and architectural principles.
-last_updated: 2025-12-17
+last_updated: [YYYY-MM-DD]
 cleardoc_version: 2.3.0
 keywords: [architecture, design-patterns, layers, principles]
 ---
@@ -44,7 +44,7 @@ This architecture follows [chosen style, e.g., Clean Architecture] with [key lay
 
 ## Overview
 
-**Project:** JSON CV
+**Project:** [PROJECT_NAME]
 **Architecture Style:** [e.g., Clean Architecture, MVC, MVVM, Layered, Micro-services, Event-Driven]
 **Primary Language:** [Programming Language]
 **Framework:** [Framework Name]

@@ -1,8 +1,8 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Software Management (Index)
 description: Index and overview of software management documentation covering dependencies, versioning, security, and maintenance.
-last_updated: 2025-12-17
+last_updated: [YYYY-MM-DD]
 cleardoc_version: 2.3.0
 keywords: [software-management, dependencies, versioning, security, maintenance]
 ---

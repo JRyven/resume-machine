@@ -149,68 +149,21 @@ keywords: [adr, architecture, [FEATURE]]
 
 ## Roadmap Specification
 
+For the complete roadmap system specification, see [Roadmap Specification](./roadmap-specification.md).
+
+### Quick Reference
+
 Roadmaps track projects through a lifecycle: In Progress → Backlog → Complete → Rejected.
 
-### Structure Overview
-
-```markdown
-# Roadmap
-
-## [SYSTEM_NAME]
-
-[Brief introduction and links to subsystem roadmaps]
-
-### In Progress
-⚠️ LIMIT: Maximum 1 project in this section
-
-#### [PROJECT_NAME]
-'''
-[Status and context information]
-'''
-created: [YYYY-MM-DD]
-dependencies: [ANCHOR_LINKS] | none
-priority: low | medium | high
-sprint: [SPRINT_NAME]
-
-##### [TASK_NAME]
-[Task description]
-
-dependencies: [ANCHOR_LINKS] | none
-
-- [ ] [ACTION]: [Description]
-- [ ] [ACTION]: [Description]
-
-### Backlog
-
-[Projects planned for future development]
-
-### Complete
-
-[Finished projects with abbreviated documentation]
-
-### Rejected
-
-[Abandoned projects with rationale]
-```
-
-### Metadata Fields
+**WIP Limits:**
+- **Projects:** Maximum 1 in "In Progress"
+- **Tasks:** Maximum 2 in "In Progress" per project
 
 **Project metadata:**
 - `created`: ISO 8601 date
 - `dependencies`: Anchor links to prerequisite projects, or `none`
 - `priority`: `low`, `medium`, or `high`
-- `sprint`: Sprint identifier (optional)
 
-**Task metadata:**
-- `dependencies`: Anchor links to prerequisite tasks, or `none`
+**Anchor format:** Convert heading to lowercase, spaces to hyphens, remove special characters.
 
-### Anchor Link Format
-
-Convert heading text: lowercase, spaces to hyphens, remove special characters.
-
-Example: `#### [User Authentication System]` → `#user-authentication-system`
-
-### WIP Limits
-
-- **Projects:** Maximum 1 in "In Progress"
-- **Tasks:** Maximum 2 in "In Progress" per project
+Example: `#### [User Authentication]` → `#user-authentication`

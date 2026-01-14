@@ -1,110 +1,50 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Unified Development Roadmap
 description: Comprehensive roadmap for all project development phases from inception through production launch and ongoing maintenance.
-last_updated: 2025-12-19
+last_updated: [YYYY-MM-DD]
 cleardoc_version: 2.3.0
 keywords: [roadmap, development, planning, maintenance, growth]
 ---
 
 # Unified Development Roadmap
 
-This roadmap covers all project development phases from inception through production launch and ongoing maintenance. It provides a unified approach to tracking work across the entire project lifecycle, whether you're in the initial development phase, managing post-launch stabilization, or planning long-term enhancements.
+All projects required to achieve the Unified Email Routing Schema implementation are tracked in this section using the Development Goals tracking system. For complete documentation of the tracking structure, metadata requirements, and modification rules, see the [Roadmap Specification](./specification.md).
 
-For guidance on using and updating this roadmap, see [How to Use This Roadmap](#how-to-use-this-roadmap) below. This repository has defined risk management considerations; please review [Risk Management](#risk-management) in this document.
+## Special Implementation Notes
 
----
+### Config
 
-## How to Use This Roadmap
+Configuration settings for production (live) and develop (unit test) need to be identical.
 
-### Adding New Projects
+`config/app.yaml` should set all COMMON configurations for production and development.
+To maintain DRY, SOLID, and code with low cognative burden, app.yaml may offload boilerplate to additional configuration files in `config/`
 
-1. Identify the project scope and define clear deliverables
-2. Create an H4 heading with the project name in the appropriate lifecycle section (typically Backlog)
-3. Include a status section with current context and any relevant code examples
-4. Add metadata fields: `created`, `dependencies`, `priority`
-5. Structure tasks within the project using H5 headings organized by their lifecycle (In Progress, Backlog, Complete)
+`config/develop/develop.yaml` and `config/production/production.yaml` should hold `.yaml` configuration rules that are distinct for the enviornments
 
-### Updating Project Status
+When `config/app.yaml` is set to use `develop`, `yaml` files from `/config/develop` must be used to implement unit test application functionality.
 
-Projects follow this linear progression:
+When `config/app.yaml` is set to use `production`, `yaml` files from `/config/production` must be used to implement live application functionality.
 
-```
-Backlog → In Progress → Complete
-                    ↘
-                    Rejected (if abandoned)
-```
-
-**WIP Limits Enforcement:**
-
-- Only 1 project may be in "In Progress" at a time
-- Enforce this limit manually by reviewing this document regularly
-- Move completed projects to "Complete" before starting new ones
+Ensure that we're developing a robust representation of test data in `/mock-data` to use for `develop` unit tests.
 
 ---
 
-## Risk Management
+### In Progress
+⚠️ LIMIT: Only 1 project allowed in this section
 
-### Common Risks in Development Workflows
+[Projects will be tracked here during active development]
 
-**1. Context Loss Between Work Sessions**
+### Backlog
 
-- Risk: Team members lose track of project state across work sessions
-- Mitigation: Maintain detailed status sections in each project
+[Batch Processing System for Resumes]
+Building a batch processing system to ingest HTML job postings, preprocess resume data, and generate tailored cover letter/resume PDFs. Currently setting up HTML data extraction using Puppeteer and configuring the workflow with Bash scripts.
 
-**2. Scope Creep**
+[HTML Data Extraction]
+Extract key data from each HTML job posting file and save it into preprocess-batch-export-resume.json.
 
-- Risk: Projects expand beyond original scope without tracking
-- Mitigation: Use dependency fields to identify blockers; update metadata when scope changes
+[Install Puppeteer]: Set up Node.js environment and install Puppeteer.
 
-**3. WIP Limit Violations**
-
-- Risk: Multiple projects in progress lead to context switching and slower delivery
-- Mitigation: Enforce 1 project in progress limit; review this document weekly
-
-**4. Stale Documentation**
-
-- Risk: Roadmap diverges from actual project state
-- Mitigation: Update roadmap during project sync meetings
-
----
-
-## Development Goals
-
-All projects required to achieve milestones (MVP launch, feature releases, maintenance goals) are tracked in this section using the Development Goals tracking system. For complete documentation of the tracking structure, metadata requirements, and modification rules, see the [Roadmap Specification](./specification.md).
-
-For guidance on updating this roadmap, see [How to Use This Roadmap](#how-to-use-this-roadmap) below.
-
----
-
-### 🔄 In Progress
-
-### 🔄 In Progress
-
-#### Project: CI/CD Pipeline
-
-**Dependencies**: (PDF Generation CLI)
-
-Automate validation and PDF generation on content changes.
-
-**Tasks**:
-
-- [x] Create GitHub Actions workflow (or equivalent)
-- [ ] Run schema validation on YAML changes
-- [ ] Build all role-specific PDFs
-- [x] Store PDFs as build artifacts
-- [ ] Compare against baseline (visual regression)
-- [ ] Fail pipeline on validation errors
-- [ ] Document CI setup in `docs/ci-cd.md`
-
-**Triggers**:
-
-- Push to `main` branch
-- Pull requests modifying `content/`
-- Manual workflow dispatch
-
-**Status**: CI workflow added at `.github/workflows/ci.yml` to run tests and perform a dry-run build; artifacts uploaded when present (2025-12-17).
-### 📋 Backlog
 
 #### Project: MCP Server Setup & Verification
 
@@ -188,12 +128,7 @@ npx prettier --check .
 npx eslint --ext .js,.ts src/ || npx eslint --ext .js,.ts --fix src/
 ```
 
----
-
-### ✅ Complete
-
-
-### ✅ Complete
+### Complete
 
 #### Project: Environment Setup & Dependencies
 
@@ -336,35 +271,30 @@ python compose_resume.py \
 
 ---
 
-#### 🚫 Rejected
+### Rejected
 
-[No rejected tasks yet.]
+#### Project: CI/CD Pipeline
 
-## Risk Register
+**Dependencies**: (PDF Generation CLI)
 
-| Risk                                      | Impact | Mitigation                                                        |
-| ----------------------------------------- | ------ | ----------------------------------------------------------------- |
-| Theme produces inconsistent PDFs          | High   | Freeze theme, test with content variations, use visual regression |
-| MCP server incompatible with workflow     | Medium | Test early (T2), maintain fallback manual editing process         |
-| JSON Resume schema changes                | Low    | Pin schema version, automate validation                           |
-| Font rendering varies across environments | Medium | Vendor fonts locally, test on multiple OS                         |
-| AI suggestions violate schema             | Medium | Validate all changes before composition                           |
+Automate validation and PDF generation on content changes.
+
+**Tasks**:
+
+- [x] Create GitHub Actions workflow (or equivalent)
+- [ ] Run schema validation on YAML changes
+- [ ] Build all role-specific PDFs
+- [x] Store PDFs as build artifacts
+- [ ] Compare against baseline (visual regression)
+- [ ] Fail pipeline on validation errors
+- [ ] Document CI setup in `docs/ci-cd.md`
+
+**Triggers**:
+
+- Push to `main` branch
+- Pull requests modifying `content/`
+- Manual workflow dispatch
+
+**Status**: CI workflow added at `.github/workflows/ci.yml` to run tests and perform a dry-run build; artifacts uploaded when present (2025-12-17).
 
 ---
-
-## Quick Start (Once Complete)
-
-```bash
-# 1. Compose resume for specific role
-python scripts/compose_resume.py --role senior-engineer
-
-# 2. Generate PDF
-python scripts/build_resume.py --role senior-engineer
-
-# 3. AI-assisted editing (via MCP)
-# Use Claude or other AI assistant with MCP integration
-# Example: "Add DevOps achievement to Goop experience"
-
-# 4. Rebuild after changes
-python scripts/build_resume.py --role senior-engineer --validate
-```

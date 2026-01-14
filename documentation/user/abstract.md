@@ -1,8 +1,8 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: User Documentation Overview
 description: Guide and documentation for end users of this project
-last_modified: 2025-12-17
+last_modified: [YYYY-MM-DD]
 cleardoc_version: 2.3.0
 keywords: [user, documentation, guide, help]
 ---

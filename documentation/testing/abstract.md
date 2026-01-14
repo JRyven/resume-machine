@@ -1,8 +1,8 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Testing Strategy (Index)
 description: Index and overview of testing documentation covering strategies, frameworks, organization, and best practices.
-last_updated: 2025-12-17
+last_updated: [YYYY-MM-DD]
 cleardoc_version: 2.3.0
 keywords: [testing, quality, tdd, bdd, coverage, automation]
 ---

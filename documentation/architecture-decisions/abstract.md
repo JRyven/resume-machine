@@ -1,8 +1,8 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Architecture Decision Records (Index)
 description: Index and guidelines for documenting architectural decisions using ADRs.
-last_updated: 2025-12-17
+last_updated: [YYYY-MM-DD]
 cleardoc_version: 2.3.0
 keywords: [adr, architecture, decisions, documentation]
 ---

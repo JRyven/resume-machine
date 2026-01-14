@@ -1,8 +1,8 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Troubleshooting Guide
-description: Solutions to common problems and issues with mailToMd
-last_updated: 2025-12-17
+description: Solutions to common problems and issues with [PROJECT_NAME]
+last_updated: [YYYY-MM-DD]
 clear_doc_version: 2.1.0
 status: Active
 keywords: [troubleshooting, problems, solutions, help, debug]
@@ -19,9 +19,9 @@ Solutions to common problems and how to get more information for debugging.
 **Always check these first:**
 
 1. **Is Python installed?** Run: `python3 --version`
-2. **Is config file present?** Check: `ls mailToMd_python.config`
+2. **Is config file present?** Check: `ls [PROJECT_NAME]_python.config`
 3. **Are paths correct?** Verify paths exist: `ls /path/to/mail/dir`
-4. **Check recent errors?** Look in: `logs/mailToMd_error_*.log`
+4. **Check recent errors?** Look in: `logs/[PROJECT_NAME]_error_*.log`
 
 ---
 
@@ -35,12 +35,12 @@ Solutions to common problems and how to get more information for debugging.
 
 ```bash
 # View your patterns
-grep "INCLUDES" mailToMd_python.config
+grep "INCLUDES" [PROJECT_NAME]_python.config
 
 # Enable debug to see what's being matched
 MAIL_TO_MD_DEBUG = True
-python3 mailToMd.py
-tail logs/mailToMd_debug_*.log
+python3 [PROJECT_NAME].py
+tail logs/[PROJECT_NAME]_debug_*.log
 ```
 
 2. **Does MAIL_DIR exist?**
@@ -79,8 +79,8 @@ Compare your `INCLUDES` patterns against actual mailbox names. URL-encode email 
 
 ```bash
 MAIL_TO_MD_DEBUG = True
-python3 mailToMd.py --test
-tail logs/mailToMd_debug_*.log | grep -i "mapping"
+python3 [PROJECT_NAME].py --test
+tail logs/[PROJECT_NAME]_debug_*.log | grep -i "mapping"
 ```
 
 **Solution:**
@@ -121,20 +121,20 @@ python3 track_manager.py rollback \
 
 ```bash
 # Make sure config is in script directory
-ls -la mailToMd_python.config
+ls -la [PROJECT_NAME]_python.config
 
 # Or specify custom config
-python3 mailToMd.py --config /path/to/config.py
+python3 [PROJECT_NAME].py --config /path/to/config.py
 ```
 
 ### Problem: "Invalid configuration"
 
 ```bash
 # Check Python syntax
-python3 -m py_compile mailToMd_python.config
+python3 -m py_compile [PROJECT_NAME]_python.config
 
 # Look for errors
-python3 mailToMd.py 2>&1 | head -20
+python3 [PROJECT_NAME].py 2>&1 | head -20
 ```
 
 **Common syntax errors:**
@@ -174,7 +174,7 @@ Use more specific include patterns to reduce scanning scope.
 
 ### Problem: Strange characters in email subjects
 
-This is usually normal - mailToMd handles RFC 2047 encoded subjects. If you see:
+This is usually normal - [PROJECT_NAME] handles RFC 2047 encoded subjects. If you see:
 - Strange Unicode escape sequences
 - Garbled text
 - Missing special characters
@@ -182,7 +182,7 @@ This is usually normal - mailToMd handles RFC 2047 encoded subjects. If you see:
 Check the logs for encoding errors:
 
 ```bash
-tail logs/mailToMd_error_*.log | grep -i "encod"
+tail logs/[PROJECT_NAME]_error_*.log | grep -i "encod"
 ```
 
 ---
@@ -205,7 +205,7 @@ cat tracking_data/import_runs.json | python3 -m json.tool | head -50
 ```bash
 # Warning: This removes all history
 rm -rf tracking_data/*.json
-python3 mailToMd.py
+python3 [PROJECT_NAME].py
 ```
 
 ---
@@ -215,32 +215,32 @@ python3 mailToMd.py
 ### Enable Debug Logging
 
 ```python
-# In mailToMd_python.config
+# In [PROJECT_NAME]_python.config
 MAIL_TO_MD_DEBUG = True
 ```
 
 Then run and check logs:
 
 ```bash
-python3 mailToMd.py
-tail -f logs/mailToMd_debug_*.log
+python3 [PROJECT_NAME].py
+tail -f logs/[PROJECT_NAME]_debug_*.log
 ```
 
 ### Check Error Logs
 
 ```bash
 # View recent errors
-tail logs/mailToMd_error_*.log
+tail logs/[PROJECT_NAME]_error_*.log
 
 # Search for specific errors
-grep "Error" logs/mailToMd_error_*.log
+grep "Error" logs/[PROJECT_NAME]_error_*.log
 ```
 
 ### Test Mode
 
 ```bash
 # Test with sample emails without modifying vault
-python3 mailToMd.py --test
+python3 [PROJECT_NAME].py --test
 ```
 
 ### View Import History
@@ -269,9 +269,9 @@ python3 track_manager.py files --search "subject"
 
 ### Check Project Files
 
-- **Logs**: `logs/mailToMd_debug_*.log`, `logs/mailToMd_error_*.log`
+- **Logs**: `logs/[PROJECT_NAME]_debug_*.log`, `logs/[PROJECT_NAME]_error_*.log`
 - **Tracking**: `tracking_data/import_runs.json`
-- **Config**: `mailToMd_python.config`
+- **Config**: `[PROJECT_NAME]_python.config`
 
 ### Common Error Messages
 
@@ -300,10 +300,10 @@ python3 track_manager.py rollback --dry-run
 python3 track_manager.py rollback
 
 # Fix configuration
-vim mailToMd_python.config
+vim [PROJECT_NAME]_python.config
 
 # Try again
-python3 mailToMd.py
+python3 [PROJECT_NAME].py
 ```
 
 See [Rollback Guide](./rollback-guide.md) for complete instructions.

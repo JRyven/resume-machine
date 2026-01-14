@@ -1,8 +1,8 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Data Schema (Index)
 description: Index and overview of data schema documentation covering models, relationships, migrations, and data architecture.
-last_updated: 2025-12-17
+last_updated: [YYYY-MM-DD]
 cleardoc_version: 2.3.0
 keywords: [data, schema, database, models, relationships, migrations]
 ---

@@ -1,15 +1,15 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: [SHORT_TITLE]
 description: [SHORT_DESCRIPTION]
-last_updated: 2025-12-17
+last_updated: [YYYY-MM-DD]
 cleardoc_version: 2.3.0
 keywords: [adr, architecture, decisions, documentation]
 ---
 
 # ADR [Number]: [Short Title]
 
-**Date:** 2025-12-17
+**Date:** [YYYY-MM-DD]
 **Status:** [Proposed | Accepted | Deprecated | Superseded]
 **Deciders:** [List of people involved in the decision]
 **Related ADRs:** [Links to related ADRs, if any]

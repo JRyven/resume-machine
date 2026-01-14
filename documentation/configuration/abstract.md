@@ -156,7 +156,7 @@ Settings in the `common` section apply to all environments:
 
 ```yaml
 common:
-  app_name: "JSON CV"
+  app_name: "[PROJECT_NAME]"
   version: "1.0.0"
   logging:
     format: "json"

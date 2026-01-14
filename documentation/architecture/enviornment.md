@@ -1,8 +1,8 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Development Environment
-description: Setup guide for developers contributing to mailToMd
-last_updated: 2025-12-17
+description: Setup guide for developers contributing to [PROJECT_NAME]
+last_updated: [YYYY-MM-DD]
 clear_doc_version: 2.1.0
 status: Active
 keywords: [development, setup, environment, contributing, testing]
@@ -10,7 +10,7 @@ keywords: [development, setup, environment, contributing, testing]
 
 # Development Environment
 
-Setup and guide for developers contributing to mailToMd.
+Setup and guide for developers contributing to [PROJECT_NAME].
 
 ---
 
@@ -23,12 +23,12 @@ Setup and guide for developers contributing to mailToMd.
 ## Project Structure
 
 ```
-mailToMd/
-├── mailToMd.py              # Main script
+[PROJECT_NAME]/
+├── [PROJECT_NAME].py              # Main script
 ├── import_tracker.py        # Tracking system
 ├── track_manager.py         # CLI utility
-├── mailToMd_python.config   # Config file
-├── mailToMd.code-workspace  # VS Code workspace
+├── [PROJECT_NAME]_python.config   # Config file
+├── [PROJECT_NAME].code-workspace  # VS Code workspace
 ├── documentation/           # CLEAR Docs structure
 ├── tests/                   # Test suite
 ├── logs/                    # Generated logs
@@ -53,7 +53,7 @@ python3 tests/test.py
 Test without modifying your vault. See [Command Reference](./dev-commands.md#import-commands) for options.
 
 ```bash
-python3 mailToMd.py --test
+python3 [PROJECT_NAME].py --test
 ```
 
 ---
@@ -62,7 +62,7 @@ python3 mailToMd.py --test
 
 See [Command Reference](./dev-commands.md#debugging-commands) for debugging workflow.
 
-Enable in `mailToMd_python.config`:
+Enable in `[PROJECT_NAME]_python.config`:
 ```python
 MAIL_TO_MD_DEBUG = True
 ```
@@ -77,9 +77,9 @@ See [Architecture Guide](./architecture.md) for detailed component documentation
 
 **Key Files:**
 
-1. **mailToMd.py** (858 lines)
-   - `MailToMdConfig` - Configuration
-   - `MailToMdLogger` - Logging
+1. **[PROJECT_NAME].py** (858 lines)
+   - `[PROJECT_NAME]Config` - Configuration
+   - `[PROJECT_NAME]Logger` - Logging
    - `EmailProcessor` - Orchestration
    - `EmailContentExtractor` - Content extraction
    - `EmailDateParser` - Date parsing
@@ -108,7 +108,7 @@ See [Architecture Guide](./architecture.md) for detailed component documentation
 
 ### Adding a New Destination Rule
 
-Edit `DestinationMapper` in `mailToMd.py`:
+Edit `DestinationMapper` in `[PROJECT_NAME].py`:
 
 ```python
 def _rule_new_mailbox(self, path: str, year: str, month: str) -> Optional[Path]:

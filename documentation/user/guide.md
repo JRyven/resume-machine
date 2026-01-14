@@ -9,6 +9,22 @@ keywords: [user-guide, resume, json-resume, themes, export]
 
 # User Guide
 
+## Quick Start (Once Complete)
+
+```bash
+# 1. Compose resume for specific role
+python scripts/compose_resume.py --role senior-engineer
+
+# 2. Generate PDF
+python scripts/build_resume.py --role senior-engineer
+
+# 3. AI-assisted editing (via MCP)
+# Use Claude or other AI assistant with MCP integration
+# Example: "Add DevOps achievement to Goop experience"
+
+# 4. Rebuild after changes
+python scripts/build_resume.py --role senior-engineer --validate
+```
 
 ## Overview
 

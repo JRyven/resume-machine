@@ -1,32 +1,32 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Configuration Reference
-description: Complete guide to configuring mailToMd with all options and examples
-last_updated: 2025-12-17
+description: Complete guide to configuring [PROJECT_NAME] with all options and examples
+last_updated: [YYYY-MM-DD]
 clear_doc_version: 2.1.0
 status: Active
-keywords: [configuration, config, settings, mailToMd]
+keywords: [configuration, config, settings, [PROJECT_NAME]]
 ---
 
 # Configuration Reference
 
-Complete guide to configuring mailToMd.
+Complete guide to configuring [PROJECT_NAME].
 
 ---
 
 ## Configuration File Location
 
-mailToMd automatically loads `mailToMd_python.config` from the script directory.
+[PROJECT_NAME] automatically loads `[PROJECT_NAME]_python.config` from the script directory.
 
 ```bash
 # Default location
-./mailToMd_python.config
+./[PROJECT_NAME]_python.config
 ```
 
 If you want to use a custom config file:
 
 ```bash
-python3 mailToMd.py --config /path/to/custom.config
+python3 [PROJECT_NAME].py --config /path/to/custom.config
 ```
 
 ---
@@ -94,7 +94,7 @@ MAIL_TO_MD_DEBUG = True    # Enable debug logging
 MAIL_TO_MD_DEBUG = False   # Disable (default)
 ```
 
-When enabled, detailed debug information is written to `logs/mailToMd_debug_*.log`.
+When enabled, detailed debug information is written to `logs/[PROJECT_NAME]_debug_*.log`.
 
 ---
 
@@ -262,7 +262,7 @@ INCLUDES = [
 
 ### Configuration file not loading
 
-1. Ensure `mailToMd_python.config` is in same directory as script
+1. Ensure `[PROJECT_NAME]_python.config` is in same directory as script
 2. Check file syntax (valid Python)
 3. Look for error messages in console output
 
@@ -272,7 +272,7 @@ INCLUDES = [
 
 ### Custom Test Configuration
 
-Create `mailToMdTest.config` for test mode:
+Create `[PROJECT_NAME]Test.config` for test mode:
 
 ```python
 MAIL_DIR = "/path/to/test/emails"
@@ -281,7 +281,7 @@ INCLUDES = [r"test\.mailbox"]
 MAIL_TO_MD_DEBUG = True
 ```
 
-Then run: `python3 mailToMd.py --test`
+Then run: `python3 [PROJECT_NAME].py --test`
 
 ---
 

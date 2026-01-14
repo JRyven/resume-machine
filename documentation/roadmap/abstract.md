@@ -1,8 +1,8 @@
 ---
-project_name: JSON CV
+project_name: [PROJECT_NAME]
 title: Roadmap Guide (Index)
 description: Index and overview of project planning documentation covering initial development and long-term maintenance phases.
-last_updated: 2025-12-17
+last_updated: [YYYY-MM-DD]
 cleardoc_version: 2.3.0
 phase: abstract
 development_goals_location: none
@@ -45,23 +45,12 @@ Understanding these key terms is essential for working with the roadmap system:
 
 **WIP Limits (Work-In-Progress Limits):** Constraints that prevent overload and maintain focus:
 - **Project WIP Limit:** Maximum 1 project in "In Progress" status at any time
-- **Task WIP Limit:** Maximum 2 tasks in "In Progress" status per project at any time
 
 **Development Goals:** The collective term for all projects being tracked through the Development Goals tracking system in the Unified Development Roadmap, covering all project phases from inception through long-term maintenance and growth.
 
 **MVP (Minimum Viable Product):** The initial production-ready version of the application containing core functionality sufficient for launch. Achievement of MVP marks the transition from Initial Development to Maintenance phase.
 
 For complete technical specifications of the Development Goals tracking system, see the [Roadmap Specification](./specification.md).
-
----
-
-## Current Project Status
-
-**Phase:** Initial Development
-**Initial Release:** [Pending]
-**Most Recent Release:** [In Development]
-**Active Projects:** [X/1]
-**Active Tasks:** [X/2 per project]
 
 ---
 
@@ -76,20 +65,6 @@ For complete technical specifications of the Development Goals tracking system, 
 
 ---
 
-## Quick Links
-
-**Essential Commands:**
-- Status check: `[STATUS_CHECK_COMMAND]` (See [Commands Reference](./dev-commands.md) - *Note: File to be created*)
-- Development Goals update: `[DEVELOPMENT_GOALS_UPDATE_COMMAND]`
-- Planning review: `[PLANNING_REVIEW_COMMAND]`
-
-**Most Referenced Docs:**
-- [Roadmap Specification](./specification.md) - Authoritative reference for Development Goals tracking system
-- [Unified Development Roadmap](./roadmap.md) - Planning and tracking all project development phases
-- [Architecture Decision Records](../../architecture-decisions/abstract.md) - Architecture Decision Records for major planning changes
-
----
-
 ## Getting Started
 
 ### For New Projects
@@ -98,9 +73,6 @@ If you're planning a new project, follow this recommended reading order:
 
 1. **[Unified Development Roadmap](./roadmap.md)** - Complete planning framework for all project development phases
 2. **[Roadmap Specification](./specification.md)** - Technical reference for Development Goals tracking structure and rules
-3. **[Architecture Overview](./architecture.md)** - Technical foundation and architectural decisions (*Scaffolding - file to be created*)
-4. **[Testing Strategy](./testing.md)** - Quality assurance and testing approaches (*Scaffolding - file to be created*)
-5. **[Deployment Guide](./deployment.md)** - Release planning and deployment procedures (*Scaffolding - file to be created*)
 
 ### For Established Projects
 
@@ -108,17 +80,12 @@ If you're managing an ongoing project, follow this maintenance-focused approach:
 
 1. **[Unified Development Roadmap](./roadmap.md)** - Long-term planning for feature enhancement and sustainability
 2. **[Roadmap Specification](./specification.md)** - Technical reference for Development Goals tracking structure and rules
-3. **[Software Management](./software-management.md)** - Dependency management and technical debt handling (*Scaffolding - file to be created*)
-4. **[ADRs](../../architecture-decisions/README.md)** - Documenting major architectural and planning decisions
 
 ### Quick Start Checklist
 
-- [ ] Determine your current project phase (Initial Development vs. Maintenance)
-- [ ] Review the appropriate roadmap document for your phase
 - [ ] Read the [Roadmap Specification](./specification.md) to understand the Development Goals tracking system
 - [ ] Identify current development goals and upcoming priorities
-- [ ] Align team objectives with roadmap goals
-- [ ] Schedule regular roadmap review meetings
+- [ ] Align objectives with roadmap goals
 - [ ] Document any significant deviations or changes
 
 ---
@@ -127,11 +94,11 @@ If you're managing an ongoing project, follow this maintenance-focused approach:
 
 ### Development Goals Tracking System
 
-The Development Goals tracking system is a dual-lifecycle markdown-based task management approach designed for both human and AI agent collaboration. Projects progress through a roadmap lifecycle (In Progress → Backlog → Complete → Rejected) while tasks within each project follow their own Kanban-like lifecycle (In Progress → Backlog → Complete).
+The Development Goals tracking system is a dual-lifecycle markdown-based task management approach designed for both human and AI agent collaboration. Projects progress through a roadmap lifecycle (In Progress → Backlog → Complete → Rejected).
 
 **Key Features:**
 - **Dual-lifecycle architecture** for managing both strategic projects and tactical tasks
-- **WIP limits** to maintain focus (1 project, 2 tasks per project)
+- **WIP limits** to maintain focus
 - **Structured metadata** for dependencies, priorities, and assignments
 - **Automatic task progression** as actions are completed
 - **Programmatic validation** schema for AI agent integration
@@ -167,29 +134,15 @@ Structured documentation of significant planning and architectural decisions:
 - Implementation tracking and outcomes
 - Historical decision context for future reference
 
-### Planning Tools & Resources
-
-**Development Goals Tracking:**
-- Status updates and progress monitoring
-- Risk assessment and mitigation strategies
-- Resource allocation and timeline management
-- Stakeholder communication and reporting
-
-**Strategic Planning:**
-- Market analysis and competitive positioning
-- Technology roadmap and platform decisions
-- Team growth and organizational planning
-- Budget and resource forecasting
-
 ---
 
 ## How to Use This Roadmap
 
 This section provides comprehensive guidance for both human developers and AI agents working with the roadmap documentation system.
 
-### For Project Managers
+### As Project Manager
 
-1. **Track progress** against milestones and deliverables
+1. **Track progress**
    - Monitor project and task completion in Development Goals sections
    - Review WIP limits to ensure focus is maintained
    - Check dependency chains to identify potential blockers
@@ -199,17 +152,12 @@ This section provides comprehensive guidance for both human developers and AI ag
    - Create projects in Development Goals backlog for critical risks requiring mitigation work
    - Document risk decisions in ADRs when appropriate
 
-3. **Communicate status** to stakeholders regularly
-   - Use the Current Project Status section for high-level updates
-   - Reference specific projects and their progress in Development Goals
-   - Share completed work from the Complete sections
-
-4. **Adjust scope** based on feedback and constraints
+3. **Adjust scope** based on feedback and constraints
    - Move projects to Rejected with clear rationale when priorities change
    - Update project priorities and dependencies as understanding evolves
    - Create ADRs for significant scope changes
 
-### For Developers
+### As Developer
 
 1. **Focus on sprint goals** and acceptance criteria
    - Work on tasks in the "In Progress" sections
@@ -221,8 +169,7 @@ This section provides comprehensive guidance for both human developers and AI ag
    - Include code examples and detailed guidance in tasks when beneficial
    - Reference the [Roadmap Specification](./specification.md) for structure rules
 
-3. **Participate in reviews** and provide constructive feedback
-   - Review Development Goals during planning sessions
+3. **Provide feedback and new ideas** and provide constructive feedback
    - Suggest new projects or tasks based on technical insights
    - Document learnings in task or project notes sections
 
@@ -231,7 +178,7 @@ This section provides comprehensive guidance for both human developers and AI ag
    - Update project status sections with current state and context
    - Preserve rationale when moving projects to Rejected
 
-### For AI Agents
+### As any role
 
 1. **Validate structure** before making modifications
    - Always validate against the formal schema in [specification.md](./specification.md)
@@ -245,7 +192,7 @@ This section provides comprehensive guidance for both human developers and AI ag
 
 3. **Maintain consistency** across documents
    - Use terminology defined in the [Definitions](#definitions) section
-   - Follow metadata formats (2025-12-17 dates, anchor link dependencies)
+   - Follow metadata formats (YYYY-MM-DD dates, anchor link dependencies)
    - Keep action scope minimal - break large actions into multiple items
 
 4. **Update status sections** to reflect current understanding
@@ -286,9 +233,9 @@ This section provides comprehensive guidance for both human developers and AI ag
 - Update last_modified date in document frontmatter
 
 **Validation Checklist:**
-- [ ] WIP limits respected (1 project, 2 tasks per project in In Progress)
+- [ ] WIP limits respected (1 project)
 - [ ] All dependencies use correct markdown anchor link format
-- [ ] All dates in 2025-12-17 format
+- [ ] All dates in YYYY-MM-DD format
 - [ ] All required metadata present for active projects and tasks
 - [ ] Heading hierarchy correct (H3→H4→H5 for project sections)
 - [ ] Detail stripped appropriately for items moved to Complete/Rejected
@@ -354,15 +301,3 @@ Effective risk management is critical throughout all phases of project developme
 - Initial Development: Focus on technical risks and timeline management
 - Maintenance: Shift focus to operational risks and user retention
 - Both Phases: Maintain awareness of resource constraints and stakeholder expectations
-
----
-
-## Related Documentation
-
-- [README](../../README.md): Project overview and main documentation index
-- [Roadmap Specification](./specification.md): Complete technical specification for Development Goals tracking system
-- [Unified Development Roadmap](./roadmap.md): Comprehensive roadmap for all project development phases
-- [Development Guide](./dev-abstract.md): Development workflow and technical practices
-- [Architecture Overview](./architecture.md): Technical architecture and design patterns (*Scaffolding - file to be created*)
-- [Software Management](./software-management.md): Version control and dependency management (*Scaffolding - file to be created*)
-- [ADRs](../../architecture-decisions/README.md): Architecture Decision Records for major decisions
