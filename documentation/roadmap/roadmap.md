@@ -33,18 +33,58 @@ Ensure that we're developing a robust representation of test data in `/mock-data
 ### In Progress
 ⚠️ LIMIT: Only 1 project allowed in this section
 
-[Projects will be tracked here during active development]
+
+#### Repair Linting
+
+You hit a pre-commit hook (husky + lint-staged). lint-staged tried to run ESLint/Prettier on staged files, failed because ESLint has no config, so the hook aborted and Git reverted the staged changes.
+
+Options to fix (pick one):
+
+Add a minimal ESLint config (recommended quick fix):
+```
+cat > .eslintrc.json <<'JSON'
+{
+  "env": { "es2021": true, "node": true, "browser": true },
+  "extends": ["eslint:recommended"],
+  "parserOptions": { "ecmaVersion": 2021, "sourceType": "module" },
+  "rules": {}
+}
+JSON
+
+git add .eslintrc.json
+git add -A
+git commit -m "v0.0.4 Pivot to monorepo"
+```
+
+Run the ESLint initializer (guided)
+```
+npm init @eslint/config
+# follow prompts, then:
+git add -A
+git commit -m "v0.0.4 Pivot to monorepo"
+```
+
+Diagnose lint-staged problems before committing:
+```
+npx lint-staged --debug
+# or run prettier/eslint manually to see errors:
+npx prettier --check .
+npx eslint --ext .js,.ts src/ || npx eslint --ext .js,.ts --fix src/
+```
 
 ### Backlog
 
-[Batch Processing System for Resumes]
+#### [Keyword Analysis]
+
+https://github.com/srbhr/Resume-Matcher
+
+#### [Batch Processing System for Resumes]
 Building a batch processing system to ingest HTML job postings, preprocess resume data, and generate tailored cover letter/resume PDFs. Currently setting up HTML data extraction using Puppeteer and configuring the workflow with Bash scripts.
 
-[HTML Data Extraction]
+#### [HTML Data Extraction]
 Extract key data from each HTML job posting file and save it into preprocess-batch-export-resume.json.
 
 [Install Puppeteer]: Set up Node.js environment and install Puppeteer.
-
 
 #### Project: MCP Server Setup & Verification
 
@@ -89,44 +129,6 @@ Integrate MCP server with resume workflow for AI-assisted editing.
 - "Add a new bullet point to my Goop experience emphasizing leadership"
 - "Update my skills to include more DevOps tools"
 - "Create a variant resume focusing on e-commerce experience"
-
-#### Repair Linting
-
-You hit a pre-commit hook (husky + lint-staged). lint-staged tried to run ESLint/Prettier on staged files, failed because ESLint has no config, so the hook aborted and Git reverted the staged changes.
-
-Options to fix (pick one):
-
-Add a minimal ESLint config (recommended quick fix):
-```
-cat > .eslintrc.json <<'JSON'
-{
-  "env": { "es2021": true, "node": true, "browser": true },
-  "extends": ["eslint:recommended"],
-  "parserOptions": { "ecmaVersion": 2021, "sourceType": "module" },
-  "rules": {}
-}
-JSON
-
-git add .eslintrc.json
-git add -A
-git commit -m "v0.0.4 Pivot to monorepo"
-```
-
-Run the ESLint initializer (guided)
-```
-npm init @eslint/config
-# follow prompts, then:
-git add -A
-git commit -m "v0.0.4 Pivot to monorepo"
-```
-
-Diagnose lint-staged problems before committing:
-```
-npx lint-staged --debug
-# or run prettier/eslint manually to see errors:
-npx prettier --check .
-npx eslint --ext .js,.ts src/ || npx eslint --ext .js,.ts --fix src/
-```
 
 ### Complete
 

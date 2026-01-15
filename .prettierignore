@@ -14,3 +14,4 @@ packages/jsonresume-theme-standard/package.json
 packages/ui/src/components/ui/button.tsx
 packages/ui/src/components/ui/card.tsx
 .github/workflows/process-hn-jobs.yml
+jobbankjobs/

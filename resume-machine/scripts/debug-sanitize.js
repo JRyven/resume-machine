@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const data = JSON.parse(fs.readFileSync(path.join(__dirname, '../preprocess-batch-export-resume.json')));
+const data = JSON.parse(fs.readFileSync(path.join(__dirname, '../resume-machine-queue.json')));
 
 function toDoc(s) {
   if (!s) return '';
