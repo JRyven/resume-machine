@@ -7,10 +7,12 @@ function toDoc(s) {
   if (!s) return '';
   s = s.replace(/[()]/g, ' ');
   const parts = s.trim().split(/\s+/).filter(Boolean);
-  return parts.map(w => {
-    if (/[A-Z]/.test(w) && w === w.toUpperCase()) return w;
-    return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
-  }).join(' ');
+  return parts
+    .map((w) => {
+      if (/[A-Z]/.test(w) && w === w.toUpperCase()) return w;
+      return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    })
+    .join(' ');
 }
 
 function toFile(s) {

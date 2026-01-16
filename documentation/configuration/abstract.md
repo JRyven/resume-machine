@@ -119,7 +119,7 @@ The system determines active environment through priority order:
 
 ```yaml
 # In app.yaml
-environment: "develop"  # Used if APP_ENV not set
+environment: 'develop' # Used if APP_ENV not set
 ```
 
 ```bash
@@ -140,7 +140,7 @@ environments:
     paths:
       data: data-develop
       logs: logs-develop
-  
+
   production:
     config_files:
       database: config/production/database.yaml
@@ -156,10 +156,10 @@ Settings in the `common` section apply to all environments:
 
 ```yaml
 common:
-  app_name: "[PROJECT_NAME]"
-  version: "1.0.0"
+  app_name: '[PROJECT_NAME]'
+  version: '1.0.0'
   logging:
-    format: "json"
+    format: 'json'
 ```
 
 ### 4. Setting Precedence
@@ -281,7 +281,7 @@ export API_SECRET_KEY="[your-secret]"
 ```yaml
 # Reference in config (don't embed directly)
 database:
-  password: "[DATABASE_PASSWORD]"  # Replaced at runtime
+  password: '[DATABASE_PASSWORD]' # Replaced at runtime
 ```
 
 ## Example Scenarios
@@ -290,7 +290,7 @@ database:
 
 ```yaml
 # app.yaml
-environment: "develop"
+environment: 'develop'
 
 # Uses: config/develop/database.yaml, config/develop/api.yaml
 # Paths: data-develop/, logs-develop/
@@ -299,6 +299,7 @@ environment: "develop"
 ```
 
 **Development characteristics:**
+
 - Debug mode enabled for troubleshooting
 - Verbose logging for detailed trace
 - Relaxed security settings for ease of testing
@@ -309,7 +310,7 @@ environment: "develop"
 
 ```yaml
 # app.yaml
-environment: "production"
+environment: 'production'
 # OR: export APP_ENV=production
 
 # Uses: config/production/database.yaml, config/production/api.yaml
@@ -319,6 +320,7 @@ environment: "production"
 ```
 
 **Production characteristics:**
+
 - Debug mode disabled for performance
 - Minimal logging (INFO level only)
 - Strict security settings (SSL required, secure JWT tokens)

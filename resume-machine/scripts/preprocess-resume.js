@@ -19,9 +19,11 @@ function substitute(data, vars) {
       }
       return data;
     }
-    return data.replace(/{{\s*([\w_]+)\s*}}/g, (m, key) => (vars[key] !== undefined ? String(vars[key]) : m));
+    return data.replace(/{{\s*([\w_]+)\s*}}/g, (m, key) =>
+      vars[key] !== undefined ? String(vars[key]) : m
+    );
   } else if (Array.isArray(data)) {
-    return data.map(item => substitute(item, vars));
+    return data.map((item) => substitute(item, vars));
   } else if (data && typeof data === 'object') {
     const out = {};
     for (const key in data) {
@@ -33,7 +35,10 @@ function substitute(data, vars) {
 }
 
 function preprocessResume() {
-  const defaultsPath = path.join(__dirname, '../role-based-templates/default/resume.unique-data.json');
+  const defaultsPath = path.join(
+    __dirname,
+    '../role-based-templates/default/resume.unique-data.json'
+  );
   const sourcePath = path.join(__dirname, '../resume.source.json');
   const outputPath = path.join(__dirname, '../../resume.json');
 

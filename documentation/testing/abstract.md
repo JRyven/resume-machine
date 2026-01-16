@@ -18,6 +18,7 @@ This is the **central index** for all testing-related documentation. Whether you
 The Testing Strategy provides comprehensive documentation for implementing robust testing practices across the development lifecycle. Key focus areas include Test-Driven Development (TDD), Behavior-Driven Development (BDD), automated testing frameworks, and quality assurance processes. The strategy emphasizes testing pyramid principles, code coverage goals, and continuous integration testing to ensure software reliability and maintainability.
 
 **Best Practices Checklist:**
+
 - [ ] Follow TDD principles for new feature development
 - [ ] Maintain >80% code coverage across all modules
 - [ ] Implement testing pyramid (unit > integration > e2e)
@@ -40,11 +41,13 @@ The Testing Strategy provides comprehensive documentation for implementing robus
 ## Quick Links
 
 **Essential Commands:**
+
 - Test: `[TEST_COMMAND]` (See [Commands Reference](./dev-commands.md))
 - Coverage: `[COVERAGE_COMMAND]`
 - Lint: `[LINT_COMMAND]`
 
 **Most Referenced Docs:**
+
 - [Testing Fundamentals](./testing-fundamentals.md) - Core testing concepts and principles
 - [Test Organization](./testing-organization.md) - Test file structure and naming conventions
 - [Automated Testing](./testing-automation.md) - CI/CD integration and test automation

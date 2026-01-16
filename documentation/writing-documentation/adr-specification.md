@@ -16,6 +16,7 @@ An Architecture Decision Record (ADR) documents a significant architectural deci
 ## Purpose
 
 ADRs create a decision log that:
+
 - Records why architectural choices were made
 - Preserves context and alternatives considered
 - Helps future developers understand design trade-offs
@@ -62,6 +63,7 @@ keywords: [adr, architecture, [DOMAIN], [KEYWORD]]
 ### Context
 
 Explain what problem this decision addresses. Include:
+
 - The architectural issue or problem statement
 - Constraints and requirements driving the decision
 - Business context if relevant
@@ -70,6 +72,7 @@ Explain what problem this decision addresses. Include:
 ### Options Considered
 
 List alternatives evaluated. For each option include:
+
 - Brief description of the approach
 - Key trade-offs (advantages and disadvantages)
 - Resource requirements if significant
@@ -87,12 +90,15 @@ Statement of the decision made, phrased as a resolved statement:
 Explain what will happen as a result of this decision:
 
 **Positive Consequences:**
+
 - Benefits, improvements, or capabilities gained
 
 **Negative Consequences:**
+
 - Trade-offs, added complexity, or resource impacts
 
 **Neutral Consequences:**
+
 - Ongoing maintenance requirements or dependencies
 
 ## Optional Sections
@@ -132,6 +138,7 @@ keywords: [adr, architecture, database, postgresql]
 Application requires storing relational data with complex queries. Team needed to decide between PostgreSQL (relational) and MongoDB (document-based).
 
 Requirements:
+
 - Complex joins across multiple entities
 - ACID transaction guarantees required
 - Read-heavy workload with complex queries
@@ -140,12 +147,15 @@ Requirements:
 ## Options Considered
 
 ### Option 1: MongoDB
+
 Document-oriented database with flexible schema. Advantages: fast writes, horizontal scaling. Disadvantages: weak transaction support, complex joins require application-level logic.
 
 ### Option 2: PostgreSQL
+
 Relational database with strong ACID guarantees. Advantages: native joins, proven scalability, strong consistency. Disadvantages: vertical scaling focus, requires schema design upfront.
 
 ### Option 3: DynamoDB
+
 AWS managed service with pay-per-use pricing. Advantages: fully managed, auto-scaling. Disadvantages: vendor lock-in, limited query flexibility, expensive at scale.
 
 ## Decision
@@ -155,16 +165,19 @@ We will use **PostgreSQL** as the primary data store for relational data because
 ## Consequences
 
 **Positive:**
+
 - Complex queries can be expressed directly in SQL
 - ACID transactions ensure data consistency
 - Team expertise reduces ramp-up time
 
 **Negative:**
+
 - Schema changes require migration planning
 - Vertical scaling limits for very large datasets
 - Connection pooling complexity
 
 **Neutral:**
+
 - Requires DBA skills for optimization
 - Ongoing backup and recovery procedures
 - Monitoring and alerting setup needed

@@ -8,9 +8,11 @@ keywords: [development, commands, guide, workflow, standards]
 ---
 
 # Development Commands
+
 Makefile, scripts, and manual commands.
 
 ## Related
+
 - [README](../../README.md): Project overview and documentation index
 - [Dev Guide: Abstract](./dev-abstract.md): Development guide overview
 - [Testing](./testing.md): Test execution commands

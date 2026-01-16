@@ -42,6 +42,7 @@ MAIL_DIR = "/Users/jamesvaleil/private/MailMate/mail/com.freron.MailMate/Message
 ```
 
 **How to find it:**
+
 1. Open MailMate
 2. Go to Preferences
 3. Check the Messages location
@@ -56,6 +57,7 @@ OBSIDIAN_VAULT = "/Users/jamesvaleil/Library/Mobile Documents/iCloud~md~obsidian
 ```
 
 **How to find it:**
+
 1. Open Obsidian
 2. Go to Settings → About
 3. Look for "Vault location"
@@ -76,6 +78,7 @@ INCLUDES = [
 Only emails in mailboxes matching these patterns will be imported.
 
 **Pattern Matching Tips:**
+
 - Use `\.` to escape dots
 - Use `%40` for `@` in email addresses
 - Use regex `.*` for wildcard matching
@@ -103,10 +106,12 @@ When enabled, detailed debug information is written to `logs/[PROJECT_NAME]_debu
 ### Email Address URL Encoding
 
 In MailMate paths, email addresses are URL-encoded:
+
 - `@` becomes `%40`
 - `.` stays as `.` (dots are fine)
 
 **Example:**
+
 ```
 jryven@gmail.com  →  jryven%40gmail.com
 ```

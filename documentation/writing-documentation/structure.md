@@ -73,12 +73,14 @@ Use descriptive kebab-case names:
 - `deployment.md` - Deployment procedures
 
 **Rules:**
+
 - Lowercase letters only
 - Hyphens for word separation
 - Descriptive and specific names
 - Pattern for sub-files: `[TOPIC]-[SUBTOPIC].md`
 
 **Examples:**
+
 - ✅ `error-handling.md`
 - ✅ `testing-coverage.md`
 - ❌ `stuff.md` (too vague)
@@ -92,19 +94,24 @@ Use descriptive kebab-case names:
 
 ```markdown
 # Document Title (H1)
+
 One H1 per document - the main title
 
 ## Major Section (H2)
+
 Primary content divisions
 
 ### Subsection (H3)
+
 Detailed breakdowns within major sections
 
 #### Fine-Grained Detail (H4)
+
 Use sparingly for necessary subdivisions
 ```
 
 **Constraints:**
+
 - One H1 per file (must match `title` in front matter)
 - Sequential hierarchy (no skipping H2 → H4)
 - Avoid H5 and H6 (split document instead)

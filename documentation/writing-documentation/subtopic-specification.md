@@ -72,6 +72,7 @@ Define specialized terminology specific to this subtopic if needed.
 ## Placeholder Format
 
 All placeholders use `[SCREAMING_SNAKE_CASE]` format:
+
 - `[PROJECT_NAME]` - Project identifier
 - `[TOPIC_NAME]` - Topic name
 - `[CONFIGURATION_VALUE]` - Configurable values
@@ -103,11 +104,12 @@ Each environment requires specific configuration values. Use environment files a
 ## Development Environment
 
 Create a `.env.development` file in the project root:
-
 ```
+
 API_URL=http://localhost:3000
 DEBUG=true
 LOG_LEVEL=debug
+
 ```
 
 Load configuration at application startup using a configuration loader.
@@ -117,10 +119,12 @@ Load configuration at application startup using a configuration loader.
 Production requires additional security and monitoring configuration:
 
 ```
+
 API_URL=https://api.example.com
 DEBUG=false
 LOG_LEVEL=error
 ENABLE_MONITORING=true
+
 ```
 
 ## Validation

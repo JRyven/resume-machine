@@ -31,8 +31,8 @@ Ensure that we're developing a robust representation of test data in `/mock-data
 ---
 
 ### In Progress
-⚠️ LIMIT: Only 1 project allowed in this section
 
+⚠️ LIMIT: Only 1 project allowed in this section
 
 #### Repair Linting
 
@@ -41,6 +41,7 @@ You hit a pre-commit hook (husky + lint-staged). lint-staged tried to run ESLint
 Options to fix (pick one):
 
 Add a minimal ESLint config (recommended quick fix):
+
 ```
 cat > .eslintrc.json <<'JSON'
 {
@@ -57,6 +58,7 @@ git commit -m "v0.0.4 Pivot to monorepo"
 ```
 
 Run the ESLint initializer (guided)
+
 ```
 npm init @eslint/config
 # follow prompts, then:
@@ -65,6 +67,7 @@ git commit -m "v0.0.4 Pivot to monorepo"
 ```
 
 Diagnose lint-staged problems before committing:
+
 ```
 npx lint-staged --debug
 # or run prettier/eslint manually to see errors:
@@ -81,9 +84,11 @@ npx eslint --ext .js,.ts src/ || npx eslint --ext .js,.ts --fix src/
 https://github.com/srbhr/Resume-Matcher
 
 #### [Batch Processing System for Resumes]
+
 Building a batch processing system to ingest HTML job postings, preprocess resume data, and generate tailored cover letter/resume PDFs. Currently setting up HTML data extraction using Puppeteer and configuring the workflow with Bash scripts.
 
 #### [HTML Data Extraction]
+
 Extract key data from each HTML job posting file and save it into preprocess-batch-export-resume.json.
 
 [Install Puppeteer]: Set up Node.js environment and install Puppeteer.

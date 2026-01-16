@@ -24,12 +24,12 @@ Configuration can be provided via:
 
 ## Configuration Reference
 
-| Option | Type | Environment | Default | Description |
-|--------|------|-------------|---------|-------------|
-| `[OPTION_NAME]` | string | `[ENV_VAR]` | `[DEFAULT]` | [DESCRIPTION]. Constraints: [CONSTRAINTS] |
-| `[OPTION_NAME]` | number | `[ENV_VAR]` | `[DEFAULT]` | [DESCRIPTION]. Range: [MIN]-[MAX] |
+| Option          | Type    | Environment | Default     | Description                                |
+| --------------- | ------- | ----------- | ----------- | ------------------------------------------ |
+| `[OPTION_NAME]` | string  | `[ENV_VAR]` | `[DEFAULT]` | [DESCRIPTION]. Constraints: [CONSTRAINTS]  |
+| `[OPTION_NAME]` | number  | `[ENV_VAR]` | `[DEFAULT]` | [DESCRIPTION]. Range: [MIN]-[MAX]          |
 | `[OPTION_NAME]` | boolean | `[ENV_VAR]` | `[DEFAULT]` | [DESCRIPTION]. Effects: [WHAT_IT_CONTROLS] |
-| `[OPTION_NAME]` | string | `[ENV_VAR]` | required | [DESCRIPTION]. Valid values: [VALUE_LIST] |
+| `[OPTION_NAME]` | string  | `[ENV_VAR]` | required    | [DESCRIPTION]. Valid values: [VALUE_LIST]  |
 
 ## Environment Variables
 

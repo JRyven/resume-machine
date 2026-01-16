@@ -29,71 +29,71 @@ python scripts/build_resume.py --role senior-engineer --validate
 ## Rsume MAchine Execution
 
 ### Complete run
+
 /Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/resume-machine/scripts/batch-process.sh
 
 ### Run without ingesting HTML
- printf 'Y
-' | SKIP_EXTRACT=1 bash resume-machine/scripts/batch-process.sh
 
+printf 'Y
+' | SKIP_EXTRACT=1 bash resume-machine/scripts/batch-process.sh
 
 ## Overview
 
 This guide walks you through:
+
 - Preparing resume data for dynamic generation
 - Previewing your theme in a browser
 - Generating a PDF resume
 - Running the resume app locally (with or without GitHub authentication)
 - Troubleshooting common errors and misconfigurations
 
-
 ## Environments: Node vs Python (.venv)
 
 Some parts of this repository are Node.js based and others are Python-based. Be aware which tools run where:
 
 - Node / JavaScript (no `.venv` required):
-	- `pnpm`, `node`, `npm` commands
-	- Theme build and preview: `pnpm turbo run build`, `pnpm turbo run dev` (registry preview)
-	- PDF export: `resumed` (Node CLI) and `node scripts/preprocess-resume.js`
-	- Linking local theme: `npm link` (run from the theme directory)
+  - `pnpm`, `node`, `npm` commands
+  - Theme build and preview: `pnpm turbo run build`, `pnpm turbo run dev` (registry preview)
+  - PDF export: `resumed` (Node CLI) and `node scripts/preprocess-resume.js`
+  - Linking local theme: `npm link` (run from the theme directory)
 
 - Python (`.venv` recommended):
-	- Any Python utilities or scripts in the repo (e.g., mailToMd or other Python tooling)
-	- Activate the virtual environment before running Python tools:
-		```bash
-		python3 -m venv .venv
-		source .venv/bin/activate
-		pip install -r requirements.txt  # if provided
-		```
+  - Any Python utilities or scripts in the repo (e.g., mailToMd or other Python tooling)
+  - Activate the virtual environment before running Python tools:
+    ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt  # if provided
+    ```
 
 Key point: You do NOT need to activate the Python `.venv` to run Node-based steps such as theme builds or `resumed` PDF export. Only run/activate `.venv` when working with repository Python scripts.
 
 ## Core Workflow & Commands
 
-
 ### 1. Prepare Your Resume Data
 
 1. **Edit `resume.source.json`:**
-	 - Use variable handles like `{{hiring_company}}`, `{{hiring_position}}`, etc. in your source JSON.
-	 - Example:
-		 ```json
-		 {
-			 "basics": {
-				 "name": "James Valeil",
-				 "label": "{{candidate_title}}",
-				 "summary": "Applying for {{hiring_position}} at {{hiring_company}}."
-			 },
-			 ...
-		 }
-		 ```
+   - Use variable handles like `{{hiring_company}}`, `{{hiring_position}}`, etc. in your source JSON.
+   - Example:
+     ```json
+     {
+     	 "basics": {
+     		 "name": "James Valeil",
+     		 "label": "{{candidate_title}}",
+     		 "summary": "Applying for {{hiring_position}} at {{hiring_company}}."
+     	 },
+     	 ...
+     }
+     ```
 2. **Set default values in `resume.defaults.json`:**
-	 - Example:
-		 ```json
-		 {
-			 "hiring_company": "Automattic",
-			 "hiring_position": "Senior Engineer",
-			 "candidate_title": "Software Engineer"
-		 }
-		 ```
+   - Example:
+     ```json
+     {
+       "hiring_company": "Automattic",
+       "hiring_position": "Senior Engineer",
+       "candidate_title": "Software Engineer"
+     }
+     ```
 3. **Do not edit `resume.json` directly.** It is always generated from the source and defaults.
 
 ### 2. Preprocess Resume Data
@@ -109,35 +109,38 @@ This creates `resume.json` with all variables replaced, ready for preview/export
 ### 3. Preview Your Theme Locally
 
 #### Step-by-step:
+
 1. **Install dependencies:**
-	```bash
-	pnpm install
-	```
+   ```bash
+   pnpm install
+   ```
 2. **Build your theme (after any changes):**
-	```bash
-	pnpm turbo run build --filter=valeii-professional
-	```
-	- If you see `No package found with name 'valeii-professional' in workspace`, check your theme's `package.json` for the correct name and ensure it's included in your workspace config.
+   ```bash
+   pnpm turbo run build --filter=valeii-professional
+   ```
+
+   - If you see `No package found with name 'valeii-professional' in workspace`, check your theme's `package.json` for the correct name and ensure it's included in your workspace config.
 3. **Link your theme globally (required for PDF export):**
-	```bash
-	cd jsonresume-theme-valeii-professional
-	npm link
-	cd ..
-	```
+   ```bash
+   cd jsonresume-theme-valeii-professional
+   npm link
+   cd ..
+   ```
 4. **Start the registry app:**
-	```bash
-	pnpm turbo run dev --filter=registry
-	# or
-	pnpm dev --filter=registry
-	```
+   ```bash
+   pnpm turbo run dev --filter=registry
+   # or
+   pnpm dev --filter=registry
+   ```
 5. **(Optional) Bypass GitHub authentication for local development:**
-	```bash
-	echo "NEXT_PUBLIC_AUTH_DISABLED=true" > apps/registry/.env
-	pnpm turbo run dev --filter=registry
-	```
-	- This creates a mock user and allows you to preview without logging in.
+   ```bash
+   echo "NEXT_PUBLIC_AUTH_DISABLED=true" > apps/registry/.env
+   pnpm turbo run dev --filter=registry
+   ```
+
+   - This creates a mock user and allows you to preview without logging in.
 6. **Open your browser:**
-	[http://localhost:3001](http://localhost:3001)
+   [http://localhost:3001](http://localhost:3001)
 
 **Note:** Any edits to your theme require a rebuild and browser refresh to see updates.
 
@@ -151,11 +154,13 @@ resumed export resume.json -t valeii-professional -o artifacts/resume-Company-Po
 ```
 
 **Checklist before running:**
+
 - Theme is built and globally linked (`npm link` in theme directory)
 - Output directory (`artifacts/`) exists
 - `resume.json` is up-to-date (run preprocess if needed)
 
 **Common errors and solutions:**
+
 - `Error: Could not load theme ...` → Run `npm link` in your theme directory
 - `No such file or directory, open 'resume.json'` → Run the preprocess step
 - `No such file or directory, open 'artifacts/resume-...'` → Create the output directory
@@ -168,59 +173,74 @@ Keep `resume.source.json` and `resume.defaults.json` as your source of truth; `r
 
 ## Troubleshooting
 
-
 ## Common Issues & Error Handling
 
 ### Workspace & Theme Errors
 
 #### No package found with name 'valeii-professional' in workspace
+
 **Solution:**
+
 - Check your theme's `package.json` for the correct name (should be `valeii-professional`)
 - Ensure your workspace config (e.g., `pnpm-workspace.yaml`) includes the theme directory
 
 #### Could not load theme
+
 **Error:** `Error: Could not load theme ./jsonresume-theme-valeii-professional. Is it installed?`
 **Solution:**
+
 - Run `npm link` in your theme directory
 - Use the theme name (not the path) in the export command
 
 #### No such file or directory for resume.json
+
 **Error:** `ENOENT: no such file or directory, open 'resume.json'`
 **Solution:**
+
 - Run the preprocess step to generate `resume.json`
 - Use the full absolute path if running from a different directory
 
 #### No such file or directory for output file
+
 **Error:** `ENOENT: no such file or directory, open 'artifacts/resume-...'`
 **Solution:**
+
 - Create the output directory: `mkdir -p artifacts`
 
 #### Unknown option '-o' or incorrect command
+
 **Error:** `error: unknown option '-o'`
 **Solution:**
+
 - Use `resumed export` (not `resume-cli export`)
 - Correct syntax: `resumed export <filename> -t <theme> -o <output>`
 
 ### Theme Development Issues
 
 #### Changes not reflecting in PDF
+
 **Solution:**
+
 - Rebuild the theme: `pnpm turbo run build --filter=valeii-professional`
 - Relink the theme: `cd jsonresume-theme-valeii-professional && npm link`
 
 #### Preview app blocked by authentication
+
 **Solution:**
+
 - For local development, set the auth bypass environment variable:
-	```bash
-	echo "NEXT_PUBLIC_AUTH_DISABLED=true" > apps/registry/.env
-	pnpm turbo run dev --filter=registry
-	```
+  ```bash
+  echo "NEXT_PUBLIC_AUTH_DISABLED=true" > apps/registry/.env
+  pnpm turbo run dev --filter=registry
+  ```
 - This creates a mock user for development without requiring GitHub login
 
 ### Preprocessing Issues
 
 #### Variables not substituted
+
 **Solution:**
+
 - Ensure `resume.source.json` uses `{{variable}}` syntax
 - Check `resume.defaults.json` for default values
 - Run preprocess with overrides: `node scripts/preprocess-resume.js --variable="value"`

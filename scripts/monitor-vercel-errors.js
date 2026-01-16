@@ -1,8 +1,4 @@
-const {
-  loadHashes,
-  saveHashes,
-  createErrorFingerprint,
-} = require('./utils/hash-storage');
+const { loadHashes, saveHashes, createErrorFingerprint } = require('./utils/hash-storage');
 const { fetchVercelLogs, parseErrors } = require('./utils/vercel-logs');
 const {
   searchExistingIssue,
@@ -44,10 +40,7 @@ async function main() {
     console.log(`Found ${errors.length} potential errors in ${project.name}`);
 
     for (const error of errors) {
-      const fingerprint = createErrorFingerprint(
-        error.message,
-        error.stack.join('\n')
-      );
+      const fingerprint = createErrorFingerprint(error.message, error.stack.join('\n'));
 
       if (errorHashes[fingerprint]) {
         const existingIssue = searchExistingIssue(fingerprint);

@@ -22,11 +22,7 @@ function createErrorFingerprint(message, stack = '') {
     .replace(/\b[a-f0-9]{32}\b/g, 'HASH')
     .replace(/\b[a-f0-9]{64}\b/g, 'HASH');
 
-  return crypto
-    .createHash('sha256')
-    .update(normalized)
-    .digest('hex')
-    .slice(0, 16);
+  return crypto.createHash('sha256').update(normalized).digest('hex').slice(0, 16);
 }
 
 module.exports = {

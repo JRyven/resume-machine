@@ -49,11 +49,13 @@ Before starting, you need:
 [Detailed explanation of what you're doing and why]
 
 **Command:**
+
 ```bash
 [ACTUAL_COMMAND_TO_RUN]
 ```
 
 **Output:**
+
 ```
 [EXPECTED_OUTPUT]
 ```
@@ -67,6 +69,7 @@ Before starting, you need:
 [Explanation of this step]
 
 1. [Sub-step]
+
    ```
    [CODE_EXAMPLE_OR_CONFIG]
    ```
@@ -88,6 +91,7 @@ Before starting, you need:
 ## What's Next
 
 Now that you've completed this task, you might want to:
+
 - [Related task or next step](./related-guide.md)
 - [Advanced topic](./advanced-guide.md)
 - [Reference documentation](./reference.md)

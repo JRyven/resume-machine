@@ -18,6 +18,7 @@ This document describes the architectural approach, design patterns, and structu
 This architecture follows [chosen style, e.g., Clean Architecture] with [key layers/components]. Core principles include separation of concerns, testability, and framework independence. The design emphasizes [key goals] through [main patterns]. Key technology choices include [tech stack].
 
 **Best Practices Checklist:**
+
 - [ ] Follow SOLID principles in all implementations
 - [ ] Keep domain layer independent of frameworks
 - [ ] Use repository pattern for data access
@@ -78,6 +79,7 @@ Select and describe your primary architectural style. Delete unused sections.
 **Core Principle:** Business logic is independent of external concerns (UI, database, frameworks).
 
 **Layer Structure:**
+
 - **Domain Layer (Core):** Business logic, entities, use cases
 - **Application Layer:** Use case orchestration, application services
 - **Infrastructure Layer:** External concerns (database, API, file system)
@@ -86,6 +88,7 @@ Select and describe your primary architectural style. Delete unused sections.
 **Dependency Rule:** Inner layers never depend on outer layers.
 
 **Benefits:**
+
 - Testable business logic without external dependencies
 - Easy to swap implementations (e.g., database, UI framework)
 - Clear separation of concerns
@@ -99,6 +102,7 @@ Select and describe your primary architectural style. Delete unused sections.
 **Core Principle:** Separation of data (Model), presentation (View), and control logic (Controller).
 
 **Components:**
+
 - **Model:** Data and business logic
 - **View:** UI presentation
 - **Controller:** Handles user input, updates Model and View
@@ -106,6 +110,7 @@ Select and describe your primary architectural style. Delete unused sections.
 **Data Flow:** User → Controller → Model → View → User
 
 **Benefits:**
+
 - Clear separation between UI and business logic
 - Parallel development of components
 - Reusable models
@@ -119,6 +124,7 @@ Select and describe your primary architectural style. Delete unused sections.
 **Core Principle:** Separation with data binding between View and ViewModel.
 
 **Components:**
+
 - **Model:** Data and business logic
 - **View:** UI presentation (passive)
 - **ViewModel:** Presentation logic and state management
@@ -126,6 +132,7 @@ Select and describe your primary architectural style. Delete unused sections.
 **Data Flow:** View ↔ ViewModel (two-way binding) → Model
 
 **Benefits:**
+
 - Strong separation of concerns
 - Testable presentation logic
 - Reactive UI updates through data binding
@@ -139,6 +146,7 @@ Select and describe your primary architectural style. Delete unused sections.
 **Core Principle:** Hierarchical organization into layers with defined responsibilities.
 
 **Typical Layers:**
+
 1. **Presentation Layer:** UI components
 2. **Business Logic Layer:** Core application logic
 3. **Data Access Layer:** Database and external services
@@ -147,6 +155,7 @@ Select and describe your primary architectural style. Delete unused sections.
 **Dependency Flow:** Each layer only depends on layers below it.
 
 **Benefits:**
+
 - Simple and intuitive
 - Clear separation of concerns
 - Easy to understand and implement
@@ -160,12 +169,14 @@ Select and describe your primary architectural style. Delete unused sections.
 **Core Principle:** Decompose application into small, independently deployable services.
 
 **Characteristics:**
+
 - Each service owns its data
 - Services communicate via APIs (REST, gRPC, messaging)
 - Independent deployment and scaling
 - Polyglot architecture (different tech stacks per service)
 
 **Benefits:**
+
 - Independent scaling and deployment
 - Technology flexibility
 - Fault isolation
@@ -179,11 +190,13 @@ Select and describe your primary architectural style. Delete unused sections.
 **Core Principle:** Components communicate through events rather than direct calls.
 
 **Components:**
+
 - **Event Producers:** Emit events when state changes
 - **Event Consumers:** React to events
 - **Event Bus/Broker:** Mediates event distribution
 
 **Benefits:**
+
 - Loose coupling between components
 - Scalability through async processing
 - Flexibility to add new consumers
@@ -223,6 +236,7 @@ Describe your project's layer/module structure in detail.
 **Responsibility:** [What this layer does]
 
 **Contains:**
+
 - [Component type 1]
 - [Component type 2]
 - [Component type 3]
@@ -230,6 +244,7 @@ Describe your project's layer/module structure in detail.
 **Dependencies:** [What this layer depends on]
 
 **Example:**
+
 ```
 [Code structure or directory layout example]
 ```
@@ -241,12 +256,14 @@ Describe your project's layer/module structure in detail.
 **Responsibility:** [What this layer does]
 
 **Contains:**
+
 - [Component type 1]
 - [Component type 2]
 
 **Dependencies:** [What this layer depends on]
 
 **Example:**
+
 ```
 [Code structure example]
 ```
@@ -268,6 +285,7 @@ Document the key design patterns used in the architecture.
 **Implementation:** [How it's implemented in this project]
 
 **Example:**
+
 ```
 [Code or structural example]
 ```
@@ -306,6 +324,7 @@ Describe how major components interact with each other.
 4. **Result:** [Final outcome]
 
 **Diagram:**
+
 ```
 [ASCII diagram or reference to external diagram]
 User → Controller → Service → Repository → Database
@@ -344,13 +363,13 @@ Describe how data moves through the system.
 
 Document key technology decisions related to architecture.
 
-| Layer/Component | Technology | Rationale |
-|----------------|------------|-----------|
-| [Layer Name] | [Tech] | [Why chosen] |
-| [Component] | [Tech] | [Why chosen] |
-| State Management | [Tech] | [Why chosen] |
-| Data Persistence | [Tech] | [Why chosen] |
-| Communication | [Tech] | [Why chosen] |
+| Layer/Component  | Technology | Rationale    |
+| ---------------- | ---------- | ------------ |
+| [Layer Name]     | [Tech]     | [Why chosen] |
+| [Component]      | [Tech]     | [Why chosen] |
+| State Management | [Tech]     | [Why chosen] |
+| Data Persistence | [Tech]     | [Why chosen] |
+| Communication    | [Tech]     | [Why chosen] |
 
 ---
 

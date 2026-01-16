@@ -16,6 +16,7 @@ An abstract is an index file that introduces a documentation topic and links to 
 ## Purpose
 
 Abstracts serve as entry points to documentation topics. They provide:
+
 - Brief overview of the topic
 - Key definitions and terminology
 - Navigation links to detailed content

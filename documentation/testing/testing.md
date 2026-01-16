@@ -138,6 +138,7 @@ python3 [PROJECT_NAME].py 2>&1 | head -20
 ```
 
 **Common syntax errors:**
+
 - Missing quotes around paths
 - Unescaped backslashes
 - Invalid regex in INCLUDES
@@ -175,6 +176,7 @@ Use more specific include patterns to reduce scanning scope.
 ### Problem: Strange characters in email subjects
 
 This is usually normal - [PROJECT_NAME] handles RFC 2047 encoded subjects. If you see:
+
 - Strange Unicode escape sequences
 - Garbled text
 - Missing special characters
@@ -276,13 +278,16 @@ python3 track_manager.py files --search "subject"
 ### Common Error Messages
 
 **"File not found"**
+
 - Check path exists and is readable
 
 **"Invalid regex in INCLUDES"**
+
 - Check regex syntax in config
 - Test patterns: `python3 -c "import re; re.compile(r'pattern')"`
 
 **"Permission denied"**
+
 - Check vault directory permissions
 - Check mail directory permissions
 

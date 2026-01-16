@@ -20,7 +20,7 @@
     "@types/react-dom": "^19.2.2",
     "eslint": "^8",
     "husky": "^8.0.3",
-    "lint-staged": "^15.2.0",
+    "lint-staged": "^15.5.2",
     "playwright": "^1.40.0",
     "prettier": "^2.8.0",
     "start-server-and-test": "^2.0.3",
@@ -29,13 +29,13 @@
   "packageManager": "pnpm@8.15.9",
   "name": "jsonresume.org",
   "dependencies": {
-    "puppeteer": "^23.7.1",
     "@changesets/cli": "^2.27.1",
     "dotenv": "^16.0.3",
+    "jsonresume-theme-valeii-professional": "file:./jsonresume-theme-valeii-professional",
     "next": "16.0.1",
+    "puppeteer": "^23.7.1",
     "react": "19.2.0",
-    "react-dom": "19.2.0",
-    "jsonresume-theme-valeii-professional": "file:../jsonresume-theme-valeii-professional"
+    "react-dom": "19.2.0"
   },
   "pnpm": {
     "overrides": {

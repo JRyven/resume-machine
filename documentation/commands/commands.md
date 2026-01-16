@@ -151,6 +151,7 @@ python3 -m py_compile track_manager.py
 ### Enable Debug Logging
 
 Edit `[PROJECT_NAME]_python.config`:
+
 ```python
 MAIL_TO_MD_DEBUG = True
 ```

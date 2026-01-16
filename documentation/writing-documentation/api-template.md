@@ -35,6 +35,7 @@ The API uses standard HTTP status codes. Error responses include:
 ```
 
 **Common Status Codes:**
+
 - `400` - Bad Request (invalid parameters)
 - `401` - Unauthorized (missing/invalid API key)
 - `403` - Forbidden (permission denied)
@@ -49,11 +50,11 @@ Retrieve a list of [RESOURCE_PLURAL].
 
 ### Query Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `limit` | integer | No | Maximum number of results (default: `20`, max: `100`) |
-| `offset` | integer | No | Number of results to skip for pagination (default: `0`) |
-| `sort` | string | No | Sort by field: `[FIELD_ONE]`, `[FIELD_TWO]`, `-[FIELD_ONE]` (descending) |
+| Parameter | Type    | Required | Description                                                              |
+| --------- | ------- | -------- | ------------------------------------------------------------------------ |
+| `limit`   | integer | No       | Maximum number of results (default: `20`, max: `100`)                    |
+| `offset`  | integer | No       | Number of results to skip for pagination (default: `0`)                  |
+| `sort`    | string  | No       | Sort by field: `[FIELD_ONE]`, `[FIELD_TWO]`, `-[FIELD_ONE]` (descending) |
 
 ### Response
 
@@ -129,8 +130,8 @@ Retrieve a specific [RESOURCE_SINGULAR] by ID.
 
 ### Path Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter       | Type   | Description                                      |
+| --------------- | ------ | ------------------------------------------------ |
 | `[RESOURCE_ID]` | string | The unique identifier of the [RESOURCE_SINGULAR] |
 
 ### Response
@@ -201,6 +202,7 @@ Delete a [RESOURCE_SINGULAR].
 API requests are rate limited to `[REQUESTS_PER_UNIT]` requests per `[TIME_UNIT]`.
 
 Headers indicate your current limit status:
+
 - `X-RateLimit-Limit`: Total requests allowed
 - `X-RateLimit-Remaining`: Requests remaining
 - `X-RateLimit-Reset`: Unix timestamp when limit resets

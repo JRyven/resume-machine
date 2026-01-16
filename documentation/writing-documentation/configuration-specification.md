@@ -16,6 +16,7 @@ Configuration documentation specifies available options, formats, and validation
 ## Purpose
 
 Configuration documentation:
+
 - Defines all configurable options
 - Specifies valid values and constraints
 - Explains environment-specific settings
@@ -69,14 +70,15 @@ Use tables for structured reference:
 ```markdown
 ## Options
 
-| Option | Type | Environment | Default | Description |
-|--------|------|-------------|---------|-------------|
-| `[OPTION_NAME]` | string | `[ENV_VAR]` | `[DEFAULT]` | [DESCRIPTION] |
-| `[OPTION_NAME]` | number | `[ENV_VAR]` | `[DEFAULT]` | [DESCRIPTION] |
+| Option          | Type    | Environment | Default     | Description   |
+| --------------- | ------- | ----------- | ----------- | ------------- |
+| `[OPTION_NAME]` | string  | `[ENV_VAR]` | `[DEFAULT]` | [DESCRIPTION] |
+| `[OPTION_NAME]` | number  | `[ENV_VAR]` | `[DEFAULT]` | [DESCRIPTION] |
 | `[OPTION_NAME]` | boolean | `[ENV_VAR]` | `[DEFAULT]` | [DESCRIPTION] |
 ```
 
 Include:
+
 - Option name (as used in configuration files)
 - Data type and valid values
 - Environment variable name
@@ -89,7 +91,7 @@ Include:
 
 Provide complete example files:
 
-```markdown
+````markdown
 ## Example Configuration (Development)
 
 ```yaml
@@ -107,7 +109,9 @@ logging:
   level: debug
   format: json
 ```
-```
+````
+
+````
 
 ### Validation Rules
 
@@ -118,7 +122,7 @@ logging:
 - `[OPTION_NAME]` must match pattern `[REGEX]`
 - `[OPTION_NAME]` is required when `[OTHER_OPTION]` is enabled
 - `[OPTION_NAME]` is incompatible with `[OTHER_OPTION]`
-```
+````
 
 ### Environment-Specific Configuration
 
@@ -136,7 +140,7 @@ Set `DEBUG=false` and ensure all secrets are provided via environment variables.
 
 ## Example
 
-```markdown
+````markdown
 ---
 project_name: [PROJECT_NAME]
 title: Application Configuration
@@ -161,16 +165,16 @@ Complete reference for application configuration options.
 
 ## Options Reference
 
-| Option | Type | Environment | Default | Description |
-|--------|------|-------------|---------|-------------|
-| Port | number | `PORT` | `3000` | Server listening port |
-| Host | string | `HOST` | `localhost` | Server bind address |
-| Log Level | string | `LOG_LEVEL` | `info` | Logging verbosity: `debug`, `info`, `warn`, `error` |
-| Database URL | string | `DATABASE_URL` | required | PostgreSQL connection string |
-| Max Connections | number | `DB_MAX_CONN` | `10` | Maximum database connections |
-| Cache TTL | number | `CACHE_TTL` | `3600` | Cache expiration in seconds |
-| API Key | string | `API_KEY` | required | External API authentication token |
-| Debug Mode | boolean | `DEBUG` | `false` | Enable verbose debugging output |
+| Option          | Type    | Environment    | Default     | Description                                         |
+| --------------- | ------- | -------------- | ----------- | --------------------------------------------------- |
+| Port            | number  | `PORT`         | `3000`      | Server listening port                               |
+| Host            | string  | `HOST`         | `localhost` | Server bind address                                 |
+| Log Level       | string  | `LOG_LEVEL`    | `info`      | Logging verbosity: `debug`, `info`, `warn`, `error` |
+| Database URL    | string  | `DATABASE_URL` | required    | PostgreSQL connection string                        |
+| Max Connections | number  | `DB_MAX_CONN`  | `10`        | Maximum database connections                        |
+| Cache TTL       | number  | `CACHE_TTL`    | `3600`      | Cache expiration in seconds                         |
+| API Key         | string  | `API_KEY`      | required    | External API authentication token                   |
+| Debug Mode      | boolean | `DEBUG`        | `false`     | Enable verbose debugging output                     |
 
 ## Example Configuration File
 
@@ -195,6 +199,7 @@ cache:
   enabled: true
   ttl: 3600
 ```
+````
 
 ## Environment Variables Example
 
@@ -219,6 +224,7 @@ export DEBUG=false
 - `DATABASE_URL` is required and must be valid PostgreSQL connection string
 - `MAX_CONNECTIONS` must be at least 1 and not exceed 100
 - `API_KEY` is required when running in production
+
 ```
 
 ## Size Guidelines
@@ -230,3 +236,4 @@ export DEBUG=false
 - Options Reference: 100-150 words (table)
 - Examples: 150-300 words
 - Validation: 60-100 words
+```

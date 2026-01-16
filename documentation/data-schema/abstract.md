@@ -18,6 +18,7 @@ This is the **central index** for all data-related documentation. Whether you're
 The Data Schema documentation provides comprehensive guidance for data modeling, database design, and data architecture decisions. Key focus areas include entity-relationship modeling, data normalization, migration strategies, and data integrity. The documentation emphasizes scalable data architecture, performance optimization, and maintainable database schemas that support business requirements while ensuring data consistency and reliability.
 
 **Best Practices Checklist:**
+
 - [ ] Follow database normalization principles (3NF minimum)
 - [ ] Implement proper indexing for query performance
 - [ ] Use meaningful naming conventions for tables and columns
@@ -40,11 +41,13 @@ The Data Schema documentation provides comprehensive guidance for data modeling,
 ## Quick Links
 
 **Essential Commands:**
+
 - Schema: `[SCHEMA_COMMAND]` (See [Commands Reference](./dev-commands.md))
 - Migrate: `[MIGRATE_COMMAND]`
 - Seed: `[SEED_COMMAND]`
 
 **Most Referenced Docs:**
+
 - [Data Models](./data-models.md) - Core entity definitions and relationships
 - [Database Design](./database-design.md) - Schema architecture and design principles
 - [Data Migrations](./data-migrations.md) - Migration planning and execution

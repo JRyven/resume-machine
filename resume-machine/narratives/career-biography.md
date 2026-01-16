@@ -158,10 +158,10 @@ James recognized early that GOOP had a significant gap: "A major concern for me 
 
 Rather than simply noting this gap, James took initiative to address it. He created comprehensive documentation covering:
 
-* Version control procedures (referenced and edited by multiple team members)
-* Platform operations (Docker, AWS, deployment processes)
-* WordPress codebase architecture and patterns
-* PHPDocumentor integration for automated documentation generation
+- Version control procedures (referenced and edited by multiple team members)
+- Platform operations (Docker, AWS, deployment processes)
+- WordPress codebase architecture and patterns
+- PHPDocumentor integration for automated documentation generation
 
 As he reflected in his self-assessment: "Making these resources speeds up our work today and will speed up our work more as the documentation is refined. I think that doing this visible work on documentation fosters a culture that prioritizes documentation."
 
@@ -207,11 +207,11 @@ He is proficient across a broad technology stack: React, Node.js, Flutter, Docke
 
 Throughout his career, James has consistently demonstrated strong architectural judgment:
 
-* He designs systems from scratch, not just implements requirements
-* He makes build-versus-buy decisions based on cost, capability, and long-term maintainability
-* He evaluates competing technologies systematically, considering tradeoffs
-* He writes technical design documents to communicate architectural decisions
-* He thinks in terms of systems and how components interact, not just individual features
+- He designs systems from scratch, not just implements requirements
+- He makes build-versus-buy decisions based on cost, capability, and long-term maintainability
+- He evaluates competing technologies systematically, considering tradeoffs
+- He writes technical design documents to communicate architectural decisions
+- He thinks in terms of systems and how components interact, not just individual features
 
 This systems-thinking approach likely traces back to his urban planning education, where understanding how different elements of a system interact is fundamental.
 
@@ -221,11 +221,11 @@ James's problem-solving style is notably pragmatic and solution-focused. As his 
 
 When faced with challenges:
 
-* He takes initiative without waiting for direction
-* He figures things out independently when necessary
-* He remains adaptable when requirements change
-* He maintains a calm, productive demeanor even under pressure
-* He proposes new ideas proactively rather than simply executing assigned work
+- He takes initiative without waiting for direction
+- He figures things out independently when necessary
+- He remains adaptable when requirements change
+- He maintains a calm, productive demeanor even under pressure
+- He proposes new ideas proactively rather than simply executing assigned work
 
 ### **Learning & Adaptability**
 
@@ -273,21 +273,21 @@ His move to No Borders allowed him to focus purely on technical delivery, managi
 
 His manager's assessment that James is "a future leader on company's Product Engineering Team" reflects observable leadership qualities:
 
-* **Initiative:** Proposes improvements, doesn't wait for direction
-* **Technical judgment:** Makes sound architectural decisions independently
-* **Team development:** Successfully mentors and develops others
-* **Ownership:** Takes responsibility for outcomes, not just tasks
-* **Cross-functional effectiveness:** Builds trust and collaboration across teams
-* **Cultural impact:** Improves team morale and establishes positive norms
+- **Initiative:** Proposes improvements, doesn't wait for direction
+- **Technical judgment:** Makes sound architectural decisions independently
+- **Team development:** Successfully mentors and develops others
+- **Ownership:** Takes responsibility for outcomes, not just tasks
+- **Cross-functional effectiveness:** Builds trust and collaboration across teams
+- **Cultural impact:** Improves team morale and establishes positive norms
 
 ### **Target Roles: Lead/Manager Hybrid**
 
 Given James's background and demonstrated capabilities, he is well-positioned for Lead or Engineering Manager roles that combine:
 
-* **Technical leadership:** Architecture, technical strategy, technology decisions
-* **People development:** Mentoring, hiring, team building
-* **Cross-functional collaboration:** Working with Product, Design, Business stakeholders
-* **Ownership:** End-to-end responsibility for systems and outcomes
+- **Technical leadership:** Architecture, technical strategy, technology decisions
+- **People development:** Mentoring, hiring, team building
+- **Cross-functional collaboration:** Working with Product, Design, Business stakeholders
+- **Ownership:** End-to-end responsibility for systems and outcomes
 
 His founder experience provides a differentiator: he understands business context, manages competing priorities, and thinks in terms of organizational effectiveness, not just technical excellence.
 
@@ -295,27 +295,27 @@ His founder experience provides a differentiator: he understands business contex
 
 ### **Business Impact**
 
-* **Eliminated 97% engineering bottleneck** at GOOP through self-service CMS, freeing 2 engineers \+ PM for high-value work
-* **Drove $35 increase in AOV** through content gating implementation (625% increase in account creation, 84% increase in logins)
-* **Built and grew Boiling Pot Media** from solo operation to 6-person team delivering 125+ client projects over 10 years
-* **Reduced operational costs by $45K annually** at No Borders through custom SaaS integrations
-* **Managed 5 e-commerce sites generating $5M+ revenue** as sole engineer at No Borders
+- **Eliminated 97% engineering bottleneck** at GOOP through self-service CMS, freeing 2 engineers \+ PM for high-value work
+- **Drove $35 increase in AOV** through content gating implementation (625% increase in account creation, 84% increase in logins)
+- **Built and grew Boiling Pot Media** from solo operation to 6-person team delivering 125+ client projects over 10 years
+- **Reduced operational costs by $45K annually** at No Borders through custom SaaS integrations
+- **Managed 5 e-commerce sites generating $5M+ revenue** as sole engineer at No Borders
 
 ### **Technical Leadership**
 
-* **Led WordPress integration** for Shopify migration at GOOP (6-month delivery, zero downtime)
-* **Architected custom WordPress plugin** integrating ACF with Shopify APIs and legacy payment gateway
-* **Scaled infrastructure** supporting 1M+ daily visits at Boiling Pot Media with \<2s page load times
-* **Designed automated merchandising workflow** reducing daily management time from 10-25% to 5%
-* **Made independent build-vs-buy decisions** throughout career, evaluating technologies and tradeoffs
+- **Led WordPress integration** for Shopify migration at GOOP (6-month delivery, zero downtime)
+- **Architected custom WordPress plugin** integrating ACF with Shopify APIs and legacy payment gateway
+- **Scaled infrastructure** supporting 1M+ daily visits at Boiling Pot Media with \<2s page load times
+- **Designed automated merchandising workflow** reducing daily management time from 10-25% to 5%
+- **Made independent build-vs-buy decisions** throughout career, evaluating technologies and tradeoffs
 
 ### **Team Development & Culture**
 
-* **Mentored junior developer** from HTML/CSS to full-stack capability over 6 months
-* **Built engineering team from 0 to 3** at Boiling Pot Media, establishing standards and processes
-* **Created comprehensive documentation framework** reducing onboarding time from 4 weeks to 1.5 weeks
-* **Improved platform observability** through automated testing and error monitoring (85% of issues caught pre-production)
-* **Built high-trust cross-functional relationships** between Engineering and Editorial teams
+- **Mentored junior developer** from HTML/CSS to full-stack capability over 6 months
+- **Built engineering team from 0 to 3** at Boiling Pot Media, establishing standards and processes
+- **Created comprehensive documentation framework** reducing onboarding time from 4 weeks to 1.5 weeks
+- **Improved platform observability** through automated testing and error monitoring (85% of issues caught pre-production)
+- **Built high-trust cross-functional relationships** between Engineering and Editorial teams
 
 ## **Major Projects**
 
@@ -385,7 +385,6 @@ The following year, we alleviated Raybend's call burden by building a user role 
 
 The site has logged metrics for more than one million pumps. After I closed my business and referred all my clients to a former employee, Raybend insisted they would only work with me.
 
-
 #### **Technical Overview**
 
 This is a comprehensive WordPress-based quality control system for manufacturing pump products. It combines PHP backend logic with JavaScript validation to create a sophisticated data entry, storage, and retrieval platform.
@@ -396,129 +395,129 @@ This is a comprehensive WordPress-based quality control system for manufacturing
 
 The system implements a multi-layered validation framework for quality assurance testing:
 
-* **Dynamic Form Generation**: PHP generates testing forms based on product model specifications stored in WordPress taxonomy metadata
-* **Real-time Validation**: jQuery validation enforces acceptable ranges for:
-  * Discharge Pressure (PSI) at three test points
-  * Current (AMPS) at three test points
-* **Serial Number Tracking**: Prevents duplicate entries by comparing against the last submitted serial number within the session
-* **Conditional Validation**: Models can have validations enabled/disabled based on configuration
+- **Dynamic Form Generation**: PHP generates testing forms based on product model specifications stored in WordPress taxonomy metadata
+- **Real-time Validation**: jQuery validation enforces acceptable ranges for:
+  - Discharge Pressure (PSI) at three test points
+  - Current (AMPS) at three test points
+- **Serial Number Tracking**: Prevents duplicate entries by comparing against the last submitted serial number within the session
+- **Conditional Validation**: Models can have validations enabled/disabled based on configuration
 
 ##### **2\. Session Management & Workflow Optimization**
 
 The system employs sophisticated session handling to streamline operator workflow:
 
-* **20-Minute Session Windows**: Auto-resets if no activity occurs
-* **Model Memory**: Automatically re-selects the last tested product model
-* **Serial Number Continuity**: Tracks the previous serial number to prevent operator errors
-* **User Context Preservation**: Maintains operator identity throughout the session
+- **20-Minute Session Windows**: Auto-resets if no activity occurs
+- **Model Memory**: Automatically re-selects the last tested product model
+- **Serial Number Continuity**: Tracks the previous serial number to prevent operator errors
+- **User Context Preservation**: Maintains operator identity throughout the session
 
 ##### **3\. Data Storage Architecture**
 
 Custom Post Type System:
 
-* Each test creates a `product_record` post with status of either 'publish' (approved) or 'void'
-* Stores six performance metrics as post metadata
-* Links to product model via custom taxonomy
+- Each test creates a `product_record` post with status of either 'publish' (approved) or 'void'
+- Stores six performance metrics as post metadata
+- Links to product model via custom taxonomy
 
 Product Model Configuration:
 
-* Stores validation ranges (min/max values for each test parameter)
-* Maintains serial number sequences
-* Contains design specifications and graphing parameters
-* Tracks pricing history with JSON serialization
-* Configurable display options (hide from dropdowns, disable charts)
+- Stores validation ranges (min/max values for each test parameter)
+- Maintains serial number sequences
+- Contains design specifications and graphing parameters
+- Tracks pricing history with JSON serialization
+- Configurable display options (hide from dropdowns, disable charts)
 
 ##### **4\. Barcode Generation & Label Printing**
 
-* Generates CODE128 barcodes using JsBarcode library
-* Combines line ID with serial number
-* Opens print dialog automatically (unless disabled per model)
-* Error logging for print failures
+- Generates CODE128 barcodes using JsBarcode library
+- Combines line ID with serial number
+- Opens print dialog automatically (unless disabled per model)
+- Error logging for print failures
 
 ##### **5\. Product Lookup & Retrieval**
 
-* Custom search functionality by serial number
-* Displays test results, operator initials, and test date
-* Links to full product records
-* Handles partial matches and multiple results
+- Custom search functionality by serial number
+- Displays test results, operator initials, and test date
+- Links to full product records
+- Handles partial matches and multiple results
 
 ##### **6\. Data Visualization**
 
 The system includes configuration for performance charting:
 
-* FT Factor calculations
-* Pipe size cross-sectional area settings
-* Design specification performance data storage
-* Chart.js integration for visual representation
+- FT Factor calculations
+- Pipe size cross-sectional area settings
+- Design specification performance data storage
+- Chart.js integration for visual representation
 
 ### **Technical Complexity Elements**
 
 #### **Multi-Level Data Relationships**
 
-* WordPress taxonomies store product model configurations
-* Custom post types store individual test records
-* Post metadata stores performance measurements
-* Session variables maintain workflow state
-* JSON encoding for pricing history
+- WordPress taxonomies store product model configurations
+- Custom post types store individual test records
+- Post metadata stores performance measurements
+- Session variables maintain workflow state
+- JSON encoding for pricing history
 
 #### **Validation Logic**
 
-* Dynamic rule generation based on product model
-* Client-side validation with jQuery Validate
-* Server-side data sanitization
-* Custom validation methods (notEqual for serial numbers)
-* Conditional validation based on model settings
+- Dynamic rule generation based on product model
+- Client-side validation with jQuery Validate
+- Server-side data sanitization
+- Custom validation methods (notEqual for serial numbers)
+- Conditional validation based on model settings
 
 #### **Error Handling & Logging**
 
-* JavaScript error capture and PHP logging
-* Print dialogue failure recording
-* Session integrity checks
-* User authentication verification
+- JavaScript error capture and PHP logging
+- Print dialogue failure recording
+- Session integrity checks
+- User authentication verification
 
 #### **Security Considerations**
 
-* User role management (operators vs. managers)
-* Login/logout flow customization
-* Password reset integration
-* Session expiration enforcement
+- User role management (operators vs. managers)
+- Login/logout flow customization
+- Password reset integration
+- Session expiration enforcement
 
 #### **Business Implications**
 
 ##### **Quality Assurance & Compliance**
 
-* **Complete Traceability**: Every pump has a timestamped record with operator identification and exact performance metrics
-* **Specification Enforcement**: Automated validation ensures products meet design tolerances before approval
-* **Audit Trail**: Void records are preserved, creating accountability for discarded units
-* **Serial Number Integrity**: Prevents duplicate entries and maintains sequential tracking
+- **Complete Traceability**: Every pump has a timestamped record with operator identification and exact performance metrics
+- **Specification Enforcement**: Automated validation ensures products meet design tolerances before approval
+- **Audit Trail**: Void records are preserved, creating accountability for discarded units
+- **Serial Number Integrity**: Prevents duplicate entries and maintains sequential tracking
 
 ##### **Operational Efficiency**
 
-* **Reduced Entry Errors**: Validation catches out-of-spec readings immediately, preventing bad units from shipping
-* **Workflow Optimization**: Session memory eliminates repetitive model selection for batch testing
-* **Instant Labeling**: Automatic barcode generation eliminates manual label creation
-* **Fast Lookup**: Customers and service teams can retrieve product specifications by serial number
+- **Reduced Entry Errors**: Validation catches out-of-spec readings immediately, preventing bad units from shipping
+- **Workflow Optimization**: Session memory eliminates repetitive model selection for batch testing
+- **Instant Labeling**: Automatic barcode generation eliminates manual label creation
+- **Fast Lookup**: Customers and service teams can retrieve product specifications by serial number
 
 ##### **Manufacturing Intelligence**
 
-* **Performance Analytics**: Stored test data enables statistical process control
-* **Model Comparison**: Aggregated data reveals performance patterns across product lines
-* **Design Validation**: Actual test results can be compared against design specifications
-* **Pricing History**: Maintains cost tracking for each product model
+- **Performance Analytics**: Stored test data enables statistical process control
+- **Model Comparison**: Aggregated data reveals performance patterns across product lines
+- **Design Validation**: Actual test results can be compared against design specifications
+- **Pricing History**: Maintains cost tracking for each product model
 
 ##### **Customer Service Benefits**
 
-* **Product Authentication**: Serial number lookup verifies genuine products
-* **Specification Retrieval**: Customers can access their specific unit's test data
-* **Warranty Support**: Test records provide evidence of initial quality for warranty claims
-* **Technical Support**: Service teams can reference original performance parameters
+- **Product Authentication**: Serial number lookup verifies genuine products
+- **Specification Retrieval**: Customers can access their specific unit's test data
+- **Warranty Support**: Test records provide evidence of initial quality for warranty claims
+- **Technical Support**: Service teams can reference original performance parameters
 
 ##### **Regulatory & Business Value**
 
-* **ISO Compliance**: Documented testing procedures support quality certifications (ISO 9001 for Quality Management Systems (QMS))
-* **Liability Protection**: Test records demonstrate due diligence in quality control
-* **Process Documentation**: System codifies institutional knowledge about acceptable ranges
-* **Scalability**: Model-based configuration allows easy addition of new product lines
+- **ISO Compliance**: Documented testing procedures support quality certifications (ISO 9001 for Quality Management Systems (QMS))
+- **Liability Protection**: Test records demonstrate due diligence in quality control
+- **Process Documentation**: System codifies institutional knowledge about acceptable ranges
+- **Scalability**: Model-based configuration allows easy addition of new product lines
 
 This system transforms what could be a paper-based or spreadsheet process into an integrated quality management platform that provides immediate value through error prevention while building a valuable database of manufacturing intelligence over time.
 
@@ -530,16 +529,16 @@ This system transforms what could be a paper-based or spreadsheet process into a
 
 ### **Why This Narrative Works:**
 
-* Shows leadership experience (founded, grew team, delivered at scale)
-* Demonstrates self-awareness (recognized strengths, made strategic choice)
-* Explains transition positively (not failure, but focus)
-* Sets up future direction (technical leadership, people development)
+- Shows leadership experience (founded, grew team, delivered at scale)
+- Demonstrates self-awareness (recognized strengths, made strategic choice)
+- Explains transition positively (not failure, but focus)
+- Sets up future direction (technical leadership, people development)
 
 ### **Addressing Potential Interview Questions**
 
 **"Why did you leave your company?"**
 
- "After 10 years of building Boiling Pot Media and growing it to our most profitable year, I realized I was spread across too many roles—sales, operations, technical leadership, client management, accounting. While the business was successful, my greatest strengths in technical architecture, team development, and solving complex engineering problems were being diluted. I made the strategic decision to focus on what I do best: technical leadership and building great engineering teams. I successfully transitioned clients to one of my engineers, and since then I've been deliberate about choosing roles that let me combine deep technical work with team leadership."
+"After 10 years of building Boiling Pot Media and growing it to our most profitable year, I realized I was spread across too many roles—sales, operations, technical leadership, client management, accounting. While the business was successful, my greatest strengths in technical architecture, team development, and solving complex engineering problems were being diluted. I made the strategic decision to focus on what I do best: technical leadership and building great engineering teams. I successfully transitioned clients to one of my engineers, and since then I've been deliberate about choosing roles that let me combine deep technical work with team leadership."
 
 **"What's your management experience?"**
 
@@ -565,23 +564,23 @@ This system transforms what could be a paper-based or spreadsheet process into a
 
 ### **Strengths**
 
-* **Solution-focused:** Maintains focus on solving problems rather than dwelling on obstacles
-* **Initiative:** Proactively identifies and addresses issues without waiting for direction
-* **Calm under pressure:** Maintains composure and productivity during challenging projects
-* **Adaptable:** Learns new technologies and adjusts to changing requirements effectively
-* **Systematic:** Approaches problems methodically, with clear reasoning and documentation
-* **Collaborative:** Builds strong cross-functional relationships through responsiveness and communication
-* **Ownership mindset:** Takes responsibility for outcomes, not just tasks
-* **Teaching ability:** Effectively mentors and develops others through structured guidance
+- **Solution-focused:** Maintains focus on solving problems rather than dwelling on obstacles
+- **Initiative:** Proactively identifies and addresses issues without waiting for direction
+- **Calm under pressure:** Maintains composure and productivity during challenging projects
+- **Adaptable:** Learns new technologies and adjusts to changing requirements effectively
+- **Systematic:** Approaches problems methodically, with clear reasoning and documentation
+- **Collaborative:** Builds strong cross-functional relationships through responsiveness and communication
+- **Ownership mindset:** Takes responsibility for outcomes, not just tasks
+- **Teaching ability:** Effectively mentors and develops others through structured guidance
 
 ### **Work Preferences & Values**
 
-* Prefers focused technical leadership over diluted generalist roles
-* Values documentation and knowledge sharing as cultural practices
-* Believes in balancing hands-on technical work with team development
-* Appreciates autonomy and trusts others to exercise independent judgment
-* Focuses on delivering measurable business impact, not just technical elegance
-* Maintains pragmatic approach: ship solutions that work well, iterate to make them better
+- Prefers focused technical leadership over diluted generalist roles
+- Values documentation and knowledge sharing as cultural practices
+- Believes in balancing hands-on technical work with team development
+- Appreciates autonomy and trusts others to exercise independent judgment
+- Focuses on delivering measurable business impact, not just technical elegance
+- Maintains pragmatic approach: ship solutions that work well, iterate to make them better
 
 ## **Technical Skills Detail**
 
@@ -639,26 +638,26 @@ James has designed numerous systems from scratch throughout his career:
 
 **Custom WordPress Plugins:** Architected plugins for specific business needs, including:
 
-* Shopify integration plugin (ACF fields → Storefront/Admin APIs \+ payment gateway)
-* Content gating system with dynamic rule application
-* Merchandising workflow automation (CSV import → WooCommerce product creation)
+- Shopify integration plugin (ACF fields → Storefront/Admin APIs \+ payment gateway)
+- Content gating system with dynamic rule application
+- Merchandising workflow automation (CSV import → WooCommerce product creation)
 
 **Integration Architectures:** Designed integration layers connecting disparate systems:
 
-* E-commerce platforms with shipping, communication, and analytics services
-* CMS systems with headless commerce platforms
-* Legacy systems with modern APIs during migration periods
+- E-commerce platforms with shipping, communication, and analytics services
+- CMS systems with headless commerce platforms
+- Legacy systems with modern APIs during migration periods
 
 **Component Systems:** Built reusable component libraries:
 
-* React-based CMS component system enabling non-technical content creation
-* Flexible layouts balancing design freedom with structured implementation
+- React-based CMS component system enabling non-technical content creation
+- Flexible layouts balancing design freedom with structured implementation
 
 **Infrastructure Architecture:** Made high-level infrastructure decisions:
 
-* VPN-based hosting for 25+ websites at Boiling Pot Media
-* Caching strategies (CDN, Redis, Varnish) for high-traffic sites
-* Database replication and optimization for scalability
+- VPN-based hosting for 25+ websites at Boiling Pot Media
+- Caching strategies (CDN, Redis, Varnish) for high-traffic sites
+- Database replication and optimization for scalability
 
 ### **Build-vs-Buy Decision Making**
 
@@ -670,21 +669,21 @@ James regularly evaluates whether to build custom solutions or leverage existing
 
 **Evaluation Framework:**
 
-* Cost analysis (initial \+ ongoing maintenance)
-* Capability assessment (does it solve the actual problem?)
-* Integration complexity (how well does it fit our ecosystem?)
-* Long-term maintainability (can the team support it?)
-* Time-to-market considerations (build time vs business urgency)
+- Cost analysis (initial \+ ongoing maintenance)
+- Capability assessment (does it solve the actual problem?)
+- Integration complexity (how well does it fit our ecosystem?)
+- Long-term maintainability (can the team support it?)
+- Time-to-market considerations (build time vs business urgency)
 
 ### **Technical Documentation**
 
 James writes technical design documents to communicate architectural decisions. His documentation work at GOOP includes:
 
-* System architecture overviews
-* API integration specifications
-* Deployment procedures
-* Code patterns and standards
-* Onboarding guides for new engineers
+- System architecture overviews
+- API integration specifications
+- Deployment procedures
+- Code patterns and standards
+- Onboarding guides for new engineers
 
 His documentation philosophy: "Making these resources speeds up our work today and will speed up our work more as the documentation is refined. I think that doing this visible work on documentation fosters a culture that prioritizes documentation."
 
@@ -696,27 +695,27 @@ James has extensive experience juggling competing demands:
 
 **At No Borders:** As sole engineer for 5 e-commerce sites, he managed:
 
-* Feature development across multiple properties
-* Bug fixes and urgent issues
-* Infrastructure maintenance
-* Stakeholder requests from different business units
-* Technical debt and optimization work
+- Feature development across multiple properties
+- Bug fixes and urgent issues
+- Infrastructure maintenance
+- Stakeholder requests from different business units
+- Technical debt and optimization work
 
 **At GOOP:** Balances:
 
-* Large multi-month projects (Shopify migration, CMS system)
-* Dozens of monthly Editorial requests (varying complexity)
-* Platform reliability and performance
-* Technical improvements (testing, monitoring, documentation)
-* Mentorship and knowledge sharing
+- Large multi-month projects (Shopify migration, CMS system)
+- Dozens of monthly Editorial requests (varying complexity)
+- Platform reliability and performance
+- Technical improvements (testing, monitoring, documentation)
+- Mentorship and knowledge sharing
 
 **At Boiling Pot Media:** Managed agency operations including:
 
-* 125+ client projects over 10 years
-* Team coordination (6 people across multiple disciplines)
-* Sales pipeline and client relationships
-* Infrastructure for 25+ hosted sites
-* Service delivery across web development, marketing, and design
+- 125+ client projects over 10 years
+- Team coordination (6 people across multiple disciplines)
+- Sales pipeline and client relationships
+- Infrastructure for 25+ hosted sites
+- Service delivery across web development, marketing, and design
 
 ### **Prioritization Approach**
 
@@ -746,18 +745,18 @@ James excels at building productive relationships with non-technical stakeholder
 
 **Editorial Team at GOOP:**
 
-* Maintains \<24-hour response time for requests
-* Translates technical constraints into understandable terms
-* Conducted stakeholder interviews to understand actual needs (CMS project)
-* Provides realistic timelines and manages expectations
-* His manager noted this "forms goodwill between the Editorial Team and the Tech Team"
+- Maintains \<24-hour response time for requests
+- Translates technical constraints into understandable terms
+- Conducted stakeholder interviews to understand actual needs (CMS project)
+- Provides realistic timelines and manages expectations
+- His manager noted this "forms goodwill between the Editorial Team and the Tech Team"
 
 **Client Relationships at Boiling Pot Media:**
 
-* Managed 125+ client relationships over 10 years
-* Handled sales, requirements gathering, expectation setting, and ongoing support
-* Translated business goals into technical solutions
-* Maintained long-term client relationships (some sites supported 1M+ daily visits)
+- Managed 125+ client relationships over 10 years
+- Handled sales, requirements gathering, expectation setting, and ongoing support
+- Translated business goals into technical solutions
+- Maintained long-term client relationships (some sites supported 1M+ daily visits)
 
 ### **Collaboration with Technical Peers**
 
@@ -787,33 +786,33 @@ James works effectively with engineers across specialties:
 
 **Ownership & Initiative:**
 
-* "Takes ownership of his area of responsibility... without the need for direction from management"
-* "Proposes new ideas that he believes will lead to further improvements"
-* "His ownership and initiative are valuable for company, and qualities that turn good organizations into great ones"
+- "Takes ownership of his area of responsibility... without the need for direction from management"
+- "Proposes new ideas that he believes will lead to further improvements"
+- "His ownership and initiative are valuable for company, and qualities that turn good organizations into great ones"
 
 **Solution-Focused Approach:**
 
-* "Focus on solutions, not problems, tackling all required tasks without complaint"
-* "Often on his own, he was able to figure out ways to make difficult aspects of the migration work"
-* "Always focused on solutions, not problems"
+- "Focus on solutions, not problems, tackling all required tasks without complaint"
+- "Often on his own, he was able to figure out ways to make difficult aspects of the migration work"
+- "Always focused on solutions, not problems"
 
 **Team & Morale Impact:**
 
-* "Teammates also value the positive impact he has on morale"
-* "Brings a calm, light-hearted demeanor to the team that is widely appreciated"
-* "Forms goodwill between the Editorial Team and the Tech Team"
+- "Teammates also value the positive impact he has on morale"
+- "Brings a calm, light-hearted demeanor to the team that is widely appreciated"
+- "Forms goodwill between the Editorial Team and the Tech Team"
 
 **Adaptability & Growth:**
 
-* "Showed growth and improvement in handling large, complicated projects"
-* "Even when I asked him to switch directions multiple times, he continued to keep his head up"
-* Expanded frontend skills significantly beyond initial PHP focus
+- "Showed growth and improvement in handling large, complicated projects"
+- "Even when I asked him to switch directions multiple times, he continued to keep his head up"
+- Expanded frontend skills significantly beyond initial PHP focus
 
 **Responsiveness:**
 
-* "Quick to respond and address \[issues\]"
-* "I believe that James's responsiveness to the editorial team greatly contributes to company success"
-* Maintains fast turnaround times across diverse request types
+- "Quick to respond and address \[issues\]"
+- "I believe that James's responsiveness to the editorial team greatly contributes to company success"
+- Maintains fast turnaround times across diverse request types
 
 ### **Areas of Recognized Strength**
 
@@ -833,11 +832,11 @@ James works effectively with engineers across specialties:
 
 His manager's guidance for future leadership development:
 
-* "Meet regularly with \[colleagues\] in 1x1 meetings (You do not need to be someone's people leader to hold a 1x1 with them\!)"
-* "Show initiative by turning tech debt into OKRs"
-* "Meet regularly with tech lead peers"
-* "Anything he can do to smooth out the challenges he faces around estimates and regressions will also help"
-* "Good leadership starts within, so he should continue to strengthen the positive values and traits he already exhibits"
+- "Meet regularly with \[colleagues\] in 1x1 meetings (You do not need to be someone's people leader to hold a 1x1 with them\!)"
+- "Show initiative by turning tech debt into OKRs"
+- "Meet regularly with tech lead peers"
+- "Anything he can do to smooth out the challenges he faces around estimates and regressions will also help"
+- "Good leadership starts within, so he should continue to strengthen the positive values and traits he already exhibits"
 
 These suggestions indicate James is being groomed for formal leadership roles and the development areas are about formalizing leadership practices (1x1s, tech lead peer relationships) rather than fundamental capability gaps.
 
@@ -847,11 +846,11 @@ These suggestions indicate James is being groomed for formal leadership roles an
 
 Unlike many engineers transitioning to leadership, James has already:
 
-* Built and managed a 6-person team
-* Made hiring decisions and developed talent
-* Managed P\&L and business operations
-* Handled client relationships and stakeholder management
-* Made resource allocation and prioritization decisions under constraints
+- Built and managed a 6-person team
+- Made hiring decisions and developed talent
+- Managed P\&L and business operations
+- Handled client relationships and stakeholder management
+- Made resource allocation and prioritization decisions under constraints
 
 This experience means he understands leadership challenges that many first-time managers struggle with.
 
@@ -859,10 +858,10 @@ This experience means he understands leadership challenges that many first-time 
 
 James repeatedly demonstrates ability to solve problems that unblock others:
 
-* CMS system: Freed 2 engineers \+ PM from manual work
-* Content gating: Unblocked frontend engineers with backend logic layer
-* Documentation: Reduced onboarding time, speeding up new engineer productivity
-* Merchandising automation: Reclaimed his own time for higher-value work
+- CMS system: Freed 2 engineers \+ PM from manual work
+- Content gating: Unblocked frontend engineers with backend logic layer
+- Documentation: Reduced onboarding time, speeding up new engineer productivity
+- Merchandising automation: Reclaimed his own time for higher-value work
 
 This "force multiplier" mindset is essential for technical leadership.
 
@@ -878,10 +877,10 @@ His ability to build "goodwill between Editorial Team and Tech Team" through res
 
 James combines:
 
-* Deep expertise in core technologies (PHP, WordPress, JavaScript)
-* Breadth across modern web stack (React, Docker, AWS, CI/CD)
-* Willingness to learn new technologies as needed
-* Architectural thinking about how systems fit together
+- Deep expertise in core technologies (PHP, WordPress, JavaScript)
+- Breadth across modern web stack (React, Docker, AWS, CI/CD)
+- Willingness to learn new technologies as needed
+- Architectural thinking about how systems fit together
 
 This T-shaped skill profile allows him to make informed technology decisions and mentor engineers across specialties.
 
@@ -889,11 +888,11 @@ This T-shaped skill profile allows him to make informed technology decisions and
 
 The Shopify migration demonstrates James's capability with complex, ambiguous projects:
 
-* Unclear requirements that evolved
-* Multiple stakeholders with different needs
-* Tight timeline with business pressure
-* Technical challenges requiring creative solutions
-* Need for independent decision-making
+- Unclear requirements that evolved
+- Multiple stakeholders with different needs
+- Tight timeline with business pressure
+- Technical challenges requiring creative solutions
+- Need for independent decision-making
 
 Lead/EM roles often involve this kind of ambiguity, and James has proven capability.
 
@@ -1023,7 +1022,7 @@ Based on James's background and demonstrated preferences:
 
 ### **Target Roles**
 
-* **Engineering Manager:** Leading team of 5-10 engineers with continued technical contribution
-* **Technical Lead / Lead Engineer:** Senior IC role with architectural responsibility and mentorship expectations
-* **Staff Engineer:** IC track with focus on technical strategy, system design, and organizational impact
-* **Director of Engineering:** For smaller companies where director role includes hands-on technical work
+- **Engineering Manager:** Leading team of 5-10 engineers with continued technical contribution
+- **Technical Lead / Lead Engineer:** Senior IC role with architectural responsibility and mentorship expectations
+- **Staff Engineer:** IC track with focus on technical strategy, system design, and organizational impact
+- **Director of Engineering:** For smaller companies where director role includes hands-on technical work

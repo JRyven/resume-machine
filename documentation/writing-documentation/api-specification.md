@@ -16,6 +16,7 @@ API documentation describes HTTP endpoints, request/response formats, authentica
 ## Purpose
 
 API documentation:
+
 - Defines available endpoints and methods
 - Specifies request and response formats
 - Documents authentication and authorization
@@ -53,10 +54,12 @@ Describe how to authenticate:
 ## Authentication
 
 All requests require an API key in the `Authorization` header:
+```
+
+Authorization: Bearer [API_KEY]
 
 ```
-Authorization: Bearer [API_KEY]
-```
+
 ```
 
 ## Endpoint Documentation Format
@@ -74,8 +77,8 @@ Authorization: Bearer [API_KEY]
 ```markdown
 ### Path Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter | Type   | Description   |
+| --------- | ------ | ------------- |
 | `[PARAM]` | string | [DESCRIPTION] |
 | `[PARAM]` | number | [DESCRIPTION] |
 ```
@@ -85,15 +88,15 @@ Authorization: Bearer [API_KEY]
 ```markdown
 ### Query Parameters
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `[PARAM]` | string | No | [DESCRIPTION] (default: `[DEFAULT]`) |
-| `[PARAM]` | boolean | No | [DESCRIPTION] (default: `[DEFAULT]`) |
+| Parameter | Type    | Required | Description                          |
+| --------- | ------- | -------- | ------------------------------------ |
+| `[PARAM]` | string  | No       | [DESCRIPTION] (default: `[DEFAULT]`) |
+| `[PARAM]` | boolean | No       | [DESCRIPTION] (default: `[DEFAULT]`) |
 ```
 
 ### Request Body
 
-```markdown
+````markdown
 ### Request Body
 
 ```json
@@ -102,7 +105,9 @@ Authorization: Bearer [API_KEY]
   "[FIELD]": "[DESCRIPTION_AND_TYPE]"
 }
 ```
-```
+````
+
+````
 
 ### Response
 
@@ -116,7 +121,7 @@ Authorization: Bearer [API_KEY]
   "[FIELD]": "[RESPONSE_VALUE]",
   "[FIELD]": "[RESPONSE_VALUE]"
 }
-```
+````
 
 ### Example
 
@@ -128,7 +133,8 @@ curl -X [METHOD] "[BASE_URL]/[ENDPOINT]" \
     "[FIELD]": "[VALUE]"
   }'
 ```
-```
+
+````
 
 ### Error Responses
 
@@ -140,8 +146,9 @@ curl -X [METHOD] "[BASE_URL]/[ENDPOINT]" \
   "error": "INVALID_REQUEST",
   "message": "Missing required field: [FIELD_NAME]"
 }
-```
-```
+````
+
+````
 
 ## Error Codes Section
 
@@ -156,7 +163,7 @@ curl -X [METHOD] "[BASE_URL]/[ENDPOINT]" \
 | 404 | Not Found | Resource does not exist |
 | 429 | Too Many Requests | Rate limit exceeded |
 | 500 | Server Error | Unexpected server error |
-```
+````
 
 ## Example
 
@@ -168,10 +175,11 @@ Base URL: `https://api.example.com/v1`
 ## Authentication
 
 All requests require an API key:
+```
 
-```
 Authorization: Bearer [API_KEY]
-```
+
+````
 
 ## POST /users
 
@@ -185,7 +193,7 @@ Create a new user account.
   "name": "[USER_NAME]",
   "password": "[PASSWORD_HASH]"
 }
-```
+````
 
 ### Response
 
@@ -219,8 +227,8 @@ Retrieve a user by ID.
 
 ### Path Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter   | Type   | Description            |
+| ----------- | ------ | ---------------------- |
 | `[USER_ID]` | string | Unique user identifier |
 
 ### Response
@@ -234,6 +242,7 @@ Retrieve a user by ID.
   "name": "[USER_NAME]"
 }
 ```
+
 ```
 
 ## Size Guidelines
@@ -244,3 +253,4 @@ Retrieve a user by ID.
 - Authentication: 30-50 words
 - Per Endpoint: 100-200 words
 - Error Codes: 50-100 words
+```

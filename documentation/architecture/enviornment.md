@@ -16,9 +16,7 @@ Setup and guide for developers contributing to [PROJECT_NAME].
 
 ## Prerequisites
 
--
-
----
+- ***
 
 ## Project Structure
 
@@ -63,6 +61,7 @@ python3 [PROJECT_NAME].py --test
 See [Command Reference](./dev-commands.md#debugging-commands) for debugging workflow.
 
 Enable in `[PROJECT_NAME]_python.config`:
+
 ```python
 MAIL_TO_MD_DEBUG = True
 ```
@@ -131,6 +130,7 @@ See [Command Reference](./dev-commands.md#configuration-commands) for component 
 ## Debugging Tips
 
 See [Command Reference](./dev-commands.md#debugging-commands) for complete debugging workflow including:
+
 - Debug log viewing
 - Error log searching
 - Pattern testing

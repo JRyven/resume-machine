@@ -16,6 +16,7 @@ Reference documentation provides concise, structured lookup information for spec
 ## Purpose
 
 References serve as quick lookup resources:
+
 - API documentation with parameter definitions
 - Command-line interface flag references
 - Configuration option lists
@@ -56,10 +57,10 @@ Reference title without "Reference" suffix.
 ### Use Tables for Structured Data
 
 ```markdown
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| [FIELD_NAME] | string | Yes | [FIELD_DESCRIPTION] |
-| [FIELD_NAME] | number | No | [FIELD_DESCRIPTION] |
+| Field        | Type   | Required | Description         |
+| ------------ | ------ | -------- | ------------------- |
+| [FIELD_NAME] | string | Yes      | [FIELD_DESCRIPTION] |
+| [FIELD_NAME] | number | No       | [FIELD_DESCRIPTION] |
 ```
 
 ### Use Definition Lists for Grouped Items
@@ -109,20 +110,21 @@ keywords: [reference, configuration, options, settings]
 
 ## Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `DATABASE_URL` | string | required | Connection string for primary database |
-| `LOG_LEVEL` | string | `info` | Logging verbosity: `debug`, `info`, `warn`, `error` |
-| `MAX_CONNECTIONS` | number | `10` | Maximum concurrent database connections |
-| `CACHE_TTL` | number | `3600` | Cache expiration time in seconds |
+| Option            | Type   | Default  | Description                                         |
+| ----------------- | ------ | -------- | --------------------------------------------------- |
+| `DATABASE_URL`    | string | required | Connection string for primary database              |
+| `LOG_LEVEL`       | string | `info`   | Logging verbosity: `debug`, `info`, `warn`, `error` |
+| `MAX_CONNECTIONS` | number | `10`     | Maximum concurrent database connections             |
+| `CACHE_TTL`       | number | `3600`   | Cache expiration time in seconds                    |
 
 ## Commands
 
 **[COMMAND_NAME]**
 Brief description of command purpose and usage.
-
 ```
+
 [COMMAND_SYNTAX]
+
 ```
 
 Options:

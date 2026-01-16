@@ -20,6 +20,7 @@ This is the **central index** for all development-related documentation. Whether
 This documentation uses a **modular, hierarchical system** to organize information. Each topic has its own directory with an `abstract.md` index file.
 
 **Quick Structure:**
+
 ```
 documentation/
 ├── abstract.md            ← You are here (main index)
@@ -34,7 +35,6 @@ documentation/
 ```
 
 **To understand this organization:** Read [Documentation Structure Guide](./STRUCTURE.md)
-
 
 ## Hierarchy Pattern
 
@@ -51,6 +51,7 @@ topic-directory/
 ### Level 0: Documentation Root
 
 The root `documentation/` directory contains:
+
 - `abstract.md` - Main index for all documentation
 - `STRUCTURE.md` - This guide (shows how documentation is organized)
 - Topic directories (organized by subject)
@@ -74,9 +75,11 @@ documentation/
 Each topic directory contains:
 
 **Mandatory:**
+
 - `abstract.md` - Table of contents and topic overview
 
 **Optional:**
+
 - Topic-specific content files (e.g., `architecture.md`, `environment.md`)
 - Organized by increasing specificity
 
@@ -87,6 +90,7 @@ Each topic directory contains:
 ### abstract.md (Index Files)
 
 Every directory level has an `abstract.md` that serves as:
+
 - **Index** - Table of contents for that topic
 - **Overview** - Executive summary and key concepts
 - **Definitions** - Key terminology for the topic
@@ -95,6 +99,7 @@ Every directory level has an `abstract.md` that serves as:
 ### Content Files
 
 Specific content files use descriptive, kebab-case names:
+
 - `architecture.md` - System architecture details
 - `environment.md` - Development environment setup
 - `configuration.md` - Configuration reference
@@ -217,11 +222,13 @@ Use consistent link patterns:
 ### Adding a New Topic
 
 1. **Create directory** with kebab-case name
+
    ```bash
    mkdir documentation/new-topic
    ```
 
 2. **Create abstract.md** (topic index)
+
    ```markdown
    ---
    title: New Topic Overview
@@ -245,6 +252,7 @@ Use consistent link patterns:
    ```
 
 3. **Add content files** as needed
+
    ```bash
    touch documentation/new-topic/detailed-content.md
    ```
@@ -301,9 +309,11 @@ Executive summary of this topic area.
 ## Key Concepts
 
 ### Concept 1
+
 Definition and explanation.
 
 ### Concept 2
+
 Definition and explanation.
 
 ---
@@ -328,26 +338,31 @@ Definition and explanation.
 ## Benefits of Hierarchical Structure
 
 ### 1. **Modularity**
+
 - Each topic is self-contained
 - Easy to maintain independently
 - Clear boundaries between topics
 
 ### 2. **Discoverability**
+
 - Natural folder structure mirrors mental models
 - Table of contents at each level
 - Consistent link patterns
 
 ### 3. **Scalability**
+
 - Add new topics without restructuring
 - Add subtopics without changing existing links
 - Scales with project growth
 
 ### 4. **Maintainability**
+
 - Single responsibility per file
 - Clear ownership (folder = topic owner)
 - Easy to find what you need
 
 ### 5. **Accessibility**
+
 - Works with file explorers
 - Works with Markdown readers
 - Works with VS Code outline view
@@ -398,6 +413,7 @@ If migrating from flat structure:
 ### VS Code Integration
 
 The folder structure works naturally with VS Code:
+
 - File explorer shows hierarchy
 - Breadcrumb navigation available
 - Outline view shows structure
@@ -406,6 +422,7 @@ The folder structure works naturally with VS Code:
 ### Static Site Generators
 
 This structure converts well to:
+
 - Hugo
 - Jekyll
 - Docusaurus
@@ -417,6 +434,7 @@ The `abstract.md` files become natural `index.md` files for site generation.
 ### Obsidian Integration
 
 Perfect for Obsidian knowledge bases:
+
 - Each folder is a workspace
 - abstract.md is the folder note
 - Backlinks work across hierarchies
@@ -428,13 +446,13 @@ Perfect for Obsidian knowledge bases:
 
 The CLEAR Docs hierarchical structure provides:
 
-| Feature | Benefit |
-|---------|---------|
+| Feature                  | Benefit                    |
+| ------------------------ | -------------------------- |
 | **Modular organization** | Easy to maintain and scale |
-| **Consistent pattern** | Intuitive to navigate |
-| **Clear hierarchy** | Natural mental model |
+| **Consistent pattern**   | Intuitive to navigate      |
+| **Clear hierarchy**      | Natural mental model       |
 | **Abstract.md indexing** | Self-documenting structure |
-| **Flexible linking** | Works with many tools |
+| **Flexible linking**     | Works with many tools      |
 
 Following this pattern ensures documentation stays organized, accessible, and maintainable as your project grows.
 

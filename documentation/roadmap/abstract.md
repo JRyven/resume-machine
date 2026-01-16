@@ -20,6 +20,7 @@ This is the **central index** for all project planning and roadmap documentation
 The Roadmap Guide provides comprehensive planning documentation for project lifecycle management, from initial development through long-term maintenance. Key focus areas include phased development approaches, Development Goals tracking, and strategic planning for sustainable growth. Use this guide to determine which roadmap applies to your current project phase and access relevant planning resources.
 
 **Best Practices Checklist:**
+
 - [ ] Review appropriate roadmap based on current project phase
 - [ ] Align team efforts with roadmap priorities and development goals
 - [ ] Update Development Goals statuses as work progresses
@@ -44,6 +45,7 @@ Understanding these key terms is essential for working with the roadmap system:
 **Kanban Lifecycle:** The progression path for tasks within a project through three stages: In Progress, Backlog, and Complete. This lifecycle enables granular tracking of work within each project.
 
 **WIP Limits (Work-In-Progress Limits):** Constraints that prevent overload and maintain focus:
+
 - **Project WIP Limit:** Maximum 1 project in "In Progress" status at any time
 
 **Development Goals:** The collective term for all projects being tracked through the Development Goals tracking system in the Unified Development Roadmap, covering all project phases from inception through long-term maintenance and growth.
@@ -97,6 +99,7 @@ If you're managing an ongoing project, follow this maintenance-focused approach:
 The Development Goals tracking system is a dual-lifecycle markdown-based task management approach designed for both human and AI agent collaboration. Projects progress through a roadmap lifecycle (In Progress → Backlog → Complete → Rejected).
 
 **Key Features:**
+
 - **Dual-lifecycle architecture** for managing both strategic projects and tactical tasks
 - **WIP limits** to maintain focus
 - **Structured metadata** for dependencies, priorities, and assignments
@@ -104,10 +107,12 @@ The Development Goals tracking system is a dual-lifecycle markdown-based task ma
 - **Programmatic validation** schema for AI agent integration
 
 **Where Development Goals Live:**
+
 - **All Phases:** All projects across the entire development lifecycle are tracked in [roadmap.md](./roadmap.md)
 - **Specification:** Complete technical documentation in [specification.md](./specification.md)
 
 **When to Update Development Goals:**
+
 - When work is completed (tasks finish, projects complete)
 - When new decisions are made (new projects identified, priorities change)
 - When dependencies change or blockers are resolved
@@ -119,6 +124,7 @@ Both human developers and AI agents edit these documents directly, with all chan
 
 **[Unified Development Roadmap](./roadmap.md)**
 Comprehensive planning framework covering all project development phases:
+
 - **Initial Development:** Project setup, foundation, core feature development, testing, deployment
 - **Post-Launch:** Stabilization, monitoring, feature enhancements, and iterative improvements
 - **Maintenance & Growth:** Performance optimization, technical debt management, user-driven evolution
@@ -129,6 +135,7 @@ All projects across the entire development lifecycle are tracked in the Developm
 
 **[Architecture Decision Records](../../architecture-decisions/README.md)**
 Structured documentation of significant planning and architectural decisions:
+
 - ADR templates and guidelines
 - Decision rationale and alternatives considered
 - Implementation tracking and outcomes
@@ -203,36 +210,42 @@ This section provides comprehensive guidance for both human developers and AI ag
 ### Updating the Roadmap
 
 **Update Frequency:**
+
 - **As needed:** When work completes or new decisions are made (no fixed cadence)
 - **Before updates:** Review relevant sections of [specification.md](./specification.md) to ensure compliance
 - **After updates:** Commit changes to version control with descriptive commit messages
 
 **Who Updates:**
+
 - Both human developers and AI agents edit these documents
 - All changes are tracked through version control
 - No formal approval process for single-person projects (adapt as team grows)
 
 **What to Update:**
 
-*When completing work:*
+_When completing work:_
+
 - Check off completed actions (`- [ ]` → `- [x]`)
 - Move completed tasks from In Progress to Complete (strip detail per spec)
 - Move completed projects from In Progress to Complete (strip detail per spec)
 - Promote next backlog task automatically when In Progress drops below WIP limit
 
-*When making new decisions:*
+_When making new decisions:_
+
 - Add new projects to appropriate backlog (Initial or Maintenance)
 - Add new tasks to project backlogs with full metadata
 - Update priorities or dependencies based on new information
 - Move projects to Rejected with clear "why" rationale
 
-*When updating status:*
+_When updating status:_
+
 - Update project status sections with current context
 - Add notes to projects or tasks to capture decisions or learnings
 - Update Current Project Status section in roadmap-abstract.md
 - Update last_modified date in document frontmatter
 
 **Validation Checklist:**
+
 - [ ] WIP limits respected (1 project)
 - [ ] All dependencies use correct markdown anchor link format
 - [ ] All dates in YYYY-MM-DD format
@@ -250,12 +263,14 @@ Effective risk management is critical throughout all phases of project developme
 ### Technical Risks
 
 **Initial Development Phase:**
+
 - **Scope Creep:** Strict prioritization and MVP focus
 - **Technology Changes:** Early proof-of-concepts and architecture spikes
 - **Performance Issues:** Regular performance testing and optimization
 - **Security Vulnerabilities:** Security reviews and automated scanning
 
 **Maintenance Phase:**
+
 - **Dependency Vulnerabilities:** Regular security updates and dependency scanning
 - **Performance Degradation:** Continuous monitoring and proactive optimization
 - **Technical Debt Accumulation:** Dedicated refactoring time in each sprint
@@ -264,12 +279,14 @@ Effective risk management is critical throughout all phases of project developme
 ### Project Risks
 
 **Initial Development Phase:**
+
 - **Timeline Delays:** Agile methodology with regular reassessment
 - **Resource Constraints:** Cross-training and knowledge sharing
 - **Stakeholder Expectations:** Regular demos and transparent communication
 - **Market Changes:** Competitive analysis and flexibility in requirements
 
 **Maintenance Phase:**
+
 - **User Retention:** Focus on user experience and feature enhancements
 - **Competitive Pressure:** Market monitoring and differentiation strategies
 - **Resource Constraints:** Efficient resource allocation and prioritization
@@ -278,6 +295,7 @@ Effective risk management is critical throughout all phases of project developme
 ### Operational Risks
 
 **Maintenance Phase (Primary Concern):**
+
 - **Incident Management:** 24/7 monitoring and rapid response capabilities
 - **Data Loss:** Robust backup and disaster recovery procedures
 - **Team Knowledge:** Documentation and knowledge sharing practices
@@ -286,18 +304,21 @@ Effective risk management is critical throughout all phases of project developme
 ### Mitigation Strategies
 
 **Proactive Management:**
+
 - **Regular Risk Reviews:** Assess risks during planning sessions and retrospectives
 - **Contingency Planning:** Document alternative approaches for critical paths
 - **Early Warning Systems:** Monitor KPIs and trends to detect issues before they escalate
 - **Stakeholder Communication:** Maintain transparency with regular updates and feedback loops
 
 **Risk-Driven Project Planning:**
+
 - Critical risks may be addressed through dedicated projects in the Development Goals backlog
 - When a risk requires significant mitigation effort, create a project with appropriate priority
 - Track risk mitigation work using the same Development Goals system as feature development
 - Document risk-related decisions in ADRs for future reference
 
 **Phase-Specific Focus:**
+
 - Initial Development: Focus on technical risks and timeline management
 - Maintenance: Shift focus to operational risks and user retention
 - Both Phases: Maintain awareness of resource constraints and stakeholder expectations

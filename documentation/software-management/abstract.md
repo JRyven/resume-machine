@@ -18,6 +18,7 @@ This is the **central index** for all software management and maintenance docume
 The Software Management documentation provides comprehensive guidance for maintaining software health throughout its lifecycle. Key focus areas include dependency management, version control strategies, security patching, and maintenance procedures. The documentation emphasizes automated dependency updates, semantic versioning, security vulnerability management, and systematic maintenance practices to ensure software reliability, security, and sustainability.
 
 **Best Practices Checklist:**
+
 - [ ] Use semantic versioning for all releases
 - [ ] Automate dependency updates and security scanning
 - [ ] Maintain dependency inventory with licenses and vulnerabilities
@@ -40,11 +41,13 @@ The Software Management documentation provides comprehensive guidance for mainta
 ## Quick Links
 
 **Essential Commands:**
+
 - Update: `[UPDATE_COMMAND]` (See [Commands Reference](./dev-commands.md))
 - Audit: `[AUDIT_COMMAND]`
 - Version: `[VERSION_COMMAND]`
 
 **Most Referenced Docs:**
+
 - [Dependency Management](./software-dependencies.md) - Managing third-party libraries and packages
 - [Version Strategy](./software-versioning.md) - Release versioning and compatibility
 - [Security Management](./software-security.md) - Vulnerability management and patching

@@ -16,6 +16,7 @@ A guide provides step-by-step instructions to accomplish a specific task or goal
 ## Purpose
 
 Guides help users:
+
 - Complete specific tasks from start to finish
 - Understand prerequisites and requirements
 - Troubleshoot common issues
@@ -55,6 +56,7 @@ Brief 1-2 sentence description of what the guide teaches and the end goal.
 ### Prerequisites
 
 List requirements before starting:
+
 - Required tools or software and versions
 - Required knowledge or skills
 - Required access or permissions
@@ -79,17 +81,21 @@ Number each major step. Within steps, use sub-bullets for details:
 
 Include real examples with language identifiers:
 
-```markdown
+````markdown
 **Command:**
+
 ```bash
 [ACTUAL_COMMAND_TO_RUN]
 ```
+````
 
 **Output:**
+
 ```
 [EXPECTED_OUTPUT]
 ```
-```
+
+````
 
 ### Verification Steps
 
@@ -97,7 +103,7 @@ After key steps, include how to verify success:
 
 ```markdown
 **Verify:** Run `[VERIFICATION_COMMAND]` and confirm output contains `[EXPECTED_TEXT]`
-```
+````
 
 ### Screenshots or Examples
 
@@ -118,7 +124,7 @@ Links to related guides or advanced topics.
 
 ## Example
 
-```markdown
+````markdown
 ---
 project_name: [PROJECT_NAME]
 title: Database - PostgreSQL Setup Guide
@@ -148,14 +154,17 @@ Set up PostgreSQL database for development and testing environments.
 1. **Install PostgreSQL**
 
    macOS:
+
    ```bash
    brew install postgresql@15
    ```
+````
 
-   Linux (Ubuntu/Debian):
-   ```bash
-   sudo apt-get install postgresql-15
-   ```
+Linux (Ubuntu/Debian):
+
+```bash
+sudo apt-get install postgresql-15
+```
 
 2. **Verify Installation**
 
@@ -168,11 +177,13 @@ Set up PostgreSQL database for development and testing environments.
 3. **Start PostgreSQL Service**
 
    macOS:
+
    ```bash
    brew services start postgresql@15
    ```
 
    Linux:
+
    ```bash
    sudo systemctl start postgresql
    ```
@@ -200,6 +211,7 @@ Solution: Ensure PostgreSQL service is running with `brew services list` (macOS)
 
 **Problem:** `createdb: error: could not connect to database template1`
 Solution: Restart PostgreSQL service and try again
+
 ```
 
 ## Size Guidelines
@@ -210,3 +222,4 @@ Solution: Restart PostgreSQL service and try again
 - Executive Summary: 20-30 words
 - Prerequisites: 40-60 words
 - Steps: Remaining words
+```

@@ -267,18 +267,11 @@
       "name": "Toggle Admin Toolbar WordPress Plugin",
       "description": "Adds admin toolbar visibility toggle on WordPress frontend",
       "highlights": [],
-      "keywords": [
-        "WordPress",
-        "PHP",
-        "Open Source"
-      ],
+      "keywords": ["WordPress", "PHP", "Open Source"],
       "startDate": "",
       "endDate": "",
       "url": "https://wordpress.org/plugins/toggle-admin-toolbar/",
-      "roles": [
-        "Creator",
-        "Maintainer"
-      ],
+      "roles": ["Creator", "Maintainer"],
       "entity": "Open Source",
       "type": "application"
     }

@@ -18,6 +18,7 @@ This is the **central index** for all Architecture Decision Records (ADRs). ADRs
 Architecture Decision Records (ADRs) document significant architectural and technical decisions, providing historical context, rationale, and consequences. The ADR system helps teams understand why decisions were made, track architectural evolution, and avoid rehashing past discussions. ADRs follow a structured lifecycle (Proposed → Accepted/Rejected → Deprecated/Superseded) and should be created for decisions that significantly impact architecture, are difficult to reverse, or involve meaningful trade-offs.
 
 **Best Practices Checklist:**
+
 - [ ] Create ADRs for significant architectural decisions only
 - [ ] Use the standard ADR template for consistency
 - [ ] Include context, decision rationale, and consequences
@@ -40,10 +41,12 @@ Architecture Decision Records (ADRs) document significant architectural and tech
 ## Quick Links
 
 **Essential Resources:**
+
 - [ADR Template](./template.md) - Standard template for creating new ADRs
 - [ADR List](#adr-list) - Complete list of all project ADRs
 
 **Most Referenced Docs:**
+
 - [What are ADRs?](#what-are-adrs) - Understanding the purpose and benefits
 - [When to Create an ADR](#when-to-create-an-adr) - Decision criteria for ADR creation
 - [How to Propose an ADR](#how-to-propose-an-adr) - Step-by-step ADR creation process
@@ -78,6 +81,7 @@ If you're new to Architecture Decision Records, follow this recommended reading 
 An Architecture Decision Record (ADR) is a document that captures an important architectural decision made along with its context and consequences.
 
 **ADRs help:**
+
 - Document the reasoning behind technical choices
 - Provide context for future developers
 - Track the evolution of the system architecture
@@ -106,6 +110,7 @@ ADRs can have the following statuses:
 ## When to Create an ADR
 
 Create an ADR when making decisions about:
+
 - System architecture patterns (e.g., choosing Clean Architecture)
 - Technology stack choices (e.g., selecting a database)
 - Major refactoring approaches
@@ -168,6 +173,7 @@ cp template.md [YYYYMMDD]-[feature]-[decision].md
 **Naming Convention:** `[YYYYMMDD]-[feature]-[decision].md`
 
 **Examples:**
+
 - `20251016-auth-oauth2.md` - Decision to use OAuth 2.0 for authentication
 - `20251020-database-postgresql.md` - Selection of PostgreSQL as primary database
 - `20251025-state-management-redux.md` - Choosing Redux for state management
@@ -203,16 +209,16 @@ Complete all sections of the ADR template:
 
 ### Active ADRs
 
-| Number | Title | Date | Status | Description |
-|--------|-------|------|--------|-------------|
-| [001] | [Decision Title] | [Date] | Accepted | [Brief description] |
-| [002] | [Decision Title] | [Date] | Accepted | [Brief description] |
+| Number | Title            | Date   | Status   | Description         |
+| ------ | ---------------- | ------ | -------- | ------------------- |
+| [001]  | [Decision Title] | [Date] | Accepted | [Brief description] |
+| [002]  | [Decision Title] | [Date] | Accepted | [Brief description] |
 
 ### Deprecated/Superseded ADRs
 
-| Number | Title | Date | Status | Superseded By |
-|--------|-------|------|--------|---------------|
-| [000] | [Old Decision] | [Date] | Superseded | ADR-003 |
+| Number | Title          | Date   | Status     | Superseded By |
+| ------ | -------------- | ------ | ---------- | ------------- |
+| [000]  | [Old Decision] | [Date] | Superseded | ADR-003       |
 
 ---
 

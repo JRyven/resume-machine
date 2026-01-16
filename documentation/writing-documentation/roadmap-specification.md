@@ -81,11 +81,13 @@ priority: low|medium|high
 ```
 
 **Field Specifications:**
+
 - `created`: Date in ISO 8601 format (2025-12-29) indicating when the project was added to the roadmap
 - `dependencies`: Comma-separated list of markdown anchor links to other projects that must be completed before this project can be started. Use `none` if no dependencies exist
 - `priority`: One of three values: `low`, `medium`, or `high`
 
 Projects in Complete or Rejected status retain only:
+
 - `created` date
 - For Rejected projects: a `why: [explanation]` field describing the rejection rationale
 
@@ -99,6 +101,7 @@ Dependencies reference other projects using markdown anchor links. These are aut
 - Prepend with `#`
 
 **Example:**
+
 - Heading: `#### [User Authentication System]`
 - Anchor: `#user-authentication-system`
 - Reference: `dependencies: [#user-authentication-system]`
@@ -112,18 +115,21 @@ Dependencies reference other projects using markdown anchor links. These are aut
 The level of detail retained varies based on an item's lifecycle status:
 
 **In Progress / Backlog Status:**
+
 - Full descriptive text (1-2 sentence summaries plus optional additional paragraphs)
 - All code examples in fenced code blocks
 - All metadata fields
 - Optional notes sections
 
 **Complete Status:**
+
 - Brief descriptive text only (1-2 sentences maximum)
 - Metadata removed except `created` date
 - Code examples removed (refer to version control logs)
 - Notes sections removed
 
 **Rejected Status:**
+
 - Brief descriptive text explaining what was attempted
 - All metadata removed except `created` date
 - Single `why: [explanation]` field added to explain rejection rationale
@@ -139,37 +145,39 @@ Projects may include a `### Notes` section to capture contextual information tha
 
 ## Simple Example
 
-```markdown
+````markdown
 # Project Roadmap
 
 ### In Progress
+
 ⚠️ LIMIT: Only 1 project allowed in this section
 
 #### [User Authentication System]
+
 '''
 Building a secure JWT-based authentication system with role-based access control. Currently implementing the token generation and validation middleware.
 
 ```javascript
 function generateTokens(userId, roles) {
-  const accessToken = jwt.sign(
-    { userId, roles },
-    process.env.JWT_SECRET,
-    { expiresIn: '15m' }
-  );
+  const accessToken = jwt.sign({ userId, roles }, process.env.JWT_SECRET, { expiresIn: '15m' });
   return { accessToken, refreshToken };
 }
 ```
+````
+
 '''
 created: 2025-10-15
 dependencies: [#database-schema-setup]
 priority: high
 
 ### Notes
+
 Reference: https://jwt.io/introduction
 
 ### Backlog
 
 #### [Real-time Notifications]
+
 '''
 Implement WebSocket-based notification system for real-time user updates.
 '''
@@ -178,6 +186,7 @@ dependencies: none
 priority: medium
 
 #### [API Rate Limiting]
+
 '''
 Add rate limiting middleware to prevent abuse and protect service availability.
 '''
@@ -188,6 +197,7 @@ priority: high
 ### Complete
 
 #### [Database Schema Setup]
+
 Set up relational database with initial schemas for users and projects.
 
 created: 2025-09-15
@@ -195,10 +205,12 @@ created: 2025-09-15
 ### Rejected
 
 #### [GraphQL API Implementation]
+
 Attempted GraphQL API layer for more flexible client queries.
 
 created: 2025-08-20
 why: Team prioritized REST API stability. GraphQL adds complexity without clear benefit for current use cases. Revisit if client needs evolve.
+
 ```
 
 ---
@@ -211,3 +223,4 @@ why: Team prioritized REST API stability. GraphQL adds complexity without clear 
 - **Update regularly**: Keep descriptions current with project state
 - **Strip details on completion**: Remove code examples and extended explanations when moving to Complete
 - **Document rejections**: Explain why projects were rejected for future reference
+```

@@ -84,7 +84,6 @@ This project focuses exclusively on technical excellence. We expect all contribu
    ```
 
    This starts:
-
    - Registry app: http://localhost:3000
    - Homepage: http://localhost:3001 (if applicable)
 
@@ -358,13 +357,7 @@ The fastest way to build a new theme is using our composable component library:
 
 ```javascript
 // index.js
-import {
-  Section,
-  SectionTitle,
-  ListItem,
-  DateRange,
-  BadgeList,
-} from '@resume/core';
+import { Section, SectionTitle, ListItem, DateRange, BadgeList } from '@resume/core';
 
 export function render(resume) {
   const html = `

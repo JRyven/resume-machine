@@ -195,7 +195,12 @@ function sectionBlock({ name, className, content }) {
 // format an array of strings as "• ..." with <br> between
 function formatBullets(arr) {
   // Each bullet gets its own <p> tag, with hanging indent for wrapped lines
-  return (arr || []).map(h => `<p class="fourteen ml10"><span class="bullet mln15 mr2">•</span>${h.replace(/<b>(.*?)<\/b>/g, '<strong>$1<\/strong>').replace(/\b(https?:\/\/\S+)/g, '$1')}</p>`).join('');
+  return (arr || [])
+    .map(
+      (h) =>
+        `<p class="fourteen ml10"><span class="bullet mln15 mr2">•</span>${h.replace(/<b>(.*?)<\/b>/g, '<strong>$1<\/strong>').replace(/\b(https?:\/\/\S+)/g, '$1')}</p>`
+    )
+    .join('');
 }
 
 // name function: Returns the page name/title
@@ -210,21 +215,22 @@ function createHtmlWrapper({ name, content }) {
 
 // render
 export const render = function (resume, options) {
-
   // variables
   const basics = resume.basics || {};
   const name = basics.name || '';
   const label = basics.label || '';
   const email = basics.email || '';
   const phone = basics.phone || '';
-  const location = basics.location ? (basics.location.city || '') : '';
+  const location = basics.location ? basics.location.city || '' : '';
 
   // inline contact info string
   const contactInline = [
     email,
     phone,
-    (location && basics.location.region ? `${location}, ${basics.location.region}` : location)
-  ].filter(Boolean).join(' | ');
+    location && basics.location.region ? `${location}, ${basics.location.region}` : location,
+  ]
+    .filter(Boolean)
+    .join(' | ');
 
   // header template function
   function renderHeader({ title, label, contact, summary }) {
@@ -246,7 +252,7 @@ export const render = function (resume, options) {
     // Convert double newlines to paragraphs for cover letter
     const coverLetterHtml = coverLetter.content
       .split(/\n\s*\n/)
-      .map(paragraph => `<p>${paragraph.replace(/\n/g, ' ').trim()}</p>`)
+      .map((paragraph) => `<p>${paragraph.replace(/\n/g, ' ').trim()}</p>`)
       .join('');
     // Render links at the end
     const links = renderLinks(basics);
@@ -282,48 +288,56 @@ export const render = function (resume, options) {
   let summaryBlock = '';
   const summaryArr = Array.isArray(basics.summary) ? basics.summary : [];
   if (summaryArr.length > 0) {
-    summaryBlock = summaryArr.map(section => {
-      let block = `<div class="summary fourteen">`;
-      if (section.prose) {
-        block += `<p>${section.prose.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>')}</p>`;
-      }
-      if (Array.isArray(section.highlights) && section.highlights.length > 0) {
-        block += formatBullets(section.highlights);
-      }
-      block += `</div>`;
-      return block;
-    }).join('');
+    summaryBlock = summaryArr
+      .map((section) => {
+        let block = `<div class="summary fourteen">`;
+        if (section.prose) {
+          block += `<p>${section.prose.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>')}</p>`;
+        }
+        if (Array.isArray(section.highlights) && section.highlights.length > 0) {
+          block += formatBullets(section.highlights);
+        }
+        block += `</div>`;
+        return block;
+      })
+      .join('');
   }
 
   // Interests inline
-  const interestsInline = (resume.interests && resume.interests.length)
-    ? resume.interests.map(i => `<p class="twelve">${i.keywords ? i.keywords.join(', ') : ''}</p>`).join('')
-    : '';
+  const interestsInline =
+    resume.interests && resume.interests.length
+      ? resume.interests
+          .map((i) => `<p class="twelve">${i.keywords ? i.keywords.join(', ') : ''}</p>`)
+          .join('')
+      : '';
 
   // Experience
-  const experience = (resume.work || []).map(w => {
-    const company = w.name || '';
-    const location = w.location || '';
-    const start = w.startDate || '';
-    const end = w.endDate || 'Present';
-    const url = w.url && w.url.startsWith('http') ? w.url : '';
+  const experience = (resume.work || [])
+    .map((w) => {
+      const company = w.name || '';
+      const location = w.location || '';
+      const start = w.startDate || '';
+      const end = w.endDate || 'Present';
+      const url = w.url && w.url.startsWith('http') ? w.url : '';
 
-    const companyDisplay = url ? `<a href="${url}">${company}</a>` : company;
+      const companyDisplay = url ? `<a href="${url}">${company}</a>` : company;
 
-    const position = w.position || '';
+      const position = w.position || '';
 
-    const summary = w.summary ? `<p class="twelve">${w.summary.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>')}</p>` : '';
+      const summary = w.summary
+        ? `<p class="twelve">${w.summary.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>')}</p>`
+        : '';
 
-    let bullets = '';
-    if (Array.isArray(w.highlights) && w.highlights.length > 0) {
-      bullets = formatBullets(w.highlights);
-    }
+      let bullets = '';
+      if (Array.isArray(w.highlights) && w.highlights.length > 0) {
+        bullets = formatBullets(w.highlights);
+      }
 
-    // Render header row as flex with company, location, and dates
-    const dateRange = `${start}${end ? `–${end}` : ''}`;
-    // Add page break before Goop
-    const pageBreak = company.trim().toLowerCase() === 'goop' ? '<hr class="cover-break" />' : '';
-    return `
+      // Render header row as flex with company, location, and dates
+      const dateRange = `${start}${end ? `–${end}` : ''}`;
+      // Add page break before Goop
+      const pageBreak = company.trim().toLowerCase() === 'goop' ? '<hr class="cover-break" />' : '';
+      return `
       <div class="work-item">
         <div class="flex-row mb12">
           <h3 class="mb0">${companyDisplay}</h3>
@@ -335,53 +349,75 @@ export const render = function (resume, options) {
       </div>
       ${pageBreak}
     `;
-  }).join('');
+    })
+    .join('');
 
   // Skills section with H3 for each skill group
-  const skillsList = (resume.skills || []).map(s => (s.keywords || []).join(', ')).filter(Boolean).join(', ');
+  const skillsList = (resume.skills || [])
+    .map((s) => (s.keywords || []).join(', '))
+    .filter(Boolean)
+    .join(', ');
   const skillsSection = (resume.skills || []).length
-    ? (resume.skills.map(s =>
-      `<h3 class="sixteen">${s.name}</h3>
-       <p class="twelve">${(s.keywords || []).join(', ')}</p>`).join(''))
+    ? resume.skills
+        .map(
+          (s) =>
+            `<h3 class="sixteen">${s.name}</h3>
+       <p class="twelve">${(s.keywords || []).join(', ')}</p>`
+        )
+        .join('')
     : '';
 
   // Open Source & Community Leadership (Projects and Volunteer)
-  const projectsBlock = (resume.projects && resume.projects.length)
-    ? resume.projects.map(p => {
-      const roles = (p.roles && p.roles.length) ? p.roles.join(', ') : '';
-      return `<div class="project">
+  const projectsBlock =
+    resume.projects && resume.projects.length
+      ? resume.projects
+          .map((p) => {
+            const roles = p.roles && p.roles.length ? p.roles.join(', ') : '';
+            return `<div class="project">
           <p class="flex-row twelve">
             ${roles ? `<span class="bold">${roles}</span> | ` : ''}<span>${p.name}</span>
           </p>
           ${p.description ? `<p class="twelve mtn5">${p.description}</p>` : ''}
-          ${p.highlights && p.highlights.length ? formatBullets(p.highlights.map(h => h.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>'))) : ''}
+          ${p.highlights && p.highlights.length ? formatBullets(p.highlights.map((h) => h.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>'))) : ''}
         </div>`;
-    }).join('')
-    : '';
+          })
+          .join('')
+      : '';
 
-  const volunteerBlock = (resume.volunteer && resume.volunteer.length)
-    ? resume.volunteer.map(v => {
-      const dateRange = (v.startDate || v.endDate) ? `${v.startDate || ''}${v.endDate ? `—${v.endDate}` : ''}` : '';
-      return `<div class="volunteer-role">
+  const volunteerBlock =
+    resume.volunteer && resume.volunteer.length
+      ? resume.volunteer
+          .map((v) => {
+            const dateRange =
+              v.startDate || v.endDate
+                ? `${v.startDate || ''}${v.endDate ? `—${v.endDate}` : ''}`
+                : '';
+            return `<div class="volunteer-role">
           <p class="flex-row twelve">
             ${v.position ? `<span class="bold">${v.position}</span> | ` : ''}<span>${v.organization}</span>${dateRange ? ` | <span>${dateRange}</span>` : ''}
           </p>
-          ${v.highlights && v.highlights.length ? formatBullets(v.highlights.map(h => h.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>'))) : ''}
+          ${v.highlights && v.highlights.length ? formatBullets(v.highlights.map((h) => h.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>'))) : ''}
         </div>`;
-    }).join('')
-    : '';
+          })
+          .join('')
+      : '';
 
   // Education
-  const educationBlock = (resume.education && resume.education.length)
-    ? resume.education.map(e =>
-      `<div>
+  const educationBlock =
+    resume.education && resume.education.length
+      ? resume.education
+          .map(
+            (e) =>
+              `<div>
         <p>
-          <span class="fourteen bold">${(e.studyType ? e.studyType : '')}</span>
-          <span class="fourteen">${(e.area ? ' | ' + e.area : '')}</span>
-          <span class="fourteen">${(e.institution ? ' | ' + e.institution : '')}</span>
+          <span class="fourteen bold">${e.studyType ? e.studyType : ''}</span>
+          <span class="fourteen">${e.area ? ' | ' + e.area : ''}</span>
+          <span class="fourteen">${e.institution ? ' | ' + e.institution : ''}</span>
         </p>
-      </div>`).join('')
-    : '';
+      </div>`
+          )
+          .join('')
+      : '';
 
   // Compose the main content
   const linksBlock = `<div class="mt10">${renderLinks(basics)}</div>`;
@@ -389,35 +425,35 @@ export const render = function (resume, options) {
     ${coverLetterSection}${renderHeader({ title: name, label, contact: contactInline })}
     <main>
       ${sectionBlock({
-    name: 'Abstract',
-    className: 'summary-section',
-    content: summaryBlock
-  })}
+        name: 'Abstract',
+        className: 'summary-section',
+        content: summaryBlock,
+      })}
       ${sectionBlock({
-    name: 'Areas of Expertise',
-    className: 'interests-section',
-    content: interestsInline
-  })}
+        name: 'Areas of Expertise',
+        className: 'interests-section',
+        content: interestsInline,
+      })}
       ${sectionBlock({
-    name: 'Experience',
-    className: 'experience-section',
-    content: experience
-  })}
+        name: 'Experience',
+        className: 'experience-section',
+        content: experience,
+      })}
       ${sectionBlock({
-    name: 'Skills',
-    className: 'skills-section',
-    content: skillsSection
-  })}
+        name: 'Skills',
+        className: 'skills-section',
+        content: skillsSection,
+      })}
       ${sectionBlock({
-    name: 'Open Source & Community Leadership',
-    className: 'projects-section',
-    content: projectsBlock + volunteerBlock
-  })}
+        name: 'Open Source & Community Leadership',
+        className: 'projects-section',
+        content: projectsBlock + volunteerBlock,
+      })}
       ${sectionBlock({
-    name: 'Education',
-    className: 'education-section',
-    content: educationBlock
-  })}
+        name: 'Education',
+        className: 'education-section',
+        content: educationBlock,
+      })}
       ${linksBlock}
     </main>
   `;

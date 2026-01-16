@@ -25,6 +25,7 @@ keywords: [adr, template, architecture, decision, example]
 [PROBLEM_STATEMENT]: This architectural issue requires a decision because [REASON_WHY_DECISION_MATTERS].
 
 Current situation:
+
 - [EXISTING_CONSTRAINT_ONE]
 - [EXISTING_CONSTRAINT_TWO]
 - [BUSINESS_REQUIREMENT]
@@ -36,10 +37,12 @@ Current situation:
 [1-2 sentence description of first approach]
 
 Advantages:
+
 - [ADVANTAGE_ONE]
 - [ADVANTAGE_TWO]
 
 Disadvantages:
+
 - [DISADVANTAGE_ONE]
 - [DISADVANTAGE_TWO]
 
@@ -48,10 +51,12 @@ Disadvantages:
 [1-2 sentence description of second approach]
 
 Advantages:
+
 - [ADVANTAGE_ONE]
 - [ADVANTAGE_TWO]
 
 Disadvantages:
+
 - [DISADVANTAGE_ONE]
 - [DISADVANTAGE_TWO]
 
@@ -60,10 +65,12 @@ Disadvantages:
 [1-2 sentence description of third approach]
 
 Advantages:
+
 - [ADVANTAGE_ONE]
 - [ADVANTAGE_TWO]
 
 Disadvantages:
+
 - [DISADVANTAGE_ONE]
 - [DISADVANTAGE_TWO]
 

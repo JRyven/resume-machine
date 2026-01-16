@@ -14,6 +14,7 @@ keywords: [specifications, templates, documentation, standards]
 Complete specification and template pairs for 11 document types used throughout documentation.
 
 Each document type includes:
+
 - **Specification**: Rules and requirements for the document type
 - **Template**: Copy-paste example showing format with placeholders
 
@@ -129,6 +130,7 @@ Configuration options, methods, validation rules, and environment-specific setti
 ### Placeholder Format
 
 All placeholders use `[SCREAMING_SNAKE_CASE]` format:
+
 - `[PROJECT_NAME]` - Project identifier
 - `[TOPIC_NAME]` - Topic name
 - `[CONFIGURATION_VALUE]` - Configurable values

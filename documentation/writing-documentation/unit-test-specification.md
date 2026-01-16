@@ -16,6 +16,7 @@ Unit test documentation defines testing standards, patterns, and conventions for
 ## Purpose
 
 Unit test documentation:
+
 - Establishes testing conventions and standards
 - Defines test structure and naming patterns
 - Explains assertion and mock usage
@@ -47,7 +48,7 @@ keywords: [testing, unit, standards, patterns, documentation]
 
 Define the standard structure:
 
-```markdown
+````markdown
 ## Test Structure
 
 Every unit test should follow the Arrange-Act-Assert pattern:
@@ -57,16 +58,18 @@ describe('[UNIT_UNDER_TEST]', () => {
   it('should [EXPECTED_BEHAVIOR] when [CONDITION]', () => {
     // Arrange: Set up test data
     const [INPUT] = [INITIALIZATION];
-    
+
     // Act: Call the function under test
     const [RESULT] = [FUNCTION_CALL];
-    
+
     // Assert: Verify the result
     expect([RESULT]).toBe([EXPECTED_VALUE]);
   });
 });
 ```
-```
+````
+
+````
 
 ### Naming Conventions
 
@@ -77,7 +80,7 @@ describe('[UNIT_UNDER_TEST]', () => {
 - **Test suites**: Use `describe('[UNIT_NAME]', ...)`
 - **Test cases**: Use `it('should [EXPECTED_BEHAVIOR] when [CONDITION]', ...)`
 - **Test data**: Use descriptive names like `validInput`, `invalidEmail`, `emptyArray`
-```
+````
 
 ### Assertion Standards
 
@@ -97,19 +100,21 @@ Standard assertion methods:
 
 ### Mock and Stub Standards
 
-```markdown
+````markdown
 ## Mocking
 
 Mock external dependencies:
 
 ```javascript
 jest.mock('[MODULE_NAME]', () => ({
-  [FUNCTION_NAME]: jest.fn().mockReturnValue([MOCK_VALUE])
+  [FUNCTION_NAME]: jest.fn().mockReturnValue([MOCK_VALUE]),
 }));
 ```
+````
 
 Use `.mockReturnValue()` for return values and `.mockImplementation()` for complex behavior.
-```
+
+````
 
 ## Optional Sections
 
@@ -121,13 +126,13 @@ Use `.mockReturnValue()` for return values and `.mockImplementation()` for compl
 - Overall: Minimum 80% line coverage
 - Critical paths: 100% coverage required
 - Exclude: Generated code, vendor code
-```
+````
 
 ### Common Testing Patterns
 
 Demonstrate patterns:
 
-```markdown
+````markdown
 ## Testing Async Functions
 
 ```javascript
@@ -136,6 +141,7 @@ it('should resolve with data', async () => {
   expect([RESULT]).toEqual([EXPECTED]);
 });
 ```
+````
 
 ## Testing Error Cases
 
@@ -144,7 +150,8 @@ it('should throw error when [CONDITION]', () => {
   expect(() => [FUNCTION]([INVALID_INPUT])).toThrow([ERROR_TYPE]);
 });
 ```
-```
+
+````
 
 ## Example
 
@@ -164,15 +171,15 @@ describe('calculateTotal', () => {
   it('should sum array of numbers correctly', () => {
     // Arrange
     const numbers = [10, 20, 30];
-    
+
     // Act
     const result = calculateTotal(numbers);
-    
+
     // Assert
     expect(result).toBe(60);
   });
 });
-```
+````
 
 ## Naming Conventions
 
@@ -187,7 +194,7 @@ describe('userService', () => {
   it('should create user with valid data', () => {
     // test code
   });
-  
+
   it('should throw error when email is invalid', () => {
     // test code
   });
@@ -221,6 +228,7 @@ expect(value).toBeFalsy();
 - Minimum 80% line coverage for all code
 - 100% coverage for critical functions (authentication, payments, security)
 - Exclude generated files and node_modules
+
 ```
 
 ## Size Guidelines
@@ -233,3 +241,4 @@ expect(value).toBeFalsy();
 - Assertions: 60-100 words
 - Mocking: 60-100 words
 - Other sections: Remaining
+```

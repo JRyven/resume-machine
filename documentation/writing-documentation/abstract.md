@@ -16,6 +16,7 @@ Standards for creating consistent, maintainable documentation across all project
 All documentation follows a modular hierarchical structure. Each topic directory contains an `abstract.md` index file and subtopic content files. Documents use YAML front matter for metadata, kebab-case file naming, and consistent header hierarchy. Content emphasizes clarity and conciseness over exhaustive specification.
 
 **Core Principles:**
+
 - One `abstract.md` index per directory
 - YAML front matter on all files
 - Kebab-case file naming

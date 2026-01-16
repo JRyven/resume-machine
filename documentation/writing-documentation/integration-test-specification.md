@@ -16,6 +16,7 @@ Integration test documentation defines standards for testing interactions betwee
 ## Purpose
 
 Integration test documentation:
+
 - Establishes multi-component testing patterns
 - Defines test environment and fixture setup
 - Explains service mocking strategies
@@ -49,6 +50,7 @@ keywords: [testing, integration, standards, patterns, documentation]
 ## What to Test
 
 Integration tests verify interactions between:
+
 - API endpoints and database
 - Services and external APIs
 - Message queues and processors
@@ -77,16 +79,17 @@ Define test infrastructure:
 ## Test Data
 
 Organize test fixtures:
-
 ```
+
 tests/
 ├── fixtures/
-│   ├── users.json
-│   ├── orders.json
-│   └── products.json
+│ ├── users.json
+│ ├── orders.json
+│ └── products.json
 └── integration/
-    └── api.test.js
-```
+└── api.test.js
+
+````
 
 Load fixtures in setup:
 
@@ -95,8 +98,9 @@ beforeAll(() => {
   const [DATA] = require('../fixtures/[RESOURCE].json');
   // Load data into test database
 });
-```
-```
+````
+
+````
 
 ### Workflow Testing Pattern
 
@@ -110,16 +114,17 @@ describe('User Registration Workflow', () => {
   it('should create user, send email, and return token', async () => {
     // Step 1: Create user via API
     const user = await [API].createUser([USER_DATA]);
-    
+
     // Step 2: Verify email was queued
     expect([EMAIL_QUEUE].called).toBe(true);
-    
+
     // Step 3: Verify token was issued
     expect(user.token).toBeDefined();
   });
 });
-```
-```
+````
+
+````
 
 ## Optional Sections
 
@@ -135,12 +140,14 @@ jest.mock('[EXTERNAL_SERVICE]');
 
 [EXTERNAL_SERVICE].processPayment
   .mockResolvedValue({id: '[TRANSACTION_ID]', status: 'success'});
-```
+````
 
 Real vs. mocked:
+
 - **Mock**: External APIs, payments, emails
 - **Real**: Database, message queues, internal services
-```
+
+````
 
 ### Performance Expectations
 
@@ -151,11 +158,11 @@ Integration tests should complete within:
 - API endpoint tests: < 100ms
 - Database operation tests: < 50ms
 - Workflow tests: < 1000ms
-```
+````
 
 ## Example
 
-```markdown
+````markdown
 # Integration Testing Standards
 
 **Path:** Documentation > Testing > Integration Testing Standards
@@ -165,12 +172,14 @@ Standards for testing component interactions and workflows.
 ## Test Scope
 
 Integration tests verify interactions between:
+
 - API handlers and database queries
 - Services communicating via message queues
 - Frontend components and backend APIs
 - Multiple microservices in a workflow
 
 **Do NOT use integration tests for:**
+
 - Individual function logic (use unit tests)
 - UI rendering behavior (use UI tests)
 
@@ -180,10 +189,10 @@ Integration tests verify interactions between:
 beforeAll(async () => {
   // Start test database
   await testDatabase.start();
-  
+
   // Load fixtures
   await testDatabase.load('fixtures/users.json');
-  
+
   // Start test server
   await app.listen(3001);
 });
@@ -193,6 +202,7 @@ afterAll(async () => {
   await app.close();
 });
 ```
+````
 
 ## Testing API Workflows
 
@@ -201,19 +211,17 @@ Test complete request-response cycles:
 ```javascript
 describe('User Registration API', () => {
   it('should register user and return auth token', async () => {
-    const response = await request(app)
-      .post('/api/users/register')
-      .send({
-        email: 'user@example.com',
-        password: '[PASSWORD]',
-        name: '[USER_NAME]'
-      });
-    
+    const response = await request(app).post('/api/users/register').send({
+      email: 'user@example.com',
+      password: '[PASSWORD]',
+      name: '[USER_NAME]',
+    });
+
     expect(response.status).toBe(201);
     expect(response.body.token).toBeDefined();
-    
+
     // Verify user was created in database
-    const user = await User.findOne({email: 'user@example.com'});
+    const user = await User.findOne({ email: 'user@example.com' });
     expect(user).toBeDefined();
   });
 });
@@ -228,11 +236,11 @@ describe('Order Processing Workflow', () => {
   it('should process order and notify warehouse', async () => {
     // Create order via API
     const order = await orderService.create([ORDER_DATA]);
-    
+
     // Verify warehouse notification was sent
     expect(warehouseQueue.send).toHaveBeenCalledWith({
       order_id: order.id,
-      items: [ORDER_ITEMS]
+      items: [ORDER_ITEMS],
     });
   });
 });
@@ -243,6 +251,7 @@ describe('Order Processing Workflow', () => {
 - Single endpoint tests: < 100ms
 - Multi-step workflows: < 1 second
 - Database-heavy operations: < 500ms
+
 ```
 
 ## Size Guidelines
@@ -255,3 +264,4 @@ describe('Order Processing Workflow', () => {
 - Test Data: 60-100 words
 - Workflow Pattern: 80-120 words
 - Other sections: Remaining
+```

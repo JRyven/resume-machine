@@ -16,6 +16,7 @@ An index organizes multiple resources around a central theme, providing categori
 ## Purpose
 
 Indexes serve as discovery points:
+
 - Organize related documentation by category or use case
 - Provide multiple entry points to content
 - List external resources and tools
@@ -96,10 +97,10 @@ Define recommended reading sequences:
 For indexes comparing similar resources:
 
 ```markdown
-| Resource | Best For | Difficulty | Time |
-|----------|----------|-----------|------|
-| [Guide One](./guide1.md) | [USE_CASE] | Beginner | 20 min |
-| [Guide Two](./guide2.md) | [USE_CASE] | Advanced | 2 hours |
+| Resource                 | Best For   | Difficulty | Time    |
+| ------------------------ | ---------- | ---------- | ------- |
+| [Guide One](./guide1.md) | [USE_CASE] | Beginner   | 20 min  |
+| [Guide Two](./guide2.md) | [USE_CASE] | Advanced   | 2 hours |
 ```
 
 ## Content Structure Rules

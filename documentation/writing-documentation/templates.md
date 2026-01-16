@@ -115,12 +115,14 @@ keywords: [adr, architecture, [FEATURE]]
 ## Alternatives Considered
 
 ### Alternative 1: [NAME]
+
 - **Description:** [BRIEF_EXPLANATION]
 - **Pros:** [BENEFITS]
 - **Cons:** [DRAWBACKS]
 - **Reason for rejection:** [WHY_NOT_CHOSEN]
 
 ### Alternative 2: [NAME]
+
 - **Description:** [BRIEF_EXPLANATION]
 - **Pros:** [BENEFITS]
 - **Cons:** [DRAWBACKS]
@@ -129,10 +131,12 @@ keywords: [adr, architecture, [FEATURE]]
 ## Consequences
 
 ### Positive
+
 - [BENEFIT_ONE]
 - [BENEFIT_TWO]
 
 ### Negative
+
 - [TRADEOFF_ONE]
 - [TRADEOFF_TWO]
 
@@ -156,10 +160,12 @@ For the complete roadmap system specification, see [Roadmap Specification](./roa
 Roadmaps track projects through a lifecycle: In Progress → Backlog → Complete → Rejected.
 
 **WIP Limits:**
+
 - **Projects:** Maximum 1 in "In Progress"
 - **Tasks:** Maximum 2 in "In Progress" per project
 
 **Project metadata:**
+
 - `created`: ISO 8601 date
 - `dependencies`: Anchor links to prerequisite projects, or `none`
 - `priority`: `low`, `medium`, or `high`

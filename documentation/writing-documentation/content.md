@@ -18,18 +18,21 @@ Guidelines for writing clear, consistent documentation content.
 ## Writing Principles
 
 **Clarity First:**
+
 - Be concise - remove unnecessary words
 - Use active voice
 - Define acronyms on first use
 - Use examples to illustrate complex concepts
 
 **Structure:**
+
 - Start with the most important information
 - Use progressive disclosure (overview → details)
 - Group related concepts together
 - End sections with actionable next steps
 
 **Maintenance:**
+
 - Write for future readers
 - Include context that might not be obvious
 - Update examples when code changes
@@ -52,6 +55,7 @@ keywords: [[KEYWORD], [KEYWORD], [KEYWORD]]
 ```
 
 **Field Requirements:**
+
 - `project_name`: Project name or `[PROJECT_NAME]` placeholder
 - `title`: Must match the H1 title in the document
 - `description`: Concise summary (60-100 characters)
@@ -74,11 +78,13 @@ Use bracket notation with SCREAMING_SNAKE_CASE for all placeholders:
 ```
 
 **Rules:**
+
 - Always use square brackets `[]`
 - Use SCREAMING_SNAKE_CASE inside brackets
 - Be descriptive: `[DATABASE_CONNECTION_STRING]` not `[VALUE]`
 
 **Prohibited formats:**
+
 - ❌ `{project_name}` (curly braces)
 - ❌ `[project name]` (spaces)
 - ❌ `<PROJECT_NAME>` (angle brackets)

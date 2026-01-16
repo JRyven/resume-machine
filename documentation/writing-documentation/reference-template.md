@@ -15,10 +15,10 @@ Quick lookup reference for [RESOURCE] with options, parameters, and usage patter
 
 ## [CATEGORY_ONE]
 
-| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `[FIELD_NAME]` | string | `[DEFAULT]` | [FIELD_DESCRIPTION] and how it's used |
-| `[FIELD_NAME]` | number | `[DEFAULT]` | [FIELD_DESCRIPTION] and constraints |
+| Field          | Type    | Default     | Description                                          |
+| -------------- | ------- | ----------- | ---------------------------------------------------- |
+| `[FIELD_NAME]` | string  | `[DEFAULT]` | [FIELD_DESCRIPTION] and how it's used                |
+| `[FIELD_NAME]` | number  | `[DEFAULT]` | [FIELD_DESCRIPTION] and constraints                  |
 | `[FIELD_NAME]` | boolean | `[DEFAULT]` | [FIELD_DESCRIPTION] and effect when enabled/disabled |
 
 ## [CATEGORY_TWO]

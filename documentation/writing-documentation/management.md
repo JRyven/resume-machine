@@ -30,12 +30,14 @@ When a document exceeds ~4000 tokens, restructure it into an index + sub-files p
 **Step 1: Convert to Index**
 
 Transform the original file into an `abstract.md` that:
+
 - Provides high-level overview
 - Links to all sub-files with descriptions
 
 **Step 2: Create Sub-Files**
 
 Extract detailed content into focused sub-files:
+
 - Use naming pattern: `[SUBTOPIC].md`
 - Each file covers ONE focused aspect
 - Include YAML front matter
@@ -49,15 +51,18 @@ Extract detailed content into focused sub-files:
 ### Index vs Sub-File Content
 
 **Index contains:**
+
 - Overview (2-3 paragraphs max)
 - Links to sub-files with descriptions
 
 **Index does NOT contain:**
+
 - Detailed explanations
 - Step-by-step tutorials
 - Code examples longer than 5 lines
 
 **Sub-files contain:**
+
 - Detailed explanations
 - Step-by-step guides
 - Code samples
