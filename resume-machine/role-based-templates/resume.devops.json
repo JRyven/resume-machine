@@ -1,9 +1,9 @@
 {
-  "featured_languages": "PHP and JavaScript",
-  "highlight_1": "<strong>Containerized platforms and orchestration</strong>; maintained Docker workflows and Kubernetes clusters, managed Helm charts and automated rollouts, secured secrets, and integrated Redis and Varnish caching to stabilize performance across environments.",
-  "highlight_2": "<strong>Led technology evaluation and selection</strong>; ran build‑vs‑buy analyses and benchmarks, weighed VPS vs Kubernetes and Redis vs Memcached tradeoffs, and selected stacks that balanced cost, latency, and operational overhead.",
-  "highlight_3": "<strong>Capacity planning and scalable design</strong>; modeled resource requirements, defined autoscaling thresholds, tuned caching layers, and sized clusters and databases to meet projected traffic and uptime targets.",
-  "highlight_4": "<strong>Aligned cross-functional product and ops teams</strong>; translated infrastructure constraints into clear SLOs, runbooks, and release windows, coordinating product, security, and business stakeholders to reduce deployment risk.",
-  "highlight_5": "<strong>Architectural and design capabilities</strong>; defined platform topologies, service contracts, and DNS/Cloudflare strategies to improve resilience, simplify failover, and accelerate safe iteration.",
-  "highlight_6": "<strong>Institutionalized observability and reliability</strong>; rolled out metrics, tracing, and alerting with Prometheus and Grafana, created runbooks and documentation, and cut MTTD from hours to minutes while improving incident response."
+  "featured_languages": "Python, Bash, and Terraform (HCL)",
+  "highlight_1": "<strong>Containerized and orchestrated platforms</strong>; Docker, Kubernetes, Helm, automated rollouts, secured secrets.",
+  "highlight_2": "<strong>Architectural platform design</strong>; defined topologies, DNS and Cloudflare failover strategies.",
+  "highlight_3": "<strong>Observability and reliability</strong>; implemented Prometheus, Grafana, tracing, alerts, and runbooks.",
+  "highlight_4": "<strong>Capacity planning</strong>; modeled resources, autoscaling thresholds, and tuned caching layers.",
+  "highlight_5": "<strong>Cross-functional alignment</strong>; translated constraints into SLOs, runbooks, and release windows.",
+  "highlight_6": "<strong>Technology evaluation</strong>; led build-vs-buy analyses and selected cost-effective stacks."
 }

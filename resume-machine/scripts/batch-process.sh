@@ -6,10 +6,14 @@ cd /Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/ || exit 1
 # Resolve script directory
 script_dir=$(cd "$(dirname "$0")" && pwd)
 
-echo "Running extract-html-data.js..."
-if ! node "$script_dir/extract-html-data.js"; then
-  echo "Error: Failed to run extract-html-data.js."
-  exit 1
+if [ -z "$SKIP_EXTRACT" ]; then
+  echo "Running extract-html-data.js..."
+  if ! node "$script_dir/extract-html-data.js"; then
+    echo "Error: Failed to run extract-html-data.js."
+    exit 1
+  fi
+else
+  echo "SKIP_EXTRACT set; skipping extract-html-data.js"
 fi
 
 # Check if the extraction was successful by verifying the output file exists
@@ -48,7 +52,7 @@ fi
 
 # Show queue summary and require operator review of role-template before proceeding
 echo "Resume machine queue summary (current raw file):"
-echo "$content" | jq -r '.[] | "- Title: " + (.title // "") + " | Company: " + (.company // "") + " | role-template: " + ((.["role-template"] // "(missing)") ) + " | generated: " + ((.generated // false) | tostring)'
+echo "$content" | jq -r '.[] | "- Title: " + (.title // "") + " | Company: " + (.company // "") + " | role-template: " + ((.["role-template"] // "(missing)") ) + " | cover-letter: " + ((.["cover-letter"] // false) | tostring) + " | generated: " + ((.generated // false) | tostring)'
 
 read -p "Please review resume-machine/resume-machine-queue.json and update 'role-template' for entries as needed. Ready to proceed? (Y/N) " yn
 case "$yn" in
@@ -56,9 +60,9 @@ case "$yn" in
   * ) echo "Aborted by user."; exit 1;;
 esac
 
-# Now normalize entries: ensure queue entries have required fields (`role-template`, `generated`) with defaults
+# Now normalize entries: ensure queue entries have required fields (`role-template`, `generated`, `cover-letter`) with defaults
 tmpqueue=$(mktemp)
-echo "$content" | jq 'map(.["role-template"] = (.["role-template"] // "default") | .generated = (.generated // false))' > "$tmpqueue" && mv "$tmpqueue" "$json_file"
+echo "$content" | jq 'map(.["role-template"] = (.["role-template"] // "default") | .generated = (.generated // false) | .["cover-letter"] = (.["cover-letter"] // false))' > "$tmpqueue" && mv "$tmpqueue" "$json_file"
 
 # Reload content and entries after normalization
 content=$(cat "$json_file")
@@ -74,6 +78,7 @@ for i in "${!entries[@]}"; do
   company=$(echo "$entry" | jq -r '.company')
   generated=$(echo "$entry" | jq -r '.generated')
   role_template=$(echo "$entry" | jq -r '."role-template"')
+  cover_flag=$(echo "$entry" | jq -r '."cover-letter"')
 
   if [ "$generated" = "true" ]; then
     echo "Skipping already-generated entry: $company - $title"
@@ -105,7 +110,13 @@ for i in "${!entries[@]}"; do
 
   if [ -n "$tmpl" ]; then
     tmpfile=$(mktemp)
-    jq --arg hc "$company_doc" --arg hp "$title_doc" '.hiring_company=$hc | .hiring_position=$hp' "$tmpl" > "$tmpfile" && mv "$tmpfile" "$unique_dest"
+    # prepare cover content: read default cover content (object) from resume.unique-data.json
+    cover_json=$(jq -c '.cover_letter_content // null' resume-machine/resume.unique-data.json 2>/dev/null || echo null)
+    if [ "$cover_flag" = "true" ] && [ "$cover_json" != "null" ]; then
+      jq --arg hc "$company_doc" --arg hp "$title_doc" --argjson cover "$cover_json" '.hiring_company=$hc | .hiring_position=$hp | .cover_letter_content = $cover' "$tmpl" > "$tmpfile" && mv "$tmpfile" "$unique_dest"
+    else
+      jq --arg hc "$company_doc" --arg hp "$title_doc" '.hiring_company=$hc | .hiring_position=$hp | .cover_letter_content = ""' "$tmpl" > "$tmpfile" && mv "$tmpfile" "$unique_dest"
+    fi
   else
     cat > "$unique_dest" <<EOF
 {
@@ -122,7 +133,7 @@ EOF
   fi
 
   # Generate PDF
-  pdf_name="artifacts/resume-${company_file}-${title_file}.pdf"
+  pdf_name="artifacts/resume-James-Valeii-${company_file}-${title_file}.pdf"
   if resumed export resume.json -t valeii-professional -o "$pdf_name"; then
     # mark this entry as generated=true in the queue
     tmpqueue=$(mktemp)

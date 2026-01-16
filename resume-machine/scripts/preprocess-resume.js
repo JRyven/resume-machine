@@ -5,7 +5,21 @@ const path = require('path');
 
 function substitute(data, vars) {
   if (typeof data === 'string') {
-    return data.replace(/{{\s*([\w_]+)\s*}}/g, (m, key) => (vars[key] !== undefined ? vars[key] : m));
+    // If the entire string is a single variable placeholder and the variable is
+    // an object, return the object so JSON structures can be injected directly.
+    const exactMatch = data.match(/^\s*{{\s*([\w_]+)\s*}}\s*$/);
+    if (exactMatch) {
+      const key = exactMatch[1];
+      if (vars[key] !== undefined) {
+        // If the variable is an object, substitute inside it recursively
+        if (vars[key] && typeof vars[key] === 'object') {
+          return substitute(vars[key], vars);
+        }
+        return vars[key];
+      }
+      return data;
+    }
+    return data.replace(/{{\s*([\w_]+)\s*}}/g, (m, key) => (vars[key] !== undefined ? String(vars[key]) : m));
   } else if (Array.isArray(data)) {
     return data.map(item => substitute(item, vars));
   } else if (data && typeof data === 'object') {

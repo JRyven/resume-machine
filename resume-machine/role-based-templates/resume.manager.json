@@ -1,9 +1,9 @@
 {
   "featured_languages": "PHP and JavaScript",
-  "highlight_1": "<strong>Built cross-functional velocity</strong>; embedded with product, science, and editorial teams; brings high curiosity across business domains (formulations, supply chain, and content strategy), informing priority queue, realistic deadlines, and feature design that users love. Turned siloed teams into true collaborators.",
-  "highlight_2": "<strong>Built and managed an engineering team</strong>; established coding standards, instituted code review and CI workflows, hired and mentored engineers, and balanced hands-on delivery with people leadership to scale velocity without sacrificing technical quality.",
-  "highlight_3": "<strong>Owned independent technical decision-making</strong>; evaluated architectures and tradeoffs, led rigorous build-versus-buy analyses, selected platform components, and accepted full responsibility for outcomes—sharpening judgment in system design and operational risk.",
-  "highlight_4": "<strong>Ended decade-long content bottleneck</strong>; architected modular self-service CMS component library; achieved 100% editorial adoption in 3 months (vs. prior failed attempts). Reclaimed 97% of engineering bandwidth, freeing 2 engineers and 1 PM for strategic work; tripled content output without added headcount.",
-  "highlight_5": "<strong>Drove record e-commerce growth</strong>; designed content-gating auth layer that sparked 625% surge in account creations, 84% login growth, and $35 AOV uplift among converted users. Engineered WordPress–Shopify integration; custom real-time sync plugin preserved inventory/data integrity across 70M+ pageviews with zero revenue loss.",
-  "highlight_6": "<strong>Institutionalized quality & speed</strong>; rolled out PHPUnit/Cypress and Rollbar/Grafana monitoring; cut MTTD from hours to minutes and caught 85% of issues pre-production. Created documentation system (PHPDocumentor, Confluence, and README standards); slashed local environment setup from 3-4 days to 1."
+  "highlight_1": "<strong>Built engineering team</strong>; hired and mentored engineers, established CI and code review.",
+  "highlight_2": "<strong>Owned technical decisions</strong>; led build-vs-buy analyses and architecture selection.",
+  "highlight_3": "<strong>Ended content bottleneck</strong>; built modular CMS components and achieved 100% editorial adoption.",
+  "highlight_4": "<strong>Drove e-commerce growth</strong>; designed auth gating and increased accounts and AOV.",
+  "highlight_5": "<strong>Built cross-functional velocity</strong>; embedded with product, science, and editorial teams.",
+  "highlight_6": "<strong>Institutionalized quality and speed</strong>; added tests and monitoring, cutting MTTD drastically."
 }

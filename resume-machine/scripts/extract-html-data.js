@@ -124,7 +124,8 @@ async function main() {
     description: item.description || '',
     matched: item.matched || {},
     "role-template": item["role-template"] || 'default',
-    generated: item.generated || false
+    generated: item.generated || false,
+    "cover-letter": item["cover-letter"] || false
   }));
 
   fs.writeFileSync(outputFilePath, JSON.stringify(queued, null, 2));

@@ -9,7 +9,8 @@
       "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
     },
     "role-template": "default",
-    "generated": true
+    "generated": true,
+    "cover-letter": false
   },
   {
     "title": "Cloud Developer",
@@ -21,7 +22,8 @@
       "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
     },
     "role-template": "default",
-    "generated": true
+    "generated": true,
+    "cover-letter": false
   },
   {
     "title": "Computer Software Engineer",
@@ -33,7 +35,8 @@
       "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
     },
     "role-template": "default",
-    "generated": true
+    "generated": true,
+    "cover-letter": false
   },
   {
     "title": "Data Administrator",
@@ -45,7 +48,8 @@
       "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
     },
     "role-template": "default",
-    "generated": true
+    "generated": true,
+    "cover-letter": false
   },
   {
     "title": "Director Of Technology",
@@ -57,7 +61,8 @@
       "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
     },
     "role-template": "default",
-    "generated": true
+    "generated": true,
+    "cover-letter": false
   },
   {
     "title": "Front-end Developer",
@@ -69,7 +74,8 @@
       "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
     },
     "role-template": "default",
-    "generated": true
+    "generated": true,
+    "cover-letter": true
   },
   {
     "title": "Information Technology (IT) Analyst",
@@ -81,7 +87,8 @@
       "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
     },
     "role-template": "default",
-    "generated": true
+    "generated": true,
+    "cover-letter": false
   },
   {
     "title": "Information Technology (IT) Analyst",
@@ -93,7 +100,8 @@
       "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
     },
     "role-template": "default",
-    "generated": true
+    "generated": true,
+    "cover-letter": false
   },
   {
     "title": "Software Developer",
@@ -105,7 +113,8 @@
       "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
     },
     "role-template": "default",
-    "generated": true
+    "generated": true,
+    "cover-letter": false
   },
   {
     "title": "Systems QA (quality Assurance) Analyst",
@@ -117,7 +126,8 @@
       "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
     },
     "role-template": "default",
-    "generated": true
+    "generated": true,
+    "cover-letter": false
   },
   {
     "title": "Systems Analyst",
@@ -129,6 +139,7 @@
       "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
     },
     "role-template": "default",
-    "generated": true
+    "generated": true,
+    "cover-letter": false
   }
 ]

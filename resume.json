@@ -1,14 +1,14 @@
 {
   "coverLetter": {
     "title": "James Valeii",
-    "salutation": "Dear Helios Technology Solutions Team,",
-    "content": "I am excited to apply for the Systems Analyst position. My motivation to join Helios Technology Solutions ....",
+    "salutation": "Dear ELIM5 Inc. Team,",
+    "content": "I am excited to apply for the Front-end Developer role. I build client-facing websites that balance visual polish, performance, and maintainability. I consult with clients to document requirements, design site appearance and flow, and source and optimize content. I implement interactive features using HTML, CSS, JavaScript, jQuery, and integrate with backend services (MySQL, Git). I also create and prepare assets with Adobe Illustrator and Photoshop, run security and quality tests, and tune caching for fast, reliable experiences. I thrive in fast-paced, client-focused consulting environments, meet tight deadlines, and communicate clearly with stakeholders and team members.",
     "conclusion": "Sincerely,\nJames Valeii"
   },
   "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
   "basics": {
     "name": "James Valeii",
-    "label": "Systems Analyst",
+    "label": "Front-end Developer",
     "image": "",
     "email": "hello@jamesvaleii.com",
     "phone": "(226) 792-6659",
@@ -16,12 +16,12 @@
     "summary": [
       {
         "name": "Abstract",
-        "prose": "<strong>{{current_role}} with 13+ years experience building technical teams and platforms</strong>, delivering solutions that drive measurable business impact. Elite PHP and JavaScript developer with deep knowledge of PIM and CMS architecture, extending beyond code to optimal platform configuration, efficient database structuring, and scalable system design. Combines hands-on development and strategic leadership, blending technical expertise with broad knowledge of interacting technologies and an entrepreneurial mindset to design complete systems and make informed build vs. buy decisions based on cost, capability, and long-term maintainability. Sensitive to workflow friction, cutting unnecessary steps to save time, reduce process frustration, and accelerate delivery.",
+        "prose": "<strong>Engineer with 13+ years experience building technical teams and platforms</strong>, delivering solutions that drive measurable business impact. Elite PHP and JavaScript developer with deep knowledge of PIM and CMS architecture, extending beyond code to optimal platform configuration, efficient database structuring, and scalable system design. Combines hands-on development and strategic leadership, blending technical expertise with broad knowledge of interacting technologies and an entrepreneurial mindset to design complete systems and make informed build vs. buy decisions based on cost, capability, and long-term maintainability. Sensitive to workflow friction, cutting unnecessary steps to save time, reduce process frustration, and accelerate delivery.",
         "highlights": [
-          "Eliminated 97% engineering bottleneck at Goop; enabled 3x content output",
-          "Drove 625% account creation and $35 average order value increase at Goop",
-          "Led zero-downtime Shopify migration for site with 70M+ annual pageviews",
-          "Grew digital agency to $250K; scaled sites to 1M+ daily visits at <2s loads"
+          "<strong>Ended decade-long content bottleneck</strong>; architected modular self-service CMS component library; achieved 100% editorial adoption in 3 months (vs. prior failed attempts). Reclaimed 97% of engineering bandwidth, freeing 2 engineers and 1 PM for strategic work; tripled content output without added headcount.",
+          "<strong>Drove record e-commerce growth</strong>; designed content-gating auth layer that sparked 625% surge in account creations, 84% login growth, and $35 AOV uplift among converted users. Lifted site-wide conversion rate from 2.5% to 4.2% (Labor Day 2024 vs. 2025, per Shopify metrics) and slashed load times from 3s to sub-1s (above gold standard).",
+          "<strong>Led zero-downtime Shopify migration</strong>; single-handedly engineered WordPress–Shopify integration; custom real-time sync plugin preserved inventory/data integrity across 70M+ pageviews with zero revenue loss.",
+          "<strong>Built cross-functional velocity</strong>; embedded with product, science, and editorial teams; bring high curiosity across business domains (formulations, supply chain, and content strategy), informing priority queue, realistic deadlines, and feature design that users love. Turned siloed teams into true collaborators."
         ]
       }
     ],
@@ -52,17 +52,17 @@
     {
       "name": "Goop",
       "position": "Technical Lead, PHP Engineer",
-      "url": "https://goop.com",
+      "url": "",
       "startDate": "2022",
       "endDate": "",
       "summary": "Lifestyle/wellness e-commerce brand with sophisticated, high-traffic platform handling 70M+ annual pageviews across WordPress/PHP, React, legacy systems, SaaS/API integrations, and REST endpoints. Hired to eliminate a multi-year editorial–engineering content bottleneck. Delivered self-service CMS tools and led WordPress–Shopify replatform; owned WordPress codebase, platform reliability, and cross-functional alignment.",
       "highlights": [
         "<strong>Ended decade-long content bottleneck</strong>; architected modular self-service CMS component library; achieved 100% editorial adoption in 3 months (vs. prior failed attempts). Reclaimed 97% of engineering bandwidth, freeing 2 engineers and 1 PM for strategic work; tripled content output without added headcount.",
         "<strong>Drove record e-commerce growth</strong>; designed content-gating auth layer that sparked 625% surge in account creations, 84% login growth, and $35 AOV uplift among converted users. Lifted site-wide conversion rate from 2.5% to 4.2% (Labor Day 2024 vs. 2025, per Shopify metrics) and slashed load times from 3s to sub-1s (above gold standard).",
-        "<strong>Led zero-downtime Shopify migration</strong>; single-handedly engineered WordPress–Shopify integration; custom real-time sync plugin preserved inventory/data integrity across 70M+ pageviews with zero revenue loss.",
+        "<strong>Led zero-downtime Shopify migration</strong>; engineered WordPress–Shopify integration; custom real-time sync plugin preserved inventory/data integrity across 70M+ pageviews with zero revenue loss.",
         "<strong>Built cross-functional velocity</strong>; embedded with product, science, and editorial teams; bring high curiosity across business domains (formulations, supply chain, and content strategy), informing priority queue, realistic deadlines, and feature design that users love. Turned siloed teams into true collaborators.",
         "<strong>Mentored & scaled talent</strong>; transformed junior developer from HTML/CSS to autonomous full-stack contributor in 6 months via pair-programming and rigorous code reviews; increased team capacity 20%.",
-        "<strong>Institutionalized quality & speed</strong>; rolled out PHPUnit/Cypress and Rollbar/Grafana monitoring; cut MTTD from hours to minutes and caught 85% of issues pre-production. Created documentation system (PHPDocumentor, Confluence, and README standards); slashed local environment setup from 3-4 days to 1"
+        "<strong>Institutionalized quality & speed</strong>; rolled out PHPUnit/Cypress and Rollbar/Grafana monitoring; cut MTTD from hours to minutes and caught 85% of issues pre-production. Created documentation system (PHPDocumentor, Confluence, and README standards)"
       ],
       "location": "Santa Monica, California"
     },
@@ -248,7 +248,6 @@
         "Full-Stack Development",
         "PHP & JavaScript Development",
         "PIM & CMS Architecture",
-        "Scalable System Design",
         "Technical Team Leadership",
         "Project Management/Delivery",
         "Strategic Decision-Making",
@@ -258,8 +257,7 @@
         "Database Structuring",
         "Infrastructure & Hosting",
         "Talent Development/Mentor",
-        "Performance Monitoring",
-        "Optimization/Automation"
+        "Performance Monitoring"
       ]
     }
   ],

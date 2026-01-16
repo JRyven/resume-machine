@@ -74,6 +74,8 @@ npx eslint --ext .js,.ts src/ || npx eslint --ext .js,.ts --fix src/
 
 ### Backlog
 
+#### [Upate role specific content variance to Abstract Areas of Expertise]
+
 #### [Keyword Analysis]
 
 https://github.com/srbhr/Resume-Matcher

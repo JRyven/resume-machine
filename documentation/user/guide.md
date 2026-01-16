@@ -9,7 +9,7 @@ keywords: [user-guide, resume, json-resume, themes, export]
 
 # User Guide
 
-## Quick Start (Once Complete)
+## JSONResume Execution
 
 ```bash
 # 1. Compose resume for specific role
@@ -26,6 +26,16 @@ python scripts/build_resume.py --role senior-engineer
 python scripts/build_resume.py --role senior-engineer --validate
 ```
 
+## Rsume MAchine Execution
+
+### Complete run
+/Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/resume-machine/scripts/batch-process.sh
+
+### Run without ingesting HTML
+ printf 'Y
+' | SKIP_EXTRACT=1 bash resume-machine/scripts/batch-process.sh
+
+
 ## Overview
 
 This guide walks you through:
@@ -34,6 +44,7 @@ This guide walks you through:
 - Generating a PDF resume
 - Running the resume app locally (with or without GitHub authentication)
 - Troubleshooting common errors and misconfigurations
+
 
 ## Environments: Node vs Python (.venv)
 
