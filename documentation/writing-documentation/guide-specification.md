@@ -70,6 +70,7 @@ Number each major step. Within steps, use sub-bullets for details:
 
 ```markdown
 1. **[Step Description]**
+
    - Detail or sub-step
    - Detail or sub-step with more specifics
 

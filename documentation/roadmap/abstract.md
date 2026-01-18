@@ -150,11 +150,13 @@ This section provides comprehensive guidance for both human developers and AI ag
 ### As Project Manager
 
 1. **Track progress**
+
    - Monitor project and task completion in Development Goals sections
    - Review WIP limits to ensure focus is maintained
    - Check dependency chains to identify potential blockers
 
 2. **Monitor risks** and implement mitigation strategies
+
    - Review the [Risk Management](#risk-management) section regularly
    - Create projects in Development Goals backlog for critical risks requiring mitigation work
    - Document risk decisions in ADRs when appropriate
@@ -167,16 +169,19 @@ This section provides comprehensive guidance for both human developers and AI ag
 ### As Developer
 
 1. **Focus on sprint goals** and acceptance criteria
+
    - Work on tasks in the "In Progress" sections
    - Check off actions as they are completed
    - Update task notes with implementation details or challenges
 
 2. **Maintain quality standards** throughout development
+
    - Follow the development methodologies described in task descriptions
    - Include code examples and detailed guidance in tasks when beneficial
    - Reference the [Roadmap Specification](./specification.md) for structure rules
 
 3. **Provide feedback and new ideas** and provide constructive feedback
+
    - Suggest new projects or tasks based on technical insights
    - Document learnings in task or project notes sections
 
@@ -188,16 +193,19 @@ This section provides comprehensive guidance for both human developers and AI ag
 ### As any role
 
 1. **Validate structure** before making modifications
+
    - Always validate against the formal schema in [specification.md](./specification.md)
    - Check WIP limits before suggesting moves to In Progress
    - Verify dependencies are satisfied before promoting tasks or projects
 
 2. **Preserve detail appropriately** based on status
+
    - Keep full detail (code examples, extended descriptions) for In Progress and Backlog items
    - Strip code examples and lengthy details when moving to Complete
    - Retain only brief descriptions and "why" rationale for Rejected items
 
 3. **Maintain consistency** across documents
+
    - Use terminology defined in the [Definitions](#definitions) section
    - Follow metadata formats (YYYY-MM-DD dates, anchor link dependencies)
    - Keep action scope minimal - break large actions into multiple items

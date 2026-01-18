@@ -291,7 +291,6 @@ database:
 ```yaml
 # app.yaml
 environment: 'develop'
-
 # Uses: config/develop/database.yaml, config/develop/api.yaml
 # Paths: data-develop/, logs-develop/
 # Debug mode: enabled

@@ -35,6 +35,7 @@ Before starting, you need:
 [Detailed explanation of what you're doing and why]
 
 1. [Detailed sub-step with specifics]
+
    - [Additional detail or alternative approach]
    - [Important note to remember]
 

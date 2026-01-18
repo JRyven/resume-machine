@@ -77,6 +77,7 @@ See [Architecture Guide](./architecture.md) for detailed component documentation
 **Key Files:**
 
 1. **[PROJECT_NAME].py** (858 lines)
+
    - `[PROJECT_NAME]Config` - Configuration
    - `[PROJECT_NAME]Logger` - Logging
    - `EmailProcessor` - Orchestration
@@ -86,6 +87,7 @@ See [Architecture Guide](./architecture.md) for detailed component documentation
    - `DestinationMapper` - Routing
 
 2. **import_tracker.py** (323 lines)
+
    - `JSONImportTracker` - Tracking system
    - `calculate_file_checksum()` - Duplicate detection
 

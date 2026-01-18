@@ -84,6 +84,7 @@ This project focuses exclusively on technical excellence. We expect all contribu
    ```
 
    This starts:
+
    - Registry app: http://localhost:3000
    - Homepage: http://localhost:3001 (if applicable)
 

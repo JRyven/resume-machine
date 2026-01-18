@@ -37,6 +37,14 @@ python scripts/build_resume.py --role senior-engineer --validate
 printf 'Y
 ' | SKIP_EXTRACT=1 bash resume-machine/scripts/batch-process.sh
 
+### If a hook blocks commit, diagnose with:
+
+**show debug output from lint-staged** (what the hook runs)
+npx lint-staged --debug
+
+**run the same hook locally** to reproduce
+pnpm -w exec lint-staged
+
 ## Overview
 
 This guide walks you through:
@@ -52,6 +60,7 @@ This guide walks you through:
 Some parts of this repository are Node.js based and others are Python-based. Be aware which tools run where:
 
 - Node / JavaScript (no `.venv` required):
+
   - `pnpm`, `node`, `npm` commands
   - Theme build and preview: `pnpm turbo run build`, `pnpm turbo run dev` (registry preview)
   - PDF export: `resumed` (Node CLI) and `node scripts/preprocess-resume.js`
@@ -115,11 +124,13 @@ This creates `resume.json` with all variables replaced, ready for preview/export
    pnpm install
    ```
 2. **Build your theme (after any changes):**
+
    ```bash
    pnpm turbo run build --filter=valeii-professional
    ```
 
    - If you see `No package found with name 'valeii-professional' in workspace`, check your theme's `package.json` for the correct name and ensure it's included in your workspace config.
+
 3. **Link your theme globally (required for PDF export):**
    ```bash
    cd jsonresume-theme-valeii-professional
@@ -133,12 +144,14 @@ This creates `resume.json` with all variables replaced, ready for preview/export
    pnpm dev --filter=registry
    ```
 5. **(Optional) Bypass GitHub authentication for local development:**
+
    ```bash
    echo "NEXT_PUBLIC_AUTH_DISABLED=true" > apps/registry/.env
    pnpm turbo run dev --filter=registry
    ```
 
    - This creates a mock user and allows you to preview without logging in.
+
 6. **Open your browser:**
    [http://localhost:3001](http://localhost:3001)
 

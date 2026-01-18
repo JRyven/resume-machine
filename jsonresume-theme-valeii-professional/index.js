@@ -198,7 +198,9 @@ function formatBullets(arr) {
   return (arr || [])
     .map(
       (h) =>
-        `<p class="fourteen ml10"><span class="bullet mln15 mr2">•</span>${h.replace(/<b>(.*?)<\/b>/g, '<strong>$1<\/strong>').replace(/\b(https?:\/\/\S+)/g, '$1')}</p>`
+        `<p class="fourteen ml10"><span class="bullet mln15 mr2">•</span>${h
+          .replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>')
+          .replace(/\b(https?:\/\/\S+)/g, '$1')}</p>`
     )
     .join('');
 }
@@ -208,7 +210,9 @@ const formatName = (name) => `${name} — Resume`;
 
 // html wrapper: Wraps content in full HTML doc
 function createHtmlWrapper({ name, content }) {
-  return `<!doctype html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <title>${formatName(name)}</title>\n  ${STYLE_FUNCTION()}\n</head>\n<body>\n${content}\n</body>\n</html>`;
+  return `<!doctype html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <title>${formatName(
+    name
+  )}</title>\n  ${STYLE_FUNCTION()}\n</head>\n<body>\n${content}\n</body>\n</html>`;
 }
 
 // MAIN RENDER
@@ -258,7 +262,12 @@ export const render = function (resume, options) {
     const links = renderLinks(basics);
     coverLetterSection = `
       <section class="cover-letter">
-        ${renderHeader({ title: coverLetter.title || 'Cover Letter', label, contact: contactInline, summary: null })}
+        ${renderHeader({
+          title: coverLetter.title || 'Cover Letter',
+          label,
+          contact: contactInline,
+          summary: null,
+        })}
         <div>
           ${coverLetter.salutation ? `<p>${coverLetter.salutation}</p>` : ''}
           ${coverLetterHtml}
@@ -341,7 +350,9 @@ export const render = function (resume, options) {
       <div class="work-item">
         <div class="flex-row mb12">
           <h3 class="mb0">${companyDisplay}</h3>
-          <p class="italic twelve mb0">${location ? `— ${location} ` : ''}${dateRange ? `— ${dateRange}` : ''}</p>
+          <p class="italic twelve mb0">${location ? `— ${location} ` : ''}${
+        dateRange ? `— ${dateRange}` : ''
+      }</p>
         </div>
         <p class="bold">${position}</p>
         ${summary}
@@ -378,7 +389,13 @@ export const render = function (resume, options) {
             ${roles ? `<span class="bold">${roles}</span> | ` : ''}<span>${p.name}</span>
           </p>
           ${p.description ? `<p class="twelve mtn5">${p.description}</p>` : ''}
-          ${p.highlights && p.highlights.length ? formatBullets(p.highlights.map((h) => h.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>'))) : ''}
+          ${
+            p.highlights && p.highlights.length
+              ? formatBullets(
+                  p.highlights.map((h) => h.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>'))
+                )
+              : ''
+          }
         </div>`;
           })
           .join('')
@@ -394,9 +411,17 @@ export const render = function (resume, options) {
                 : '';
             return `<div class="volunteer-role">
           <p class="flex-row twelve">
-            ${v.position ? `<span class="bold">${v.position}</span> | ` : ''}<span>${v.organization}</span>${dateRange ? ` | <span>${dateRange}</span>` : ''}
+            ${v.position ? `<span class="bold">${v.position}</span> | ` : ''}<span>${
+              v.organization
+            }</span>${dateRange ? ` | <span>${dateRange}</span>` : ''}
           </p>
-          ${v.highlights && v.highlights.length ? formatBullets(v.highlights.map((h) => h.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>'))) : ''}
+          ${
+            v.highlights && v.highlights.length
+              ? formatBullets(
+                  v.highlights.map((h) => h.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>'))
+                )
+              : ''
+          }
         </div>`;
           })
           .join('')

@@ -105,7 +105,9 @@ async function extractDataFromHTML(filePath) {
     };
 
     console.log(
-      `${path.basename(filePath)} - matched title: ${data.matched.titleSelector || 'none'}, company: ${data.matched.companySelector || 'none'}`
+      `${path.basename(filePath)} - matched title: ${
+        data.matched.titleSelector || 'none'
+      }, company: ${data.matched.companySelector || 'none'}`
     );
 
     return data;
