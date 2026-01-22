@@ -30,12 +30,16 @@ python scripts/build_resume.py --role senior-engineer --validate
 
 ### Complete run
 
+```bash
 /Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/resume-machine/scripts/batch-process.sh
+```
 
 ### Run without ingesting HTML
 
+```bash
 printf 'Y
 ' | SKIP_EXTRACT=1 bash resume-machine/scripts/batch-process.sh
+```
 
 ### If a hook blocks commit, diagnose with:
 

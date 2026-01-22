@@ -38,17 +38,21 @@ const STYLE_FUNCTION = () => `
     }
 
     h1 {
-      font-size: 22px;
+      font-size: 20px;
     }
     h2 {
-      font-size: 20px;
+      font-size: 18px;
       text-transform: uppercase;
       font-weight: bold;
     }
     h3 {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
     }
+    h4 {
+      font-size: 14px;
+      font-weight: bold;
+    }      
 
     p {
       font-family: Arial, Helvetica, sans-serif;
@@ -81,11 +85,21 @@ const STYLE_FUNCTION = () => `
     }
     .fourteen {
       font-size: 14px;
-    }      
+    }     
+    .thirteen {
+      font-size: 13px;
+    }     
     .twelve {
       font-size: 12px;
     }
 
+    .p0 {
+      padding: 0;
+    }
+
+    .mt0 {
+      margin-top: 0;
+    }
     .mt10 { 
       margin-top: 10px;
     }
@@ -193,12 +207,12 @@ function sectionBlock({ name, className, content }) {
 }
 
 // format an array of strings as "• ..." with <br> between
-function formatBullets(arr) {
+function formatBullets(arr, size = 'thirteen') {
   // Each bullet gets its own <p> tag, with hanging indent for wrapped lines
   return (arr || [])
     .map(
       (h) =>
-        `<p class="fourteen ml10"><span class="bullet mln15 mr2">•</span>${h
+        `<p class="${size} ml10"><span class="bullet mln15 mr2">•</span>${h
           .replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>')
           .replace(/\b(https?:\/\/\S+)/g, '$1')}</p>`
     )
@@ -241,7 +255,7 @@ export const render = function (resume, options) {
     return `
       <header>
         <div class="head-top flex-between">
-          <h1>${title}</h1>
+          <h1 class="mb0">${title}</h1>
           <p class="sixteen mb0">${label}</p>
           <p class="italic twelve mb0">${contact}</p>
         </div>
@@ -282,11 +296,11 @@ export const render = function (resume, options) {
   function renderLinks(basics) {
     if (!basics) return '';
     const links = [];
-    if (basics.url) links.push(`<a href="${basics.url}">${basics.url}</a>`);
+    if (basics.url) links.push(`<a class="twelve" href="${basics.url}">${basics.url}</a>`);
     if (Array.isArray(basics.profiles)) {
       for (const p of basics.profiles) {
         if (p.url) {
-          links.push(`<a href="${p.url}">${p.url}</a>`);
+          links.push(`<a class="twelve" href="${p.url}">${p.url}</a>`);
         }
       }
     }
@@ -299,12 +313,12 @@ export const render = function (resume, options) {
   if (summaryArr.length > 0) {
     summaryBlock = summaryArr
       .map((section) => {
-        let block = `<div class="summary fourteen">`;
+        let block = `<div class="summary sixteen">`;
         if (section.prose) {
           block += `<p>${section.prose.replace(/<b>(.*?)<\/b>/g, '<strong>$1</strong>')}</p>`;
         }
         if (Array.isArray(section.highlights) && section.highlights.length > 0) {
-          block += formatBullets(section.highlights);
+          block += formatBullets(section.highlights, 'fourteen');
         }
         block += `</div>`;
         return block;
@@ -316,7 +330,7 @@ export const render = function (resume, options) {
   const interestsInline =
     resume.interests && resume.interests.length
       ? resume.interests
-          .map((i) => `<p class="twelve">${i.keywords ? i.keywords.join(', ') : ''}</p>`)
+          .map((i) => `<p class="sixteen">${i.keywords ? i.keywords.join(', ') : ''}</p>`)
           .join('')
       : '';
 
@@ -345,16 +359,17 @@ export const render = function (resume, options) {
       // Render header row as flex with company, location, and dates
       const dateRange = `${start}${end ? `–${end}` : ''}`;
       // Add page break before Goop
-      const pageBreak = company.trim().toLowerCase() === 'goop' ? '<hr class="cover-break" />' : '';
+      const pageBreak =
+        company.trim().toLowerCase() === 'goop' ? '<hr class="cover-break p0 mt0" />' : '';
       return `
       <div class="work-item">
-        <div class="flex-row mb12">
-          <h3 class="mb0">${companyDisplay}</h3>
-          <p class="italic twelve mb0">${location ? `— ${location} ` : ''}${
-        dateRange ? `— ${dateRange}` : ''
-      }</p>
+        <div class="flex-row mb12 mb0 mt0 p0">
+          <h3 class="sixteen mb0 p0 mt0" style="margin-bottom:0px;padding-bottom:0px;">${companyDisplay}</h3>
+          <p class="italic twelve mb0 mt0 p0 style="margin-top:0px;padding-top:0px;"">${
+            location ? `— ${location} ` : ''
+          }${dateRange ? `— ${dateRange}` : ''}</p>
         </div>
-        <p class="bold">${position}</p>
+        <p class="fourteen bold mb0 mt0 p0">${position}</p>
         ${summary}
         ${bullets}
       </div>
@@ -372,7 +387,7 @@ export const render = function (resume, options) {
     ? resume.skills
         .map(
           (s) =>
-            `<h3 class="sixteen">${s.name}</h3>
+            `<h3 class="fourteen">${s.name}</h3>
        <p class="twelve">${(s.keywords || []).join(', ')}</p>`
         )
         .join('')

@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../mira"
+		}
+	],
+  "settings": {
+    "json.format.enable": true
+  }
+}

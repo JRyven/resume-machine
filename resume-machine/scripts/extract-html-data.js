@@ -3,51 +3,98 @@
 const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
+const inputDir =
+  '/Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/jobbankjobs/2026/01/21';
 
 async function extractDataFromHTML(filePath) {
   const browser = await puppeteer.launch({ headless: 'new' });
   const page = await browser.newPage();
 
+  // Read the first 2KB of the file to detect the source
+  let fileHead = '';
+  try {
+    fileHead = fs.readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
+    fileHead = fileHead.slice(0, 2048);
+  } catch (e) {
+    // fallback: ignore detection, default to jobbank
+    fileHead = '';
+  }
+
+  // Source detection
+  let source = 'jobbank';
+  if (/<!--\s*saved from url=.*careerbeacon\.com/.test(fileHead)) {
+    source = 'careerbeacon';
+  } else if (/<!--\s*saved from url=.*jobbank\.gc\.ca/.test(fileHead)) {
+    source = 'jobbank';
+  }
+
   try {
     await page.goto(`file://${filePath}`, { waitUntil: 'networkidle0' });
-    // Candidate selectors - try each list in order and return the first match
-    const titleSelectors = [
-      '.job-posting-details-body .title-header [property="title"]',
-      '.job-posting-details-body [property="title"]',
-      '[property="title"]',
-      '[property="name"]',
-      'h1.title',
-      '.title-header h1',
-      'h1[property="name"]',
-      '.title',
-    ];
 
-    const companySelectors = [
-      'span[property="hiringOrganization"] [property="name"] a',
-      'span[property="name"] a',
-      '.job-posting-details-body .title-header p .business [property="name"] a',
-      '.job-posting-details-body .title-header p .business a',
-      '.job-posting-details-body .title-header p .business strong',
-      '.job-posting-details-menu h2',
-      '.job-posting-details-body .title-header p .business',
-      '.business',
-      'a[rel~="author"]',
-    ];
+    let titleSelectors, companySelectors, descriptionSelectors;
 
-    const descriptionSelectors = [
-      '.job-posting-details-body [property="description"]',
-      '.job-posting-details-body .description',
-      '#wb-cont [property="description"]',
-    ];
+    if (source === 'careerbeacon') {
+      // CareerBeacon selectors
+      titleSelectors = ['h1.h3.text-primary', 'h1.h3', 'h1', 'meta[property="og:title"]', 'title'];
+      companySelectors = [
+        'h2.company_name a',
+        'h2.company_name',
+        '.company_name a',
+        '.company_name',
+        'meta[property="og:site_name"]',
+      ];
+      descriptionSelectors = [
+        'section.details',
+        'div#job_details section.details',
+        'div#job_details',
+        'meta[name="description"]',
+      ];
+    } else {
+      // Default: jobbank selectors (existing logic)
+      titleSelectors = [
+        '.job-posting-details-body .title-header [property="title"]',
+        '.job-posting-details-body [property="title"]',
+        '[property="title"]',
+        '[property="name"]',
+        'h1.title',
+        '.title-header h1',
+        'h1[property="name"]',
+        '.title',
+      ];
+      companySelectors = [
+        'span[property="hiringOrganization"] [property="name"] a',
+        'span[property="name"] a',
+        '.job-posting-details-body .title-header p .business [property="name"] a',
+        '.job-posting-details-body .title-header p .business a',
+        '.job-posting-details-body .title-header p .business strong',
+        '.job-posting-details-menu h2',
+        '.job-posting-details-body .title-header p .business',
+        '.business',
+        'a[rel~="author"]',
+      ];
+      descriptionSelectors = [
+        '.job-posting-details-body [property="description"]',
+        '.job-posting-details-body .description',
+        '#wb-cont [property="description"]',
+      ];
+    }
 
     const result = await page.evaluate(
-      (titleSelectors, companySelectors, descriptionSelectors) => {
+      (titleSelectors, companySelectors, descriptionSelectors, source) => {
         const firstMatch = (selectors) => {
           for (const sel of selectors) {
             try {
-              const el = document.querySelector(sel);
+              let el = document.querySelector(sel);
+              if (!el && sel.startsWith('meta[')) {
+                // Special handling for meta tags
+                const meta = document.querySelector(sel);
+                if (meta && meta.content) {
+                  return { text: meta.content.trim(), selector: sel };
+                }
+              }
               if (el) {
-                const text = (el.textContent || el.innerText || '').trim();
+                let text = (el.textContent || el.innerText || '').trim();
+                if (!text && el.getAttribute('content')) text = el.getAttribute('content').trim();
                 if (text) return { text, selector: sel };
               }
             } catch (e) {
@@ -57,15 +104,45 @@ async function extractDataFromHTML(filePath) {
           return { text: '', selector: null };
         };
 
-        const title = firstMatch(titleSelectors);
-        const company = firstMatch(companySelectors);
-        const description = firstMatch(descriptionSelectors);
+        let title = firstMatch(titleSelectors);
+        let company = firstMatch(companySelectors);
+        let description = firstMatch(descriptionSelectors);
+
+        // For CareerBeacon, try to extract from JSON-LD if selectors fail
+        if (source === 'careerbeacon' && (!title.text || !company.text || !description.text)) {
+          const ldJsons = Array.from(
+            document.querySelectorAll('script[type="application/ld+json"]')
+          );
+          for (const script of ldJsons) {
+            try {
+              const data = JSON.parse(script.textContent);
+              if (data['@type'] === 'JobPosting') {
+                if (!title.text && data.title)
+                  title = { text: data.title, selector: 'ld+json:title' };
+                if (!company.text && data.hiringOrganization && data.hiringOrganization.name)
+                  company = {
+                    text: data.hiringOrganization.name,
+                    selector: 'ld+json:hiringOrganization.name',
+                  };
+                if (!description.text && data.description)
+                  description = {
+                    text: data.description
+                      .replace(/<[^>]+>/g, ' ')
+                      .replace(/\s+/g, ' ')
+                      .trim(),
+                    selector: 'ld+json:description',
+                  };
+              }
+            } catch (e) {}
+          }
+        }
 
         return { title, company, description };
       },
       titleSelectors,
       companySelectors,
-      descriptionSelectors
+      descriptionSelectors,
+      source
     );
 
     const normalizeDoc = (s) => {
@@ -82,12 +159,12 @@ async function extractDataFromHTML(filePath) {
 
     if (!result.title.text) {
       console.warn(
-        `Title element not found for file: ${filePath}. Tried ${titleSelectors.length} selectors.`
+        `Title element not found for file: ${filePath}. Tried ${titleSelectors.length} selectors. Source: ${source}`
       );
     }
     if (!result.company.text) {
       console.warn(
-        `Company element not found for file: ${filePath}. Tried ${companySelectors.length} selectors.`
+        `Company element not found for file: ${filePath}. Tried ${companySelectors.length} selectors. Source: ${source}`
       );
     }
 
@@ -105,7 +182,7 @@ async function extractDataFromHTML(filePath) {
     };
 
     console.log(
-      `${path.basename(filePath)} - matched title: ${
+      `${path.basename(filePath)} [${source}] - matched title: ${
         data.matched.titleSelector || 'none'
       }, company: ${data.matched.companySelector || 'none'}`
     );
@@ -121,8 +198,6 @@ async function extractDataFromHTML(filePath) {
 }
 
 async function main() {
-  const inputDir =
-    '/Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/jobbankjobs/2026/01/12';
   const outputFilePath = path.join(__dirname, '../resume-machine-queue.json');
 
   const htmlFiles = fs.readdirSync(inputDir).filter((file) => file.endsWith('.html'));
@@ -137,6 +212,9 @@ async function main() {
   }
 
   // Add defaults for queue processing so operator can review and edit prior to generation
+
+  // Add current date in YYYY-MM-DD format
+  const today = new Date().toISOString().slice(0, 10);
   const queued = allData.map((item) => ({
     title: item.title || '',
     company: item.company || '',
@@ -145,6 +223,7 @@ async function main() {
     'role-template': item['role-template'] || 'default',
     generated: item.generated || false,
     'cover-letter': item['cover-letter'] || false,
+    date: today,
   }));
 
   fs.writeFileSync(outputFilePath, JSON.stringify(queued, null, 2));
