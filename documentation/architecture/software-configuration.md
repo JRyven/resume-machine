@@ -1,4 +1,5 @@
 ---
+
 project_name: [PROJECT_NAME]
 title: Software and dependencies.
 description:
@@ -6,6 +7,7 @@ last_updated: [YYYY-MM-DD]
 clear_doc_version: 2.1.0
 status:
 keywords: [development, setup, environment, contributing, testing]
+
 ---
 
 # {SYSTEM} Software Configuration

@@ -26,6 +26,11 @@ async function extractDataFromHTML(filePath) {
     source = 'careerbeacon';
   } else if (/<!--\s*saved from url=.*jobbank\.gc\.ca/.test(fileHead)) {
     source = 'jobbank';
+  } else if (
+    /<!--\s*saved from url=.*ziprecruiter\.com/.test(fileHead) ||
+    /ZipRecruiter/.test(fileHead)
+  ) {
+    source = 'ziprecruiter';
   }
 
   try {
@@ -79,6 +84,31 @@ async function extractDataFromHTML(filePath) {
       ];
     }
 
+    if (source === 'ziprecruiter') {
+      // ZipRecruiter selectors (best-effort; JSON-LD fallback below)
+      titleSelectors = [
+        'h1[data-qa="job-title"]',
+        'h1.job-title',
+        'h1',
+        'meta[property="og:title"]',
+        'title',
+      ];
+      companySelectors = [
+        'a[data-qa="company-name"]',
+        'div[data-qa="company-name"]',
+        '.company',
+        '.company-name',
+        'meta[property="og:site_name"]',
+      ];
+      descriptionSelectors = [
+        'div[data-qa="job-description"]',
+        '.job-description',
+        '#job_description',
+        'section.job-description',
+        'meta[name="description"]',
+      ];
+    }
+
     const result = await page.evaluate(
       (titleSelectors, companySelectors, descriptionSelectors, source) => {
         const firstMatch = (selectors) => {
@@ -108,8 +138,11 @@ async function extractDataFromHTML(filePath) {
         let company = firstMatch(companySelectors);
         let description = firstMatch(descriptionSelectors);
 
-        // For CareerBeacon, try to extract from JSON-LD if selectors fail
-        if (source === 'careerbeacon' && (!title.text || !company.text || !description.text)) {
+        // For CareerBeacon and ZipRecruiter, try to extract from JSON-LD if selectors fail
+        if (
+          (source === 'careerbeacon' || source === 'ziprecruiter') &&
+          (!title.text || !company.text || !description.text)
+        ) {
           const ldJsons = Array.from(
             document.querySelectorAll('script[type="application/ld+json"]')
           );
