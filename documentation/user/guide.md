@@ -26,13 +26,19 @@ python scripts/build_resume.py --role senior-engineer
 python scripts/build_resume.py --role senior-engineer --validate
 ```
 
-## Rsume MAchine Execution
+## Resume Machine Execution
+
+## Update Data Path
+
+Set the correct target URL [Extract Resume HTML](../../resume-machine/scripts/extract-html-data.js)
 
 ### Complete run
 
 ```bash
 /Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/resume-machine/scripts/batch-process.sh
 ```
+
+Review resume [machine queue](../../resume-machine/resume-machine-queue.json), update `role-template` and other values to optimize resume content.
 
 ### Run without ingesting HTML
 

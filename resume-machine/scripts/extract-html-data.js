@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
 const inputDir =
-  '/Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/jobbankjobs/2026/01/21';
+  '/Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/jobbankjobs/2026/02/06';
 
 async function extractDataFromHTML(filePath) {
   const browser = await puppeteer.launch({ headless: 'new' });
