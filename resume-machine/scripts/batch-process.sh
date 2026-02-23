@@ -6,9 +6,13 @@ cd /Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/ || exit 1
 # Resolve script directory
 script_dir=$(cd "$(dirname "$0")" && pwd)
 
+# Input directory for HTML extraction (can be overridden by environment)
+# Default targets the specific jobbankjobs date folder; change here to use another folder.
+INPUT_DIR="${INPUT_DIR:-$(pwd)/jobbankjobs/2026/02/22}"
+
 if [ -z "$SKIP_EXTRACT" ]; then
-  echo "Running extract-html-data.js..."
-  if ! node "$script_dir/extract-html-data.js"; then
+  echo "Running extract-html-data.js with INPUT_DIR=$INPUT_DIR..."
+  if ! node "$script_dir/extract-html-data.js" "$INPUT_DIR"; then
     echo "Error: Failed to run extract-html-data.js."
     exit 1
   fi

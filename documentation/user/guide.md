@@ -28,6 +28,8 @@ python scripts/build_resume.py --role senior-engineer --validate
 
 ## Resume Machine Execution
 
+Note: the resume machine now supports a simple per-repo config file at `resume-machine/config.yaml` and accepts runtime overrides via the `INPUT_DIR`, `OUTPUT_DIR`, `SKIP_EXTRACT`, and `DRY_RUN` environment variables or CLI args. The batch script will prompt for review of the generated queue before producing PDFs; you can auto-confirm in scripts with `printf 'Y\n' | ...` when needed.
+
 ## Update Data Path
 
 Set the correct target URL [Extract Resume HTML](../../resume-machine/scripts/extract-html-data.js)

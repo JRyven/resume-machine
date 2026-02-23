@@ -3,8 +3,43 @@
 const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
-const inputDir =
-  '/Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/jobbankjobs/2026/02/06';
+
+// Allow input directory to be provided as: 1) CLI arg, 2) process.env.INPUT_DIR, 3) resume-machine/config.yaml, 4) fallback hardcoded default
+const repoRoot = path.resolve(__dirname, '..', '..');
+const configPath = path.join(repoRoot, 'resume-machine', 'config.yaml');
+
+// Minimal YAML loader for simple key: value pairs (avoid extra deps)
+function loadSimpleYaml(filePath) {
+  try {
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const lines = raw.split(/\r?\n/);
+    const cfg = {};
+    for (let line of lines) {
+      line = line.trim();
+      if (!line || line.startsWith('#')) continue;
+      const m = line.match(/^([a-zA-Z0-9_\-]+):\s*(.*)$/);
+      if (m) {
+        let k = m[1];
+        let v = m[2].trim();
+        // strip surrounding quotes
+        if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+          v = v.slice(1, -1);
+        }
+        // coerce booleans
+        if (v === 'true') v = true;
+        else if (v === 'false') v = false;
+        cfg[k] = v;
+      }
+    }
+    return cfg;
+  } catch (e) {
+    return {};
+  }
+}
+
+const fileCfg = fs.existsSync(configPath) ? loadSimpleYaml(configPath) : {};
+const defaultInput = path.resolve(repoRoot, fileCfg.input_dir || 'jobbankjobs/2026/02/06');
+const inputDir = path.resolve(process.argv[2] || process.env.INPUT_DIR || defaultInput);
 
 async function extractDataFromHTML(filePath) {
   const browser = await puppeteer.launch({ headless: 'new' });
@@ -27,6 +62,12 @@ async function extractDataFromHTML(filePath) {
   } else if (/<!--\s*saved from url=.*jobbank\.gc\.ca/.test(fileHead)) {
     source = 'jobbank';
   } else if (
+    /<!--\s*saved from url=.*automattic\.com/.test(fileHead) ||
+    /Automattic/.test(fileHead) ||
+    /og:site_name" content="Automattic/.test(fileHead)
+  ) {
+    source = 'automattic';
+  } else if (
     /<!--\s*saved from url=.*ziprecruiter\.com/.test(fileHead) ||
     /ZipRecruiter/.test(fileHead)
   ) {
@@ -38,75 +79,105 @@ async function extractDataFromHTML(filePath) {
 
     let titleSelectors, companySelectors, descriptionSelectors;
 
-    if (source === 'careerbeacon') {
-      // CareerBeacon selectors
-      titleSelectors = ['h1.h3.text-primary', 'h1.h3', 'h1', 'meta[property="og:title"]', 'title'];
-      companySelectors = [
-        'h2.company_name a',
-        'h2.company_name',
-        '.company_name a',
-        '.company_name',
-        'meta[property="og:site_name"]',
-      ];
-      descriptionSelectors = [
-        'section.details',
-        'div#job_details section.details',
-        'div#job_details',
-        'meta[name="description"]',
-      ];
-    } else {
-      // Default: jobbank selectors (existing logic)
-      titleSelectors = [
-        '.job-posting-details-body .title-header [property="title"]',
-        '.job-posting-details-body [property="title"]',
-        '[property="title"]',
-        '[property="name"]',
-        'h1.title',
-        '.title-header h1',
-        'h1[property="name"]',
-        '.title',
-      ];
-      companySelectors = [
-        'span[property="hiringOrganization"] [property="name"] a',
-        'span[property="name"] a',
-        '.job-posting-details-body .title-header p .business [property="name"] a',
-        '.job-posting-details-body .title-header p .business a',
-        '.job-posting-details-body .title-header p .business strong',
-        '.job-posting-details-menu h2',
-        '.job-posting-details-body .title-header p .business',
-        '.business',
-        'a[rel~="author"]',
-      ];
-      descriptionSelectors = [
-        '.job-posting-details-body [property="description"]',
-        '.job-posting-details-body .description',
-        '#wb-cont [property="description"]',
-      ];
-    }
+    switch (source) {
+      case 'careerbeacon':
+        // CareerBeacon selectors
+        titleSelectors = [
+          'h1.h3.text-primary',
+          'h1.h3',
+          'h1',
+          'meta[property="og:title"]',
+          'title',
+        ];
+        companySelectors = [
+          'h2.company_name a',
+          'h2.company_name',
+          '.company_name a',
+          '.company_name',
+          'meta[property="og:site_name"]',
+        ];
+        descriptionSelectors = [
+          'section.details',
+          'div#job_details section.details',
+          'div#job_details',
+          'meta[name="description"]',
+        ];
+        break;
 
-    if (source === 'ziprecruiter') {
-      // ZipRecruiter selectors (best-effort; JSON-LD fallback below)
-      titleSelectors = [
-        'h1[data-qa="job-title"]',
-        'h1.job-title',
-        'h1',
-        'meta[property="og:title"]',
-        'title',
-      ];
-      companySelectors = [
-        'a[data-qa="company-name"]',
-        'div[data-qa="company-name"]',
-        '.company',
-        '.company-name',
-        'meta[property="og:site_name"]',
-      ];
-      descriptionSelectors = [
-        'div[data-qa="job-description"]',
-        '.job-description',
-        '#job_description',
-        'section.job-description',
-        'meta[name="description"]',
-      ];
+      case 'automattic':
+        // Automattic job page selectors
+        titleSelectors = ['h1.title', 'h2.title-md', 'h1', 'meta[property="og:title"]', 'title'];
+        companySelectors = [
+          'meta[property="og:site_name"]',
+          '.job-card-team',
+          '.job-card-team a',
+          '.job-card-details .job-card-team',
+          '.wp-block-automattic-2011-job-card .job-card-team',
+          '.wp-block-automattic-2011-job .job-posts .job-card-team',
+          '.wp-block-automattic-2011-job .job-posts .job-card-details .job-card-team',
+        ];
+        descriptionSelectors = [
+          '.wp-block-automattic-2011-job-description',
+          '.wp-block-automattic-2011-job-description p',
+          '.wp-block-automattic-2011-job .job-layout',
+          'meta[name="description"]',
+        ];
+        break;
+
+      case 'ziprecruiter':
+        // ZipRecruiter selectors (best-effort; JSON-LD fallback below)
+        titleSelectors = [
+          'h1[data-qa="job-title"]',
+          'h1.job-title',
+          'h1',
+          'meta[property="og:title"]',
+          'title',
+        ];
+        companySelectors = [
+          'a[data-qa="company-name"]',
+          'div[data-qa="company-name"]',
+          '.company',
+          '.company-name',
+          'meta[property="og:site_name"]',
+        ];
+        descriptionSelectors = [
+          'div[data-qa="job-description"]',
+          '.job-description',
+          '#job_description',
+          'section.job-description',
+          'meta[name="description"]',
+        ];
+        break;
+
+      default:
+        // Default: jobbank selectors (existing logic)
+        titleSelectors = [
+          '.job-posting-details-body .title-header [property="title"]',
+          '.job-posting-details-body [property="title"]',
+          '[property="title"]',
+          '[property="name"]',
+          'h1.title',
+          '.title-header h1',
+          'h1[property="name"]',
+          '.title',
+        ];
+        companySelectors = [
+          'span[property="hiringOrganization"] [property="name"] a',
+          'span[property="name"] a',
+          '.job-posting-details-body .title-header p .business [property="name"] a',
+          '.job-posting-details-body .title-header p .business a',
+          '.job-posting-details-body .title-header p .business strong',
+          '.job-posting-details-menu h2',
+          '.job-posting-details-body .title-header p .business',
+          '.business',
+          'a[rel~="author"]',
+        ];
+        descriptionSelectors = [
+          '.job-posting-details-body [property="description"]',
+          '.job-posting-details-body .description',
+          '#wb-cont [property="description"]',
+        ];
+        break;
     }
 
     const result = await page.evaluate(

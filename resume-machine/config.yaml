@@ -1,0 +1,29 @@
+# Resume machine configuration
+# Values can be overridden by: 1) CLI arg to scripts, 2) environment vars, 3) this config file
+
+# Input directory containing saved HTML job files (can be an absolute or repo-relative path)
+input_dir: jobbankjobs/2026/02/22
+
+# Output artifacts directory for generated PDFs
+output_dir: artifacts
+
+# Queue file used by the batch script
+queue_file: resume-machine/resume-machine-queue.json
+
+# Role templates directory
+role_templates_dir: resume-machine/role-based-templates
+
+# Path to unique/default data file
+unique_data_file: resume-machine/resume.unique-data.json
+
+# Skip HTML extraction step when true
+skip_extract: false
+
+# Dry run mode (do not write outputs)
+dry_run: false
+
+# Logging level: debug, info, warn, error
+log_level: info
+
+# PDF filename template
+pdf_naming_template: 'resume-{candidate}-{company}-{role}.pdf'
