@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cover Letter — James Valeii — Automattic</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+Pro:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @page {
+        size: Letter;
+        margin: 0.7in;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Source Serif Pro', Georgia, serif;
+        color: #111827;
+        font-size: 11.5pt;
+        line-height: 1.32;
+        background: #fff;
+        padding: 0.7in;
+        max-width: 8.5in;
+        margin: 0 auto;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 10pt;
+      }
+
+      .header .name {
+        font-family: 'Inter', Arial, sans-serif;
+        font-weight: 700;
+        font-size: 17pt;
+        color: #111827;
+        line-height: 1.1;
+      }
+
+      .header .title-label {
+        font-family: 'Inter', Arial, sans-serif;
+        font-size: 11pt;
+        font-weight: 400;
+        color: #6b7280;
+        margin-top: 3pt;
+      }
+
+      .contact {
+        font-family: 'Inter', Arial, sans-serif;
+        font-size: 10pt;
+        color: #6b7280;
+        text-align: right;
+        line-height: 1.6;
+      }
+
+      .contact a {
+        color: #1490c7;
+        text-decoration: none;
+      }
+
+      .rule {
+        height: 1px;
+        background: #e5e7eb;
+        margin: 10pt 0 14pt 0;
+      }
+
+      .date {
+        font-family: 'Inter', Arial, sans-serif;
+        font-size: 10.5pt;
+        color: #6b7280;
+        margin-bottom: 18pt;
+      }
+
+      h2 {
+        font-family: 'Inter', Arial, sans-serif;
+        font-size: 11pt;
+        font-weight: 600;
+        color: #1490c7;
+        margin: 18pt 0 6pt 0;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      p {
+        margin: 0 0 8pt 0;
+        max-width: 72ch;
+      }
+
+      ul {
+        margin: 0 0 8pt 1.2em;
+        max-width: 70ch;
+      }
+
+      ul li {
+        margin-bottom: 6pt;
+      }
+
+      ul li strong {
+        font-weight: 600;
+      }
+
+      blockquote {
+        margin: 0 0 8pt 0;
+        padding-left: 12pt;
+        border-left: 3px solid #e5e7eb;
+        color: #6b7280;
+        font-style: italic;
+      }
+
+      .signature {
+        margin-top: 20pt;
+        font-family: 'Source Serif Pro', Georgia, serif;
+        font-size: 11.5pt;
+        line-height: 1.7;
+      }
+
+      .signature .sig-name {
+        font-family: 'Inter', Arial, sans-serif;
+        font-weight: 700;
+        font-size: 12pt;
+        color: #111827;
+        margin-top: 2pt;
+      }
+
+      .signature .sig-contact {
+        font-family: 'Inter', Arial, sans-serif;
+        font-size: 10pt;
+        color: #6b7280;
+      }
+
+      .signature .sig-contact a {
+        color: #1490c7;
+        text-decoration: none;
+      }
+
+      @media (max-width: 520px) {
+        .header {
+          flex-direction: column;
+          gap: 8pt;
+        }
+
+        .contact {
+          text-align: left;
+        }
+
+        body {
+          padding: 0.4in;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <div>
+        <div class="name">{{name}}</div>
+        <div class="title_label">{{title_label}}</div>
+      </div>
+      <div class="contact">
+        <a href="mailto:{{email}}">{{email}}</a><br />
+        {{phone}}<br />
+        {{city}}, {{provence}} · {{country}}<br />
+        <a href="https://linkedin.com/in/{{linkedin}}">linkedin.com/in/{{linkedin}}</a>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="date">{{date}}</div>
+
+    <!-- Q1 -->
+    <h2>What's motivating you to explore an engineering role at Automattic and why now?</h2>
+    <p>
+      I'm drawn to Automattic for three reasons: its commitment to open source, its culture of
+      kindness, and its careful, human-centered approach to AI.
+    </p>
+    <p>
+      Open source aligns with my values. As a cofounder of Kalamazoo Collective Housing and an
+      active participant in housing, food, and arts cooperatives, I've seen how co-ownership and
+      consensus-based governance produce transparent decision-making and shared accountability.
+      Those structures intentionally allocate resources and opportunities so members can contribute,
+      learn, and grow — the same outcomes I value in open-source communities.
+    </p>
+    <p>
+      Kindness sustains inclusion. Cooperatives succeed because members support one another, elevate
+      quieter voices, and make space for diverse perspectives. Automattic's creed to show respect
+      and empathy mirrors that practice; a culture of mutual support enables honest feedback,
+      thoughtful collaboration, and real shared ownership.
+    </p>
+    <p>
+      AI should amplify human creativity. I want to work on technology that enhances people's
+      capabilities rather than replaces their judgment. Automattic's measured adoption of large
+      language models suggests thoughtful stewardship of these tools, and that clarity makes now the
+      right time for me to contribute.
+    </p>
+
+    <!-- Q2 -->
+    <h2>When have you felt happiest at work? And when have you felt the least fulfilled?</h2>
+    <p>I am most fulfilled when:</p>
+    <ul>
+      <li>
+        <strong>Solving meaningful problems.</strong> I enjoy untangling practical challenges that
+        improve people's day-to-day experiences.
+      </li>
+      <li>
+        <strong>I have clear goals and impact metrics.</strong> I thrive when success is measurable
+        and we know what defines impact.
+      </li>
+      <li>
+        <strong>My team is invested in our work.</strong> Teams that understand why projects matter
+        and align short-term goals with long-term value energize me.
+      </li>
+      <li>
+        <strong>I'm in a culture of high trust and mutual support.</strong> I flourish where
+        contributions are valued, people are respectful, and collaboration is calm and constructive.
+      </li>
+      <li>
+        <strong>I have opportunities to learn and build.</strong> I value creating useful products,
+        meeting new people, and experimenting with emerging technology to stay curious and grow.
+      </li>
+    </ul>
+
+    <!-- Q3 -->
+    <h2>Which part of the Automattic Creed resonates most with you, and why?</h2>
+    <blockquote>
+      "I am more motivated by impact than money, and I know that Open Source is one of the most
+      powerful ideas of our generation."
+    </blockquote>
+    <p>
+      Open source resonates most with me because it expands capacity, grants ownership, and
+      preserves choice for users.
+    </p>
+    <p>
+      Open source expands capacity for the underfunded. Community-maintained tools let small
+      organizations access infrastructure they could not otherwise afford.
+    </p>
+    <p>
+      Access matters, but ownership matters too. Open source gives users the ability to inspect,
+      modify, and control their tools, so software becomes an asset rather than a rented service.
+    </p>
+    <p>
+      Ownership preserves choice. When code is open, organizations can switch providers, avoid
+      lock-in, and resist opaque pricing or extractive licensing.
+    </p>
+    <p>
+      Because of these principles, I oppose an extraction-first ethos. Sustainable impact comes from
+      empowering users, not from maximizing short-term revenue per client.
+    </p>
+    <p>
+      At Boiling Pot Media, I built on WordPress, prioritized self-service, and used clear pricing
+      so clients could own and maintain their sites. I later closed the agency to focus on
+      engineering that contributes to open communities and builds tools that serve people.
+    </p>
+    <p>
+      I feel that Automattic aligns perfectly with my passion for open-source contributions and
+      maintaining healthy online communities. I actually maintain a WordPress plugin called Toggle
+      Admin Toolbar, which adds an option to toggle admin toolbar visibility on the WordPress
+      frontend. I also donate to Wikipedia every month.
+    </p>
+
+    <!-- Q4 -->
+    <h2>Tell us about a project or piece of work you're especially proud of.</h2>
+    <p>
+      At GOOP, I led the rollout of a self-service CMS that removed a persistent bottleneck between
+      Editorial and Engineering. When I arrived, editors were designing posts in Figma and
+      Engineering was rebuilding each design by hand. That workflow was slow, costly, and left no
+      room for higher-impact work.
+    </p>
+    <p>
+      Earlier attempts to introduce self-service tools had failed because editors felt excluded and
+      the tools didn't match their process. To avoid the same mistake, I spoke with staff across
+      departments and listened for their real needs and constraints.
+    </p>
+    <p>
+      We implemented a component-based system built on ACF Flexible Content. The components give
+      editors clear, simple controls while preserving the design flexibility they need. Behind the
+      scenes, the implementation uses pragmatic WordPress/PHP patterns and modular editor
+      components, so the codebase stays maintainable.
+    </p>
+    <p>
+      Within three months, the editorial team had adopted the system and the Figma-to-code handoff
+      had disappeared. Engineering reclaimed most of the time previously spent on article builds and
+      could focus on higher-value projects. The change made the content workflow faster, more
+      reliable, and easier to maintain.
+    </p>
+
+    <!-- Q5 -->
+    <h2>
+      What's the most recent idea, book, blog post, or talk that changed how you think about your
+      craft?
+    </h2>
+    <p>
+      I recently read "Sleep-time Compute: Beyond Inference Scaling at Test-time" (Kevin Lin et al.,
+      arXiv:2504.13171v1). The paper proposes precomputing reasoning over persistent context during
+      idle periods so that queries can be answered with less test-time compute and lower latency.
+    </p>
+    <p>
+      The approach improves accuracy at query time. By doing heavy reasoning during idle periods,
+      the system delivers better answers when a query arrives.
+    </p>
+    <p>
+      It also cuts real-time compute and cost. Shifting work offline reduces test-time tokens and
+      can lower demand for hardware, energy, and water.
+    </p>
+    <p>
+      Beyond technical gains, the approach supports healthier work rhythms. If expensive computation
+      can happen while systems are idle, engineers and users face less pressure to run long, intense
+      sessions.
+    </p>
+    <p>
+      Finally, it resonated with me personally. Stepping away from a problem often lets subconscious
+      processes work in the background. Sleep-time compute mirrors that habit and gives it a
+      concrete, technical justification.
+    </p>
+    <p>
+      I am actually completing a home-lab PC build that I will be using as a self-hosted LLM (Large
+      Language Model). One of my next projects will be to set up sleep-time computing! This setup
+      allows me to utilize the computational resources efficiently during off-peak hours, ensuring
+      that I can run complex tasks without impacting daily performance.
+    </p>
+
+    <!-- Q6 -->
+    <h2>What's a controversial or unpopular opinion you hold about software engineering?</h2>
+    <p>Documentation is a crucial feature of a healthy repository.</p>
+    <p>
+      This is not a radical idea on paper, but in practice documentation is often neglected. Teams
+      inherit outdated guides, documentation goes unused, or writing docs is treated as a chore.
+      Good documentation requires time and attention, and people become cynical when that work isn't
+      valued.
+    </p>
+    <p>
+      Today, neglect is harder to excuse. Tools like phpDocumentor and TypeDoc, paired with agentic
+      AI, make generating and maintaining accurate docs far easier than before.
+    </p>
+    <p>
+      Documentation is leverage, not bureaucracy. Clear docs speed onboarding, reduce context
+      switching, and make pair-programming with LLMs far more effective. They preserve knowledge
+      through staff changes and make codebases more resilient.
+    </p>
+    <p>
+      I treat documentation as a product feature: I document intent, examples, and maintenance
+      notes, and I invest in automation and review so that docs stay accurate and discoverable.
+    </p>
+
+    <!-- Q7 -->
+    <h2>Tell us about a time you strongly disagreed with someone on your team.</h2>
+    <p>
+      My current employer used WordPress for content management for over a decade. Over time, they
+      hired software engineers focused primarily on React and Node.js; nobody knew PHP or was a
+      WordPress expert. As a result, engineers often created convoluted, fragile PHP
+      infrastructure—developing shims and shortcuts to meet short-term acceptance criteria at the
+      expense of long-term stability and scalability.
+    </p>
+
+    <p>
+      I was hired in 2022 to develop a viable content builder the editorial team would adopt and to
+      rein in the chaos from the previous decade. I achieved the first objective and was making
+      steady progress on the second. At the end of 2025, the team had an opportunity to reboot the
+      CMS.
+    </p>
+
+    <p>
+      “Ah ha,” I thought. With a fresh WordPress installation, I could quickly eliminate major
+      friction points. Leadership, however, wanted to consider new and “modern” CMS options. I
+      articulated my position:
+    </p>
+
+    <p><strong>Sticking with WordPress had advantages:</strong></p>
+    <ul>
+      <li>The editorial team already knew it well.</li>
+      <li>It’s a mature platform with strong long-term support.</li>
+      <li>No database migration would be required.</li>
+      <li>
+        With a clean theme, we could implement efficient business logic the whole team could
+        understand and finally pivot our ACF-based builder from Classic to Block Editor, which was a
+        longstanding goal.
+      </li>
+    </ul>
+
+    <p><strong>Migrating carried risks:</strong></p>
+    <ul>
+      <li>The editorial team would need to retrain and might slow down during the transition.</li>
+      <li>A younger CMS might not endure, leading to another replatform.</li>
+      <li>Data migration would be costly and complex due to deprecated interfaces.</li>
+    </ul>
+
+    <p>
+      Effectively, I stood alone. The primary argument for replatforming was that the company would
+      benefit from a CMS aligned with the engineering team’s core stack.
+    </p>
+
+    <p>
+      I kept the situation in perspective. While I had a clear preference, moving away from
+      WordPress would not spell doom for the organization. I explained my reasoning and engaged
+      thoughtfully with opposing views. When the decision was made to move to Payload, I embraced it
+      fully. In the end, we work as a team to identify the best solution for our stakeholders and
+      clients, even when it’s not our preferred path.
+    </p>
+
+    <div class="rule"></div>
+
+    <div class="signature" style="display: none">
+      Sincerely,<br />
+      <div class="sig-name">{{name}}</div>
+      <div class="sig-contact"><a href="mailto:{{email}}">{{email}}</a> · {{phone}}</div>
+    </div>
+
+    <script>
+      // Placeholder injector: config groups + simple API
+      const __placeholder_config = {
+        personal: {
+          name: 'James Valeii',
+          title_label: 'Experienced Software Engineer',
+          email: 'hello@jamesvaleii.com',
+          phone: '(226) 792-6659',
+          city: 'Waterloo',
+          provence: 'ON',
+          country: 'Canada',
+          linkedin: 'jamesvaleii',
+          date: new Date().toLocaleDateString('en-CA', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }),
+        },
+      };
+
+      function __escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      // Replace placeholders inside attributes like href="mailto:{{email}}"
+      function __replaceAttributes(group, root = document) {
+        const data = __placeholder_config[group];
+        if (!data) return;
+        const attrRe = /{{\s*([\w.-]+)\s*}}/g;
+        const els = root.querySelectorAll('*');
+        els.forEach((el) => {
+          Array.from(el.attributes).forEach((attr) => {
+            if (!attr.value || attr.value.indexOf('{{') === -1) return;
+            attrRe.lastIndex = 0;
+            const newVal = attr.value.replace(attrRe, (_, key) =>
+              data[key] !== undefined ? data[key] : `{{${key}}}`
+            );
+            if (newVal !== attr.value) el.setAttribute(attr.name, newVal);
+          });
+        });
+      }
+
+      // Replace text-node placeholders with <span id="group__key">value</span>
+      function injectPlaceholders(group, root = document) {
+        const data = __placeholder_config[group];
+        if (!data) return;
+        __replaceAttributes(group, root);
+        const re = /{{\s*([\w.-]+)\s*}}/g;
+        const walker = root.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach((textNode) => {
+          if (!re.test(textNode.nodeValue)) return;
+          if (textNode.parentNode && textNode.parentNode.nodeName === 'SCRIPT') return;
+          re.lastIndex = 0;
+          const html = textNode.nodeValue.replace(re, (_, key) => {
+            const id = `${group}__${key}`;
+            const val = data[key] !== undefined ? data[key] : `{{${key}}}`;
+            return `<span id="${id}">${__escapeHtml(val)}</span>`;
+          });
+          const wrapper = document.createElement('span');
+          wrapper.innerHTML = html;
+          textNode.parentNode.replaceChild(wrapper, textNode);
+        });
+      }
+
+      function updateValue(group, key, value) {
+        __placeholder_config[group] = __placeholder_config[group] || {};
+        __placeholder_config[group][key] = value;
+        const el = document.getElementById(`${group}__${key}`);
+        if (el) el.textContent = value;
+        // also update attributes that may include this placeholder
+        document.querySelectorAll('*').forEach((node) => {
+          Array.from(node.attributes || []).forEach((attr) => {
+            if (attr.value && attr.value.indexOf(`{{${key}}}`) !== -1) {
+              node.setAttribute(attr.name, attr.value.replace(`{{${key}}}`, value));
+            }
+          });
+        });
+      }
+
+      // convenience: inject a named group or all groups
+      function injectAll() {
+        Object.keys(__placeholder_config).forEach((g) => injectPlaceholders(g));
+      }
+
+      // auto-inject the `personal` group when the document is ready
+      document.addEventListener('DOMContentLoaded', function () {
+        injectPlaceholders('personal', document);
+      });
+
+      // expose APIs for console usage
+      window.injectPlaceholders = injectPlaceholders;
+      window.injectAll = injectAll;
+      window.updateValue = updateValue;
+      window.__placeholder_config = __placeholder_config;
+    </script>
+  </body>
+</html>

@@ -2,7 +2,7 @@
 # Values can be overridden by: 1) CLI arg to scripts, 2) environment vars, 3) this config file
 
 # Input directory containing saved HTML job files (can be an absolute or repo-relative path)
-input_dir: jobbankjobs/2026/02/22
+input_dir: jobbankjobs/2026/04/05
 
 # Output artifacts directory for generated PDFs
 output_dir: artifacts

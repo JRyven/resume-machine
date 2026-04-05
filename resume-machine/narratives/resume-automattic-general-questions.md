@@ -1,7 +1,3 @@
-https://automattic.com/work-with-us/job/experienced-software-engineer/
-
----
-
 # What’s motivating you to explore an engineering role at Automattic and why now?
 
 I’m drawn to Automattic for three reasons: its commitment to open source, its culture of kindness, and its careful, human‑centered approach to AI.
@@ -90,13 +86,30 @@ I treat documentation as a product feature: I document intent, examples, and mai
 
 # Tell us about a time you strongly disagreed with someone on your team and how you worked through it. We'd love to understand how you approach collaboration and conflict, especially when values or technical perspectives differ.
 
-I don't have a single, dramatic showdown to share. I surface disagreements early and with curiosity.
+My current employer used WordPress for content management for over a decade. Over the years, they hired software engineers who primarily focused on React and Node.js; nobody knew PHP or was a WordPress expert. As a result, the engineers frequently created convoluted and fragile PHP infrastructure, developing shims and shortcuts to meet short-term acceptance criteria at the expense of platform stability and scalability.
 
-My approach is simple. I ask why, assume good intent, and focus on the problem rather than the person. I explain my reasoning so others can respond to the evidence. I am willing to change my mind when shown better information.
+I was hired in 2022 to develop a viable content builder that the editorial team would adopt and to reign in the chaos from the previous decade. I achieved the first objective successfully and was steadily working toward the second. At the end of 2025, the team had an opportunity to reboot the CMS.
 
-A concrete example: at GOOP, Editorial wanted complete design freedom while Engineering needed maintainable structures. I ran stakeholder interviews to clarify actual needs. We designed a component system that preserved editorial flexibility and kept the codebase sustainable.
+"Ah Ha!" I though. If permitted to start with a fresh WordPress installation, I could eliminate points of friction rapidly. Leadership wanted to consider "new and modern" CMS options. I articulated my position:
 
-Ultimately, I prefer working with people who disagree in good faith. Thoughtful collaboration matters more to me than being right.
+Sticking with WordPress had advantages:
 
-Steve Deckert
-Strategic Partnerships, WooCommerce @ Automattic
+The editorial team knows how to work with WordPress.
+
+WordPress is a mature platform with a great outlook for future support.
+
+No database migration would be required.
+
+With fresh theming, we could develop efficient business logic that all team members could understand. We could pivot from rendering the ACF flexible content fields that comprised our content builder from Classic to Block Editor, which was a longstanding company objective.
+
+Migrating would expose us to potential problems:
+
+The editorial team would need to retrain and may experience slowdowns adapting to a new CMS.
+
+A young CMS might not endure the coming years, resulting in another replatform.
+
+Data migration from the WordPress database to a new system would be costly due to many deprecated interfaces.
+
+Effectively, I stood alone in this position. The primary argument for replatforming was that the company would benefit if the CMS relied on a tech stack understood comprehensively by most of the engineering team.
+
+I imagine the situation could have been unnecessarily dramatic if someone in my shoes did not keep the proposed CMS migration (away from their specialty) in perspective. Although I had a decided preference, moving away from WordPress would not result in certain doom for the organization. I was able to explain my perspective and contribute to the decision-making process. My colleagues were open to my ideas, and I was open to theirs. When the decision to move to Payload was made, I embraced the path redily. In the end, we work in teams to identify the best solutions for our stakeholders and clients.
