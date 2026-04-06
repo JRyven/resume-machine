@@ -7,8 +7,18 @@ cd /Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/ || exit 1
 script_dir=$(cd "$(dirname "$0")" && pwd)
 
 # Input directory for HTML extraction (can be overridden by environment)
-# Default targets the specific jobbankjobs date folder; change here to use another folder.
-INPUT_DIR="${INPUT_DIR:-$(pwd)/jobbankjobs/2026/02/22}"
+# Default resolution order: 1) env var INPUT_DIR, 2) resume-machine/config.yaml input_dir, 3) hardcoded default
+if [ -z "$INPUT_DIR" ]; then
+  cfg=$(awk -F': ' '/^[[:space:]]*input_dir:/ {print $2; exit}' resume-machine/config.yaml 2>/dev/null || true)
+  if [ -n "$cfg" ]; then
+    # strip surrounding double quotes if present
+    cfg="${cfg%\"}"
+    cfg="${cfg#\"}"
+    INPUT_DIR="$cfg"
+  else
+    INPUT_DIR="$(pwd)/jobbankjobs/2026/02/22"
+  fi
+fi
 
 if [ -z "$SKIP_EXTRACT" ]; then
   echo "Running extract-html-data.js with INPUT_DIR=$INPUT_DIR..."

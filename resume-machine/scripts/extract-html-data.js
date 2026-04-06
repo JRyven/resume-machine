@@ -55,6 +55,19 @@ async function extractDataFromHTML(filePath) {
     fileHead = '';
   }
 
+  // Attempt to extract the original saved-from URL (comment added by browsers when saving pages)
+  // Example comment: <!-- saved from url=(0076)https://www.jobbank.gc.ca/jobsearch/jobposting/47496156?source=searchresults -->
+  let sourceUrl = '';
+  try {
+    const m = fileHead.match(/<!--\s*saved from url=\([^\)]*\)(https?:\/\/[^\s"'>]+)/i);
+    if (m && m[1]) {
+      // strip query string for canonical job posting URL
+      sourceUrl = m[1].split('?')[0];
+    }
+  } catch (e) {
+    sourceUrl = '';
+  }
+
   // Source detection
   let source = 'jobbank';
   if (/<!--\s*saved from url=.*careerbeacon\.com/.test(fileHead)) {
@@ -283,6 +296,7 @@ async function extractDataFromHTML(filePath) {
         companySelector: result.company.selector,
         descriptionSelector: result.description.selector,
       },
+      source_url: sourceUrl,
     };
 
     console.log(
@@ -324,6 +338,7 @@ async function main() {
     company: item.company || '',
     description: item.description || '',
     matched: item.matched || {},
+    source_url: item.source_url || '',
     'role-template': item['role-template'] || 'default',
     generated: item.generated || false,
     'cover-letter': item['cover-letter'] || false,

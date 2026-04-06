@@ -1,9 +1,14 @@
 {
-  "coverLetter": "",
+  "coverLetter": {
+    "title": "James Valeii",
+    "salutation": "Dear {{hiring_company}} Team,",
+    "content": "I am excited to apply for the {{hiring_position}} role. I build client-facing websites that balance visual polish, performance, and maintainability. I consult with clients to document requirements, design site appearance and flow, and source and optimize content. I implement interactive features using HTML, CSS, JavaScript, jQuery, and integrate with backend services (MySQL, Git). I also create and prepare assets with Adobe Illustrator and Photoshop, run security and quality tests, and tune caching for fast, reliable experiences. I thrive in fast-paced, client-focused consulting environments, meet tight deadlines, and communicate clearly with stakeholders and team members.",
+    "conclusion": "Sincerely,\nJames Valeii"
+  },
   "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
   "basics": {
     "name": "James Valeii",
-    "label": "Senior Software Developer",
+    "label": "HIRING POSITION",
     "image": "",
     "email": "hello@jamesvaleii.com",
     "phone": "(226) 792-6659",

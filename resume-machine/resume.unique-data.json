@@ -5,8 +5,8 @@
     "content": "I am excited to apply for the {{hiring_position}} role. I build client-facing websites that balance visual polish, performance, and maintainability. I consult with clients to document requirements, design site appearance and flow, and source and optimize content. I implement interactive features using HTML, CSS, JavaScript, jQuery, and integrate with backend services (MySQL, Git). I also create and prepare assets with Adobe Illustrator and Photoshop, run security and quality tests, and tune caching for fast, reliable experiences. I thrive in fast-paced, client-focused consulting environments, meet tight deadlines, and communicate clearly with stakeholders and team members.",
     "conclusion": "Sincerely,\nJames Valeii"
   },
-  "hiring_company": "Helios Technology Solutions",
-  "hiring_position": "Systems Analyst",
+  "hiring_company": "HIRING COMPANY",
+  "hiring_position": "HIRING POSITION",
   "featured_languages": "PHP and JavaScript",
   "highlight_1": "Eliminated 97% engineering bottleneck at Goop; enabled 3x content output",
   "highlight_2": "Drove 625% account creation and $35 average order value increase at Goop",
