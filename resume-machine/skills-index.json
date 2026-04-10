@@ -143,6 +143,18 @@
       "skill_key": "communication_tools",
       "skill_name": "Communication & Remote Collaboration",
       "description": "Communication platforms and remote work tools"
+    },
+    {
+      "skill_id": "skill.communication_skills.1",
+      "skill_key": "communication_skills",
+      "skill_name": "Communication Skills",
+      "description": "Interpersonal communication: presentations, facilitation, consensus building, sales"
+    },
+    {
+      "skill_id": "skill.leadership_skills.1",
+      "skill_key": "leadership_skills",
+      "skill_name": "Leadership Skills",
+      "description": "Leadership capability: mentoring, governance, policy, team development"
     }
   ],
   "facet_catalog": [
@@ -247,6 +259,42 @@
       "facet_name": "SCRUM/Agile",
       "facet_type": "leadership_soft_skill",
       "skill_group": "project_management_tools"
+    },
+    {
+      "facet_id": "facet.presentations",
+      "facet_name": "Presentations",
+      "facet_type": "hands_on_skill",
+      "skill_group": "communication_skills"
+    },
+    {
+      "facet_id": "facet.meeting_facilitation",
+      "facet_name": "Meeting Facilitation",
+      "facet_type": "leadership_soft_skill",
+      "skill_group": "communication_skills"
+    },
+    {
+      "facet_id": "facet.consensus_building",
+      "facet_name": "Consensus Building",
+      "facet_type": "leadership_soft_skill",
+      "skill_group": "communication_skills"
+    },
+    {
+      "facet_id": "facet.sales_meetings",
+      "facet_name": "Sales Meetings",
+      "facet_type": "hands_on_skill",
+      "skill_group": "communication_skills"
+    },
+    {
+      "facet_id": "facet.mentoring",
+      "facet_name": "Mentoring",
+      "facet_type": "leadership_soft_skill",
+      "skill_group": "leadership_skills"
+    },
+    {
+      "facet_id": "facet.company_policy_governance",
+      "facet_name": "Company Policy & Governance",
+      "facet_type": "leadership_soft_skill",
+      "skill_group": "leadership_skills"
     }
   ],
   "skills": {
@@ -863,6 +911,84 @@
             "experience_level": "advanced",
             "proficiency": "advanced",
             "confidence_level": 9,
+            "last_used": "2026-Q1",
+            "skill_training": []
+          }
+        }
+      }
+    ],
+    "communication_skills": [
+      {
+        "skill_name": "Communication Skills",
+        "description": "Interpersonal communication: presentations, facilitation, consensus building, sales",
+        "years_of_experience": 13,
+        "facets": {
+          "presentations": {
+            "facet_type": "hands_on_skill",
+            "facet_name": "Presentations",
+            "years_of_experience": 13,
+            "experience_level": "advanced",
+            "proficiency": "advanced",
+            "confidence_level": 8,
+            "last_used": "2026-Q1",
+            "skill_training": []
+          },
+          "meeting_facilitation": {
+            "facet_type": "leadership_soft_skill",
+            "facet_name": "Meeting Facilitation",
+            "years_of_experience": 13,
+            "experience_level": "advanced",
+            "proficiency": "advanced",
+            "confidence_level": 8,
+            "last_used": "2026-Q1",
+            "skill_training": []
+          },
+          "consensus_building": {
+            "facet_type": "leadership_soft_skill",
+            "facet_name": "Consensus Building",
+            "years_of_experience": 13,
+            "experience_level": "advanced",
+            "proficiency": "advanced",
+            "confidence_level": 7,
+            "last_used": "2026-Q1",
+            "skill_training": []
+          },
+          "sales_meetings": {
+            "facet_type": "hands_on_skill",
+            "facet_name": "Sales Meetings",
+            "years_of_experience": 10,
+            "experience_level": "advanced",
+            "proficiency": "advanced",
+            "confidence_level": 8,
+            "last_used": "2025-Q4",
+            "skill_training": []
+          }
+        }
+      }
+    ],
+    "leadership_skills": [
+      {
+        "skill_name": "Leadership Skills",
+        "description": "Leadership capability: mentoring, governance, policy, team development",
+        "years_of_experience": 13,
+        "facets": {
+          "mentoring": {
+            "facet_type": "leadership_soft_skill",
+            "facet_name": "Mentoring",
+            "years_of_experience": 8,
+            "experience_level": "advanced",
+            "proficiency": "advanced",
+            "confidence_level": 8,
+            "last_used": "2026-Q1",
+            "skill_training": []
+          },
+          "company_policy_governance": {
+            "facet_type": "leadership_soft_skill",
+            "facet_name": "Company Policy & Governance",
+            "years_of_experience": 13,
+            "experience_level": "advanced",
+            "proficiency": "advanced",
+            "confidence_level": 7,
             "last_used": "2026-Q1",
             "skill_training": []
           }
