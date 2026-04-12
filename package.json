@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "turbo run build",
+    "build": "npm run generate:resume && turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier -w .",
@@ -11,7 +11,8 @@
     "storybook": "pnpm --filter @repo/ui storybook",
     "build-storybook": "pnpm --filter @repo/ui build-storybook",
     "generate:screenshots": "node scripts/generate-theme-screenshots.mjs",
-    "serve:registry": "start-server-and-test 'pnpm --filter registry dev' http://localhost:3000 generate:screenshots"
+    "serve:registry": "start-server-and-test 'pnpm --filter registry dev' http://localhost:3000 generate:screenshots",
+    "generate:resume": "node resume-machine/scripts/preprocess-resume.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
