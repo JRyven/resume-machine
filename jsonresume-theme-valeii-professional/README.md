@@ -58,7 +58,7 @@ pnpm turbo run build --filter=jsonresume-theme-valeii-professional
 ### Testing
 Test with sample resume data:
 ```bash
-resumed export artifacts/resume.json -t valeii-professional -o test.pdf
+resumed export resume-machine/artifacts/resume.json -t valeii-professional -o test.pdf
 ```
 
 ## Schema Support

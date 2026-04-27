@@ -77,7 +77,7 @@ npx eslint --ext .js,.ts src/ || npx eslint --ext .js,.ts --fix src/
 
 ### Backlog
 
-#### [Upate role specific content variance to Abstract Areas of Expertise]
+#### [Update role specific content variance to Abstract Areas of Expertise]
 
 #### [Keyword Analysis]
 
@@ -188,8 +188,8 @@ Select and validate a resume theme for consistent PDF generation.
 **Validation**:
 
 - Theme package: `packages/themes/jsonresume-theme-valeii-professional/`
-- PDF output: `artifacts/baseline-valeii-professional.pdf`
-- Command: `resumed export artifacts/resume.json -t valeii-professional -o artifacts/baseline-valeii-professional.pdf`
+- PDF output: `resume-machine/artifacts/baseline-valeii-professional.pdf`
+- Command: `resumed export resume-machine/artifacts/resume.json -t valeii-professional -o resume-machine/artifacts/baseline-valeii-professional.pdf`
 
 #### Project: Theme Customization & Freeze
 
@@ -221,8 +221,8 @@ Fork selected theme, apply custom specialized Noto font styling, and freeze for 
 **Validation**:
 
 - Theme package: `packages/themes/jsonresume-theme-valeii-professional/`
-- Full resume PDF: `artifacts/full-resume-valeii-professional.pdf` (2 pages, 341KB)
-- Baseline PDF: `artifacts/baseline-valeii-professional.pdf` (1 page, 2.8KB)
+- Full resume PDF: `resume-machine/artifacts/full-resume-valeii-professional.pdf` (2 pages, 341KB)
+- Baseline PDF: `resume-machine/artifacts/baseline-valeii-professional.pdf` (1 page, 2.8KB)
 - Documentation: Updated README with installation, usage, schema support, and specialized font requirements
 - CI Integration: Theme builds successfully in monorepo pipeline
 - Font Integration: Local specialized Noto fonts loaded via @font-face for offline compatibility:

@@ -17,7 +17,7 @@ preprocess-resume.js
   ↓ [variable substitution]
 resume.json
   ↓ [resumed CLI export]
-artifacts/resume-*.pdf
+resume-machine/artifacts/resume-*.pdf
 ```
 
 ## Components

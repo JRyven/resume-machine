@@ -4,6 +4,9 @@ from pathlib import Path
 from datetime import datetime
 
 # ── Config ─────────────────────────────────────────────────────────────────────
+import sys
+
+# Defaults (can be overridden by CLI args)
 SKILLS_INDEX_PATH = '/Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/resume-machine/skills-index.json'
 JOB_JSON_PATH     = '/Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/jobbankjobs/2026/04/05/software developer - Kanata, ON - Job posting - Job Bank.json'
 OUTPUT_PATH       = '/Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/jobbankjobs/2026/04/05/correlation_software_developer_kanata.json'
@@ -529,33 +532,36 @@ def build_correlation_report(job_data: dict, skills_index: dict, facet_lookup: d
 
 if __name__ == '__main__':
     try:
-        # Load and validate input files
+        # Allow override of job JSON and output path via CLI args
+        # Usage: python py_skill_job_correlator.py [JOB_JSON_PATH] [OUTPUT_PATH]
+        job_json_path = JOB_JSON_PATH
+        output_path = OUTPUT_PATH
+        if len(sys.argv) > 1:
+            job_json_path = sys.argv[1]
+        if len(sys.argv) > 2:
+            output_path = sys.argv[2]
+
         if not Path(SKILLS_INDEX_PATH).exists():
             print(f"ERROR: Skills index not found at {SKILLS_INDEX_PATH}")
             exit(1)
 
-        if not Path(JOB_JSON_PATH).exists():
-            print(f"ERROR: Job JSON not found at {JOB_JSON_PATH}")
+        if not Path(job_json_path).exists():
+            print(f"ERROR: Job JSON not found at {job_json_path}")
             exit(1)
 
         with open(SKILLS_INDEX_PATH, 'r') as f:
             skills_index = json.load(f)
 
-        with open(JOB_JSON_PATH, 'r') as f:
+        with open(job_json_path, 'r') as f:
             job_data = json.load(f)
 
         # Build facet lookups from skills-index
-        # facet_name (lower) → full facet entry including proficiency data from skills{}
         facet_lookup = {}
-
-        # First pass: catalog entries (structure/type info)
         for entry in skills_index.get('facet_catalog', []):
             key = entry['facet_name'].lower().strip()
             facet_lookup[key] = {**entry, 'proficiency': None, 'confidence_level': None,
                                  'years_of_experience': None, 'last_used': None,
                                  'experience_level': None}
-
-        # Second pass: enrich with live data from skills{}
         for skill_group_key, skill_group_list in skills_index.get('skills', {}).items():
             for skill_group in skill_group_list:
                 for facet_key, facet_data in skill_group.get('facets', {}).items():
@@ -576,10 +582,10 @@ if __name__ == '__main__':
         report = build_correlation_report(job_data, skills_index, facet_lookup)
 
         # Save report
-        output_dir = Path(OUTPUT_PATH).parent
+        output_dir = Path(output_path).parent
         output_dir.mkdir(parents=True, exist_ok=True)
 
-        with open(OUTPUT_PATH, 'w') as f:
+        with open(output_path, 'w') as f:
             json.dump(report, f, indent=2)
 
         # Print summary
@@ -616,7 +622,7 @@ if __name__ == '__main__':
             if len(report['hard_gaps']) > 15:
                 print(f"  ... and {len(report['hard_gaps']) - 15} more")
 
-        print(f"\n✓ Saved to: {OUTPUT_PATH}\n")
+        print(f"\n✓ Saved to: {output_path}\n")
 
     except json.JSONDecodeError as e:
         print(f"ERROR: Invalid JSON in input file: {e}")

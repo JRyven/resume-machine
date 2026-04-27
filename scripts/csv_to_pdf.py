@@ -2,8 +2,8 @@
 """Generate PDF(s) from CSV input.
 
 By default this script renders the entire CSV as a single table in a PDF located at
-`artifacts/csv-table.pdf`. If `--per-row` is given, one PDF per row is written to
-`artifacts/rows/` named `row-<N>.pdf`.
+`resume-machine/artifacts/csv-table.pdf`. If `--per-row` is given, one PDF per row is written to
+`resume-machine/artifacts/rows/` named `row-<N>.pdf`.
 
 Usage examples:
   python scripts/csv_to_pdf.py scripts/sample.csv
@@ -80,14 +80,14 @@ def main(argv=None):
     p = argparse.ArgumentParser(description="Render CSV to PDF(s)")
     p.add_argument("csv", help="Path to CSV file")
     p.add_argument("--per-row", action="store_true", help="Produce one PDF per CSV row")
-    p.add_argument("--out", default="artifacts/csv-table.pdf", help="Output PDF path or directory for per-row")
+    p.add_argument("--out", default="resume-machine/artifacts/csv-table.pdf", help="Output PDF path or directory for per-row")
     args = p.parse_args(argv)
 
     if args.per_row:
         rows = load_csv_rows(args.csv)
         out_dir = args.out if os.path.isdir(args.out) or args.out.endswith(os.sep) else os.path.join(args.out)
         out_dir = out_dir if out_dir.endswith(os.sep) else out_dir
-        base_dir = out_dir.rstrip(os.sep) if out_dir else "artifacts/rows"
+        base_dir = out_dir.rstrip(os.sep) if out_dir else "resume-machine/artifacts/rows"
         os.makedirs(base_dir, exist_ok=True)
         for i, r in enumerate(rows, start=1):
             out_path = os.path.join(base_dir, f"row-{i}.pdf")

@@ -135,8 +135,8 @@ def orchestrate(correlation_path: str, dry_run: bool = False):
     # Step 4: Export resume as PDF
     pdf_name = f"resume-James-Valeii-{template_data.get('job_title', 'job').replace(' ', '-')}.pdf"
     run_command(
-        ['resumed', 'export', 'resume.json', '-t', 'valeii-professional', '-o', f'artifacts/{pdf_name}'],
-        f"Step 4: Export PDF → artifacts/{pdf_name}",
+        ['resumed', 'export', 'resume.json', '-t', 'valeii-professional', '-o', f'resume-machine/artifacts/{pdf_name}'],
+        f"Step 4: Export PDF → resume-machine/artifacts/{pdf_name}",
         dry_run
     )
     

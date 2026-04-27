@@ -1,8 +1,8 @@
-# batch-process-v2.sh — Adapter-Enhanced Resume Batch Processing
+# batch-process.sh — Adapter-Enhanced Resume Batch Processing
 
 ## Overview
 
-`batch-process-v2.sh` extends the original batch processing workflow with intelligent template selection powered by the skill-job correlation adapter.
+`batch-process.sh` extends the original batch processing workflow with intelligent template selection powered by the skill-job correlation adapter.
 
 ### Key Improvements
 
@@ -20,7 +20,7 @@
 ### Basic (Interactive)
 
 ```bash
-./resume-machine/scripts/batch-process-v2.sh
+./resume-machine/scripts/batch-process.sh
 ```
 
 - Extracts job postings from HTML
@@ -31,7 +31,7 @@
 ### Auto-template (Non-interactive)
 
 ```bash
-./resume-machine/scripts/batch-process-v2.sh --auto-template
+./resume-machine/scripts/batch-process.sh --auto-template
 ```
 
 - Skips all user prompts
@@ -42,7 +42,7 @@
 ### Dry-run Preview
 
 ```bash
-./resume-machine/scripts/batch-process-v2.sh --dry-run
+./resume-machine/scripts/batch-process.sh --dry-run
 ```
 
 - Shows what would happen without generating PDFs
@@ -51,7 +51,7 @@
 ### Combined Flags
 
 ```bash
-./resume-machine/scripts/batch-process-v2.sh --auto-template --dry-run
+./resume-machine/scripts/batch-process.sh --auto-template --dry-run
 ```
 
 - Non-interactive + preview mode
@@ -60,10 +60,10 @@
 
 ```bash
 # Override input directory (where HTML files are)
-INPUT_DIR=/custom/path/to/jobbankjobs ./batch-process-v2.sh
+INPUT_DIR=/custom/path/to/jobbankjobs ./batch-process.sh
 
 # Skip HTML extraction (use existing resume-machine-queue.json)
-SKIP_EXTRACT=true ./batch-process-v2.sh
+SKIP_EXTRACT=true ./batch-process.sh
 ```
 
 ## Workflow v2
@@ -140,7 +140,7 @@ SKIP_EXTRACT=true ./batch-process-v2.sh
             ↓
  ┌──────────────────────────────────────────┐
  │ Generate PDF                             │
- │    artifacts/resume-*.pdf                │
+ │    resume-machine/artifacts/resume-*.pdf                │
  └──────────────────────────────────────────┘
 ```
 
@@ -215,7 +215,7 @@ Template mode: auto (adapter-driven)
 ✓ Using adapter-inferred template: fullstack
 
 Sanitizing: company_doc="Acme Corp", title_doc="Software Developer"
-✓ Generated: artifacts/resume-James-Valeii-Acme-Corp-Software-Developer.pdf
+✓ Generated: resume-machine/artifacts/resume-James-Valeii-Acme-Corp-Software-Developer.pdf
 ```
 
 ## Configuration
@@ -290,7 +290,7 @@ find jobbankjobs -name "*.json" | head -5
 - You want the original simple workflow
 - You're debugging template selection
 
-### Use v2 (batch-process-v2.sh) when:
+### Use v2 (batch-process.sh) when:
 
 - You want automated, intelligent template selection
 - You're processing many jobs
@@ -317,13 +317,13 @@ Trade-off: +2-4 minutes upfront investment for intelligent, domain-aware templat
 
 ```bash
 cd /Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv
-INPUT_DIR=jobbankjobs/2026/04/05 ./resume-machine/scripts/batch-process-v2.sh --auto-template
+INPUT_DIR=jobbankjobs/2026/04/05 ./resume-machine/scripts/batch-process.sh --auto-template
 ```
 
 ### Example 2: Dry-run to preview recommendations
 
 ```bash
-./resume-machine/scripts/batch-process-v2.sh --dry-run
+./resume-machine/scripts/batch-process.sh --dry-run
 # Review recommendations, then rerun without --dry-run
 ```
 
@@ -335,12 +335,12 @@ jq '.[] | select(.title | contains("Manager")) | .["role-template"] = "manager"'
   resume-machine/resume-machine-queue.json
 
 # Then run (will use "manager" template for that job, adapter for others)
-./resume-machine/scripts/batch-process-v2.sh --auto-template
+./resume-machine/scripts/batch-process.sh --auto-template
 ```
 
 ## Next Steps
 
-1. **Test v2 with dry-run:** `./batch-process-v2.sh --dry-run`
+1. **Test v2 with dry-run:** `./batch-process.sh --dry-run`
 2. **Compare recommendations** with your manual template choices
 3. **Adjust `DOMAIN_PATTERNS`** if needed for your specific roles
 4. **Integrate into CI/CD** using `--auto-template` flag

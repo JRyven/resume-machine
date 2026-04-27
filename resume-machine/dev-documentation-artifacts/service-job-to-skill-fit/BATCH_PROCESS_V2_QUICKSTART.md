@@ -2,7 +2,7 @@
 
 ## What's New
 
-**batch-process-v2.sh** now integrates the adapter to automatically select resume templates based on skill-job correlation analysis.
+**batch-process.sh** now integrates the adapter to automatically select resume templates based on skill-job correlation analysis.
 
 ### Before (v1)
 
@@ -14,7 +14,7 @@ $ ./batch-process.sh
 ### After (v2)
 
 ```bash
-$ ./batch-process-v2.sh --auto-template
+$ ./batch-process.sh --auto-template
 # Automatic: Analyzes job requirements → infers best template
 # Example output shows: "Domain: fullstack, Languages: PHP, BASH, JavaScript"
 ```
@@ -36,7 +36,7 @@ $ ./batch-process-v2.sh --auto-template
 
 ```bash
 cd /Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv
-./resume-machine/scripts/batch-process-v2.sh --dry-run
+./resume-machine/scripts/batch-process.sh --dry-run
 ```
 
 Shows what would happen without generating PDFs.
@@ -44,7 +44,7 @@ Shows what would happen without generating PDFs.
 ### 2. Run with User Approval
 
 ```bash
-./resume-machine/scripts/batch-process-v2.sh
+./resume-machine/scripts/batch-process.sh
 ```
 
 Prompts once at start, then shows recommendations for each job. Accept or override.
@@ -52,7 +52,7 @@ Prompts once at start, then shows recommendations for each job. Accept or overri
 ### 3. Run Fully Automated
 
 ```bash
-./resume-machine/scripts/batch-process-v2.sh --auto-template
+./resume-machine/scripts/batch-process.sh --auto-template
 ```
 
 Skips all prompts, uses adapter recommendations automatically.
@@ -105,7 +105,7 @@ Template mode: auto (adapter-driven)
   ╰────────────────────────────────────────────────────
 
 ✓ Using adapter-inferred template: fullstack
-✓ Generated: artifacts/resume-James-Valeii-Acme-Corp-Software-Developer.pdf
+✓ Generated: resume-machine/artifacts/resume-James-Valeii-Acme-Corp-Software-Developer.pdf
 ```
 
 ## When to Use Each Version
@@ -116,7 +116,7 @@ Template mode: auto (adapter-driven)
 - You're testing/debugging templates
 - You have a small batch
 
-### Use v2 (batch-process-v2.sh)
+### Use v2 (batch-process.sh)
 
 - You want intelligent automation
 - You're processing many jobs
@@ -131,14 +131,14 @@ Template mode: auto (adapter-driven)
   run: |
     cd /path/to/0-career-cv
     INPUT_DIR=jobbankjobs/2026/04/05 \
-      ./resume-machine/scripts/batch-process-v2.sh --auto-template --skip-extract
+      ./resume-machine/scripts/batch-process.sh --auto-template --skip-extract
 ```
 
 ## Files Added/Modified
 
 | File                                   | Type          | Purpose                              |
 | -------------------------------------- | ------------- | ------------------------------------ |
-| `batch-process-v2.sh`                  | Script        | Main v2 orchestration                |
+| `batch-process.sh`                  | Script        | Main v2 orchestration                |
 | `batch-process.sh`                     | Script        | Original (unchanged)                 |
 | `py_adapter_correlator_to_template.py` | Handler       | Infers template from correlation     |
 | `py_orchestrate_correlation_to_pdf.py` | Orchestrator  | Standalone end-to-end flow           |
@@ -171,9 +171,9 @@ find jobbankjobs -name "*.json" | head
 
 ## Next Steps
 
-1. ✅ Test: `./batch-process-v2.sh --dry-run`
+1. ✅ Test: `./batch-process.sh --dry-run`
 2. ✅ Review recommendations
-3. ✅ Run: `./batch-process-v2.sh --auto-template`
+3. ✅ Run: `./batch-process.sh --auto-template`
 4. ✅ Compare with v1 results
 5. ✅ Switch workflows if satisfied
 

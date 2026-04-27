@@ -1,12 +1,12 @@
 {
 	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../../mira"
-		}
-	],
+    {
+      "path": "."
+    },
+    {
+      "path": "../../../../voyante"
+    }
+  ],
   "settings": {
     "json.format.enable": true
   }

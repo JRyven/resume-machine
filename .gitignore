@@ -44,9 +44,13 @@ pnpm-lock.yaml
 package-lock.json
 
 # Artifacts
-artifacts/
+resume-machine/artifacts/
+resume-machine/jobbankjobs/
+resume-machine/narratives/
+
 build/
 dist/
+
 *.pdf
 *.zip
 *.tar.gz
