@@ -8,8 +8,12 @@
   "hiring_company": "HIRING COMPANY",
   "hiring_position": "HIRING POSITION",
   "featured_languages": "PHP and JavaScript",
-  "highlight_1": "Eliminated 97% engineering bottleneck at Goop; enabled 3x content output",
-  "highlight_2": "Drove 625% account creation and $35 average order value increase at Goop",
-  "highlight_3": "Led zero-downtime Shopify migration for site with 70M+ annual pageviews",
-  "highlight_4": "Grew digital agency to $250K; scaled sites to 1M+ daily visits at <2s loads"
+  "highlight_1": "<strong>End-to-end feature ownership</strong>; database \u2192 API \u2192 UI, holistic optimization.",
+  "highlight_2": "<strong>Modern JavaScript ecosystems</strong>; Node.js servers, React clients, shared tooling.",
+  "highlight_3": "<strong>Database design & optimization</strong>; schema modeling, migrations, query optimization.",
+  "highlight_4": "<strong>API design & integration</strong>; RESTful/GraphQL endpoints, SDKs, third-party services.",
+  "domain_inference": "fullstack",
+  "job_title": "",
+  "highlight_5": "<strong>DevOps & deployment</strong>; containerization, CI/CD, monitoring, scaling.",
+  "highlight_6": "<strong>Testing across layers</strong>; unit, integration, E2E\u2014full-stack confidence."
 }

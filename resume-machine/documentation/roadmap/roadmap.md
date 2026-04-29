@@ -30,6 +30,8 @@ Ensure that we're developing a robust representation of test data in `/mock-data
 
 ---
 
+## Projects
+
 ### In Progress
 
 ⚠️ LIMIT: Only 1 project allowed in this section
@@ -169,6 +171,8 @@ Extract key data from each HTML job posting file and save it into preprocess-bat
 
 [Install Puppeteer]: Set up Node.js environment and install Puppeteer.
 
+#### [Batch Processing System for Resumes]
+
 #### Project: Environment Setup & Dependencies
 
 **Dependencies**: None
@@ -194,6 +198,8 @@ node --version  # Should show v18+
 python --version  # Should show 3.10+
 resumed --version  # Should show current version
 ```
+
+#### [Environment Setup & Dependencies]
 
 #### Project: Theme Selection & Baseline
 
