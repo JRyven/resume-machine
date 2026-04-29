@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Guide Specification
 description: Rules for creating procedural guides that help users accomplish specific tasks.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [guide, specification, documentation, procedural, tutorial]
 ---
@@ -29,12 +29,12 @@ Guides help users:
 
 ```yaml
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [TOPIC] - [TASK] Guide
 description: [BRIEF_GUIDE_DESCRIPTION]
 difficulty: [Beginner|Intermediate|Advanced]
 estimated_time: [TIME_ESTIMATE]
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [guide, [TOPIC], [TASK], [KEYWORD]]
 ---
@@ -127,7 +127,7 @@ Links to related guides or advanced topics.
 
 ````markdown
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Database - PostgreSQL Setup Guide
 description: Step-by-step guide to installing and configuring PostgreSQL for development.
 difficulty: Intermediate

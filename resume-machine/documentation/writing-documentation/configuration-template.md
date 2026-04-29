@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Configuration Template
 description: Copy-paste template for configuration documentation.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [configuration, template, documentation, settings]
 ---

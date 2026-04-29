@@ -1,5 +1,5 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Writing Documentation
 description: Standards and templates for creating and maintaining project documentation.
 last_updated: 2026-01-04

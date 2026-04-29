@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Index Template
 description: Copy-paste template for index documentation organizing multiple resources.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [index, template, documentation, organization, navigation]
 ---

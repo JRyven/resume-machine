@@ -1,5 +1,5 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Writing Documentation - Content
 description: Writing guidelines, clarity principles, and placeholder conventions for documentation.
 last_updated: 2026-01-04
@@ -45,10 +45,10 @@ All documentation files require YAML front matter:
 
 ```yaml
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [DOCUMENT_TITLE]
 description: [BRIEF_DESCRIPTION]
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: [X.X.X]
 keywords: [[KEYWORD], [KEYWORD], [KEYWORD]]
 ---

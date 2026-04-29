@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Abstract Specification
 description: Rules for creating abstract (index) files that introduce documentation topics.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [abstract, specification, documentation, index, standards]
 ---
@@ -30,10 +30,10 @@ All abstracts must include YAML front matter with these fields:
 
 ```yaml
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [TOPIC]
 description: [BRIEF_TOPIC_DESCRIPTION]
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [[TOPIC], index, [KEYWORD]]
 ---
@@ -85,7 +85,7 @@ Define any domain-specific terminology, acronyms, or software-specific terms rel
 
 ```markdown
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Configuration
 description: Standards and patterns for system and application configuration management.
 last_updated: 2025-12-20

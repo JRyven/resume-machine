@@ -1,5 +1,5 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Writing Documentation - Architecture
 description: Directory structure, file naming conventions, and header hierarchy for documentation.
 last_updated: 2026-01-04

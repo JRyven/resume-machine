@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Integration Test Specification
 description: Rules for documenting integration tests that verify component interactions.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [testing, integration, specification, documentation, patterns]
 ---
@@ -29,10 +29,10 @@ Integration test documentation:
 
 ```yaml
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Integration Testing Standards
 description: Standards and patterns for integration tests.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [testing, integration, standards, patterns, documentation]
 ---

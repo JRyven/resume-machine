@@ -1,5 +1,10 @@
 ---
+project_name: Resume Machine
 title: Composition Engine
+description:
+last_updated: 2025-12-17
+cleardoc_version: 2.3.0
+keywords:
 ---
 
 This document explains how to use the composition and build scripts.

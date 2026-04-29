@@ -1,5 +1,5 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Writing Documentation - Templates
 description: Document templates for abstracts, subtopics, ADRs, and roadmaps.
 last_updated: 2026-01-04
@@ -21,10 +21,10 @@ Use for `abstract.md` index files in topic directories.
 
 ```markdown
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [TOPIC]
 description: [BRIEF_TOPIC_DESCRIPTION]
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: [X.X.X]
 keywords: [[TOPIC], index, [KEYWORD]]
 ---
@@ -55,10 +55,10 @@ Use for detailed content files within topic directories.
 
 ```markdown
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [TOPIC] - [SUBTOPIC]
 description: [BRIEF_SUBTOPIC_DESCRIPTION]
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: [X.X.X]
 keywords: [[TOPIC], [SUBTOPIC], [KEYWORD]]
 ---
@@ -90,10 +90,10 @@ Use for Architecture Decision Records in `architecture-decisions/` directory.
 
 ```markdown
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [SHORT_TITLE]
 description: [SHORT_DESCRIPTION]
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: [X.X.X]
 keywords: [adr, architecture, [FEATURE]]
 ---

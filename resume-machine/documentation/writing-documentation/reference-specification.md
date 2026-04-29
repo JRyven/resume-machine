@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Reference Specification
 description: Rules for creating reference documentation providing concise information lookup.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [reference, specification, documentation, lookup]
 ---
@@ -33,10 +33,10 @@ References use consistent, scannable formats. Avoid narrative prose; use structu
 
 ```yaml
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [TOPIC] Reference
 description: [BRIEF_REFERENCE_DESCRIPTION]
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [reference, [TOPIC], lookup]
 ---
@@ -96,7 +96,7 @@ Wrap command names, parameters, and values in backticks: `[COMMAND_NAME]`, `[PAR
 
 ```markdown
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Configuration Reference
 description: Complete list of configuration options with descriptions and defaults.
 last_updated: 2025-12-20

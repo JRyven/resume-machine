@@ -1,17 +1,25 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Roadmap Specifications
 description: Specifications for writing and updating project roadmap documentation.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [roadmap, specifications]
 ---
 
-# Markdown Roadmap Kanban System Specification
+# Markdown Roadmap System Specification
+
+## Dictionary: Key Topics
+
+**Overview** — Brief overview and purpose.
+
+**Key Concepts** — Core concepts and terminology.
+
+**Best Practices** — Recommended practices and checklists.
 
 ## System Overview
 
-This specification defines a dual-lifecycle task management system implemented in markdown outline format, designed for use with AI agents (LLMs) in software development workflows. The system manages **Projects** through a roadmap lifecycle while simultaneously managing **Tasks** within each project through a Kanban-like lifecycle.
+This specification defines a project-based task management system implemented in markdown outline format, designed for use with AI agents (LLMs) in software development workflows. The system manages **Projects** through a roadmap lifecycle with tasks and actions organized sequentially within each project.
 
 **Roadmap Lifecycle (Projects)**
 Projects represent complete features, functionalities, or deliverables. They move through a linear roadmap with four stages: In Progress, Backlog, Complete, and Rejected. Projects are represented as H4 headings within H3 lifecycle stage sections.
@@ -19,7 +27,6 @@ Projects represent complete features, functionalities, or deliverables. They mov
 ### Work-In-Progress Limits
 
 To maintain focus and prevent context-switching, the system enforces strict WIP limits:
-
 - **Projects**: Maximum 1 project in "In Progress" at any time
 
 ---
@@ -47,7 +54,6 @@ Immediately following the project heading is a note enclosure (`'''`) followed b
 
 ```markdown
 #### [Project Name]
-
 '''
 Current status and context information goes here. This can include multiple paragraphs, code examples, and references that help orient developers to the project's current state.
 '''
@@ -61,25 +67,9 @@ dependencies: [markdown anchor links to prerequisite projects]
 priority: low|medium|high
 ```
 
-### H5: Task Lifecycle Stages (Within Projects)
-
-Within each project, tasks are organized into their own lifecycle stages using H5 headings in this mandatory order:
-
-1. **In Progress** - Contains 0-2 tasks currently being worked on
-2. **Backlog** - Contains tasks planned for this project, ordered by intended execution sequence
-3. **Complete** - Contains finished tasks with abbreviated documentation
-
-Each stage section must include a WIP limit reminder:
-
-```markdown
-##### In Progress
-
-⚠️ LIMIT: Maximum 2 tasks in this section
-```
-
 ### H5: Task Headings
 
-Individual tasks appear as H5 headings within their lifecycle stage sections:
+Individual tasks appear as H5 headings within projects:
 
 ```markdown
 ##### [Task Name]
@@ -120,19 +110,17 @@ Notes sections should not duplicate information already present in status sectio
 Every project in In Progress or Backlog status must include the following metadata immediately after its status section:
 
 ```markdown
-created: 2025-12-29
+created: 2025-12-29s and a
 dependencies: [#anchor-to-project], [#another-project]
 priority: low|medium|high
 ```
 
 **Field Specifications:**
-
 - `created`: Date in ISO 8601 format (2025-12-29) indicating when the project was added to the roadmap
 - `dependencies`: Comma-separated list of markdown anchor links to other projects that must be completed before this project can be started. Use `none` if no dependencies exist
 - `priority`: One of three values: `low`, `medium`, or `high`
 
 Projects in Complete or Rejected status retain only:
-
 - `created` date
 - For Rejected projects: a `why: [explanation]` field describing the rejection rationale
 
@@ -145,7 +133,6 @@ dependencies: [#anchor-to-task], [#another-task]
 ```
 
 **Field Specifications:**
-
 - `dependencies`: Comma-separated list of markdown anchor links to other tasks that must be completed before this task can be started. Use `none` if no dependencies exist
 
 Tasks in Complete status retain no metadata.
@@ -160,7 +147,6 @@ Dependencies reference other projects or tasks using markdown anchor links. Thes
 - Prepend with `#`
 
 **Example:**
-
 - Heading: `#### [User Authentication System]`
 - Anchor: `#user-authentication-system`
 - Reference: `dependencies: [#user-authentication-system]`
@@ -174,7 +160,6 @@ Dependencies reference other projects or tasks using markdown anchor links. Thes
 The level of detail retained varies based on an item's lifecycle status:
 
 **In Progress / Backlog Status:**
-
 - Full descriptive text (1-2 sentence summaries plus optional additional paragraphs)
 - All code examples in fenced code blocks
 - All metadata fields
@@ -182,7 +167,6 @@ The level of detail retained varies based on an item's lifecycle status:
 - Optional notes sections
 
 **Complete Status:**
-
 - Brief descriptive text only (1-2 sentences maximum)
 - Metadata removed except `created` date for projects
 - Code examples removed (refer to version control logs)
@@ -190,7 +174,6 @@ The level of detail retained varies based on an item's lifecycle status:
 - Notes sections removed
 
 **Rejected Status (Projects Only):**
-
 - Brief descriptive text explaining what was attempted
 - All metadata removed except `created` date
 - Single `why: [explanation]` field added to explain rejection rationale
@@ -226,14 +209,12 @@ Extended information should be formatted as paragraphs or markdown lists (bullet
 Projects move through the roadmap lifecycle according to these rules:
 
 **Backlog → In Progress:**
-
 - Only permitted when no other project occupies the In Progress section (WIP limit: 1)
 - All dependencies must be in Complete status
 - User must manually move the project and all its content
 - Project retains all detail and metadata
 
 **In Progress → Complete:**
-
 - Only permitted when all tasks within the project are in Complete status
 - User must manually move the project
 - Upon moving, strip all code examples, extended paragraphs, and task/action details
@@ -242,7 +223,6 @@ Projects move through the roadmap lifecycle according to these rules:
 - Remove any notes sections
 
 **In Progress → Rejected:**
-
 - May occur at any time based on user decision
 - User must manually move the project
 - Upon moving, strip all code examples and task/action details
@@ -251,27 +231,23 @@ Projects move through the roadmap lifecycle according to these rules:
 - Add `why: [explanation]` field with rejection rationale
 
 **Backlog → Rejected:**
-
 - May occur at any time based on user decision
 - Same stripping rules as In Progress → Rejected
 
 ### Adding New Items
 
 **New Projects:**
-
 - Always added to Backlog section (unless explicitly starting a new active project and In Progress is empty)
 - Must include all required metadata
 - Should include status section with initial context
 - Tasks should be pre-planned in the project's Backlog section
 
 **New Tasks:**
-
 - Always added to the project's Backlog section
 - Must include all required metadata
 - Should have actions pre-defined as unchecked markdown checkboxes
 
 **New Actions:**
-
 - Added as unchecked markdown checkboxes under appropriate task
 - Must include 1-2 sentence description minimum
 - May include optional extended information and code examples
@@ -279,25 +255,21 @@ Projects move through the roadmap lifecycle according to these rules:
 ### Modifying Existing Items
 
 **Updating Descriptions:**
-
 - Permitted at any time for items in In Progress or Backlog
 - Keep descriptions accurate and reflective of current understanding
 - Update code examples as needed to reflect current approach
 
 **Adding/Removing Actions:**
-
 - Permitted for tasks in In Progress or Backlog
 - When removing actions, document reason in task notes if significant
 - When adding actions, ensure they maintain minimal scope
 
 **Changing Metadata:**
-
 - Priority changes permitted at any time for projects
 - Dependency changes should trigger re-evaluation of readiness
 - Assigned-to changes permitted for tasks not yet started
 
 **Status Section Updates:**
-
 - Project status sections should be updated regularly to reflect current state
 - Include recent changes, blockers, or significant decisions
 - May include references to external resources or documentation
@@ -372,7 +344,7 @@ CHECKBOX := "- [ ]" | "- [x]"
 
 ### Data Type Rules
 
-````
+```
 ISO_DATE := YYYY + "-" + MM + "-" + DD
   WHERE YYYY = 4 digits, MM = 01-12, DD = 01-31
 
@@ -402,7 +374,7 @@ ACTION_NAME := Text without brackets, length ≤ 80 chars
 ROLE_DESCRIPTION := Text describing engineer specialization, length ≤ 50 chars
 
 EXPLANATION_TEXT := Text explaining rationale, length ≤ 500 chars
-````
+```
 
 ### Validation Rules
 
@@ -422,13 +394,11 @@ EXPLANATION_TEXT := Text explaining rationale, length ≤ 500 chars
 
 ### Before Completion (In Progress)
 
-````markdown
+```markdown
 ### In Progress
-
 ⚠️ LIMIT: Only 1 project allowed in this section
 
 #### [User Authentication System]
-
 '''
 Building a secure JWT-based authentication system with role-based access control. Currently implementing the token generation and validation middleware. Using bcrypt for password hashing and storing refresh tokens in Redis for quick invalidation.
 
@@ -439,16 +409,18 @@ dependencies: [#database-schema-setup]
 priority: high
 
 ##### [Implement JWT Token Generation]
-
 Create middleware to generate access and refresh tokens upon successful login. Access tokens expire in 15 minutes, refresh tokens in 7 days.
 
-```javascript
-function generateTokens(userId, roles) {
-  const accessToken = jwt.sign({ userId, roles }, process.env.JWT_SECRET, { expiresIn: '15m' });
-  return { accessToken, refreshToken };
-}
-```
-````
+  ```javascript
+  function generateTokens(userId, roles) {
+    const accessToken = jwt.sign(
+      { userId, roles },
+      process.env.JWT_SECRET,
+      { expiresIn: '15m' }
+    );
+    return { accessToken, refreshToken };
+  }
+  ```
 
 - [ ] [Create token generation utility]: Implement function to create JWT access and refresh tokens with appropriate expiration times and payload structure.
   ```javascript
@@ -456,14 +428,13 @@ function generateTokens(userId, roles) {
   const crypto = require('crypto');
   ```
 - [ ] [Store refresh token in Redis]: Save refresh token to Redis with user ID as key and 7-day expiration.
-      Use the node-redis client and set TTL to match token expiration.
+    Use the node-redis client and set TTL to match token expiration.
 - [x] [Add token signing secret to environment]: Configure JWT_SECRET in .env file and validate it exists on application startup.
 
 ####### Notes
 Consider rotating the JWT_SECRET periodically. May need to implement a key versioning system in the future.
 
 ##### [Create Authentication Middleware]
-
 Build Express middleware to validate JWT tokens on protected routes.
 
 - [ ] [Extract token from Authorization header]: Parse the Bearer token from incoming requests and handle missing or malformed headers gracefully.
@@ -471,14 +442,12 @@ Build Express middleware to validate JWT tokens on protected routes.
 - [ ] [Attach user data to request object]: After successful verification, attach decoded user ID and roles to req.user for downstream handlers.
 
 ##### [Implement Password Reset Flow]
-
 Allow users to request password reset via email with time-limited token.
 
 - [ ] [Generate reset token]: Create cryptographically secure random token and store with expiration in Redis.
 - [ ] [Send reset email]: Integrate with email service to send reset link to user.
 - [ ] [Validate and process reset]: Verify token validity and update user password in database.
-
-````
+```
 
 ### After Completion (Moved to Complete)
 
@@ -508,7 +477,7 @@ Implemented password reset via email with time-limited tokens.
 - [x] [Generate reset token]
 - [x] [Send reset email]
 - [x] [Validate and process reset]
-````
+```
 
 ### Example: Rejected Project
 
@@ -516,7 +485,6 @@ Implemented password reset via email with time-limited tokens.
 ### Rejected
 
 #### [Real-time Collaborative Editing]
-
 Attempted to implement operational transformation for real-time document collaboration using custom WebSocket server.
 
 created: 2025-09-20
@@ -527,22 +495,19 @@ why: After prototyping, discovered that operational transformation complexity ex
 
 ## Complete Template
 
-````markdown
+```markdown
 # Project Roadmap
 
 ### In Progress
-
 ⚠️ LIMIT: Only 1 project allowed in this section
 
 #### [Project Name]
-
 '''
 Status information goes here. Current state, recent changes, blockers, decisions. Can include code snippets, lists, and external references.
 
 ```language
 optional code examples
 ```
-````
 
 Additional context paragraphs as needed.
 '''
@@ -551,7 +516,6 @@ dependencies: [#other-project], [#another-project] or none
 priority: low|medium|high
 
 ##### [Task Name]
-
 Brief 1-2 sentence description of the task.
 
 Optional additional paragraphs explaining approach or context.
@@ -561,7 +525,7 @@ optional code example
 ```
 
 - [ ] [Action Name]: Brief description of this action.
-      Optional extended information.
+  Optional extended information.
   ```language
   optional code example
   ```
@@ -571,7 +535,6 @@ optional code example
 Optional task-specific notes that don't belong in the main description.
 
 ##### [Task Name]
-
 Brief 1-2 sentence description.
 
 assigned-to: Engineer Specialization
@@ -581,26 +544,22 @@ dependencies: [prerequisite-task] or none
 - [ ] [Action Name]: Brief description.
 
 ##### [Task Name]
-
 Brief description.
 
 - [x] [Action Name]
 - [x] [Action Name]
 
 ##### Notes
-
 Optional project-level notes.
 
 ### Backlog
 
 #### [Project Name]
-
 '''
 Status and context information.
 '''
 
 ##### [Task Name]
-
 Description.
 
 assigned-to: Engineer Specialization
@@ -611,13 +570,11 @@ dependencies: none
 ### Complete
 
 #### [Project Name]
-
 Brief summary of what was completed.
 
 created: 2025-12-29
 
 ##### [Task Name]
-
 Brief summary.
 
 - [x] [Action Name]
@@ -626,12 +583,10 @@ Brief summary.
 ### Rejected
 
 #### [Project Name]
-
 Brief description of what was attempted.
 
 created: 2025-12-29
 why: Explanation of why this project was abandoned and what decision was made instead.
-
 ```
 
 ---
@@ -658,4 +613,3 @@ When asked to modify the roadmap, AI agents should:
 - Preserve or strip detail based on destination status
 - Update metadata appropriately
 - Validate the entire document structure after changes
-```

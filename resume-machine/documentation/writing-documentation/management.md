@@ -1,5 +1,5 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Writing Documentation - Management
 description: Guidelines for splitting large documents and maintenance workflows.
 last_updated: 2026-01-04

@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Index Specification
 description: Rules for creating index documents that organize and link related resources.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [index, specification, documentation, navigation, organization]
 ---
@@ -34,10 +34,10 @@ Indexes serve as discovery points:
 
 ```yaml
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [TOPIC] Index
 description: [BRIEF_INDEX_DESCRIPTION]
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [index, [TOPIC], organization, [KEYWORD]]
 ---
@@ -115,7 +115,7 @@ For indexes comparing similar resources:
 
 ```markdown
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Development Resources Index
 description: Comprehensive index of development guides, references, and tools organized by use case.
 last_updated: 2025-12-20

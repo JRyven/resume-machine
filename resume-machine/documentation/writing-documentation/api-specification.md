@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: API Specification
 description: Rules for creating API documentation with endpoints, parameters, and examples.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [api, specification, documentation, endpoints, reference]
 ---
@@ -29,12 +29,12 @@ API documentation:
 
 ```yaml
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [API_NAME] API Documentation
 description: [BRIEF_API_DESCRIPTION]
 api_version: [VERSION]
 base_url: [BASE_URL_PLACEHOLDER]
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [api, [API_NAME], documentation, endpoints]
 ---

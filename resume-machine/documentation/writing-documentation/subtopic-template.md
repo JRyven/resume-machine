@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Subtopic Template
 description: Copy-paste template for creating detailed subtopic documentation files.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [subtopic, template, documentation, example]
 ---

@@ -1,5 +1,5 @@
 ---
-project_name: JSON CV
+project_name: Resume Machine
 title: Development Guide (Index)
 description: Index and overview of development documentation covering setup, workflow, standards, and best practices.
 last_updated: 2025-12-17
@@ -277,7 +277,7 @@ Each topic directory has an `abstract.md` following this pattern:
 
 ```markdown
 ---
-project_name: JSON CV
+project_name: Resume Machine
 title: [Topic Name] Overview
 description: Overview of [Topic Name] including structure and key resources
 last_modified: 2025-12-17

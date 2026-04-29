@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Specifications and Templates
 description: Complete documentation system with 11 document type specifications and templates.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [specifications, templates, documentation, standards]
 ---

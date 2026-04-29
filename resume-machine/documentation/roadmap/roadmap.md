@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Unified Development Roadmap
 description: Comprehensive roadmap for all project development phases from inception through production launch and ongoing maintenance.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [roadmap, development, planning, maintenance, growth]
 ---
@@ -34,64 +34,14 @@ Ensure that we're developing a robust representation of test data in `/mock-data
 
 ⚠️ LIMIT: Only 1 project allowed in this section
 
-#### Repair Linting
+#### [Various]
 
-You hit a pre-commit hook (husky + lint-staged). lint-staged tried to run ESLint/Prettier on staged files, failed because ESLint has no config, so the hook aborted and Git reverted the staged changes.
-
-Options to fix (pick one):
-
-Add a minimal ESLint config (recommended quick fix):
-
-```
-cat > .eslintrc.json <<'JSON'
-{
-  "env": { "es2021": true, "node": true, "browser": true },
-  "extends": ["eslint:recommended"],
-  "parserOptions": { "ecmaVersion": 2021, "sourceType": "module" },
-  "rules": {}
-}
-JSON
-
-git add .eslintrc.json
-git add -A
-git commit -m "v0.0.4 Pivot to monorepo"
-```
-
-Run the ESLint initializer (guided)
-
-```
-npm init @eslint/config
-# follow prompts, then:
-git add -A
-git commit -m "v0.0.4 Pivot to monorepo"
-```
-
-Diagnose lint-staged problems before committing:
-
-```
-npx lint-staged --debug
-# or run prettier/eslint manually to see errors:
-npx prettier --check .
-npx eslint --ext .js,.ts src/ || npx eslint --ext .js,.ts --fix src/
-```
 
 ### Backlog
-
-#### [Update role specific content variance to Abstract Areas of Expertise]
 
 #### [Keyword Analysis]
 
 https://github.com/srbhr/Resume-Matcher
-
-#### [Batch Processing System for Resumes]
-
-Building a batch processing system to ingest HTML job postings, preprocess resume data, and generate tailored cover letter/resume PDFs. Currently setting up HTML data extraction using Puppeteer and configuring the workflow with Bash scripts.
-
-#### [HTML Data Extraction]
-
-Extract key data from each HTML job posting file and save it into preprocess-batch-export-resume.json.
-
-[Install Puppeteer]: Set up Node.js environment and install Puppeteer.
 
 #### Project: MCP Server Setup & Verification
 
@@ -138,6 +88,16 @@ Integrate MCP server with resume workflow for AI-assisted editing.
 - "Create a variant resume focusing on e-commerce experience"
 
 ### Complete
+
+#### [Batch Processing System for Resumes]
+
+Building a batch processing system to ingest HTML job postings, preprocess resume data, and generate tailored cover letter/resume PDFs. Currently setting up HTML data extraction using Puppeteer and configuring the workflow with Bash scripts.
+
+#### [HTML Data Extraction]
+
+Extract key data from each HTML job posting file and save it into preprocess-batch-export-resume.json.
+
+[Install Puppeteer]: Set up Node.js environment and install Puppeteer.
 
 #### Project: Environment Setup & Dependencies
 

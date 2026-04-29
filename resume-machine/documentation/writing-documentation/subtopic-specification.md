@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Subtopic Specification
 description: Rules for creating detailed subtopic files within documentation topics.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [subtopic, specification, documentation, content]
 ---
@@ -25,10 +25,10 @@ All subtopics must include YAML front matter:
 
 ```yaml
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [TOPIC] - [SUBTOPIC]
 description: [BRIEF_SUBTOPIC_DESCRIPTION]
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [[TOPIC], [SUBTOPIC], [KEYWORD], [KEYWORD]]
 ---
@@ -83,7 +83,7 @@ All placeholders use `[SCREAMING_SNAKE_CASE]` format:
 
 ```markdown
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Configuration - Environment Setup
 description: Steps for configuring development and production environments.
 last_updated: 2025-12-20

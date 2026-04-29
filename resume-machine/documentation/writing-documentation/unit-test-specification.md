@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Unit Test Specification
 description: Rules for documenting unit test structure, patterns, and examples.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [testing, unit, specification, documentation, patterns]
 ---
@@ -29,10 +29,10 @@ Unit test documentation:
 
 ```yaml
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Unit Testing Standards
 description: Standards and patterns for writing unit tests.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [testing, unit, standards, patterns, documentation]
 ---

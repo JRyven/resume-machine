@@ -1,5 +1,5 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Writing Documentation - Roadmap Specification
 description: Specification for project roadmap documentation structure and metadata.
 last_updated: 2026-01-04

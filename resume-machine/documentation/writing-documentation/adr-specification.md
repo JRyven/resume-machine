@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: ADR Specification
 description: Rules for creating Architecture Decision Records documenting major technical decisions.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [adr, architecture, decision, record, specification]
 ---
@@ -37,13 +37,13 @@ Each ADR must have one of these status values:
 
 ```yaml
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [ADR_NUMBER] - [DECISION_TITLE]
 description: [BRIEF_DECISION_SUMMARY]
 status: [Proposed|Accepted|Deprecated|Superseded]
 decision_date: [YYYY-MM-DD]
 authors: [AUTHOR_NAME]
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [adr, architecture, [DOMAIN], [KEYWORD]]
 ---
@@ -118,7 +118,7 @@ Technical details on how to implement or migrate to this decision.
 
 ```markdown
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: ADR-005 - Use PostgreSQL for Primary Data Store
 description: Decision to use PostgreSQL instead of MongoDB for relational data.
 status: Accepted

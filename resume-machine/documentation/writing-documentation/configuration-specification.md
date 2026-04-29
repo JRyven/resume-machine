@@ -1,8 +1,8 @@
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Configuration Specification
 description: Rules for documenting system and application configuration files and options.
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [configuration, specification, documentation, options, settings]
 ---
@@ -33,10 +33,10 @@ Configuration docs are organized by configuration method: environment variables,
 
 ```yaml
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: [SYSTEM] Configuration
 description: Complete configuration guide for [SYSTEM].
-last_updated: [YYYY-MM-DD]
+last_updated: [2026-04-29]
 cleardoc_version: 2.3.0
 keywords: [configuration, settings, [SYSTEM], options]
 ---
@@ -142,7 +142,7 @@ Set `DEBUG=false` and ensure all secrets are provided via environment variables.
 
 ````markdown
 ---
-project_name: [PROJECT_NAME]
+project_name: Resume Machine
 title: Application Configuration
 description: Configuration options for application startup and operation.
 last_updated: 2025-12-20
