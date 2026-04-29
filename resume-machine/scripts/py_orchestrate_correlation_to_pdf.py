@@ -209,6 +209,7 @@ def step_export_pdf(template: dict, candidate_name: str, theme: str, dry_run: bo
         basename = derive_basename_from_job_json(job_json_ref)
         raw_job = basename or 'job'
 
+    # Use the shared naming utility for consistent filename sanitization
     job_slug = sanitize_for_filename(raw_job)
     pdf_name = f'resume-{sanitize_for_filename(candidate_name)}-{job_slug}.pdf'
 

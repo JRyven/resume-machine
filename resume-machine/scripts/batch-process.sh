@@ -273,15 +273,14 @@ for i in "${!entries[@]}"; do
     echo "Template mode: manual ($role_template)"
   fi
 
-  # Sanitize company and title using the JS helper in this scripts folder (portable)
-  _sanitized_lines=()
-  while IFS= read -r line; do
-    _sanitized_lines+=("$line")
-  done < <(node "$script_dir/sanitize.js" "$company" "$title")
-  company_doc="${_sanitized_lines[0]:-}"
-  title_doc="${_sanitized_lines[1]:-}"
-  company_file="${_sanitized_lines[2]:-}"
-  title_file="${_sanitized_lines[3]:-}"
+  # Use Python naming utility for consistent filename sanitization
+  # First, get the basename from the job title/company for PDF naming
+  basename=$(python "$script_dir/naming_utils.py" "$company" "$title")
+  # Then, sanitize for filename
+  company_doc=$(python -c "import sys; from naming_utils import sanitize_for_filename; print(sanitize_for_filename(sys.argv[1]))" "$company")
+  title_doc=$(python -c "import sys; from naming_utils import sanitize_for_filename; print(sanitize_for_filename(sys.argv[1]))" "$title")
+  company_file="$basename"
+  title_file="$basename"
 
   # Copy role-based template into resume.unique-data.json and inject company/title
   role_file_src="resume-machine/role-based-templates/resume.${role_template}.json"
