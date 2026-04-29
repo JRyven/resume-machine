@@ -1,29 +1,40 @@
-# Resume machine configuration
-# Values can be overridden by: 1) CLI arg to scripts, 2) environment vars, 3) this config file
+# Resume Machine Configuration
+#
+# This file contains default configuration for the resume machine workflow.
+# Environment variables can override these values.
+#
+# For more information, see:
+# https://github.com/your-repo/resume-machine/blob/main/documentation/config.md
 
-# Input directory containing saved HTML job files (can be an absolute or repo-relative path)
-input_dir: jobbankjobs/2026/04/05
+# Input directory for job data extraction
+input_dir: jobbankjobs
 
-# Output artifacts directory for generated PDFs
+# Output directory for generated artifacts
 output_dir: artifacts
 
-# Queue file used by the batch script
-queue_file: resume-machine/resume-machine-queue.json
+# Queue file name for job processing
+queue_file: resume-machine-queue.json
 
-# Role templates directory
-role_templates_dir: resume-machine/role-based-templates
+# Directory for role-based templates
+role_templates_dir: role-based-templates
 
-# Path to unique/default data file
-unique_data_file: resume-machine/resume.unique-data.json
+# Unique data file for resume
+unique_data_file: resume.unique-data.json
 
-# Skip HTML extraction step when true
+# Skip HTML extraction step
 skip_extract: false
 
-# Dry run mode (do not write outputs)
+# Dry run mode
 dry_run: false
 
-# Logging level: debug, info, warn, error
+# Log level
 log_level: info
 
-# PDF filename template
-pdf_naming_template: 'resume-{candidate}-{company}-{role}.pdf'
+# PDF naming template
+pdf_naming_template: resume-{candidate}-{company}-{role}.pdf
+
+# Default candidate name (can be overridden by --name flag or RESUME_NAME env var)
+candidate_name: "James Valeil"
+
+# Default theme (can be overridden by --template flag or RESUME_THEME env var)
+theme: "valeii-professional"

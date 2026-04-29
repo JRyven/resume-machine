@@ -1,9 +1,9 @@
 {
   "featured_languages": "PHP and JavaScript",
-  "highlight_1": "Eliminated 97% engineering bottleneck at Goop; enabled 3x content output",
-  "highlight_2": "Drove 625% account creation and $35 average order value increase at Goop",
-  "highlight_3": "Led zero-downtime Shopify migration for site with 70M+ annual pageviews",
-  "highlight_4": "Grew digital agency to $250K; scaled sites to 1M+ daily visits at <2s loads",
+  "highlight_1": "<strong>End-to-end feature ownership</strong>; database \u2192 API \u2192 UI, holistic optimization.",
+  "highlight_2": "<strong>Modern JavaScript ecosystems</strong>; Node.js servers, React clients, shared tooling.",
+  "highlight_3": "<strong>Database design & optimization</strong>; schema modeling, migrations, query optimization.",
+  "highlight_4": "<strong>API design & integration</strong>; RESTful/GraphQL endpoints, SDKs, third-party services.",
   "hiring_company": "IBS Software Canada",
   "hiring_position": "Software Technical Architect",
   "cover_letter_content": {
@@ -11,5 +11,9 @@
     "salutation": "Dear {{hiring_company}} Team,",
     "content": "I am excited to apply for the {{hiring_position}} role. I build client-facing websites that balance visual polish, performance, and maintainability. I consult with clients to document requirements, design site appearance and flow, and source and optimize content. I implement interactive features using HTML, CSS, JavaScript, jQuery, and integrate with backend services (MySQL, Git). I also create and prepare assets with Adobe Illustrator and Photoshop, run security and quality tests, and tune caching for fast, reliable experiences. I thrive in fast-paced, client-focused consulting environments, meet tight deadlines, and communicate clearly with stakeholders and team members.",
     "conclusion": "Sincerely,\nJames Valeii"
-  }
+  },
+  "domain_inference": "fullstack",
+  "job_title": "",
+  "highlight_5": "<strong>DevOps & deployment</strong>; containerization, CI/CD, monitoring, scaling.",
+  "highlight_6": "<strong>Testing across layers</strong>; unit, integration, E2E\u2014full-stack confidence."
 }

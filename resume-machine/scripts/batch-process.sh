@@ -40,18 +40,34 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# Load configuration from YAML file
+load_config() {
+  local config_file="${1:-resume-machine/config.yaml}"
+  if [ -f "$config_file" ]; then
+    # Use awk to parse YAML and convert to environment variables
+    awk -F': ' '
+      /^[[:space:]]*input_dir:/ {print "INPUT_DIR=" $2}
+      /^[[:space:]]*output_dir:/ {print "OUTPUT_DIR=" $2}
+      /^[[:space:]]*queue_file:/ {print "QUEUE_FILE=" $2}
+      /^[[:space:]]*role_templates_dir:/ {print "ROLE_TEMPLATES_DIR=" $2}
+      /^[[:space:]]*unique_data_file:/ {print "UNIQUE_DATA_FILE=" $2}
+      /^[[:space:]]*candidate_name:/ {print "CANDIDATE_NAME=" $2}
+      /^[[:space:]]*theme:/ {print "THEME=" $2}
+    ' "$config_file" 2>/dev/null | while IFS= read -r line; do
+      if [ -n "$line" ]; then
+        export "$line"
+      fi
+    done
+  fi
+}
+
+# Load configuration
+load_config
+
 # Input directory for HTML extraction (can be overridden by environment)
 # Default resolution order: 1) env var INPUT_DIR, 2) resume-machine/config.yaml input_dir, 3) hardcoded default
 if [ -z "$INPUT_DIR" ]; then
-  cfg=$(awk -F': ' '/^[[:space:]]*input_dir:/ {print $2; exit}' resume-machine/config.yaml 2>/dev/null || true)
-  if [ -n "$cfg" ]; then
-    # strip surrounding double quotes if present
-    cfg="${cfg%\"}"
-    cfg="${cfg#\"}"
-    INPUT_DIR="$cfg"
-  else
-    INPUT_DIR="$(pwd)/jobbankjobs/2026/02/22"
-  fi
+  INPUT_DIR="$(pwd)/jobbankjobs/2026/02/22"
 fi
 
 if [ -z "$SKIP_EXTRACT" ]; then

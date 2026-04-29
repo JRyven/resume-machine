@@ -18,10 +18,10 @@
         "name": "Abstract",
         "prose": "<strong>Engineer with 13+ years experience building technical teams and platforms</strong>, delivering solutions that drive measurable business impact. Elite PHP and JavaScript developer with deep knowledge of PIM and CMS architecture, extending beyond code to optimal platform configuration, efficient database structuring, and scalable system design. Combines hands-on development and strategic leadership, blending technical expertise with broad knowledge of interacting technologies and an entrepreneurial mindset to design complete systems and make informed build vs. buy decisions based on cost, capability, and long-term maintainability. Sensitive to workflow friction, cutting unnecessary steps to save time, reduce process frustration, and accelerate delivery.",
         "highlights": [
-          "Eliminated 97% engineering bottleneck at Goop; enabled 3x content output",
-          "Drove 625% account creation and $35 average order value increase at Goop",
-          "Led zero-downtime Shopify migration for site with 70M+ annual pageviews",
-          "Grew digital agency to $250K; scaled sites to 1M+ daily visits at <2s loads"
+          "<strong>End-to-end feature ownership</strong>; database → API → UI, holistic optimization.",
+          "<strong>Modern JavaScript ecosystems</strong>; Node.js servers, React clients, shared tooling.",
+          "<strong>Database design & optimization</strong>; schema modeling, migrations, query optimization.",
+          "<strong>API design & integration</strong>; RESTful/GraphQL endpoints, SDKs, third-party services."
         ]
       }
     ],

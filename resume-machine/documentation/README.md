@@ -13,7 +13,7 @@ RESUME MACHINE — PIPELINE MAP
 ══════════════════════════════════════════════════════════════
 
 INPUT                         PROCESSING                      DATA / CONFIG
-─────                         ──────────                      ─────────────
+─────                         ────────────                      ───────────
 
 [Job Bank HTML files]
         │
@@ -37,7 +37,7 @@ INPUT                         PROCESSING                      DATA / CONFIG
                     │                       │         ----╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
                     │                       │        ╎ skills-index.json   ╎
                     │                       │╌╌╌╌╌╌╌╌╎ (skills inventory)  ╎
-                    └───────────┬───────────┘         ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+                    └───────────┬───────────┘         ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌--╌╌
                                 │
                                 ▼
                       [correlation_*.json]
@@ -50,10 +50,7 @@ INPUT                         PROCESSING                      DATA / CONFIG
                                 ▼                       ----╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
                       [resume.unique-data.json] ╌╌╌╌╌╌ ╎ resume.defaults.json   ╎
                        Merge target             ╌╌╌╌╌╌ ╎ (fallback template)    ╎
-                                │                       ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌--╌╌
-                                │               ╌╌╌╌╌╌╌╎ role-based-templates/  ╎
-                                │╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╎ (domain template files)╎
-                                │                        ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+                                │                       ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
                     ┌───────────┴───────────┐
                     ▼                       ▼
             [compose_resume.py]       [preprocess-resume.js]
@@ -75,6 +72,103 @@ LEGEND
   ╎ name ╎      data / config file (side input)
   ──────        main flow
   ╌╌╌╌╌╌        supporting / fallback input
+---
+
+## Configuration System
+
+Resume Machine supports configuration through multiple sources with the following priority order:
+
+1. **Command line flags** (`--name`, `--template`)
+2. **Environment variables** (`RESUME_NAME`, `RESUME_THEME`, `RESUME_CONFIG_FILE`)
+3. **Configuration file** (`resume-machine/config.yaml`)
+
+### Environment Variables
+
+Set these in your shell or `.env` file:
+
+```bash
+export RESUME_NAME="James"
+export RESUME_THEME="valeii-professional"
+export RESUME_CONFIG_FILE="/path/to/config.yaml"
+```
+
+### Using .env files
+
+Create a `.env` file in the resume-machine directory and source it:
+
+```bash
+# Create .env file
+cp resume-machine/.env.example resume-machine/.env
+
+# Edit .env to set your values
+# Then source it in your shell
+source resume-machine/.env
+```
+
+### Configuration File
+
+The default configuration file is `resume-machine/config.yaml`. It contains:
+
+```yaml
+# Resume machine configuration
+# Values can be overridden by: 1) CLI arg to scripts, 2) environment vars, 3) this config file
+
+# Input directory containing saved HTML job files (can be an absolute or repo-relative path)
+input_dir: jobbankjobs/2026/04/05
+
+# Output artifacts directory for generated PDFs
+output_dir: artifacts
+
+# Queue file used by the batch script
+queue_file: resume-machine-queue.json
+
+# Role templates directory
+role_templates_dir: role-based-templates
+
+# Path to unique/default data file
+unique_data_file: resume.unique-data.json
+
+# Skip HTML extraction step when true
+skip_extract: false
+
+# Dry run mode (do not write outputs)
+dry_run: false
+
+# Logging level: debug, info, warn, error
+log_level: info
+
+# PDF filename template
+pdf_naming_template: 'resume-{candidate}-{company}-{role}.pdf'
+
+# Default candidate name (can be overridden by CLI flag or RESUME_NAME env var)
+candidate_name: James
+
+# Default theme (can be overridden by CLI flag or RESUME_THEME env var)
+theme: valeii-professional
+```
+
+### Usage Examples
+
+With configuration file:
+```bash
+python resume-machine/scripts/py_orchestrate_correlation_to_pdf.py \
+  resume-machine/jobbankjobs/2026/04/05/correlation_web_developer_saint_antoine_abbe.json
+```
+
+With environment variables:
+```bash
+export RESUME_NAME="James"
+export RESUME_THEME="valeii-professional"
+python resume-machine/scripts/py_orchestrate_correlation_to_pdf.py \
+  resume-machine/jobbankjobs/2026/04/05/correlation_web_developer_saint_antoine_abbe.json
+```
+
+With command line flags:
+```bash
+python resume-machine/scripts/py_orchestrate_correlation_to_pdf.py \
+  resume-machine/jobbankjobs/2026/04/05/correlation_web_developer_saint_antoine_abbe.json \
+  --name=James \
+  --template=valeii-professional
 ```
 
 ---

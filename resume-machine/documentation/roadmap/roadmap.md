@@ -34,8 +34,20 @@ Ensure that we're developing a robust representation of test data in `/mock-data
 
 ⚠️ LIMIT: Only 1 project allowed in this section
 
-#### [Various]
+#### [Optimizations]
 
+##### [Refactor DOMAIN_PATTERNS to Use Template Files]
+
+The current implementation has domain patterns hardcoded within the Python script, while template files in the role-based-templates directory contain similar content but are separate. This creates duplication but provides performance and portability benefits. This task involves implementing a hybrid approach that reduces duplication while maintaining script functionality.
+
+dependencies: [none]
+
+- [ ] [Analyze current DOMAIN_PATTERNS implementation in Python script]
+- [ ] [Review template files in role-based-templates directory]
+- [ ] [Design hybrid approach that reads from template files while maintaining core logic in code]
+- [ ] [Implement solution to reduce duplication between script and template files]
+- [ ] [Test that the refactored approach maintains performance and portability]
+- [ ] [Update documentation to reflect the new hybrid approach]
 
 ### Backlog
 

@@ -1,4 +1,4 @@
-dz# JSON Resume Theme: Valeii Professional
+# JSON Resume Theme: Valeii Professional
 
 A minimal, ATS-friendly theme for JSON Resume, optimized for professional use with clean typography and layout.
 

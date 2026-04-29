@@ -1,23 +1,21 @@
 #!/usr/bin/env python3
 """
-Adapter: Map correlation data → role-based template selection or generation.
+Adapter: correlation data → role-based template selection.
 
-This bridge transforms skill-job correlation analysis into a tailored resume template,
-automating what would otherwise be manual template selection during batch processing.
+Reads a correlation_*.json produced by py_skill_job_correlator.py, infers the
+best-fit domain, and emits a JSON object suitable for merging into
+resume.unique-data.json.
 
 Usage:
   python py_adapter_correlator_to_template.py <correlation_json_path>
-  
+
 Output:
-  Prints JSON template to stdout, suitable for merging into resume.unique-data.json
-  
+  JSON to stdout — pipe into jq or capture in a shell variable.
+
 Example:
-  python py_adapter_correlator_to_template.py jobbankjobs/2026/04/05/correlation_software_developer_kanata.json
-  
-Pipeline Integration:
-  # In batch-process.sh or custom orchestration:
-  template_data=$(python resume-machine/scripts/py_adapter_correlator_to_template.py "$correlation_file")
-  jq --argjson tmpl "$template_data" '. += $tmpl' resume-machine/role-based-templates/default/resume.unique-data.json
+  template=$(python resume-machine/scripts/py_adapter_correlator_to_template.py \\
+    jobbankjobs/2026/04/05/correlation_software_developer_kanata.json)
+  jq --argjson t "$template" '. += $t' resume.unique-data.json
 """
 
 import json
@@ -27,13 +25,14 @@ from typing import Dict, List, Optional, Tuple
 
 
 # ════════════════════════════════════════════════════════════════════════════════
-# SKILL DOMAIN PATTERNS
+# DOMAIN PATTERNS
 # ════════════════════════════════════════════════════════════════════════════════
 
-DOMAIN_PATTERNS = {
+DOMAIN_PATTERNS: Dict[str, Dict] = {
     'devops': {
-        'keywords': ['docker', 'kubernetes', 'terraform', 'ansible', 'ci/cd', 'aws', 'azure', 'gcp', 'prometheus', 'grafana', 'jenkins'],
-        'facet_types': ['hands_on_tool', 'hands_on_platform'],
+        'keywords': {'docker', 'kubernetes', 'terraform', 'ansible', 'ci/cd',
+                     'aws', 'azure', 'gcp', 'prometheus', 'grafana', 'jenkins'},
+        'facet_types': {'hands_on_tool', 'hands_on_platform'},
         'highlights': [
             "<strong>Containerization & orchestration</strong>; Docker, Kubernetes, Helm, automated rollouts.",
             "<strong>Infrastructure-as-code & automation</strong>; Terraform, Ansible, orchestrated deployments.",
@@ -44,8 +43,9 @@ DOMAIN_PATTERNS = {
         ],
     },
     'backend': {
-        'keywords': ['node.js', 'django', 'flask', 'fastapi', 'spring boot', '.net', 'express', 'rest api', 'graphql', 'microservices'],
-        'facet_types': ['hands_on_language', 'hands_on_framework'],
+        'keywords': {'node.js', 'django', 'flask', 'fastapi', 'spring boot',
+                     '.net', 'express', 'rest api', 'graphql', 'microservices'},
+        'facet_types': {'hands_on_language', 'hands_on_framework'},
         'highlights': [
             "<strong>RESTful & async API design</strong>; high-throughput, event-driven architectures.",
             "<strong>Database optimization</strong>; query design, indexing, caching strategies (Redis, Varnish).",
@@ -56,11 +56,12 @@ DOMAIN_PATTERNS = {
         ],
     },
     'frontend': {
-        'keywords': ['react', 'angular', 'vue', 'html5', 'css/sass', 'typescript', 'webpack', 'next.js'],
-        'facet_types': ['hands_on_framework', 'hands_on_language'],
+        'keywords': {'react', 'angular', 'vue', 'html5', 'css/sass',
+                     'typescript', 'webpack', 'next.js'},
+        'facet_types': {'hands_on_framework', 'hands_on_language'},
         'highlights': [
             "<strong>Component-driven UI architecture</strong>; reusable, testable React/Vue/Angular components.",
-            "<strong>State management & data flow</strong>; redux, context, MobX—predictable, debuggable patterns.",
+            "<strong>State management & data flow</strong>; Redux, Context, MobX—predictable, debuggable patterns.",
             "<strong>Performance optimization</strong>; code splitting, lazy loading, bundle analysis, Core Web Vitals.",
             "<strong>Responsive & accessible design</strong>; CSS Grid/Flexbox, WCAG compliance, mobile-first.",
             "<strong>Build tooling & bundling</strong>; Webpack, Vite, esbuild—production-ready pipelines.",
@@ -68,8 +69,9 @@ DOMAIN_PATTERNS = {
         ],
     },
     'fullstack': {
-        'keywords': ['javascript', 'typescript', 'node.js', 'react', 'next.js', 'sql/mysql', 'mongodb', 'rest api'],
-        'facet_types': ['hands_on_language', 'hands_on_framework'],
+        'keywords': {'javascript', 'typescript', 'node.js', 'react', 'next.js',
+                     'sql/mysql', 'mongodb', 'rest api'},
+        'facet_types': {'hands_on_language', 'hands_on_framework'},
         'highlights': [
             "<strong>End-to-end feature ownership</strong>; database → API → UI, holistic optimization.",
             "<strong>Modern JavaScript ecosystems</strong>; Node.js servers, React clients, shared tooling.",
@@ -80,8 +82,9 @@ DOMAIN_PATTERNS = {
         ],
     },
     'ml_ai': {
-        'keywords': ['python', 'tensorflow', 'pytorch', 'scikit-learn', 'pandas', 'jupyter', 'data science', 'machine learning'],
-        'facet_types': ['hands_on_language', 'strategic_domain'],
+        'keywords': {'python', 'tensorflow', 'pytorch', 'scikit-learn',
+                     'pandas', 'jupyter', 'data science', 'machine learning'},
+        'facet_types': {'hands_on_language', 'strategic_domain'},
         'highlights': [
             "<strong>Model training & evaluation</strong>; hyperparameter tuning, cross-validation, performance metrics.",
             "<strong>Feature engineering & preprocessing</strong>; data pipelines, normalization, dimensionality reduction.",
@@ -92,8 +95,9 @@ DOMAIN_PATTERNS = {
         ],
     },
     'database': {
-        'keywords': ['sql/mysql', 'postgresql', 'mongodb', 'elasticsearch', 'redis', 'cassandra', 'database'],
-        'facet_types': ['hands_on_tool'],
+        'keywords': {'sql/mysql', 'postgresql', 'mongodb', 'elasticsearch',
+                     'redis', 'cassandra', 'database'},
+        'facet_types': {'hands_on_tool'},
         'highlights': [
             "<strong>Relational database design</strong>; schema modeling, normalization, indexes, constraints.",
             "<strong>Query optimization & performance</strong>; execution plans, indexing strategies, query tuning.",
@@ -104,8 +108,9 @@ DOMAIN_PATTERNS = {
         ],
     },
     'manager': {
-        'keywords': ['scrum', 'agile', 'project management', 'mentoring', 'leadership', 'team', 'jira'],
-        'facet_types': ['leadership_soft_skill'],
+        'keywords': {'scrum', 'agile', 'project management', 'mentoring',
+                     'leadership', 'team', 'jira'},
+        'facet_types': {'leadership_soft_skill'},
         'highlights': [
             "<strong>Agile team leadership</strong>; sprint planning, retrospectives, velocity forecasting.",
             "<strong>Mentoring & growth</strong>; code review, knowledge transfer, career development.",
@@ -117,117 +122,111 @@ DOMAIN_PATTERNS = {
     },
 }
 
-# Map of template names to domain keywords
-TEMPLATE_DOMAIN_MAP = {
-    'devops': ['docker', 'kubernetes', 'terraform', 'prometheus', 'grafana'],
-    'manager': ['scrum', 'agile', 'mentoring', 'leadership', 'team'],
-    'database': ['sql', 'mysql', 'postgresql', 'mongodb', 'elasticsearch'],
-    'ai': ['python', 'tensorflow', 'pytorch', 'machine learning', 'data science'],
-}
+# Default domain when no pattern scores above zero.
+DEFAULT_DOMAIN = 'fullstack'
 
 
 # ════════════════════════════════════════════════════════════════════════════════
-# HELPERS
+# CORE LOGIC
 # ════════════════════════════════════════════════════════════════════════════════
 
 def load_correlation(path: str) -> Dict:
-    """Load and parse correlation JSON file."""
-    with open(path, 'r') as f:
+    with open(path) as f:
         return json.load(f)
 
 
-def identify_domain(correlations: List[Dict]) -> Tuple[str, List[str]]:
+def identify_domain(correlations: List[Dict]) -> str:
     """
-    Identify best-fit domain from LEAD_STRENGTH correlations.
-    
-    Returns: (domain_name, matched_keywords)
+    Score each domain by counting LEAD_STRENGTH facet matches against its
+    keyword set, then return the highest-scoring domain.
+
+    Uses sets for O(1) keyword lookup and avoids double-counting a facet that
+    matches multiple domain keyword lists (each facet contributes at most 1
+    point per domain).
     """
-    # Collect LEAD_STRENGTH facet names
-    lead_facets = [
+    lead_facets = {
         c['facet_name'].lower()
         for c in correlations
         if c.get('content_tag') == 'LEAD_STRENGTH'
-    ]
+    }
 
-    # Score each domain by keyword overlap
-    scores = {}
-    for domain, pattern in DOMAIN_PATTERNS.items():
-        keywords = pattern['keywords']
-        match_count = sum(1 for facet in lead_facets if any(kw in facet for kw in keywords))
-        scores[domain] = match_count
+    scores: Dict[str, int] = {
+        domain: sum(1 for facet in lead_facets if facet in pattern['keywords'])
+        for domain, pattern in DOMAIN_PATTERNS.items()
+    }
 
-    # Return highest-scoring domain (or 'fullstack' if tied)
-    if not scores or max(scores.values()) == 0:
-        return ('fullstack', lead_facets)
+    best_score = max(scores.values(), default=0)
+    if best_score == 0:
+        return DEFAULT_DOMAIN
 
-    best_domain = max(scores, key=scores.get)
-    return (best_domain, lead_facets)
+    return max(scores, key=scores.get)
 
 
-def extract_featured_languages(correlations: List[Dict]) -> str:
-    """Extract featured languages from LEAD_STRENGTH correlations."""
+def extract_featured_languages(correlations: List[Dict], limit: int = 3) -> Optional[str]:
+    """
+    Return a comma-separated string of the top LEAD_STRENGTH hands-on languages,
+    or None if none are found.
+    """
     languages = [
         c['facet_name']
         for c in correlations
         if c.get('content_tag') == 'LEAD_STRENGTH'
         and c.get('facet_type') == 'hands_on_language'
     ]
-    if not languages:
-        return "PHP and JavaScript"
-    return ', '.join(languages[:3])  # Top 3
+    return ', '.join(languages[:limit]) if languages else None
 
 
 def generate_template(correlation_data: Dict) -> Dict:
     """
-    Generate a role-based template from correlation data.
-    
-    Returns a dict suitable for merging into resume.unique-data.json
+    Build a template dict from correlation data.
+
+    Returns:
+        Dict ready for merging into resume.unique-data.json.
     """
     correlations = correlation_data.get('correlations', [])
-    metadata = correlation_data.get('metadata', {})
-    
-    # Identify domain
-    domain, lead_facets = identify_domain(correlations)
-    
-    # Extract featured languages
+    metadata     = correlation_data.get('metadata', {})
+
+    domain             = identify_domain(correlations)
     featured_languages = extract_featured_languages(correlations)
-    
-    # Fetch domain highlights
-    domain_highlights = DOMAIN_PATTERNS.get(domain, DOMAIN_PATTERNS['fullstack'])['highlights']
-    
-    # Build template
-    template = {
-        'featured_languages': featured_languages,
+    highlights         = DOMAIN_PATTERNS[domain]['highlights']
+
+    template: Dict = {
         'domain_inference': domain,
-        'job_title': metadata.get('job_title', ''),
+        'job_title':        metadata.get('job_title', ''),
     }
-    
-    # Add highlights (limit to 6)
-    for i, highlight in enumerate(domain_highlights[:6], 1):
+
+    if featured_languages:
+        template['featured_languages'] = featured_languages
+
+    for i, highlight in enumerate(highlights[:6], 1):
         template[f'highlight_{i}'] = highlight
-    
+
     return template
 
 
-def main():
-    """Main entry point."""
+# ════════════════════════════════════════════════════════════════════════════════
+# CLI
+# ════════════════════════════════════════════════════════════════════════════════
+
+def main() -> None:
     if len(sys.argv) < 2:
-        print(json.dumps({
-            'error': 'Usage: python py_adapter_correlator_to_template.py <correlation_json_path>'
-        }), file=sys.stderr)
+        print(
+            'Usage: python py_adapter_correlator_to_template.py <correlation_json_path>',
+            file=sys.stderr,
+        )
         sys.exit(1)
-    
+
     correlation_path = sys.argv[1]
-    
+
     try:
         correlation_data = load_correlation(correlation_path)
         template = generate_template(correlation_data)
         print(json.dumps(template, indent=2))
+    except FileNotFoundError:
+        print(f'ERROR: File not found: {correlation_path}', file=sys.stderr)
+        sys.exit(1)
     except Exception as e:
-        print(json.dumps({
-            'error': str(e),
-            'correlation_path': correlation_path
-        }), file=sys.stderr)
+        print(json.dumps({'error': str(e), 'correlation_path': correlation_path}), file=sys.stderr)
         sys.exit(1)
 
 
