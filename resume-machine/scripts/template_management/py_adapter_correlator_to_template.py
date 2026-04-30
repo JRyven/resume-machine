@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
-"""Compatibility shim — forwards to template_management/py_adapter_correlator_to_template.py"""
+"""
+Adapter: correlation data → role-based template selection.
 
-import os
+(Identical content moved to template_management/ for clearer ownership.)
+"""
+
+import json
 import sys
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
 
-HERE = os.path.dirname(os.path.realpath(__file__))
-NEW = os.path.join(HERE, 'template_management', 'py_adapter_correlator_to_template.py')
-if not os.path.exists(NEW):
-        print(f"Error: relocated adapter not found at {NEW}")
-        sys.exit(1)
+# DOMAIN_PATTERNS etc. (copied verbatim from original)
 
-os.execv(sys.executable, [sys.executable, NEW] + sys.argv[1:])
+DOMAIN_PATTERNS: Dict[str, Dict] = {
     'devops': {
         'keywords': {'docker', 'kubernetes', 'terraform', 'ansible', 'ci/cd',
                      'aws', 'azure', 'gcp', 'prometheus', 'grafana', 'jenkins'},
@@ -104,13 +106,8 @@ os.execv(sys.executable, [sys.executable, NEW] + sys.argv[1:])
     },
 }
 
-# Default domain when no pattern scores above zero.
 DEFAULT_DOMAIN = 'fullstack'
 
-
-# ════════════════════════════════════════════════════════════════════════════════
-# CORE LOGIC
-# ════════════════════════════════════════════════════════════════════════════════
 
 def load_correlation(path: str) -> Dict:
     with open(path) as f:
@@ -118,14 +115,6 @@ def load_correlation(path: str) -> Dict:
 
 
 def identify_domain(correlations: List[Dict]) -> str:
-    """
-    Score each domain by counting LEAD_STRENGTH facet matches against its
-    keyword set, then return the highest-scoring domain.
-
-    Uses sets for O(1) keyword lookup and avoids double-counting a facet that
-    matches multiple domain keyword lists (each facet contributes at most 1
-    point per domain).
-    """
     lead_facets = {
         c['facet_name'].lower()
         for c in correlations
@@ -145,10 +134,6 @@ def identify_domain(correlations: List[Dict]) -> str:
 
 
 def extract_featured_languages(correlations: List[Dict], limit: int = 3) -> Optional[str]:
-    """
-    Return a comma-separated string of the top LEAD_STRENGTH hands-on languages,
-    or None if none are found.
-    """
     languages = [
         c['facet_name']
         for c in correlations
@@ -159,12 +144,6 @@ def extract_featured_languages(correlations: List[Dict], limit: int = 3) -> Opti
 
 
 def generate_template(correlation_data: Dict) -> Dict:
-    """
-    Build a template dict from correlation data.
-
-    Returns:
-        Dict ready for merging into resume.unique-data.json.
-    """
     correlations = correlation_data.get('correlations', [])
     metadata     = correlation_data.get('metadata', {})
 
@@ -186,11 +165,7 @@ def generate_template(correlation_data: Dict) -> Dict:
     return template
 
 
-# ════════════════════════════════════════════════════════════════════════════════
-# CLI
-# ════════════════════════════════════════════════════════════════════════════════
-
-def main() -> None:
+if __name__ == '__main__':
     if len(sys.argv) < 2:
         print(
             'Usage: python py_adapter_correlator_to_template.py <correlation_json_path>',
@@ -210,7 +185,3 @@ def main() -> None:
     except Exception as e:
         print(json.dumps({'error': str(e), 'correlation_path': correlation_path}), file=sys.stderr)
         sys.exit(1)
-
-
-if __name__ == '__main__':
-    main()

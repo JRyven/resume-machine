@@ -1,28 +1,16 @@
 #!/usr/bin/env python3
-"""
-Skill–job correlator: compare your skills index against a job posting JSON
-and produce a tagged correlation report.
+"""Compatibility shim — forwards to data_processing/py_skill_job_correlator.py"""
 
-Usage:
-  python py_skill_job_correlator.py [JOB_JSON_PATH] [OUTPUT_PATH]
-
-Output:
-  correlation_<slug>.json written to OUTPUT_PATH (or beside the job JSON).
-"""
-
-import json
-import re
+import os
 import sys
-from datetime import datetime, timezone
-from pathlib import Path
 
+HERE = os.path.dirname(os.path.realpath(__file__))
+NEW = os.path.join(HERE, 'data_processing', 'py_skill_job_correlator.py')
+if not os.path.exists(NEW):
+        print(f"Error: relocated correlator not found at {NEW}")
+        sys.exit(1)
 
-# ════════════════════════════════════════════════════════════════════════════════
-# CONFIG
-# ════════════════════════════════════════════════════════════════════════════════
-
-_SCRIPT_DIR       = Path(__file__).parent
-SKILLS_INDEX_PATH = _SCRIPT_DIR.parent / 'skills-index.json'
+os.execv(sys.executable, [sys.executable, NEW] + sys.argv[1:])
 
 # ── Thresholds ─────────────────────────────────────────────────────────────────
 STALE_YEAR_THRESHOLD   = 2      # last_used older than N years → UNTESTED_CLAIM
@@ -447,181 +435,17 @@ def build_correlation_report(job_data: dict, facet_lookup: dict) -> dict:
 
         elif has_adjacent:
             facet_mention_counts[term]  = facet_mention_counts.get(term, 0) + 1
-            facet_section_weights[term] = max(facet_section_weights.get(term, 0), weight)
-            facet_adjacency_available[term] = True
-            facet_sources.setdefault(term, [])
-            if section not in facet_sources[term]:
-                facet_sources[term].append(section)
+            #!/usr/bin/env python3
+            """Compatibility shim — forwards to data_processing/py_skill_job_correlator.py"""
 
-    # Second pass: collect hard gaps (terms with no resolution at all)
-    seen_resolved = set(facet_mention_counts.keys())
-    hard_gaps: list[dict] = []
-    seen_gap_terms: set[str] = set()
+            import os
+            import sys
 
-    for term, section, _weight in terms:
-        if term not in seen_resolved and term not in seen_gap_terms:
-            hard_gaps.append({'term': term, 'source_section': section})
-            seen_gap_terms.add(term)
-
-    # Build correlation records
-    correlations: list[dict] = []
-
-    for fname_or_term, mention_count in facet_mention_counts.items():
-        facet      = facet_by_term.get(fname_or_term)
-        is_adj     = facet_adjacency_available.get(fname_or_term, False)
-        sec_weight = facet_section_weights.get(fname_or_term, 1)
-        sources    = facet_sources.get(fname_or_term, [])
-
-        tag, score = compute_content_tag(facet, is_adj, sec_weight, job_required_years, mention_count)
-
-        correlations.append({
-            'facet_id'            : facet.get('facet_id') if facet else None,
-            'facet_name'          : facet.get('facet_name') if facet else fname_or_term,
-            'facet_type'          : facet.get('facet_type') if facet else None,
-            'skill_group'         : facet.get('skill_group') if facet else None,
-            'content_tag'         : tag,
-            'score'               : score,
-            'mention_count'       : mention_count,
-            'source_sections'     : sources,
-            'is_adjacent_match'   : is_adj,
-            'your_proficiency'    : facet.get('proficiency') if facet else None,
-            'your_confidence'     : facet.get('confidence_level') if facet else None,
-            'your_years'          : facet.get('years_of_experience') if facet else None,
-            'your_last_used'      : facet.get('last_used') if facet else None,
-            'job_required_years'  : job_required_years,
-        })
-
-    correlations.sort(key=lambda r: (TAG_ORDER.get(r['content_tag'], 9), -r['score']))
-
-    tag_counts: dict[str, int] = {}
-    for r in correlations:
-        tag_counts[r['content_tag']] = tag_counts.get(r['content_tag'], 0) + 1
-
-    return {
-        '$schema'    : '../../../resume-machine/skills-schema.json',
-        'metadata'   : {
-            'generated_at'      : datetime.now(timezone.utc).isoformat(),
-            'job_title'         : job_posting.get('job_title', ''),
-            'employer'          : job_posting.get('employer', ''),
-            'job_required_years': job_required_years,
-        },
-        'summary'    : {
-            'total_correlations': len(correlations),
-            'hard_gaps_count'   : len(hard_gaps),
-            'tag_distribution'  : tag_counts,
-        },
-        'correlations': correlations,
-        'hard_gaps'   : hard_gaps,
-    }
-
-
-def _build_facet_lookup(skills_index: dict) -> dict:
-    """Build the enriched facet lookup from a skills-index dict."""
-    facet_lookup: dict[str, dict] = {}
-
-    for entry in skills_index.get('facet_catalog', []):
-        key = entry['facet_name'].lower().strip()
-        facet_lookup[key] = {
-            **entry,
-            'proficiency': None, 'confidence_level': None,
-            'years_of_experience': None, 'last_used': None, 'experience_level': None,
-        }
-
-    for skill_group_key, skill_group_list in skills_index.get('skills', {}).items():
-        for skill_group in skill_group_list:
-            for _fkey, facet_data in skill_group.get('facets', {}).items():
-                fname = facet_data['facet_name'].lower().strip()
-                if fname in facet_lookup:
-                    facet_lookup[fname].update({
-                        'proficiency'        : facet_data.get('proficiency'),
-                        'confidence_level'   : facet_data.get('confidence_level'),
-                        'years_of_experience': facet_data.get('years_of_experience'),
-                        'last_used'          : facet_data.get('last_used'),
-                        'experience_level'   : facet_data.get('experience_level'),
-                        'skill_group'        : skill_group_key,
-                    })
-
-    return facet_lookup
-
-
-def _print_report_summary(report: dict) -> None:
-    sep = '═' * 60
-    print(f'\n{sep}')
-    print('  CORRELATION REPORT')
-    print(sep)
-    print(f"  Job      : {report['metadata']['job_title']}")
-    print(f"  Employer : {report['metadata']['employer']}")
-    print(f"  Required : {report['metadata']['job_required_years']} yrs")
-    print(sep)
-
-    for tag in ['LEAD_STRENGTH', 'SOLID_MATCH', 'PARTIAL_MATCH', 'UNTESTED_CLAIM', 'GAP_ADJACENCY']:
-        items = [r for r in report['correlations'] if r['content_tag'] == tag]
-        if not items:
-            continue
-        print(f"\n── {tag} {'─' * (50 - len(tag))}")
-        for r in items[:10]:
-            adj = ' [adjacent]' if r['is_adjacent_match'] else ''
-            print(
-                f"  {r['facet_name']:<30} "
-                f"prof={str(r['your_proficiency']):<12} "
-                f"conf={str(r['your_confidence']):<4} "
-                f"yrs={str(r['your_years']):<4} "
-                f"score={r['score']:.3f}{adj}"
-            )
-        if len(items) > 10:
-            print(f'  ... and {len(items) - 10} more')
-
-    if report['hard_gaps']:
-        print('\n── HARD_GAP (no facet match) ────────────────────────────')
-        for g in report['hard_gaps'][:15]:
-            print(f"  ✗ {g['term'][:60]:<62} ({g['source_section']})")
-        if len(report['hard_gaps']) > 15:
-            print(f"  ... and {len(report['hard_gaps']) - 15} more")
-
-
-# ════════════════════════════════════════════════════════════════════════════════
-# CLI
-# ════════════════════════════════════════════════════════════════════════════════
-
-if __name__ == '__main__':
-    try:
-        job_json_path = Path(sys.argv[1]) if len(sys.argv) > 1 else None
-        if not job_json_path:
-            print('Usage: python py_skill_job_correlator.py <JOB_JSON_PATH> [OUTPUT_PATH]')
-            sys.exit(1)
-
-        output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else job_json_path.parent / (
-            'correlation_' + job_json_path.stem.lower().replace(' ', '_') + '.json'
-        )
-
-        for label, p in [('Skills index', SKILLS_INDEX_PATH), ('Job JSON', job_json_path)]:
-            if not p.exists():
-                print(f'ERROR: {label} not found at {p}')
+            HERE = os.path.dirname(os.path.realpath(__file__))
+            NEW = os.path.join(HERE, 'data_processing', 'py_skill_job_correlator.py')
+            if not os.path.exists(NEW):
+                print(f"Error: relocated correlator not found at {NEW}")
                 sys.exit(1)
 
-        with open(SKILLS_INDEX_PATH) as f:
-            skills_index = json.load(f)
-
-        with open(job_json_path) as f:
-            job_data = json.load(f)
-
-        facet_lookup = _build_facet_lookup(skills_index)
-        print(f'Loaded {len(facet_lookup)} enriched facets from skills index')
-
-        report = build_correlation_report(job_data, facet_lookup)
-
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(output_path, 'w') as f:
-            json.dump(report, f, indent=2)
-
-        _print_report_summary(report)
-        print(f'\n✓ Saved to: {output_path}\n')
-
-    except json.JSONDecodeError as e:
-        print(f'ERROR: Invalid JSON — {e}')
-        sys.exit(1)
-    except Exception as e:
-        import traceback
-        print(f'ERROR: {e}')
-        traceback.print_exc()
-        sys.exit(1)
+            os.execv(sys.executable, [sys.executable, NEW] + sys.argv[1:])
+            hard_gaps.append({'term': term, 'source_section': section})
