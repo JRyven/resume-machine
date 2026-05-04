@@ -9,7 +9,7 @@ keywords: [roadmap, development, planning, maintenance, growth]
 
 # Unified Development Roadmap
 
-All projects required to achieve the Unified Email Routing Schema implementation are tracked in this section using the Development Goals tracking system. For complete documentation of the tracking structure, metadata requirements, and modification rules, see the [Roadmap Specification](./specification.md).
+All projects required to achieve the Unified Email Routing Schema implementation are tracked in this section using the Development Goals tracking system. For complete documentation of the tracking structure, metadata requirements, and modification rules, see the [Roadmap Specification](../writing-documentation/roadmap-specification.md).
 
 ## Special Implementation Notes
 
@@ -34,7 +34,7 @@ Ensure that we're developing a robust representation of test data in `/mock-data
 
 ### In Progress
 
-⚠️ LIMIT: Only 1 project allowed in this section
+⚠️ LIMIT: Only 2 project allowed in this section
 
 #### [Optimizations]
 '''
@@ -45,6 +45,7 @@ dependencies: [none]
 priority: high
 
 ##### [Establish better organization system within /scripts/ that makes the role of each file clearer]
+
 Reorganizing the scripts directory to improve clarity and maintainability. The scripts will be grouped by functionality:
 
 - `data_processing/` - Scripts for data extraction and preprocessing
@@ -60,6 +61,7 @@ Each script will have a clear purpose and be documented with usage examples.
 - [ ] [Test directory structure]: Verify that all scripts run correctly with the new organization.
 
 ##### [Add a shared naming helper used by batch-process.sh so both runners behave identically]
+
 Create a `naming_utils.py` file in the scripts directory with functions for filename sanitization.
 
 - [ ] [Create naming_utils.py]: Implement the Python utility with functions for filename sanitization:
@@ -71,6 +73,7 @@ Create a `naming_utils.py` file in the scripts directory with functions for file
 - [ ] [Test consistency]: Ensure both scripts produce identical filename formatting for consistency.
 
 ##### [Update py_skill_job_correlator.py to populate metadata.job_title and metadata.employer upstream]
+
 Modify `py_skill_job_correlator.py` to extract and populate `metadata.job_title` and `metadata.employer` fields.
 
 - [ ] [Extract job title and employer]: Modify the correlator to extract job title and employer from job posting data.
@@ -79,6 +82,7 @@ Modify `py_skill_job_correlator.py` to extract and populate `metadata.job_title`
 - [ ] [Test metadata population]: Verify that the metadata fields are correctly populated and used in the workflow.
 
 ##### [Refactor DOMAIN_PATTERNS to Use Template Files]
+
 The current implementation has domain patterns hardcoded within the Python script, while template files in the role-based-templates directory contain similar content but are separate. This creates duplication but provides performance and portability benefits. This task involves implementing a hybrid approach that reduces duplication while maintaining script functionality.
 
 - [ ] [Analyze current DOMAIN_PATTERNS implementation in Python script]: Review the existing implementation to understand how patterns are currently used.
@@ -87,8 +91,6 @@ The current implementation has domain patterns hardcoded within the Python scrip
 - [ ] [Implement solution to reduce duplication between script and template files]: Implement the hybrid approach.
 - [ ] [Test that the refactored approach maintains performance and portability]: Verify that the refactored approach works correctly.
 - [ ] [Update documentation to reflect the new hybrid approach]: Update any relevant documentation.
-
-### Backlog
 
 #### [Migrate to a system modifyable system]
 
@@ -106,6 +108,8 @@ Duplicate manual-cover-letter.html as resume-machine.html.
   - include a searchable select field to filter by specific correlated resume json file
   - selected correlated resume json file hydrates the page
 - user clicks print to generate PDF through browser UX
+
+### Backlog
 
 #### [Keyword Analysis]
 
