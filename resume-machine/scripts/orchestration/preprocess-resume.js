@@ -33,8 +33,13 @@ function substitute(data, vars) {
 
 function preprocessResume() {
   const defaultsPath = path.join(__dirname, '../role-based-templates/default/resume.unique-data.json');
-  const sourcePath = path.join(__dirname, '../resume.source.json');
-  const outputPath = path.join(__dirname, '../../resume.json');
+  // Prefer resume.source.json at repo root, fall back to scripts-level copy for compatibility
+  const repoRoot = path.join(__dirname, '..', '..');
+  let sourcePath = path.join(repoRoot, 'resume.source.json');
+  if (!fs.existsSync(sourcePath)) {
+    sourcePath = path.join(__dirname, '../resume.source.json');
+  }
+  const outputPath = path.join(repoRoot, 'resume.json');
 
   let defaults = {};
   try {
