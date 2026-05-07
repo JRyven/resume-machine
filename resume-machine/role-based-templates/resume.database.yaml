@@ -1,0 +1,32 @@
+domain: database
+keywords:
+  - sql
+  - postgresql
+  - mysql
+  - mongodb
+  - redis
+  - elasticsearch
+  - database design
+  - query optimization
+  - indexing
+  - transactions
+  - normalization
+  - denormalization
+  - backup and recovery
+  - replication
+  - clustering
+  - caching
+  - orm
+  - migrations
+  - schema evolution
+highlights:
+  - "Designed and optimized database schemas for high-traffic applications"
+  - "Implemented efficient indexing strategies reducing query times by 60%"
+  - "Led database migration projects from planning to deployment"
+  - "Configured and maintained high-availability database clusters"
+  - "Developed automated backup and recovery procedures"
+  - "Integrated caching solutions to improve application performance"
+  - "Collaborated with cross-functional teams to define data requirements"
+  - "Monitored database performance and implemented optimization measures"
+  - "Ensured data integrity and security compliance"
+  - "Mentored junior developers on database best practices"
