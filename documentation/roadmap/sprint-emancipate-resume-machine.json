@@ -1,9 +1,9 @@
 {
   "_meta": {
     "name": "sprint-emancipate-resume-machine",
-    "version": "1.1.0",
-    "description": "Build resume-machine from scratch per north-star v1.1.0: pure-Python ingest via BeautifulSoup4+lxml, structured skills correlation, two-file output (correlation always overwritten, cover letter written once), deterministic orchestration, and a vanilla HTML/ES2020 UX served by a Python HTTP server.",
-    "authored_from": "north-star.json v1.1.0",
+    "version": "1.2.0",
+    "description": "Build resume-machine from scratch per north-star v1.2.0: pure-Python ingest via BeautifulSoup4+lxml, structured skills correlation, two-file output (correlation always overwritten, cover letter written once), deterministic orchestration, and a vanilla HTML/ES2020 UX served by a Python HTTP server.",
+    "authored_from": "north-star.json v1.2.0",
     "companion": "migration-manifest.json v1.0.0",
     "sprint_goal": "Deliver a fully operational local resume-machine that ingests HTML job postings, correlates them against a structured skills index, adapts output to domain-specific role templates, and exposes a browser-based UX with year/month/keyword navigation and print-to-PDF — all in pure Python with no Node.js runtime.",
     "pd-004-override": "skills-index.json remains in v2.3.0 facet_catalog format (operator decision C). The correlator adapts via _build_facet_lookup(). north-star skills_index_schema updated in commit 63a3b20."
@@ -65,7 +65,7 @@
           "depends_on": [
             "p0-t1"
           ],
-          "done_when": "data/role-based-templates/ contains exactly 5 valid JSON files (ai.json, database.json, devops.json, manager.json, sted.json). Each file has domain, keywords (array), facet_types (array), highlights (array, min 4 entries). No HTML tags present in any highlights string. No resume.*.json or .yaml files remain.",
+          "done_when": "data/role-based-templates/ contains exactly 4 valid JSON files (ai.json, database.json, devops.json, manager.json). sted.json is deleted (sted dropped per operator decision). backend.json, frontend.json, fullstack.json are absent — they are created in p2-t1. Each file has domain, keywords (array), facet_types (array), highlights (array, min 6 entries). No HTML tags present in any highlights string. No resume.*.json or .yaml files remain.",
           "status": "todo",
           "notes": "backend, frontend, fullstack templates are absent and will be created in p2-t1. The adapter will fall back to DEFAULT_DOMAIN ('fullstack') for those roles until p2-t1 is complete."
         },
@@ -178,7 +178,7 @@
     {
       "id": "p2",
       "title": "Template Management — Role Templates and Domain Adapter",
-      "description": "Create domain-specific role template JSON files for all eight known domains and implement py_adapter_correlator_to_template exposing infer_domain(). This layer depends on utilities only and is imported by the correlator in the next phase.",
+      "description": "Create domain-specific role template JSON files for all seven known domains and implement py_adapter_correlator_to_template exposing infer_domain(). This layer depends on utilities only and is imported by the correlator in the next phase.",
       "tasks": [
         {
           "id": "p2-t1",
@@ -189,7 +189,7 @@
               "For each of the 7 domains, create data/role-based-templates/{domain}.json.",
               "domain field must exactly match the filename stem (e.g. 'devops' in devops.json).",
               "keywords: 10 or more domain-relevant technology and skill terms that the adapter will match against correlation term values. Use logical placeholder/draft content reflecting the candidate's PHP/WordPress/Python/DevOps/E-Commerce background.",
-              "facet_types: list the correlation tag labels most relevant to this domain, chosen from LEAD_STRENGTH, SOLID_MATCH, PARTIAL_MATCH, UNTESTED_CLAIM, GAP_ADJACENCY, HARD_GAP.",
+              "facet_types: array of skill and concept CATEGORY labels used to classify correlation entries for this domain — NOT tag taxonomy labels. e.g. ['language', 'framework', 'practice', 'tool', 'platform', 'cloud_provider']. These values populate the 'type' field of each correlation entry.",
               "highlights: 6 to 10 plain-text strings describing candidate strengths for this domain. Use logical placeholder/draft content based on the candidate's skillset. No HTML tags. No markdown. No bracketed placeholders."
             ]
           },
@@ -265,12 +265,12 @@
             "steps": [
               "Accept positional argument job_json_path. Accept --name flag to override candidate_name from config. Apply naming_utils.slugify() to candidate_name before using it in output filenames.",
               "Load job JSON, skills-index.json (via _build_facet_lookup() which reads from facet_catalog in the v2.3.0 format), and config via config_manager.load_config().",
-              "Correlate: for each skill in skills-index.json, check whether skill.name (or its prefix) appears in job_posting.required_skills or job_posting.additional_skills. Assign tag: LEAD_STRENGTH (required + expert), SOLID_MATCH (required + proficient), PARTIAL_MATCH (additional, any proficiency), UNTESTED_CLAIM (required + familiar), GAP_ADJACENCY (adjacent domain skill not directly required), HARD_GAP (required skill absent from index entirely).",
+              "Correlate: iterate all terms in job_posting.required_skills and job_posting.additional_skills. For each term, look up the lowercase term in the facet_lookup returned by _build_facet_lookup(). Assign tag using the following rules in order — (1) LEAD_STRENGTH: term in required_skills, facet_lookup match found, experience_level is 'advanced' or 'expert' OR proficiency is 'expert', AND staleness_rule does not fire. (2) SOLID_MATCH: term in required_skills, facet_lookup match found, experience_level is 'intermediate' OR proficiency is 'intermediate', AND staleness_rule does not fire. (3) UNTESTED_CLAIM: term in required_skills, facet_lookup match found, but experience_level is 'beginner' OR proficiency is 'novice' or 'beginner', OR staleness_rule fires (facet_entry.last_used is more than 24 months before the correlation run date, using datetime.now(timezone.utc) as the reference). (4) PARTIAL_MATCH: term in additional_skills, facet_lookup match found at any proficiency (staleness_rule does not affect this tag). (5) GAP_ADJACENCY: term in required_skills or additional_skills, no facet_lookup match, but the term appears as a keyword in at least one role template loaded via _template_cache. (6) HARD_GAP: term in required_skills, no facet_lookup match, and term does not appear in any role template keywords. additional_skills terms with no facet_lookup match and no role template keyword match are silently excluded — do not tag them HARD_GAP.",
               "Derive summary: total_correlations = len(correlations); hard_gaps_count = count of entries where tag == 'HARD_GAP'; tag_distribution = dict mapping each tag to its count; hard_gaps = list of { term, context } for each HARD_GAP entry.",
               "Call infer_domain(correlation_data, config['role_templates_dir']) imported from py_adapter_correlator_to_template. Merge returned domain, featured_languages, highlights into correlation_data.",
-              "Populate metadata: job_title, employer, location (from job JSON), generated_at = datetime.utcnow().isoformat() + 'Z', job_json = absolute path to source job JSON, skills_index = absolute path to skills-index.json.",
+              "Populate metadata: job_title, employer, location (from job JSON), candidate_name = the slugified candidate name used in the output filename, generated_at = datetime.now(timezone.utc).isoformat() (import timezone from datetime — utcnow() is deprecated in Python 3.12), job_json = absolute path to source job JSON, skills_index = absolute path to skills-index.json.",
               "Write correlation JSON to naming_utils.correlation_json_path(...). Always overwrite without checking existence.",
-              "Resolve cover letter path via naming_utils.cover_letter_json_path(...). If the file does not exist: generate cover letter JSON with opening = 'Dear Hiring Manager,' (boilerplate), value_proposition = string derived from top LEAD_STRENGTH highlights, relevant_experience = array of up to 5 strings from highlights[], closing = 'Thank you for your consideration.' (boilerplate). Write it. If the file already exists: do nothing — do not read, do not modify.",
+              "Resolve cover letter path via naming_utils.cover_letter_json_path(...). If the file does not exist: generate cover letter JSON using exact construction rules — opening: 'Dear Hiring Team at {employer}, I am writing to apply for the {job_title} position.' (substitute values from metadata); value_proposition: join the notes fields of the first two LEAD_STRENGTH entries in correlations[] as declarative sentences; if fewer than two LEAD_STRENGTH entries exist fall back to highlights[0] and highlights[1] joined as sentences; relevant_experience: array of up to 5 strings sourced from highlights[0..4], one string per entry; closing: 'I would welcome the opportunity to discuss how my experience contributes to {employer}'s goals. Thank you for your consideration.' (substitute employer from metadata). Write the letter JSON. If the file already exists: do nothing — do not read, do not modify.",
               "Expose correlate_job(job_json_path: str, candidate_name: str | None = None) → None as an importable function for use by process.py."
             ]
           },
@@ -321,20 +321,21 @@
     {
       "id": "p5",
       "title": "UX — HTTP Server and Browser Interface",
-      "description": "Implement serve.py (stdlib-only Python HTTP server with three API endpoints and path-traversal protection) and resume-machine.html (vanilla HTML/CSS/ES2020, no build step) with year/month/keyword navigation, cover letter toggle, and print-to-PDF per pd-003.",
+      "description": "Implement serve.py (stdlib-only Python HTTP server with four API endpoints and path-traversal protection) and resume-machine.html (vanilla HTML/CSS/ES2020, no build step) with year/month/keyword navigation, cover letter toggle, and print-to-PDF per pd-003.",
       "tasks": [
         {
           "id": "p5-t1",
           "title": "Create serve.py",
-          "what": "Implement a stdlib-only Python HTTP server on localhost:8080 serving resume-machine.html as the root and exposing GET /api/jobs, GET /api/resume, and GET /api/correlation. /api/correlation must validate that the supplied path resolves within data/jobbankjobs/ before reading.",
+          "what": "Implement a stdlib-only Python HTTP server on localhost:8080 serving resume-machine.html as the root and exposing GET /api/years, GET /api/jobs, GET /api/resume, and GET /api/correlation. /api/correlation must validate that the supplied path resolves within data/jobbankjobs/ before reading.",
           "how": {
             "steps": [
               "Use http.server.BaseHTTPRequestHandler. No third-party HTTP framework.",
               "Accept optional --port argument defaulting to 8080. Log the bound address at INFO on startup.",
               "GET /: Read src/api/resume-machine.html relative to the project root. Respond 200 with Content-Type: text/html; charset=utf-8.",
-              "GET /api/jobs?year=YYYY[&month=MM]: Walk data/jobbankjobs/{year}/{month:02d}/ (or all months under {year}/ when month is absent). Collect all files matching the resume-* pattern. For each, read JSON and extract path (relative to the project root, i.e. data/jobbankjobs/{year}/{month:02d}/{day:02d}/{filename} — this value is passed directly as the path parameter to /api/correlation), job_title, employer, location, domain. Return a JSON array sorted by date directory descending (newest first). Content-Type: application/json.",
+              "GET /api/years: Walk data/jobbankjobs/ and collect all direct subdirectory names that are 4-digit year strings. Sort descending. Return as a JSON array of strings (e.g. ['2026', '2025']). Return [] if data/jobbankjobs/ does not exist.",
+              "GET /api/jobs?year=YYYY[&month=MM]: Walk data/jobbankjobs/{year}/{month:02d}/ (or all months under {year}/ when month is absent). Collect all files matching the resume-* pattern. For each correlation JSON, read the file and extract: path (relative to project root — used as-is in /api/correlation requests), job_title and employer from metadata, location from metadata, and domain from the top-level domain field (this is why /api/jobs requires O(N) file reads). Return a JSON array sorted by date directory descending (newest first). Content-Type: application/json.",
               "GET /api/resume: Read data/resume.source.json. Return its content as JSON.",
-              "GET /api/correlation?path=...: Resolve the path parameter against the project root using pathlib.Path.resolve(). Reject with HTTP 400 if the resolved path does not begin with the resolved data/jobbankjobs/ directory (path-traversal guard). Load correlation JSON. Derive the companion cover letter path by replacing the 'resume-' filename prefix with 'letter-' (e.g. data/jobbankjobs/2025/05/01/resume-x-y-z.json → data/jobbankjobs/2025/05/01/letter-x-y-z.json). If the cover letter file exists, merge its fields (opening, value_proposition, relevant_experience, closing) into the response dict. Return unified JSON.",
+              "GET /api/correlation?path=...: Resolve the path parameter against the project root using pathlib.Path.resolve(). Reject with HTTP 400 if the resolved path does not begin with the resolved data/jobbankjobs/ directory (path-traversal guard). Load correlation JSON. Derive the companion cover letter path by replacing the 'resume-' filename prefix with 'letter-' (e.g. data/jobbankjobs/2025/05/01/resume-x-y-z.json → data/jobbankjobs/2025/05/01/letter-x-y-z.json). If the cover letter file exists, merge its fields (opening, value_proposition, relevant_experience, closing) into the response dict. The response always includes metadata.candidate_name so the client can construct document.title without parsing the file path. Return unified JSON.",
               "Set Access-Control-Allow-Origin: * on all /api/* responses.",
               "Log each request method and path at INFO via logging_manager.get_logger('resume-machine.server').",
               "Return 404 for unrecognized paths. Return 400 for path-traversal attempts."
@@ -348,7 +349,7 @@
             "p0-t6",
             "p3-t2"
           ],
-          "done_when": "python -m src.api.serve starts and logs 'Serving on localhost:8080'; GET /api/jobs?year=2025 returns a valid JSON array; GET /api/resume returns JSON containing a basics.name field; GET /api/correlation?path=data/jobbankjobs/2025/05/01/resume-x-y-z.json returns a merged object containing both correlation fields and cover letter fields; GET /api/correlation?path=../../etc/passwd returns HTTP 400; the implementation contains no third-party imports beyond the stdlib.",
+          "done_when": "python -m src.api.serve starts and logs 'Serving on localhost:8080'; GET /api/years returns a JSON array of year strings sorted descending; GET /api/jobs?year=2025 returns a valid JSON array where each entry has path, job_title, employer, location, and domain; GET /api/resume returns JSON containing a basics.name field; GET /api/correlation?path=data/jobbankjobs/2025/05/01/resume-x-y-z.json returns a merged object containing both correlation fields and cover letter fields and includes metadata.candidate_name; GET /api/correlation?path=../../etc/passwd returns HTTP 400; the implementation contains no third-party imports beyond the stdlib.",
           "status": "todo"
         },
         {
@@ -357,13 +358,13 @@
           "what": "Implement the single-page browser UX in vanilla HTML/CSS/ES2020 (no build step, no framework): filters panel with year select, optional month select, keyword search input, and cover letter toggle; scrollable job results list with empty-state message; printable area with a cover letter page followed by a resume page.",
           "how": {
             "steps": [
-              "On DOMContentLoaded: populate the year <select> with current year ± 2 years, defaulting to current year. Fetch /api/jobs?year={current_year} and render the job list. Cache the /api/resume response after the first fetch.",
-              "Year <select> change: fetch /api/jobs?year=YYYY. Reapply the current keyword filter client-side.",
-              "Month <select>: blank option by default (no month filter active). Selecting a month fetches /api/jobs?year=YYYY&month=MM. Keyword filter reapplied client-side.",
-              "Keyword <input>: on every input event, filter the rendered job list in-place without any network request. When the filtered list is empty, display the message 'No results for current filters.' in the results area.",
-              "Job row click: fetch /api/correlation?path={row.dataset.path} and the cached /api/resume. Hydrate cover letter panel with opening, value_proposition, relevant_experience[] as list items, and closing. Hydrate resume panel with: contact block from basics; summary paragraph from highlights[0] through highlights[2]; work history from work[]; skills list from skills[].name; education from education[].",
+              "On DOMContentLoaded: fetch /api/years and populate the year <select> with the returned array (sorted descending). Default selection: the entry matching the current calendar year, or the first entry if the current year is not present. Declare a module-level allJobs[] array. Fetch /api/jobs?year={selected_year} and set allJobs[] to the result. Render the job list from allJobs[]. Show the pre-selection placeholder ('Select a job to preview your resume.') in the printable area. Cache the /api/resume response after the first fetch.",
+              "Year <select> change: fetch /api/jobs?year=YYYY → replace allJobs[]. Re-render the job list. Reapply the current keyword filter over allJobs[] client-side.",
+              "Month <select>: blank option by default (no month filter active). Selecting a month fetches /api/jobs?year=YYYY&month=MM → replace allJobs[]. If cleared, fetch /api/jobs?year=YYYY → replace allJobs[]. Keyword filter reapplied client-side over allJobs[].",
+              "Keyword <input>: on every input event, filter allJobs[] client-side by job_title and employer (case-insensitive substring match). Re-render the DOM list from the filtered array. No network request. When the filtered array is empty, display 'No results for current filters.' in the results area.",
+              "Job row click: show a loading indicator in the printable area. Fetch /api/correlation?path={row.dataset.path} and the cached /api/resume. On response: hide the loading indicator. Hydrate cover letter panel with opening, value_proposition, relevant_experience[] as list items, and closing. Hydrate resume panel with: contact block from basics; summary paragraph from highlights[0] through highlights[2]; work history from work[]; skills list from skills[].name; education from education[].",
               "Cover letter toggle: a checkbox, checked by default. On change, toggle a 'cover-letter--hidden' CSS class on the cover letter section. No network request.",
-              "Print: set document.title to '{employer} — {job_title}.pdf', then call window.print().",
+              "Print: construct filename as slugify(metadata.candidate_name) + '-' + slugify(metadata.employer) + '-' + slugify(metadata.job_title), where slugify lowercases and replaces non-alphanumeric characters with hyphens (matching the Python slugify() in naming_utils). Set document.title = filename. Call window.print().",
               "@media print: page size Letter 8.5in × 11in, margins 0.7in; cover letter section receives page-break-after: always; filters panel and results list are hidden; body font-family: 'Source Serif Pro', serif; UI element font-family: 'Inter', sans-serif."
             ]
           },
