@@ -1,9 +1,0 @@
-{
-  "featured_languages": "Python, Bash, and Terraform (HCL)",
-  "highlight_1": "<strong>Containerized and orchestrated platforms</strong>; Docker, Kubernetes, Helm, automated rollouts, secured secrets.",
-  "highlight_2": "<strong>Architectural platform design</strong>; defined topologies, DNS and Cloudflare failover strategies.",
-  "highlight_3": "<strong>Observability and reliability</strong>; implemented Prometheus, Grafana, tracing, alerts, and runbooks.",
-  "highlight_4": "<strong>Capacity planning</strong>; modeled resources, autoscaling thresholds, and tuned caching layers.",
-  "highlight_5": "<strong>Cross-functional alignment</strong>; translated constraints into SLOs, runbooks, and release windows.",
-  "highlight_6": "<strong>Technology evaluation</strong>; led build-vs-buy analyses and selected cost-effective stacks."
-}
