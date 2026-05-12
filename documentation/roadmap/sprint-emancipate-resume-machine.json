@@ -205,7 +205,7 @@
           "what": "Implement infer_domain(correlation_data: dict, role_templates_dir: str) → dict returning { domain: str, featured_languages: list[str], highlights: list[str] }. This function is imported by the correlator after facets are computed.",
           "how": {
             "steps": [
-              "Load all *.json files from role_templates_dir at call time (no module-level cache); raise FileNotFoundError if the directory is empty.",
+              "On first call for a given role_templates_dir, load all *.json files and store the list in a module-level dict _template_cache keyed by role_templates_dir. Return the cached list on subsequent calls. Raise FileNotFoundError if the directory is empty or contains no *.json files. Cache is valid for the process lifetime and invalidated only by process restart.",
               "Score each template by counting how many of its keywords appear as term values in correlation_data['correlations'][]. Scoring counts all correlation entries regardless of tag value (not just LEAD_STRENGTH). Higher score wins; ties broken alphabetically by domain name.",
               "On tie, select the alphabetically first domain name.",
               "featured_languages: collect unique term values from correlations (any tag) whose term case-insensitively matches the hardcoded language list exactly: Python, JavaScript, TypeScript, Go, Java, Rust, C++, SQL, Bash, Ruby, PHP. SQL is matched as an exact token — not as a substring of SQL/MySQL.",
