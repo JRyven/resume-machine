@@ -118,17 +118,35 @@
     },
 
     "skills_index_schema": {
-      "description": "Personal skill catalog: resume-machine/skills-index.json. Array of structured skill objects. Drives correlation scoring. Manually maintained.",
+      "description": "Personal skill catalog: resume-machine/skills-index.json. Faceted normalized format v2.3.0. Operator decision C: the v2.3.0 schema is the source of truth. The correlator adapts via _build_facet_lookup() — not a flat array. Manually maintained.",
       "file_path": "resume-machine/skills-index.json",
-      "structure": "Array of skill objects. Each entry conforms to skill_object_format.",
-      "skill_object_format": {
-        "name": "String. Required. Skill or technology name (e.g., 'React', 'PostgreSQL', 'Terraform').",
-        "proficiency": "String. Required. One of: expert | proficient | familiar.",
-        "domain": "String. Optional. Domain tag (e.g., 'frontend', 'devops').",
-        "years_experience": "Integer. Optional.",
-        "verified": "Boolean. Optional. True if demonstrated in a production context."
+      "schema_version": "2.3.0",
+      "structure": "Object with top-level keys: @context, $schema, metadata, venues_catalog, skills_catalog, facet_catalog, skills. The correlator reads from facet_catalog only.",
+      "facet_catalog": {
+        "description": "Array of facet entries. This is the only section the correlator reads at runtime.",
+        "facet_entry_format": {
+          "facet_id": "String. Pattern: 'facet.[a-z_]+(.[0-9]+)?'. e.g. 'facet.python'.",
+          "facet_name": "String. Display name used for matching. e.g. 'Python', 'SQL/MySQL'.",
+          "facet_type": "String. One of: hands_on_language | hands_on_framework | hands_on_tool | hands_on_platform | hands_on_skill | strategic_domain | leadership_soft_skill.",
+          "skill_group": "String. Grouping category. e.g. 'programming_languages', 'devops_tools'.",
+          "proficiency": "String. Optional when declared at catalog level. One of: novice | beginner | intermediate | advanced | expert.",
+          "confidence_level": "Integer 1–10. Optional at catalog level; enriched from skills[] entries by _build_facet_lookup().",
+          "years_of_experience": "Integer. Optional.",
+          "last_used": "String. ISO date or YYYY-MM format. Used by correlator for staleness detection (UNTESTED_CLAIM threshold: 2 years).",
+          "experience_level": "String. Optional. One of: beginner | intermediate | advanced | expert."
+        }
       },
-      "usage": "Correlator reads this array at runtime. For each job posting term, searches by name prefix matching. Matched skills tagged per facet type and proficiency."
+      "correlator_adapter": "_build_facet_lookup(skills_index: dict) → dict[str, dict]: iterates facet_catalog to build a lookup keyed by lowercase facet_name; enriches each entry with proficiency, confidence_level, years_of_experience, last_used, and experience_level sourced from the skills[] array. Returns the enriched lookup. This is the only interface between the correlator and skills-index.json.",
+      "facet_type_weights": {
+        "hands_on_language": 1.0,
+        "hands_on_framework": 0.9,
+        "hands_on_tool": 0.8,
+        "hands_on_platform": 0.8,
+        "hands_on_skill": 0.7,
+        "strategic_domain": 0.9,
+        "leadership_soft_skill": 0.6
+      },
+      "note": "pd-004 (flat array format) is superseded by operator decision C. The flat-array format described in pd-004 is not implemented. pd-004 in _meta.permanent_decisions is retained as a record of the original intent but is overridden by this schema entry."
     },
 
     "resume_source_schema": {
