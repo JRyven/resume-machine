@@ -1,0 +1,286 @@
+{
+  "_meta": {
+    "name": "migration-manifest",
+    "version": "1.0.0",
+    "description": "Inventory of all files in resume-machine/ categorized as PORT (salvageable with adaptation instructions), ABSENT (net-new, no prior art), or DROP (delete before greenfield build). Companion to sprint-emancipate-resume-machine.json and north-star.json v1.1.0.",
+    "decisions_applied": ["pd-001", "pd-002", "pd-003", "pd-004-override", "pd-005"],
+    "pd-004-override": "User elected option C: keep skills-index.json v2.3.0 (facet_catalog array) as the source of truth. The correlator must read facet_catalog, not a flat skill array. This supersedes pd-004 for the skills-index file itself; the correlator's internal schema adapter is the compatibility layer. north-star.json skills_index_schema should be updated in a follow-up to reflect the actual v2.3.0 format.",
+    "schema_divergence_note": "The existing correlator's output uses 'content_tag' and 'facet_name' as correlation field names. The north-star spec uses 'tag' and 'term'. All port instructions below normalize to the north-star field names."
+  },
+  "port": [
+    {
+      "id": "port-001",
+      "source": "scripts/py_skill_job_correlator.py",
+      "target": "scripts/data_processing/py_skill_job_correlator.py",
+      "status": "corrupted — partial reconstruction required",
+      "value": "critical",
+      "what_exists": "ALIASES dict (120+ job-term → canonical-facet-name mappings), ADJACENCY_MAP (30+ alternate-skill mappings), SECTION_WEIGHTS, FACET_TYPE_WEIGHTS, TAG_ORDER constants; helper functions parse_required_years(), extract_job_terms(), resolve_to_facet(), compute_content_tag() — all complete and functional. _build_facet_lookup() reads facet_catalog from v2.3.0 skills-index.json. First pass of build_correlation_report() is present but truncated mid-function; the second pass (tag computation, deduplication, output dict assembly) and all CLI/write logic are missing.",
+      "what_is_broken": "The file at scripts/py_skill_job_correlator.py has shim redirect code (os.execv) accidentally embedded inside build_correlation_report(), truncating the function. The relocated version at scripts/data_processing/py_skill_job_correlator.py is an acknowledged stub that raises an error if called.",
+      "how_to_port": {
+        "steps": [
+          "Copy all constants (STALE_YEAR_THRESHOLD through ADJACENCY_MAP) and all helper functions (parse_required_years, extract_job_terms, resolve_to_facet, compute_content_tag, _build_facet_lookup) verbatim into the new scripts/data_processing/py_skill_job_correlator.py — these are clean and correct.",
+          "Reconstruct build_correlation_report() second pass: after the first-pass loop aggregates facet_mention_counts, facet_section_weights, facet_by_term, and hard_gaps, write a second pass that iterates unique facets in facet_by_term, calls compute_content_tag() for each, and builds correlations[] as [{ 'term': facet_name, 'type': facet.facet_type, 'tag': tag, 'notes': '' }]. Collect HARD_GAP terms from the first pass as hard_gaps[] = [{ 'term': term, 'context': section }]. Sort correlations[] by TAG_ORDER.",
+          "Keep _build_facet_lookup() reading from skills_index['facet_catalog'] — this is the pd-004 override. Do not flatten to a simple array.",
+          "Rename output field 'content_tag' → 'tag' and 'facet_name' → 'term' throughout the output dict to match north-star correlation_json_schema.",
+          "Add the two-file write logic per pd-002: write correlation JSON always (overwrite); resolve cover letter path by replacing 'resume-' prefix with 'letter-' in the filename; write cover letter JSON only if absent.",
+          "Expose correlate_job(job_json_path: str, candidate_name: str | None = None) → None as a top-level importable function for use by process.py.",
+          "Add --name argparse flag and __main__ guard for direct CLI invocation."
+        ]
+      },
+      "field_rename_map": {
+        "content_tag": "tag",
+        "facet_name (in output correlations)": "term"
+      }
+    },
+    {
+      "id": "port-002",
+      "source": "scripts/py_adapter_correlator_to_template.py",
+      "target": "scripts/template_management/py_adapter_correlator_to_template.py",
+      "status": "functionally complete — interface and format changes required",
+      "value": "high",
+      "what_exists": "DOMAIN_PATTERNS inline dict with 7 domains (devops, backend, frontend, fullstack, ml_ai, database, manager); each entry has 'keywords' (set), 'facet_types' (set), 'highlights' (list of 6 strings with HTML). identify_domain(), extract_featured_languages(), generate_template() are all functional. Reads from correlation data in memory — no file I/O for templates.",
+      "what_is_broken": "Domain 'ml_ai' must be renamed 'ai'. Domain 'sted' is absent from DOMAIN_PATTERNS (though resume.sted.json exists). Highlights contain <strong> HTML tags (north-star prohibits HTML in highlights). generate_template() returns highlight_1/highlight_2/... dict instead of highlights[] array. extract_featured_languages() returns a comma-string instead of a list. Function signature is generate_template(correlation_data) not infer_domain(correlation_data, role_templates_dir). Reads 'content_tag' and 'facet_name' field names from correlations — must change to 'tag' and 'term' after port-001 is applied.",
+      "how_to_port": {
+        "steps": [
+          "Rename the DOMAIN_PATTERNS key 'ml_ai' → 'ai'. Update DEFAULT_DOMAIN if needed.",
+          "Add 'sted' entry to DOMAIN_PATTERNS with appropriate keywords (e.g. 'testing', 'qa', 'embedded', 'firmware', 'hardware', 'technical writing') and facet_types. Use resume.sted.json highlights as the basis for highlights[], stripping any HTML.",
+          "Strip <strong> and </strong> tags from all highlights strings in all 7 existing domain entries. The structure 'Text here; details here.' is preserved — only HTML tags are removed.",
+          "Rename the entry point function to infer_domain(correlation_data: dict, role_templates_dir: str) → dict. The role_templates_dir parameter is accepted for interface compatibility with the sprint spec but can initially be ignored (patterns remain inline). Document this as acceptable until role template files reach their target format.",
+          "Change identify_domain() to match on 'tag' (not 'content_tag') and 'term' (not 'facet_name') in the correlations list.",
+          "Change extract_featured_languages() to return a list of strings (not a comma-joined string). Match on 'tag' == 'LEAD_STRENGTH' and 'type' == 'hands_on_language' (not 'facet_type').",
+          "Change the return value of infer_domain() to: { 'domain': str, 'featured_languages': list[str], 'highlights': list[str] } — highlights as an array (max 6), not highlight_1/2/... keys."
+        ]
+      }
+    },
+    {
+      "id": "port-003",
+      "source": "scripts/data_processing/py_extract_jobs.py",
+      "target": "scripts/data_processing/py_extract_jobs.py",
+      "status": "functionally complete — integration changes only",
+      "value": "high",
+      "what_exists": "BeautifulSoup4+lxml extraction with validated jobbank.gc.ca CSS selectors: span[property='title'] (job_title), span[property='name'] (employer), span[property='address'] (location), div#comparisonchart (required_skills, additional_skills, specialization), div#jobOverview-1 (overview), div#jobOverview-2 (responsibilities). Handles salary, employment type, education, work setting extraction.",
+      "how_to_port": {
+        "steps": [
+          "Add import for logging_manager.get_logger('resume-machine.ingest') and replace any print() calls with logger.info() / logger.error().",
+          "Add import for naming_utils.job_json_path() and use it for output path generation instead of any inline path construction.",
+          "Add import for config_manager.load_config() and use config['jobbankjobs_dir'] as the base_dir for job_json_path().",
+          "Verify the output JSON structure matches job_json_schema required_fields exactly: job_title, employer, location, job_posting.required_skills (array), job_posting.additional_skills (array), job_posting.responsibilities (array), job_posting.overview (string), job_posting.specialization (string). Add or rename fields as needed to match the schema.",
+          "Derive year/month/day integers from the three rightmost path components of input_dir for use in job_json_path().",
+          "Ensure the script accepts a single positional argument (input_dir) via argparse and exits with code 1 if no HTML files are found."
+        ]
+      }
+    },
+    {
+      "id": "port-004",
+      "source": "scripts/utilities/naming_utils.py",
+      "target": "scripts/utilities/naming_utils.py",
+      "status": "partial — three functions missing",
+      "value": "medium",
+      "what_exists": "sanitize_for_filename(s: str) → str — NFKD normalization, ASCII-only, hyphen collapsing, 200-char cap. This is functionally equivalent to the sprint's slugify() but with better Unicode handling. build_dated_artifact_path() and derive_basename_from_job_json() exist but are not needed by the sprint spec.",
+      "how_to_port": {
+        "steps": [
+          "Add slugify as an alias: slugify = sanitize_for_filename. This preserves the existing function name for any callers while satisfying the sprint spec's slugify() interface.",
+          "Add job_json_path(base_dir: str, year: int, month: int, day: int, slug: str) → str returning f'{base_dir}/{year}/{month:02d}/{day:02d}/{slug}.json'.",
+          "Add correlation_json_path(base_dir: str, year: int, month: int, day: int, candidate: str, employer: str, title: str) → str: applies slugify to employer and title; returns path to 'resume-{candidate}-{slugified_employer}-{slugified_title}.json' inside the datestamped directory.",
+          "Add cover_letter_json_path() with identical logic but 'letter-' prefix.",
+          "Do not remove build_dated_artifact_path or derive_basename_from_job_json — they are harmless and may be referenced by other existing scripts during migration."
+        ]
+      }
+    },
+    {
+      "id": "port-005",
+      "source": "scripts/utilities/config_manager.py",
+      "target": "scripts/utilities/config_manager.py",
+      "status": "exists — key names must be reconciled",
+      "value": "medium",
+      "what_exists": "A config_manager.py exists in scripts/utilities/. The current config.yaml uses keys: input_dir, output_dir, queue_file, role_templates_dir, unique_data_file, skip_extract, dry_run, log_level, pdf_naming_template, candidate_name, theme.",
+      "how_to_port": {
+        "steps": [
+          "Update config.yaml to use the sprint-spec key names: replace 'input_dir' with 'jobbankjobs_dir'; replace 'output_dir' with 'artifacts_dir' (or remove if unused by sprint); remove 'queue_file', 'unique_data_file', 'pdf_naming_template', 'theme' — these belong to the dropped Node.js pipeline. Add 'skills_index_path' and 'resume_source_path' if not present.",
+          "Implement load_config() → dict in scripts/utilities/config_manager.py: resolve the resume-machine/ root as Path(__file__).parents[2]; load config.yaml with yaml.safe_load(); resolve the four path values (jobbankjobs_dir, skills_index_path, resume_source_path, role_templates_dir) to absolute strings; raise FileNotFoundError if config.yaml is absent.",
+          "The existing scripts/config_manager.py shim at the scripts/ root can be deleted after all callers are updated to import from scripts.utilities.config_manager."
+        ]
+      }
+    },
+    {
+      "id": "port-006",
+      "source": "role-based-templates/resume.{domain}.json (7 files) + DOMAIN_PATTERNS inline dict in py_adapter_correlator_to_template.py",
+      "target": "role-based-templates/{domain}.json (8 files: ai, database, devops, manager, sted, backend, frontend, fullstack)",
+      "status": "format conversion required — content preserved",
+      "value": "high",
+      "what_exists": "7 files (resume.ai, resume.crm, resume.database, resume.devops, resume.manager, resume.sted) with format { featured_languages: string, highlight_1: string, ... highlight_N: string }. DOMAIN_PATTERNS inline dict provides keywords[] and facet_types[] for devops, backend, frontend, fullstack, ml_ai, database, manager. Highlights in DOMAIN_PATTERNS use generic domain-level language with <strong> HTML tags; highlights in resume.*.json files are candidate-specific achievement strings.",
+      "how_to_port": {
+        "steps": [
+          "For each of the 5 domains with both a resume.{domain}.json and a DOMAIN_PATTERNS entry (ai/ml_ai, database, devops, manager, sted): create a new {domain}.json with: domain = filename stem; keywords = from DOMAIN_PATTERNS (convert set to sorted array); facet_types = from DOMAIN_PATTERNS (convert set to sorted array); highlights = from resume.{domain}.json highlight_1..N values, with all <strong> and </strong> tags stripped. If fewer than 6 highlights exist in the file, supplement with de-HTML'd strings from DOMAIN_PATTERNS highlights until 6 are present.",
+          "Rename 'ml_ai' → 'ai' in the new filename and domain field.",
+          "For 'sted': resume.sted.json has 4 highlights; DOMAIN_PATTERNS has no sted entry. Add 2 additional candidate-specific highlights manually or flag as needing operator input.",
+          "For 'backend', 'frontend', 'fullstack': these exist in DOMAIN_PATTERNS only (no resume.*.json). Create new files using DOMAIN_PATTERNS keywords/facet_types and de-HTML'd highlights. Mark highlights as 'generic — requires candidate-specific revision' in a _note field until the operator provides tailored strings.",
+          "Delete resume.crm.json — crm is not a known domain in the sprint spec.",
+          "Delete resume.defaults.json, resume.defaults.yaml — defaults concept is eliminated; config.yaml is the defaults source.",
+          "Delete role-based-templates/default/ directory — contained resume.unique-data.json which belongs to the dropped Node.js template substitution pipeline.",
+          "Delete all .yaml siblings (resume.ai.yaml, resume.database.yaml, resume.defaults.yaml) — YAML copies are redundant once JSON is the canonical format."
+        ]
+      }
+    },
+    {
+      "id": "port-007",
+      "source": "resume.source.json",
+      "target": "resume.source.json",
+      "status": "real candidate data present — placeholder cleanup required",
+      "value": "high",
+      "what_exists": "Full JSON Resume v1.0.0 structure with real candidate data: basics (name, email, phone, location, profiles), 3 work entries (Goop Technical Lead, No Borders Inc Senior Engineer, Boiling Pot Media Founder) with detailed highlights, education, skills. Contains {{featured_languages}}, {{highlight_1}} through {{highlight_4}}, {{cover_letter_content}} placeholders in summary and coverLetter fields.",
+      "how_to_port": {
+        "steps": [
+          "Remove the 'summary' field entirely if it contains only template placeholders ({{featured_languages}}, {{highlight_1}}, etc.) — the sprint spec derives the resume summary from correlation highlights[] at render time in resume-machine.html.",
+          "Remove the 'coverLetter' field with its {{cover_letter_content}} placeholder — cover letter content is now in the separate letter-*.json file, not in resume.source.json.",
+          "Verify all remaining sections (basics, work[], education[], skills[]) contain only literal string values. No {{...}} placeholders should remain.",
+          "Confirm the file parses as valid JSON after edits."
+        ]
+      }
+    }
+  ],
+  "absent": [
+    {
+      "id": "absent-001",
+      "target": "scripts/utilities/logging_manager.py",
+      "sprint_task": "p1-t2",
+      "note": "No prior art. Net-new implementation using Python stdlib logging only."
+    },
+    {
+      "id": "absent-002",
+      "target": "scripts/utilities/serve.py",
+      "sprint_task": "p5-t1",
+      "note": "No HTTP server exists in the codebase. Net-new implementation using http.server.BaseHTTPRequestHandler."
+    },
+    {
+      "id": "absent-003",
+      "target": "scripts/orchestration/process.py",
+      "sprint_task": "p4-t1",
+      "note": "No Python batch orchestrator exists. The existing py_orchestrate_correlation_to_pdf.py chains subprocess calls to Node.js and is being dropped entirely. Net-new argparse CLI."
+    },
+    {
+      "id": "absent-004",
+      "target": "ux/resume-machine.html",
+      "sprint_task": "p5-t2",
+      "note": "ux/ux.html is a static print template, not an interactive SPA. ux/manual-cover-letter.html is a static cover letter template. Neither is the year/month/keyword navigation app described in the sprint. Net-new HTML/CSS/ES2020 implementation. ux/ux.html and ux/manual-cover-letter.html can be referenced for typography/color tokens (Inter, Source Serif Pro, #111827, 0.7in margins, Letter page size) to ensure visual continuity."
+    },
+    {
+      "id": "absent-005",
+      "target": "role-based-templates/backend.json",
+      "sprint_task": "p2-t1",
+      "note": "No backend-specific template exists. DOMAIN_PATTERNS in py_adapter_correlator_to_template.py has keywords and generic highlights for 'backend' — use as source. Highlights require candidate-specific revision."
+    },
+    {
+      "id": "absent-006",
+      "target": "role-based-templates/frontend.json",
+      "sprint_task": "p2-t1",
+      "note": "No frontend-specific template exists. DOMAIN_PATTERNS has keywords and generic highlights for 'frontend' — use as source. Highlights require candidate-specific revision."
+    },
+    {
+      "id": "absent-007",
+      "target": "role-based-templates/fullstack.json",
+      "sprint_task": "p2-t1",
+      "note": "No fullstack-specific template exists. DOMAIN_PATTERNS has keywords and generic highlights for 'fullstack' — use as source. Highlights require candidate-specific revision."
+    }
+  ],
+  "drop": [
+    {
+      "id": "drop-001",
+      "files": [
+        "scripts/data_processing/extract-html-data.js",
+        "scripts/extract-html-data.js"
+      ],
+      "reason": "Puppeteer-based HTML extraction. Eliminated by pd-001 (pure Python). py_extract_jobs.py with BeautifulSoup4+lxml is the replacement."
+    },
+    {
+      "id": "drop-002",
+      "files": [
+        "scripts/orchestration/preprocess-resume.js",
+        "scripts/preprocess-resume.js"
+      ],
+      "reason": "Node.js template variable substitution engine. Eliminated by pd-001. The entire {{variable}} substitution model is dropped; resume-machine.html renders directly from API data."
+    },
+    {
+      "id": "drop-003",
+      "files": [
+        "scripts/utilities/sanitize.js",
+        "scripts/sanitize.js",
+        "scripts/utilities/debug-sanitize.js",
+        "scripts/debug-sanitize.js"
+      ],
+      "reason": "Node.js filename sanitization utilities. Eliminated by pd-001. naming_utils.py slugify() is the replacement."
+    },
+    {
+      "id": "drop-004",
+      "files": [
+        "scripts/orchestration/batch-process.sh",
+        "scripts/batch-process.sh"
+      ],
+      "reason": "Bash orchestration with AWK YAML parsing. Eliminated by pd-005 (deterministic pipeline). scripts/orchestration/process.py is the replacement."
+    },
+    {
+      "id": "drop-005",
+      "files": [
+        "scripts/orchestration/py_orchestrate_correlation_to_pdf.py",
+        "scripts/py_orchestrate_correlation_to_pdf.py"
+      ],
+      "reason": "Calls Node.js preprocess-resume.js and 'resumed' PDF CLI via subprocess. Eliminated by pd-001. Replaced by process.py (Python-only, no subprocess)."
+    },
+    {
+      "id": "drop-006",
+      "files": [
+        "scripts/data_processing/py_job_skill_analyzer.py"
+      ],
+      "reason": "Standalone skill index loader/normalizer. Its _build_facet_lookup() logic is superseded by the equivalent function in the new py_skill_job_correlator.py (port-001). No longer needed as a separate file."
+    },
+    {
+      "id": "drop-007",
+      "files": [
+        "scripts/py_skill_job_correlator.py",
+        "scripts/py_adapter_correlator_to_template.py",
+        "scripts/config_manager.py"
+      ],
+      "reason": "Root-level shim redirects to the scripts/ subdirectory versions. Once the proper subdirectory implementations are in place, these shims cause import confusion and os.execv loops. Delete after subdirectory versions are verified."
+    },
+    {
+      "id": "drop-008",
+      "files": [
+        "resume-machine-queue.json"
+      ],
+      "reason": "Queue-based processing model (title/company pairs) is eliminated. process.py uses --dir/--file flags pointing directly to job JSON files. No queue file needed."
+    },
+    {
+      "id": "drop-009",
+      "files": [
+        "resume.unique-data.json",
+        "role-based-templates/default/resume.unique-data.json"
+      ],
+      "reason": "Template variable substitution data file. Entire {{variable}} model is dropped with preprocess-resume.js. The sprint's role templates carry domain, keywords, facet_types, highlights directly."
+    },
+    {
+      "id": "drop-010",
+      "files": [
+        "role-based-templates/resume.crm.json"
+      ],
+      "reason": "crm is not a known domain in the north-star. No sprint task references it. Drop."
+    },
+    {
+      "id": "drop-011",
+      "files": [
+        "role-based-templates/resume.defaults.json",
+        "role-based-templates/resume.defaults.yaml",
+        "role-based-templates/resume.ai.yaml",
+        "role-based-templates/resume.database.yaml",
+        "role-based-templates/default/"
+      ],
+      "reason": "YAML siblings are redundant (JSON is the canonical format). The 'defaults' concept is replaced by config.yaml. The default/ subdirectory contained resume.unique-data.json which is dropped with the Node.js pipeline."
+    },
+    {
+      "id": "drop-012",
+      "files": [
+        "skills-schema.json"
+      ],
+      "reason": "JSON Schema v2.3.0 for skills-index.json. The schema is now defined by the north-star (and will be updated to reflect the pd-004 override). Not needed as a standalone file at runtime."
+    }
+  ]
+}

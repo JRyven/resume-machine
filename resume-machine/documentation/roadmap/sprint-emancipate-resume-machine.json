@@ -1,12 +1,133 @@
 {
   "_meta": {
     "name": "sprint-emancipate-resume-machine",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Build resume-machine from scratch per north-star v1.1.0: pure-Python ingest via BeautifulSoup4+lxml, structured skills correlation, two-file output (correlation always overwritten, cover letter written once), deterministic orchestration, and a vanilla HTML/ES2020 UX served by a Python HTTP server.",
     "authored_from": "north-star.json v1.1.0",
-    "sprint_goal": "Deliver a fully operational local resume-machine that ingests HTML job postings, correlates them against a structured skills index, adapts output to domain-specific role templates, and exposes a browser-based UX with year/month/keyword navigation and print-to-PDF — all in pure Python with no Node.js runtime."
+    "companion": "migration-manifest.json v1.0.0",
+    "sprint_goal": "Deliver a fully operational local resume-machine that ingests HTML job postings, correlates them against a structured skills index, adapts output to domain-specific role templates, and exposes a browser-based UX with year/month/keyword navigation and print-to-PDF — all in pure Python with no Node.js runtime.",
+    "pd-004-override": "skills-index.json remains in v2.3.0 facet_catalog format (operator decision C). The correlator adapts via _build_facet_lookup(). north-star skills_index_schema requires a follow-up update to reflect this."
   },
   "phases": [
+    {
+      "id": "p0",
+      "title": "Migration — Salvage, Clean, and Reconcile",
+      "description": "Execute all pre-build housekeeping before writing any new code: delete the Node.js pipeline and shell shims (pd-001), clean up root-level duplicate shim scripts, restructure role templates into the sprint format, strip placeholder fields from resume.source.json, reconcile config.yaml keys, and extend naming_utils.py with the path functions the build phases require. References migration-manifest.json for per-file port/drop detail. All p0 tasks must be complete before p1 begins.",
+      "tasks": [
+        {
+          "id": "p0-t1",
+          "title": "Delete Node.js files and shell orchestration",
+          "what": "Remove all files identified as DROP in migration-manifest.json: Node.js scripts (extract-html-data.js, preprocess-resume.js, sanitize.js, debug-sanitize.js), shell scripts (batch-process.sh), Python subprocess orchestrators (py_orchestrate_correlation_to_pdf.py), and the standalone skill analyzer (py_job_skill_analyzer.py). Also remove data files that belong to the dropped pipeline (resume-machine-queue.json, resume.unique-data.json, role-based-templates/default/).",
+          "how": {
+            "steps": [
+              "Delete all files listed in migration-manifest.json drop-001 through drop-009 in the order given.",
+              "Delete the role-based-templates/default/ directory and its contents (drop-011 partial).",
+              "Delete resume.unique-data.json (drop-009).",
+              "Delete resume-machine-queue.json (drop-008).",
+              "Run 'find resume-machine/scripts -name \"*.js\" -o -name \"*.sh\"' to verify no Node.js or shell files remain.",
+              "Run 'git status' and confirm all deleted files appear as deletions with no unintended removals."
+            ]
+          },
+          "module": "scripts/",
+          "priority": "high",
+          "depends_on": [],
+          "done_when": "No .js or .sh files exist anywhere under resume-machine/scripts/. No resume-machine-queue.json, resume.unique-data.json, or role-based-templates/default/ exist. git status shows only deletions in this batch.",
+          "status": "todo"
+        },
+        {
+          "id": "p0-t2",
+          "title": "Delete root-level script shims",
+          "what": "Remove the three root-level shim files in scripts/ that redirect to subdirectory implementations (migration-manifest.json drop-007). These cause os.execv loops and import confusion once the subdirectory versions are the canonical implementations.",
+          "how": "Delete scripts/py_skill_job_correlator.py, scripts/py_adapter_correlator_to_template.py, and scripts/config_manager.py. Verify the subdirectory versions exist before deleting shims.",
+          "module": "scripts/",
+          "priority": "high",
+          "depends_on": ["p0-t1"],
+          "done_when": "scripts/ root contains no .py files directly (only subdirectories). scripts/data_processing/, scripts/template_management/, scripts/utilities/, scripts/orchestration/ all still exist with their contents.",
+          "status": "todo"
+        },
+        {
+          "id": "p0-t3",
+          "title": "Restructure role-based-templates to sprint format",
+          "what": "Convert the 5 existing role template files from the {featured_languages, highlight_1...N} format to the sprint's {domain, keywords[], facet_types[], highlights[]} format. Rename files from resume.{domain}.json to {domain}.json. Drop crm, defaults, and YAML siblings. Note: backend, frontend, fullstack templates are ABSENT — they are created in p2-t1, not here.",
+          "how": {
+            "steps": [
+              "For each of ai (from resume.ai.json), database, devops, manager, sted: create a new {domain}.json with: domain = filename stem; keywords = sorted array from DOMAIN_PATTERNS in scripts/py_adapter_correlator_to_template.py (for ai use ml_ai entry); facet_types = sorted array from DOMAIN_PATTERNS; highlights = array built from resume.{domain}.json highlight_1..N values with all <strong> and </strong> tags stripped. If the file has fewer than 6 highlights, add de-HTML'd strings from DOMAIN_PATTERNS highlights until 6 are present.",
+              "For sted: no DOMAIN_PATTERNS entry exists. Use resume.sted.json highlights as-is (strip HTML). Add a '_note' field: 'keywords and facet_types require operator input; sted domain detection will fall back to DEFAULT_DOMAIN until populated.'",
+              "Delete resume.crm.json (drop-010), resume.defaults.json, resume.defaults.yaml, resume.ai.yaml, resume.database.yaml (drop-011).",
+              "Delete the source resume.*.json files after the new {domain}.json files are written and verified as valid JSON.",
+              "Verify: exactly 5 .json files exist under role-based-templates/ (ai.json, database.json, devops.json, manager.json, sted.json). No resume.*.json, no .yaml files, no default/ subdirectory."
+            ]
+          },
+          "module": "role-based-templates/",
+          "priority": "high",
+          "depends_on": ["p0-t1"],
+          "done_when": "role-based-templates/ contains exactly 5 valid JSON files (ai.json, database.json, devops.json, manager.json, sted.json). Each file has domain, keywords (array), facet_types (array), highlights (array, min 4 entries). No HTML tags present in any highlights string. No resume.*.json or .yaml files remain.",
+          "status": "todo",
+          "notes": "backend, frontend, fullstack templates are absent and will be created in p2-t1. The adapter will fall back to DEFAULT_DOMAIN ('fullstack') for those roles until p2-t1 is complete."
+        },
+        {
+          "id": "p0-t4",
+          "title": "Strip placeholders from resume.source.json",
+          "what": "Remove the 'summary' field (contains {{featured_languages}}, {{highlight_1..4}} placeholders) and the 'coverLetter' field (contains {{cover_letter_content}} placeholder) from resume.source.json. The sprint derives summary from correlation highlights[] at render time in resume-machine.html; cover letter content comes from the separate letter-*.json file.",
+          "how": "Open resume.source.json. Remove the top-level 'summary' key if its value contains any {{...}} template placeholders. Remove the top-level 'coverLetter' key entirely. Verify no remaining {{...}} strings exist anywhere in the file. Save and validate JSON.",
+          "module": "resume.source.json",
+          "priority": "high",
+          "depends_on": [],
+          "done_when": "resume.source.json is valid JSON; no {{...}} placeholder strings appear anywhere in the file; the file retains basics, work[], education[], and skills[] sections with real candidate data.",
+          "status": "todo"
+        },
+        {
+          "id": "p0-t5",
+          "title": "Reconcile config.yaml keys",
+          "what": "Update config.yaml to use the key names expected by the sprint spec and drop keys that belong to the eliminated Node.js pipeline.",
+          "how": {
+            "steps": [
+              "Rename 'input_dir' → 'jobbankjobs_dir'.",
+              "Add 'skills_index_path: skills-index.json' if not present.",
+              "Add 'resume_source_path: resume.source.json' if not present.",
+              "Remove or comment out: 'output_dir' (replaced by artifacts_dir if needed), 'queue_file', 'unique_data_file', 'skip_extract', 'dry_run', 'pdf_naming_template', 'theme' — all belong to the dropped pipeline.",
+              "Keep: 'candidate_name', 'role_templates_dir', 'log_level'.",
+              "Verify config.yaml has exactly these top-level keys: candidate_name, jobbankjobs_dir, skills_index_path, resume_source_path, role_templates_dir, log_level."
+            ]
+          },
+          "module": "config.yaml",
+          "priority": "high",
+          "depends_on": [],
+          "done_when": "config.yaml contains candidate_name, jobbankjobs_dir, skills_index_path, resume_source_path, role_templates_dir, and log_level as top-level keys. No pipeline-specific keys (queue_file, theme, pdf_naming_template, unique_data_file) remain.",
+          "status": "todo"
+        },
+        {
+          "id": "p0-t6",
+          "title": "Extend naming_utils.py with sprint path functions",
+          "what": "Add slugify (alias), job_json_path(), correlation_json_path(), and cover_letter_json_path() to scripts/utilities/naming_utils.py per migration-manifest.json port-004. The existing sanitize_for_filename() function is preserved as-is.",
+          "how": {
+            "steps": [
+              "Add at module level after sanitize_for_filename: slugify = sanitize_for_filename",
+              "Add job_json_path(base_dir: str, year: int, month: int, day: int, slug: str) → str: return f'{base_dir}/{year}/{month:02d}/{day:02d}/{slug}.json'",
+              "Add correlation_json_path(base_dir: str, year: int, month: int, day: int, candidate: str, employer: str, title: str) → str: employer_slug = slugify(employer); title_slug = slugify(title); return f'{base_dir}/{year}/{month:02d}/{day:02d}/resume-{candidate}-{employer_slug}-{title_slug}.json'",
+              "Add cover_letter_json_path() with identical signature and logic but 'letter-' prefix.",
+              "Verify: all four functions are importable; slugify('Software Engineer (Senior)') returns 'software-engineer-senior'; correlation_json_path and cover_letter_json_path return paths with their respective prefixes and no filesystem access occurs."
+            ]
+          },
+          "module": "scripts/utilities/naming_utils.py",
+          "priority": "high",
+          "depends_on": [],
+          "done_when": "from scripts.utilities.naming_utils import slugify, job_json_path, correlation_json_path, cover_letter_json_path succeeds. slugify('Software Engineer (Senior)') returns 'software-engineer-senior'. cover_letter_json_path and correlation_json_path return paths with 'letter-' and 'resume-' prefixes respectively in the correct datestamped directory.",
+          "status": "todo"
+        },
+        {
+          "id": "p0-t7",
+          "title": "Drop skills-schema.json and YAML siblings",
+          "what": "Delete skills-schema.json (the standalone JSON Schema v2.3.0 file) and any remaining YAML files not yet removed in p0-t1/p0-t3.",
+          "how": "Delete resume-machine/skills-schema.json. Verify no .yaml files remain in resume-machine/ or its subdirectories (role-based-templates .yaml siblings were removed in p0-t3; confirm none were missed).",
+          "module": "resume-machine/",
+          "priority": "low",
+          "depends_on": ["p0-t1", "p0-t3"],
+          "done_when": "skills-schema.json does not exist. No .yaml files exist anywhere under resume-machine/ except config.yaml.",
+          "status": "todo"
+        }
+      ]
+    },
     {
       "id": "p1",
       "title": "Foundation — Utilities, Configuration, and Static Data",
