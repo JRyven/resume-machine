@@ -1,10 +1,34 @@
 from __future__ import annotations
 
 import re
+import secrets
 import unicodedata
 from pathlib import Path
 from typing import Optional
 import sys
+
+
+_DROP_PHRASES = re.compile(
+    r'\bgovernment\s+du\s+canada\b',
+    re.IGNORECASE,
+)
+
+_DROP_WORDS = re.compile(
+    r'\b(a|an|the|of|with|for)\b',
+    re.IGNORECASE,
+)
+
+_ABBREVIATIONS: dict[str, str] = {
+    'government': 'gov',
+    'canada': 'ca',
+    'developer': 'dev',
+}
+
+
+def _apply_abbreviations(s: str) -> str:
+    def _replace(m: re.Match) -> str:
+        return _ABBREVIATIONS.get(m.group(0).lower(), m.group(0))
+    return re.sub(r'\b(' + '|'.join(re.escape(k) for k in _ABBREVIATIONS) + r')\b', _replace, s, flags=re.IGNORECASE)
 
 
 def sanitize_for_filename(s: str) -> str:
@@ -12,6 +36,9 @@ def sanitize_for_filename(s: str) -> str:
         return ''
     s = unicodedata.normalize('NFKD', s)
     s = s.encode('ascii', 'ignore').decode('ascii')
+    s = _DROP_PHRASES.sub(' ', s)
+    s = _DROP_WORDS.sub(' ', s)
+    s = _apply_abbreviations(s)
     s = re.sub(r"[^0-9A-Za-z]+", '-', s)
     s = re.sub(r'-{2,}', '-', s)
     return s.strip('-').lower()[:200]
@@ -24,13 +51,18 @@ def job_json_path(base_dir: str, year: int, month: int, day: int, slug: str) -> 
     return f'{base_dir}/{year}/{month:02d}/{day:02d}/{slug}.json'
 
 
+def _uid() -> str:
+    return secrets.token_hex(3)  # 6 hex characters
+
+
 def correlation_json_path(
     base_dir: str, year: int, month: int, day: int,
     candidate: str, employer: str, title: str
 ) -> str:
     employer_slug = slugify(employer)
     title_slug = slugify(title)
-    return f'{base_dir}/{year}/{month:02d}/{day:02d}/resume-{candidate}-{employer_slug}-{title_slug}.json'
+    uid = _uid()
+    return f'{base_dir}/{year}/{month:02d}/{day:02d}/resume-{candidate}-{employer_slug}-{title_slug}-{uid}.json'
 
 
 def cover_letter_json_path(
@@ -39,7 +71,8 @@ def cover_letter_json_path(
 ) -> str:
     employer_slug = slugify(employer)
     title_slug = slugify(title)
-    return f'{base_dir}/{year}/{month:02d}/{day:02d}/letter-{candidate}-{employer_slug}-{title_slug}.json'
+    uid = _uid()
+    return f'{base_dir}/{year}/{month:02d}/{day:02d}/letter-{candidate}-{employer_slug}-{title_slug}-{uid}.json'
 
 
 if __name__ == '__main__':

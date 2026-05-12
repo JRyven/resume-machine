@@ -163,7 +163,7 @@ def correlate_job(
     candidate = slugify(candidate_name or cfg.get('candidate_name', 'candidate'))
     skills_index_path = cfg['skills_index_path']
     role_templates_dir = cfg['role_templates_dir']
-    job-listings_dir = cfg['job-listings_dir']
+    job_listings_dir = cfg['job-listings_dir']
 
     job_json_path_obj = Path(job_json_path_str).resolve()
     with open(job_json_path_obj) as f:
@@ -263,8 +263,8 @@ def correlate_job(
     except (ValueError, IndexError):
         year, month, day = now.year, now.month, now.day
 
-    corr_path = correlation_json_path(job-listings_dir, year, month, day, candidate, employer, job_title)
-    letter_path = cover_letter_json_path(job-listings_dir, year, month, day, candidate, employer, job_title)
+    corr_path = correlation_json_path(job_listings_dir, year, month, day, candidate, employer, job_title)
+    letter_path = cover_letter_json_path(job_listings_dir, year, month, day, candidate, employer, job_title)
 
     if not dry_run:
         Path(corr_path).parent.mkdir(parents=True, exist_ok=True)

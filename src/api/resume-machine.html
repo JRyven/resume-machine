@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Resume Machine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
   <style>
     /* ── Reset ───────────────────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     /* ── Variables ───────────────────────────────────────────────────────── */
     :root {
@@ -27,492 +36,743 @@
     }
 
     /* ── Layout ──────────────────────────────────────────────────────────── */
-    body { font-family: var(--font-ui); background: #e8ecf0; color: var(--text); }
+    body {
+      font-family: var(--font-ui);
+      background: #e8ecf0;
+      color: var(--text);
+    }
 
-    .app { display: flex; min-height: 100vh; }
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
 
     .filters-panel {
-      width: 320px; min-width: 280px; background: #fff;
-      border-right: 1px solid var(--border); padding: 1.5rem;
-      display: flex; flex-direction: column; gap: 1.25rem;
-      position: sticky; top: 0; height: 100vh; overflow-y: auto;
+      width: 320px;
+      min-width: 280px;
+      background: #fff;
+      border-right: 1px solid var(--border);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
     }
 
-    .filters-panel h1 { font-size: 1.1rem; font-weight: 600; color: var(--accent); }
+    .filters-panel h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
 
-    .filter-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .filter-group label { font-size: 0.78rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .filter-group label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
     .filter-group select,
     .filter-group input[type="text"] {
-      padding: 0.45rem 0.6rem; border: 1px solid var(--border); border-radius: 5px;
-      font-family: var(--font-ui); font-size: 0.88rem; color: var(--text);
-      background: var(--surface); width: 100%;
+      padding: 0.45rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      color: var(--text);
+      background: var(--surface);
+      width: 100%;
     }
-    .filter-group select:focus,
-    .filter-group input:focus { outline: 2px solid var(--accent-light); outline-offset: 1px; }
 
-    .toggle-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; color: var(--muted); }
-    .toggle-row input[type="checkbox"] { width: 1rem; height: 1rem; accent-color: var(--accent); }
+    .filter-group select:focus,
+    .filter-group input:focus {
+      outline: 2px solid var(--accent-light);
+      outline-offset: 1px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .toggle-row input[type="checkbox"] {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--accent);
+    }
 
     /* ── Job list ────────────────────────────────────────────────────────── */
-    .job-list { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--border); margin-top: 0.5rem; }
+    .job-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--border);
+      margin-top: 0.5rem;
+    }
 
     .job-row {
-      padding: 0.75rem 0.5rem; border-bottom: 1px solid var(--border);
-      cursor: pointer; transition: background 0.12s; font-size: 0.85rem;
+      padding: 0.75rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.12s;
+      font-size: 0.85rem;
     }
-    .job-row:hover { background: #f0f4f9; }
-    .job-row.active { background: #e3eaf6; border-left: 3px solid var(--accent); padding-left: calc(0.5rem - 3px); }
-    .job-row .job-title { font-weight: 500; color: var(--text); }
-    .job-row .job-meta { color: var(--muted); font-size: 0.78rem; margin-top: 0.15rem; }
 
-    .empty-state { padding: 1rem 0.5rem; color: var(--muted); font-size: 0.85rem; font-style: italic; }
+    .job-row:hover {
+      background: #f0f4f9;
+    }
+
+    .job-row.active {
+      background: #e3eaf6;
+      border-left: 3px solid var(--accent);
+      padding-left: calc(0.5rem - 3px);
+    }
+
+    .job-row .job-title {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .job-row .job-meta {
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 0.15rem;
+    }
+
+    .empty-state {
+      padding: 1rem 0.5rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
 
     /* ── Print area container ────────────────────────────────────────────── */
     .print-container {
-      flex: 1; padding: 2rem; display: flex; flex-direction: column;
-      align-items: center; gap: 1.5rem;
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
     }
 
     .placeholder-msg {
-      margin-top: 4rem; color: var(--muted); font-size: 1rem; font-style: italic; text-align: center;
+      margin-top: 4rem;
+      color: var(--muted);
+      font-size: 1rem;
+      font-style: italic;
+      text-align: center;
     }
 
     .loading-msg {
-      margin-top: 4rem; color: var(--accent); font-size: 1rem; text-align: center;
+      margin-top: 4rem;
+      color: var(--accent);
+      font-size: 1rem;
+      text-align: center;
     }
 
     /* ── Page (printable) ────────────────────────────────────────────────── */
     .page {
-      width: var(--page-w); min-height: var(--page-h);
-      background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      width: var(--page-w);
+      min-height: var(--page-h);
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
       padding: var(--margin);
-      font-family: var(--font-body); font-size: 10.5pt; color: var(--text);
+      font-family: var(--font-body);
+      font-size: 10.5pt;
+      color: var(--text);
     }
 
     /* ── Cover letter page ───────────────────────────────────────────────── */
-    #cover-letter-section { break-after: page; }
+    #cover-letter-section {
+      break-after: page;
+    }
 
-    .cl-header { margin-bottom: 2em; }
-    .cl-header .candidate-name { font-size: 18pt; font-weight: 700; margin-bottom: 0.25em; }
-    .cl-header .contact-line { font-size: 9pt; color: var(--muted); }
-    .cl-date { margin-bottom: 1.5em; font-size: 10pt; }
-    .cl-recipient { margin-bottom: 1.5em; font-weight: 600; }
-    .cl-body p { margin-bottom: 1em; line-height: 1.65; }
-    .cl-body ul { margin: 0.5em 0 1em 1.5em; }
-    .cl-body ul li { margin-bottom: 0.3em; line-height: 1.5; }
+    .cl-header {
+      margin-bottom: 2em;
+    }
+
+    .cl-header .candidate-name {
+      font-size: 18pt;
+      font-weight: 700;
+      margin-bottom: 0.25em;
+    }
+
+    .cl-header .contact-line {
+      font-size: 9pt;
+      color: var(--muted);
+    }
+
+    .cl-date {
+      margin-bottom: 1.5em;
+      font-size: 10pt;
+    }
+
+    .cl-recipient {
+      margin-bottom: 1.5em;
+      font-weight: 600;
+    }
+
+    .cl-body p {
+      margin-bottom: 1em;
+      line-height: 1.65;
+    }
+
+    .cl-body ul {
+      margin: 0.5em 0 1em 1.5em;
+    }
+
+    .cl-body ul li {
+      margin-bottom: 0.3em;
+      line-height: 1.5;
+    }
 
     /* ── Resume page ─────────────────────────────────────────────────────── */
     #resume-section {}
 
-    .resume-header { border-bottom: 2px solid var(--accent); padding-bottom: 0.6em; margin-bottom: 1em; }
-    .resume-header h1 { font-size: 20pt; font-weight: 700; margin-bottom: 0.15em; }
-    .resume-header .contact { font-size: 8.5pt; color: var(--muted); }
-    .resume-header .contact span { margin-right: 1em; }
+    .resume-header {
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.6em;
+      margin-bottom: 1em;
+    }
 
-    .section { margin-bottom: 1.1em; }
+    .resume-header h1 {
+      font-size: 20pt;
+      font-weight: 700;
+      margin-bottom: 0.15em;
+    }
+
+    .resume-header .contact {
+      font-size: 8.5pt;
+      color: var(--muted);
+    }
+
+    .resume-header .contact span {
+      margin-right: 1em;
+      white-space: nowrap;
+    }
+
+    .section {
+      margin-bottom: 1.1em;
+    }
+
     .section h2 {
-      font-size: 8pt; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--accent);
-      border-bottom: 1px solid var(--border); padding-bottom: 0.2em; margin-bottom: 0.5em;
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.2em;
+      margin-bottom: 0.5em;
     }
 
-    .summary-list { list-style: none; padding: 0; }
-    .summary-list li { padding: 0.2em 0; line-height: 1.55; font-size: 10pt; }
-    .summary-list li::before { content: '▸ '; color: var(--accent); font-size: 8pt; }
+    .summary-list {
+      list-style: none;
+      padding: 0;
+    }
 
-    .work-entry { margin-bottom: 0.9em; }
-    .work-header { display: flex; justify-content: space-between; align-items: baseline; }
-    .work-company { font-weight: 700; font-size: 10.5pt; }
-    .work-dates { font-size: 8.5pt; color: var(--muted); white-space: nowrap; margin-left: 1em; }
-    .work-position { font-style: italic; font-size: 9.5pt; color: var(--muted); margin-bottom: 0.25em; }
-    .work-summary { font-size: 9pt; line-height: 1.5; margin-bottom: 0.3em; }
-    .work-highlights { list-style: none; padding: 0; }
-    .work-highlights li { font-size: 9pt; line-height: 1.5; padding: 0.15em 0 0.15em 0.9em; text-indent: -0.9em; }
-    .work-highlights li::before { content: '• '; color: var(--accent); }
+    .summary-list li {
+      padding: 0.2em 0;
+      line-height: 1.55;
+      font-size: 10pt;
+    }
 
-    .skills-grid { display: flex; flex-wrap: wrap; gap: 0.25em; }
+    .summary-list li::before {
+      content: '▸ ';
+      color: var(--accent);
+      font-size: 8pt;
+    }
+
+    .work-entry {
+      margin-bottom: 0.9em;
+    }
+
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .work-company {
+      font-weight: 700;
+      font-size: 10.5pt;
+    }
+
+    .work-dates {
+      font-size: 8.5pt;
+      color: var(--muted);
+      white-space: nowrap;
+      margin-left: 1em;
+    }
+
+    .work-position {
+      font-style: italic;
+      font-size: 9.5pt;
+      color: var(--muted);
+      margin-bottom: 0.25em;
+    }
+
+    .work-summary {
+      font-size: 9pt;
+      line-height: 1.5;
+      margin-bottom: 0.3em;
+    }
+
+    .work-highlights {
+      list-style: none;
+      padding: 0;
+    }
+
+    .work-highlights li {
+      font-size: 9pt;
+      line-height: 1.5;
+      padding: 0.15em 0 0.15em 0.9em;
+      text-indent: -0.9em;
+    }
+
+    .work-highlights li::before {
+      content: '• ';
+      color: var(--accent);
+    }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25em;
+    }
+
     .skill-tag {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 3px; padding: 0.15em 0.5em; font-size: 8.5pt;
+      /* background: var(--surface); border: 1px solid var(--border); */
+      border-radius: 3px;
+      padding: 0.15em 0.5em;
+      font-size: 8.5pt;
     }
 
-    .edu-entry { margin-bottom: 0.5em; font-size: 9.5pt; }
-    .edu-entry .institution { font-weight: 600; }
-    .edu-entry .degree { color: var(--muted); font-style: italic; }
+    .edu-entry {
+      margin-bottom: 0.5em;
+      font-size: 9.5pt;
+    }
+
+    .edu-entry .institution {
+      font-weight: 600;
+    }
+
+    .edu-entry .degree {
+      color: var(--muted);
+      font-style: italic;
+    }
 
     /* ── Print styles ────────────────────────────────────────────────────── */
     @media print {
-      body { background: none; }
-      .filters-panel { display: none !important; }
-      .print-container { padding: 0; align-items: stretch; }
-      .page {
-        width: 100%; min-height: 0; box-shadow: none;
-        padding: var(--margin); margin: 0;
+      body {
+        background: none;
       }
-      @page { size: letter; margin: 0; }
+
+      .filters-panel {
+        display: none !important;
+      }
+
+      .print-container {
+        padding: 0;
+        align-items: stretch;
+      }
+
+      .page {
+        width: 100%;
+        min-height: 0;
+        box-shadow: none;
+        padding: var(--margin);
+        margin: 0;
+      }
+
+      @page {
+        size: letter;
+        margin: 0;
+      }
     }
 
     /* ── Utilities ───────────────────────────────────────────────────────── */
-    .hidden { display: none !important; }
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
+
 <body>
-<div class="app">
+  <div class="app">
 
-  <!-- ── Filters panel ──────────────────────────────────────────────────── -->
-  <aside class="filters-panel" id="filters-panel">
-    <h1>Resume Machine</h1>
+    <!-- ── Filters panel ──────────────────────────────────────────────────── -->
+    <aside class="filters-panel" id="filters-panel">
+      <h1>Resume Machine</h1>
 
-    <div class="filter-group">
-      <label for="year-select">Year</label>
-      <select id="year-select"></select>
-    </div>
-
-    <div class="filter-group">
-      <label for="month-select">Month</label>
-      <select id="month-select">
-        <option value="">All months</option>
-        <option value="1">January</option>
-        <option value="2">February</option>
-        <option value="3">March</option>
-        <option value="4">April</option>
-        <option value="5">May</option>
-        <option value="6">June</option>
-        <option value="7">July</option>
-        <option value="8">August</option>
-        <option value="9">September</option>
-        <option value="10">October</option>
-        <option value="11">November</option>
-        <option value="12">December</option>
-      </select>
-    </div>
-
-    <div class="filter-group">
-      <label for="keyword-input">Search</label>
-      <input type="text" id="keyword-input" placeholder="Job title or employer…" />
-    </div>
-
-    <div class="toggle-row">
-      <input type="checkbox" id="cover-letter-toggle" checked />
-      <label for="cover-letter-toggle">Include cover letter</label>
-    </div>
-
-    <div class="job-list" id="job-list">
-      <div class="empty-state">Loading jobs…</div>
-    </div>
-  </aside>
-
-  <!-- ── Print area ─────────────────────────────────────────────────────── -->
-  <main class="print-container" id="print-container">
-    <div class="placeholder-msg" id="placeholder-msg">Select a job to preview your resume.</div>
-    <div class="loading-msg hidden" id="loading-msg">Loading…</div>
-
-    <!-- Cover letter page -->
-    <div class="page hidden" id="cover-letter-section">
-      <div class="cl-header">
-        <div class="candidate-name" id="cl-name"></div>
-        <div class="contact-line" id="cl-contact"></div>
-      </div>
-      <div class="cl-date" id="cl-date"></div>
-      <div class="cl-recipient" id="cl-recipient"></div>
-      <div class="cl-body">
-        <p id="cl-opening"></p>
-        <p id="cl-value"></p>
-        <ul id="cl-experience"></ul>
-        <p id="cl-closing"></p>
-      </div>
-    </div>
-
-    <!-- Resume page -->
-    <div class="page hidden" id="resume-section">
-      <div class="resume-header">
-        <h1 id="r-name"></h1>
-        <div class="contact" id="r-contact"></div>
+      <div class="filter-group">
+        <label for="year-select">Year</label>
+        <select id="year-select"></select>
       </div>
 
-      <div class="section" id="summary-section">
-        <h2>Summary</h2>
-        <ul class="summary-list" id="r-summary"></ul>
+      <div class="filter-group">
+        <label for="month-select">Month</label>
+        <select id="month-select">
+          <option value="">All months</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
       </div>
 
-      <div class="section" id="work-section">
-        <h2>Experience</h2>
-        <div id="r-work"></div>
+      <div class="filter-group">
+        <label for="keyword-input">Search</label>
+        <input type="text" id="keyword-input" placeholder="Job title or employer…" />
       </div>
 
-      <div class="section" id="skills-section">
-        <h2>Skills</h2>
-        <div class="skills-grid" id="r-skills"></div>
+      <div class="toggle-row">
+        <input type="checkbox" id="cover-letter-toggle" checked />
+        <label for="cover-letter-toggle">Include cover letter</label>
       </div>
 
-      <div class="section" id="education-section">
-        <h2>Education</h2>
-        <div id="r-education"></div>
+      <div class="job-list" id="job-list">
+        <div class="empty-state">Loading jobs…</div>
       </div>
-    </div>
-  </main>
-</div>
+    </aside>
 
-<script type="module">
-  // ── State ───────────────────────────────────────────────────────────────
-  let allJobs = [];
-  let resumeCache = null;
-  let activeJobPath = null;
+    <!-- ── Print area ─────────────────────────────────────────────────────── -->
+    <main class="print-container" id="print-container">
+      <div class="placeholder-msg" id="placeholder-msg">Select a job to preview your resume.</div>
+      <div class="loading-msg hidden" id="loading-msg">Loading…</div>
 
-  // ── DOM refs ────────────────────────────────────────────────────────────
-  const yearSelect   = document.getElementById('year-select');
-  const monthSelect  = document.getElementById('month-select');
-  const keywordInput = document.getElementById('keyword-input');
-  const clToggle     = document.getElementById('cover-letter-toggle');
-  const jobList      = document.getElementById('job-list');
+      <!-- Cover letter page -->
+      <div class="page hidden" id="cover-letter-section">
+        <div class="cl-header">
+          <div class="candidate-name" id="cl-name"></div>
+          <div class="contact-line" id="cl-contact"></div>
+        </div>
+        <div class="cl-date" id="cl-date"></div>
+        <div class="cl-recipient" id="cl-recipient"></div>
+        <div class="cl-body">
+          <p id="cl-opening"></p>
+          <p id="cl-value"></p>
+          <ul id="cl-experience"></ul>
+          <p id="cl-closing"></p>
+        </div>
+      </div>
 
-  const placeholder  = document.getElementById('placeholder-msg');
-  const loadingMsg   = document.getElementById('loading-msg');
-  const clSection    = document.getElementById('cover-letter-section');
-  const resumeSection= document.getElementById('resume-section');
+      <!-- Resume page -->
+      <div class="page hidden" id="resume-section">
+        <div class="resume-header">
+          <h1 id="r-name"></h1>
+          <div class="contact" id="r-contact"></div>
+        </div>
 
-  // ── Helpers ─────────────────────────────────────────────────────────────
-  function slugify(s) {
-    return (s || '').toLowerCase().replace(/[^0-9a-z]+/g, '-').replace(/-{2,}/g, '-').replace(/^-|-$/g, '');
-  }
+        <div class="section" id="summary-section">
+          <h2>Summary</h2>
+          <ul class="summary-list" id="r-summary"></ul>
+        </div>
 
-  function showLoading(show) {
-    loadingMsg.classList.toggle('hidden', !show);
-    placeholder.classList.add('hidden');
-  }
+        <div class="section" id="work-section">
+          <h2>Experience</h2>
+          <div id="r-work"></div>
+        </div>
 
-  function showPlaceholder() {
-    placeholder.classList.remove('hidden');
-    loadingMsg.classList.add('hidden');
-    clSection.classList.add('hidden');
-    resumeSection.classList.add('hidden');
-  }
+        <div class="section" id="skills-section">
+          <h2>Skills</h2>
+          <div class="skills-grid" id="r-skills"></div>
+        </div>
 
-  function el(tag, cls, html) {
-    const e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (html !== undefined) e.innerHTML = html;
-    return e;
-  }
+        <div class="section" id="education-section">
+          <h2>Education</h2>
+          <div id="r-education"></div>
+        </div>
+      </div>
+    </main>
+  </div>
 
-  function txt(id, value) {
-    document.getElementById(id).textContent = value || '';
-  }
+  <script type="module">
+    // ── State ───────────────────────────────────────────────────────────────
+    let allJobs = [];
+    let resumeCache = null;
+    let activeJobPath = null;
 
-  function html(id, value) {
-    document.getElementById(id).innerHTML = value || '';
-  }
+    // ── DOM refs ────────────────────────────────────────────────────────────
+    const yearSelect = document.getElementById('year-select');
+    const monthSelect = document.getElementById('month-select');
+    const keywordInput = document.getElementById('keyword-input');
+    const clToggle = document.getElementById('cover-letter-toggle');
+    const jobList = document.getElementById('job-list');
 
-  // ── Fetch wrappers ──────────────────────────────────────────────────────
-  async function fetchJSON(url) {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);
-    return res.json();
-  }
+    const placeholder = document.getElementById('placeholder-msg');
+    const loadingMsg = document.getElementById('loading-msg');
+    const clSection = document.getElementById('cover-letter-section');
+    const resumeSection = document.getElementById('resume-section');
 
-  // ── Job list rendering ──────────────────────────────────────────────────
-  function filterJobs() {
-    const kw = keywordInput.value.trim().toLowerCase();
-    return kw
-      ? allJobs.filter(j =>
+    // ── Helpers ─────────────────────────────────────────────────────────────
+    function slugify(s) {
+      return (s || '').toLowerCase().replace(/[^0-9a-z]+/g, '-').replace(/-{2,}/g, '-').replace(/^-|-$/g, '');
+    }
+
+    function showLoading(show) {
+      loadingMsg.classList.toggle('hidden', !show);
+      placeholder.classList.add('hidden');
+    }
+
+    function showPlaceholder() {
+      placeholder.classList.remove('hidden');
+      loadingMsg.classList.add('hidden');
+      clSection.classList.add('hidden');
+      resumeSection.classList.add('hidden');
+    }
+
+    function el(tag, cls, html) {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (html !== undefined) e.innerHTML = html;
+      return e;
+    }
+
+    function txt(id, value) {
+      document.getElementById(id).textContent = value || '';
+    }
+
+    function html(id, value) {
+      document.getElementById(id).innerHTML = value || '';
+    }
+
+    // ── Fetch wrappers ──────────────────────────────────────────────────────
+    async function fetchJSON(url) {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);
+      return res.json();
+    }
+
+    // ── Job list rendering ──────────────────────────────────────────────────
+    function filterJobs() {
+      const kw = keywordInput.value.trim().toLowerCase();
+      return kw
+        ? allJobs.filter(j =>
           j.job_title.toLowerCase().includes(kw) ||
           j.employer.toLowerCase().includes(kw))
-      : allJobs;
-  }
-
-  function renderJobList() {
-    const filtered = filterJobs();
-    if (!filtered.length) {
-      jobList.innerHTML = '<div class="empty-state">No results for current filters.</div>';
-      return;
+        : allJobs;
     }
-    jobList.innerHTML = '';
-    for (const job of filtered) {
-      const row = el('div', 'job-row' + (job.path === activeJobPath ? ' active' : ''));
-      row.innerHTML = `
+
+    function renderJobList() {
+      const filtered = filterJobs();
+      if (!filtered.length) {
+        jobList.innerHTML = '<div class="empty-state">No results for current filters.</div>';
+        return;
+      }
+      jobList.innerHTML = '';
+      for (const job of filtered) {
+        const row = el('div', 'job-row' + (job.path === activeJobPath ? ' active' : ''));
+        row.innerHTML = `
         <div class="job-title">${job.job_title || 'Untitled'}</div>
         <div class="job-meta">${job.employer || ''}${job.domain ? ' · ' + job.domain : ''}</div>`;
-      row.addEventListener('click', () => selectJob(job.path));
-      jobList.appendChild(row);
-    }
-  }
-
-  // ── Load jobs ───────────────────────────────────────────────────────────
-  async function loadJobs() {
-    const year = yearSelect.value;
-    const month = monthSelect.value;
-    if (!year) return;
-
-    let url = `/api/jobs?year=${encodeURIComponent(year)}`;
-    if (month) url += `&month=${encodeURIComponent(month)}`;
-
-    try {
-      allJobs = await fetchJSON(url);
-    } catch {
-      allJobs = [];
-    }
-    renderJobList();
-  }
-
-  // ── Select a job ────────────────────────────────────────────────────────
-  async function selectJob(path) {
-    activeJobPath = path;
-    showLoading(true);
-    renderJobList();
-
-    try {
-      const [corr, resume] = await Promise.all([
-        fetchJSON(`/api/correlation?path=${encodeURIComponent(path)}`),
-        resumeCache ? Promise.resolve(resumeCache) : fetchJSON('/api/resume').then(r => { resumeCache = r; return r; }),
-      ]);
-
-      hydratePages(corr, resume);
-    } catch (err) {
-      console.error('Failed to load job:', err);
-      showPlaceholder();
-    } finally {
-      showLoading(false);
-    }
-  }
-
-  // ── Hydrate pages ────────────────────────────────────────────────────────
-  function hydratePages(corr, resume) {
-    const basics = resume.basics || {};
-    const meta   = corr.metadata || {};
-
-    // ── Cover letter ───────────────────────────────────────────────────────
-    txt('cl-name', basics.name);
-    const contactParts = [basics.email, basics.phone].filter(Boolean);
-    if (basics.location) {
-      const loc = basics.location;
-      contactParts.push(typeof loc === 'string' ? loc : [loc.city, loc.region, loc.countryCode].filter(Boolean).join(', '));
-    }
-    txt('cl-contact', contactParts.join('  ·  '));
-
-    const now = new Date();
-    txt('cl-date', now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
-    txt('cl-recipient', meta.employer || '');
-    txt('cl-opening', corr.opening || '');
-    txt('cl-value', corr.value_proposition || '');
-
-    const clExp = document.getElementById('cl-experience');
-    clExp.innerHTML = '';
-    for (const line of (corr.relevant_experience || []).slice(0, 5)) {
-      clExp.appendChild(el('li', null, line));
-    }
-    txt('cl-closing', corr.closing || '');
-
-    // ── Resume header ──────────────────────────────────────────────────────
-    txt('r-name', basics.name);
-    const rContact = document.getElementById('r-contact');
-    rContact.innerHTML = '';
-    for (const part of [basics.email, basics.phone].filter(Boolean)) {
-      rContact.appendChild(el('span', null, part));
-    }
-    for (const p of (basics.profiles || [])) {
-      if (p.url || p.username) {
-        rContact.appendChild(el('span', null, p.network + ': ' + (p.url || p.username)));
+        row.addEventListener('click', () => selectJob(job.path));
+        jobList.appendChild(row);
       }
     }
 
-    // ── Summary (highlights[0..2]) ─────────────────────────────────────────
-    const summaryList = document.getElementById('r-summary');
-    summaryList.innerHTML = '';
-    for (const h of (corr.highlights || []).slice(0, 3)) {
-      summaryList.appendChild(el('li', null, h));
+    // ── Load jobs ───────────────────────────────────────────────────────────
+    async function loadJobs() {
+      const year = yearSelect.value;
+      const month = monthSelect.value;
+      if (!year) return;
+
+      let url = `/api/jobs?year=${encodeURIComponent(year)}`;
+      if (month) url += `&month=${encodeURIComponent(month)}`;
+
+      try {
+        allJobs = await fetchJSON(url);
+      } catch {
+        allJobs = [];
+      }
+      renderJobList();
     }
 
-    // ── Work experience ────────────────────────────────────────────────────
-    const workDiv = document.getElementById('r-work');
-    workDiv.innerHTML = '';
-    for (const job of (resume.work || [])) {
-      const entry = el('div', 'work-entry');
-      const startY = (job.startDate || '').slice(0, 4);
-      const endY   = job.endDate ? (job.endDate || '').slice(0, 4) : 'Present';
-      entry.innerHTML = `
+    // ── Select a job ────────────────────────────────────────────────────────
+    async function selectJob(path) {
+      activeJobPath = path;
+      showLoading(true);
+      renderJobList();
+
+      try {
+        const [corr, resume] = await Promise.all([
+          fetchJSON(`/api/correlation?path=${encodeURIComponent(path)}`),
+          resumeCache ? Promise.resolve(resumeCache) : fetchJSON('/api/resume').then(r => { resumeCache = r; return r; }),
+        ]);
+
+        hydratePages(corr, resume);
+      } catch (err) {
+        console.error('Failed to load job:', err);
+        showPlaceholder();
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // ── Hydrate pages ────────────────────────────────────────────────────────
+    function hydratePages(corr, resume) {
+      const basics = resume.basics || {};
+      const meta = corr.metadata || {};
+
+      // ── Cover letter ───────────────────────────────────────────────────────
+      txt('cl-name', basics.name);
+      const contactParts = [basics.email, basics.phone].filter(Boolean);
+      if (basics.location) {
+        const loc = basics.location;
+        contactParts.push(typeof loc === 'string' ? loc : [loc.city, loc.region, loc.countryCode].filter(Boolean).join(', '));
+      }
+      txt('cl-contact', contactParts.join('  ·  '));
+
+      const now = new Date();
+      txt('cl-date', now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
+      txt('cl-recipient', meta.employer || '');
+      txt('cl-opening', corr.opening || '');
+      txt('cl-value', corr.value_proposition || '');
+
+      const clExp = document.getElementById('cl-experience');
+      clExp.innerHTML = '';
+      for (const line of (corr.relevant_experience || []).slice(0, 5)) {
+        clExp.appendChild(el('li', null, line));
+      }
+      txt('cl-closing', corr.closing || '');
+
+      // ── Resume header ──────────────────────────────────────────────────────
+      txt('r-name', basics.name);
+      const rContact = document.getElementById('r-contact');
+      rContact.innerHTML = '';
+      for (const part of [basics.email, basics.phone].filter(Boolean)) {
+        rContact.appendChild(el('span', null, part));
+      }
+      for (const p of (basics.profiles || [])) {
+        if (p.url || p.username) {
+          rContact.appendChild(el('span', null, p.network + ': ' + (p.url || p.username)));
+        }
+      }
+
+      // ── Summary (highlights[0..2]) ─────────────────────────────────────────
+      const summaryList = document.getElementById('r-summary');
+      summaryList.innerHTML = '';
+      for (const h of (corr.highlights || []).slice(0, 3)) {
+        summaryList.appendChild(el('li', null, h));
+      }
+
+      // ── Work experience ────────────────────────────────────────────────────
+      const workDiv = document.getElementById('r-work');
+      workDiv.innerHTML = '';
+      for (const job of (resume.work || [])) {
+        const entry = el('div', 'work-entry');
+        const startY = (job.startDate || '').slice(0, 4);
+        const endY = job.endDate ? (job.endDate || '').slice(0, 4) : 'Present';
+        entry.innerHTML = `
         <div class="work-header">
           <span class="work-company">${job.company || job.name || ''}</span>
           <span class="work-dates">${startY}–${endY}</span>
         </div>
         <div class="work-position">${job.position || ''}</div>
         <div class="work-summary">${job.summary || ''}</div>`;
-      if ((job.highlights || []).length) {
-        const ul = el('ul', 'work-highlights');
-        for (const h of job.highlights) {
-          ul.appendChild(el('li', null, h));
+        if ((job.highlights || []).length) {
+          const ul = el('ul', 'work-highlights');
+          for (const h of job.highlights) {
+            ul.appendChild(el('li', null, h));
+          }
+          entry.appendChild(ul);
         }
-        entry.appendChild(ul);
+        workDiv.appendChild(entry);
       }
-      workDiv.appendChild(entry);
-    }
 
-    // ── Skills ─────────────────────────────────────────────────────────────
-    const skillsGrid = document.getElementById('r-skills');
-    skillsGrid.innerHTML = '';
-    for (const group of (resume.skills || [])) {
-      for (const kw of (group.keywords || [])) {
-        skillsGrid.appendChild(el('span', 'skill-tag', kw));
+      // ── Skills ─────────────────────────────────────────────────────────────
+      const skillsGrid = document.getElementById('r-skills');
+      skillsGrid.innerHTML = '';
+      for (const group of (resume.skills || [])) {
+        for (const kw of (group.keywords || [])) {
+          skillsGrid.appendChild(el('span', 'skill-tag', kw));
+        }
       }
-    }
 
-    // ── Education ──────────────────────────────────────────────────────────
-    const eduDiv = document.getElementById('r-education');
-    eduDiv.innerHTML = '';
-    for (const e of (resume.education || [])) {
-      const entry = el('div', 'edu-entry');
-      entry.innerHTML = `<span class="institution">${e.institution || ''}</span> — <span class="degree">${e.studyType || ''}, ${e.area || ''}</span>`;
-      eduDiv.appendChild(entry);
-    }
-
-    // ── Visibility ─────────────────────────────────────────────────────────
-    placeholder.classList.add('hidden');
-    loadingMsg.classList.add('hidden');
-    clSection.classList.toggle('hidden', !clToggle.checked);
-    resumeSection.classList.remove('hidden');
-
-    // ── document.title for print ────────────────────────────────────────────
-    const candidateName = meta.candidate_name || slugify(basics.name || '');
-    const employer      = slugify(meta.employer || '');
-    const jobTitle      = slugify(meta.job_title || '');
-    document.title = [candidateName, employer, jobTitle].filter(Boolean).join('-');
-  }
-
-  // ── Event listeners ─────────────────────────────────────────────────────
-  yearSelect.addEventListener('change', () => {
-    monthSelect.value = '';
-    loadJobs();
-  });
-
-  monthSelect.addEventListener('change', loadJobs);
-
-  keywordInput.addEventListener('input', renderJobList);
-
-  clToggle.addEventListener('change', () => {
-    clSection.classList.toggle('hidden', !clToggle.checked);
-  });
-
-  // ── Init ─────────────────────────────────────────────────────────────────
-  async function init() {
-    try {
-      const years = await fetchJSON('/api/years');
-      yearSelect.innerHTML = '';
-      const currentYear = String(new Date().getFullYear());
-      for (const y of years) {
-        const opt = document.createElement('option');
-        opt.value = y;
-        opt.textContent = y;
-        if (y === currentYear) opt.selected = true;
-        yearSelect.appendChild(opt);
+      // ── Education ──────────────────────────────────────────────────────────
+      const eduDiv = document.getElementById('r-education');
+      eduDiv.innerHTML = '';
+      for (const e of (resume.education || [])) {
+        const entry = el('div', 'edu-entry');
+        entry.innerHTML = `<span class="institution">${e.institution || ''}</span> — <span class="degree">${e.studyType || ''}, ${e.area || ''}</span>`;
+        eduDiv.appendChild(entry);
       }
-      if (!yearSelect.value && years.length) yearSelect.value = years[0];
-    } catch {
-      yearSelect.innerHTML = '<option value="">No years found</option>';
-    }
-    await loadJobs();
-  }
 
-  init();
-</script>
+      // ── Visibility ─────────────────────────────────────────────────────────
+      placeholder.classList.add('hidden');
+      loadingMsg.classList.add('hidden');
+      clSection.classList.toggle('hidden', !clToggle.checked);
+      resumeSection.classList.remove('hidden');
+
+      // ── document.title for print ────────────────────────────────────────────
+      const candidateName = meta.candidate_name || slugify(basics.name || '');
+      const employer = slugify(meta.employer || '');
+      const jobTitle = slugify(meta.job_title || '');
+      document.title = [candidateName, employer, jobTitle].filter(Boolean).join('-');
+    }
+
+    // ── Event listeners ─────────────────────────────────────────────────────
+    yearSelect.addEventListener('change', () => {
+      monthSelect.value = '';
+      loadJobs();
+    });
+
+    monthSelect.addEventListener('change', loadJobs);
+
+    keywordInput.addEventListener('input', renderJobList);
+
+    clToggle.addEventListener('change', () => {
+      clSection.classList.toggle('hidden', !clToggle.checked);
+    });
+
+    // ── Init ─────────────────────────────────────────────────────────────────
+    async function init() {
+      try {
+        const years = await fetchJSON('/api/years');
+        yearSelect.innerHTML = '';
+        const currentYear = String(new Date().getFullYear());
+        for (const y of years) {
+          const opt = document.createElement('option');
+          opt.value = y;
+          opt.textContent = y;
+          if (y === currentYear) opt.selected = true;
+          yearSelect.appendChild(opt);
+        }
+        if (!yearSelect.value && years.length) yearSelect.value = years[0];
+        const currentMonth = String(new Date().getMonth() + 1);
+        if (monthSelect.querySelector(`option[value="${currentMonth}"]`)) {
+          monthSelect.value = currentMonth;
+        }
+      } catch {
+        yearSelect.innerHTML = '<option value="">No years found</option>';
+      }
+      await loadJobs();
+    }
+
+    init();
+  </script>
 </body>
+
 </html>

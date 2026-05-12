@@ -46,7 +46,9 @@ def extract_job_posting(html_path: Path) -> dict:
 
     output['job_title'] = _text(soup.find('span', property='title'))
     output['employer'] = _text(soup.find('span', property='name'))
-    output['location'] = _text(soup.find('span', property='address'))
+    _city   = _text(soup.find(property='addressLocality'))
+    _region = _text(soup.find(property='addressRegion'))
+    output['location'] = f'{_city}, {_region}' if _city and _region else _city or _region or _text(soup.find('span', property='address'))
     output['salary'] = _text(soup.find('span', property='value'))
     output['employment_type'] = _text(soup.find('span', property='employmentType'))
 
@@ -159,7 +161,11 @@ def process_directory(input_dir: Path, base_dir: str, year: int, month: int, day
     for html_file in html_files:
         try:
             job_data = extract_job_posting(html_file)
-            slug = slugify(job_data.get('job_title', html_file.stem)) or slugify(html_file.stem)
+            title = job_data.get('job_title', '') or html_file.stem
+            location = job_data.get('location', '')
+            city = location.split(',')[0].strip() if location else ''
+            slug_source = f'{title} {city}'.strip() if city else title
+            slug = slugify(slug_source) or slugify(html_file.stem)
             out_path = Path(job_json_path(base_dir, year, month, day, slug))
             out_path.parent.mkdir(parents=True, exist_ok=True)
             with open(out_path, 'w') as f:

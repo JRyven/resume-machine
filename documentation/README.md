@@ -130,6 +130,10 @@ Parses Job Bank Canada HTML files using BeautifulSoup4 + lxml. Extracts structur
 python -m src.data.py_extract_jobs <input_dir>
 ```
 
+```bash
+python -m src.data.py_extract_jobs /Users/jamesvaleil/Desktop/db/0-projects/active/0-career-cv/data/job-listings/2026/05
+```
+
 ---
 
 ### Correlation → Template Adapter (`py_adapter_correlator_to_template.py`)
