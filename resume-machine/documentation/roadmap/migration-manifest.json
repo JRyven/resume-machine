@@ -3,7 +3,13 @@
     "name": "migration-manifest",
     "version": "1.0.0",
     "description": "Inventory of all files in resume-machine/ categorized as PORT (salvageable with adaptation instructions), ABSENT (net-new, no prior art), or DROP (delete before greenfield build). Companion to sprint-emancipate-resume-machine.json and north-star.json v1.1.0.",
-    "decisions_applied": ["pd-001", "pd-002", "pd-003", "pd-004-override", "pd-005"],
+    "decisions_applied": [
+      "pd-001",
+      "pd-002",
+      "pd-003",
+      "pd-004-override",
+      "pd-005"
+    ],
     "pd-004-override": "User elected option C: keep skills-index.json v2.3.0 (facet_catalog array) as the source of truth. The correlator must read facet_catalog, not a flat skill array. This supersedes pd-004 for the skills-index file itself; the correlator's internal schema adapter is the compatibility layer. north-star.json skills_index_schema should be updated in a follow-up to reflect the actual v2.3.0 format.",
     "schema_divergence_note": "The existing correlator's output uses 'content_tag' and 'facet_name' as correlation field names. The north-star spec uses 'tag' and 'term'. All port instructions below normalize to the north-star field names."
   },

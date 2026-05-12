@@ -41,7 +41,9 @@
           "how": "Delete scripts/py_skill_job_correlator.py, scripts/py_adapter_correlator_to_template.py, and scripts/config_manager.py. Verify the subdirectory versions exist before deleting shims.",
           "module": "scripts/",
           "priority": "high",
-          "depends_on": ["p0-t1"],
+          "depends_on": [
+            "p0-t1"
+          ],
           "done_when": "scripts/ root contains no .py files directly (only subdirectories). scripts/data_processing/, scripts/template_management/, scripts/utilities/, scripts/orchestration/ all still exist with their contents.",
           "status": "todo"
         },
@@ -60,7 +62,9 @@
           },
           "module": "role-based-templates/",
           "priority": "high",
-          "depends_on": ["p0-t1"],
+          "depends_on": [
+            "p0-t1"
+          ],
           "done_when": "role-based-templates/ contains exactly 5 valid JSON files (ai.json, database.json, devops.json, manager.json, sted.json). Each file has domain, keywords (array), facet_types (array), highlights (array, min 4 entries). No HTML tags present in any highlights string. No resume.*.json or .yaml files remain.",
           "status": "todo",
           "notes": "backend, frontend, fullstack templates are absent and will be created in p2-t1. The adapter will fall back to DEFAULT_DOMAIN ('fullstack') for those roles until p2-t1 is complete."
@@ -122,7 +126,10 @@
           "how": "Delete resume-machine/skills-schema.json. Verify no .yaml files remain in resume-machine/ or its subdirectories (role-based-templates .yaml siblings were removed in p0-t3; confirm none were missed).",
           "module": "resume-machine/",
           "priority": "low",
-          "depends_on": ["p0-t1", "p0-t3"],
+          "depends_on": [
+            "p0-t1",
+            "p0-t3"
+          ],
           "done_when": "skills-schema.json does not exist. No .yaml files exist anywhere under resume-machine/ except config.yaml.",
           "status": "todo"
         }
@@ -170,7 +177,10 @@
           },
           "module": "scripts/utilities/config_manager.py",
           "priority": "high",
-          "depends_on": ["p1-t1", "p1-t2"],
+          "depends_on": [
+            "p1-t1",
+            "p1-t2"
+          ],
           "done_when": "load_config() returns a dict with all five keys; all four path values are absolute pathlib-resolved strings; calling it when config.yaml is absent raises FileNotFoundError whose message contains the expected path.",
           "status": "todo"
         },
@@ -188,7 +198,9 @@
           },
           "module": "scripts/utilities/naming_utils.py",
           "priority": "high",
-          "depends_on": ["p1-t2"],
+          "depends_on": [
+            "p1-t2"
+          ],
           "done_when": "slugify('Software Engineer (Senior)') returns 'software-engineer-senior'; correlation_json_path and cover_letter_json_path return paths in the correct datestamped directory with their respective prefixes; all four functions are importable and produce correct output without any filesystem access.",
           "status": "todo"
         },
@@ -256,7 +268,11 @@
           },
           "module": "scripts/template_management/py_adapter_correlator_to_template.py",
           "priority": "high",
-          "depends_on": ["p1-t2", "p1-t3", "p2-t1"],
+          "depends_on": [
+            "p1-t2",
+            "p1-t3",
+            "p2-t1"
+          ],
           "done_when": "from scripts.template_management.py_adapter_correlator_to_template import infer_domain; calling infer_domain({'correlations': [{'term': 'Python', 'type': 'language', 'tag': 'LEAD_STRENGTH', 'notes': ''}]}, role_templates_dir) returns a dict with domain, featured_languages, and highlights keys; highlights contains at most 6 items; featured_languages contains 'Python'.",
           "status": "todo"
         }
@@ -285,7 +301,11 @@
           },
           "module": "scripts/data_processing/py_extract_jobs.py",
           "priority": "high",
-          "depends_on": ["p1-t2", "p1-t3", "p1-t4"],
+          "depends_on": [
+            "p1-t2",
+            "p1-t3",
+            "p1-t4"
+          ],
           "done_when": "python scripts/data_processing/py_extract_jobs.py jobbankjobs/2025/05/01 exits with code 0; one .json output file is written per .html file in the directory; every output JSON contains all required_fields from job_json_schema with non-null string or array values; no Node.js process is invoked at any point.",
           "status": "todo"
         },
@@ -308,7 +328,13 @@
           },
           "module": "scripts/data_processing/py_skill_job_correlator.py",
           "priority": "high",
-          "depends_on": ["p1-t2", "p1-t3", "p1-t4", "p1-t5", "p2-t2"],
+          "depends_on": [
+            "p1-t2",
+            "p1-t3",
+            "p1-t4",
+            "p1-t5",
+            "p2-t2"
+          ],
           "done_when": "Running the script against a job JSON exits 0; correlation JSON is written and contains all required_fields from correlation_json_schema; cover letter JSON is written on the first run and contains opening, value_proposition, relevant_experience, and closing; running the script a second time does not alter the cover letter JSON (verified by mtime or SHA-256 before and after); correlate_job is importable as a standalone function.",
           "status": "todo"
         }
@@ -336,7 +362,10 @@
           },
           "module": "scripts/orchestration/process.py",
           "priority": "high",
-          "depends_on": ["p3-t1", "p3-t2"],
+          "depends_on": [
+            "p3-t1",
+            "p3-t2"
+          ],
           "done_when": "python scripts/orchestration/process.py --dir jobbankjobs/2025/05/01 exits 0 and writes correlation and cover letter files for all job JSONs in the target directory; python scripts/orchestration/process.py --dry-run --dir jobbankjobs/2025/05/01 prints paths and exits 0 without writing any files; python scripts/orchestration/process.py --file jobbankjobs/2025/05/01/sample.json processes exactly one file; no subprocess or shell invocation appears in the source.",
           "status": "todo"
         }
@@ -366,7 +395,12 @@
           },
           "module": "scripts/utilities/serve.py",
           "priority": "high",
-          "depends_on": ["p1-t2", "p1-t3", "p1-t4", "p3-t2"],
+          "depends_on": [
+            "p1-t2",
+            "p1-t3",
+            "p1-t4",
+            "p3-t2"
+          ],
           "done_when": "python scripts/utilities/serve.py starts and logs 'Serving on localhost:8080'; GET /api/jobs?year=2025 returns a valid JSON array; GET /api/resume returns JSON containing a basics.name field; GET /api/correlation?path=jobbankjobs/2025/05/01/resume-x-y-z.json returns a merged object containing both correlation fields and cover letter fields; GET /api/correlation?path=../../etc/passwd returns HTTP 400; the implementation contains no third-party imports beyond the stdlib.",
           "status": "todo"
         },
@@ -388,7 +422,9 @@
           },
           "module": "ux/resume-machine.html",
           "priority": "high",
-          "depends_on": ["p5-t1"],
+          "depends_on": [
+            "p5-t1"
+          ],
           "done_when": "Opening http://localhost:8080 renders a filters panel with year select defaulting to the current year, a blank month select, a keyword input, and a cover letter toggle checkbox. Selecting a job from the list hydrates both panels without a page reload. Typing in the keyword input filters the visible jobs without a network request and shows the empty-state message when no jobs match. Print preview shows the cover letter on page 1 and the resume beginning on page 2, at Letter size with 0.7in margins.",
           "status": "todo"
         }
