@@ -102,7 +102,11 @@ def _api_jobs(handler, params: dict) -> None:
         return
 
     jobs: list[dict] = []
-    for corr_file in sorted(search_root.rglob('resume-*.json'), reverse=True):
+    resume_files = sorted(
+        [*search_root.rglob('*_resume_*.json'), *search_root.rglob('resume-*.json')],
+        reverse=True,
+    )
+    for corr_file in resume_files:
         try:
             with open(corr_file) as f:
                 data = json.load(f)
@@ -165,8 +169,12 @@ def _api_correlation(handler, params: dict) -> None:
         _error(handler, 500, f'failed to read correlation file: {exc}')
         return
 
-    # Merge companion letter JSON if present
-    letter_name = abs_path.name.replace('resume-', 'letter-', 1)
+    # Merge companion letter JSON if present (support both naming formats)
+    name = abs_path.name
+    if '_resume_' in name:
+        letter_name = name.replace('_resume_', '_letter_', 1)
+    else:
+        letter_name = name.replace('resume-', 'letter-', 1)
     letter_path = abs_path.parent / letter_name
     if letter_path.is_file():
         try:
