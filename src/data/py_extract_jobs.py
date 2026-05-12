@@ -195,7 +195,7 @@ def main(argv: list[str] | None = None) -> int:
     cfg = load_config()
     set_level(cfg.get('log_level', 'info'))
 
-    return process_directory(input_dir, cfg['jobbankjobs_dir'], year, month, day)
+    return process_directory(input_dir, cfg['job-listings_dir'], year, month, day)
 
 
 if __name__ == '__main__':

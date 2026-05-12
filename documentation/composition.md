@@ -1,13 +1,21 @@
 ---
 project_name: Resume Machine
 title: Composition Engine
-description:
-last_updated: 2025-12-17
+description: Historical reference for the compose_resume.py / build_resume.py scripts (removed).
+last_updated: 2026-05-12
 cleardoc_version: 2.3.0
-keywords:
+keywords: [composition, deprecated, compose_resume, build_resume]
 ---
 
-This document explains how to use the composition and build scripts.
+# Composition Engine
+
+**Path:** Documentation > Composition Engine
+
+> **Deprecated.** The `compose_resume.py` and `build_resume.py` scripts described here have been removed. Resume generation is now handled by `src/data/py_skill_job_correlator.py` (correlation) and `src/models/py_adapter_correlator_to_template.py` (domain inference). See [README](./README.md) for current commands.
+
+## Executive Summary
+
+This file is a historical reference for the YAML-fragment composition approach that preceded the current pipeline. The scripts below no longer exist in the repository.
 
 Usage examples
 

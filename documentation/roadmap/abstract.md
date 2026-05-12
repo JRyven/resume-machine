@@ -2,7 +2,7 @@
 project_name: Resume Machine
 title: Roadmap Guide (Index)
 description: Index and overview of project planning documentation covering initial development and long-term maintenance phases.
-last_updated: [2026-04-29]
+last_updated: 2026-05-12
 cleardoc_version: 2.3.0
 phase: abstract
 development_goals_location: none

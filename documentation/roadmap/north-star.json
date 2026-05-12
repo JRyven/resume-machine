@@ -72,7 +72,7 @@
   "data_schemas": {
     "job_json_schema": {
       "description": "Output of extraction stage. One file per job posting. Co-located with source HTML.",
-      "file_path_pattern": "data/jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json",
+      "file_path_pattern": "data/job-listings/{year}/{month:02d}/{day:02d}/{slug}.json",
       "required_fields": {
         "job_title": "String. Title of the job position.",
         "employer": "String. Company or organization name.",
@@ -86,7 +86,7 @@
     },
     "correlation_json_schema": {
       "description": "Canonical per-job record containing facet correlations, domain inference, and highlights. Co-located with source job JSON. Does NOT contain the cover letter — that lives in the companion letter JSON. Always overwritten on re-correlation. Manually editable post-generation.",
-      "file_path_pattern": "data/jobbankjobs/{year}/{month:02d}/{day:02d}/resume-{candidate}-{employer}-{title}.json",
+      "file_path_pattern": "data/job-listings/{year}/{month:02d}/{day:02d}/resume-{candidate}-{employer}-{title}.json",
       "required_fields": {
         "metadata": {
           "job_title": "String. Populated from job JSON.",
@@ -121,7 +121,7 @@
     },
     "cover_letter_json_schema": {
       "description": "Operator-editable cover letter content. Stored separately from the correlation JSON so re-correlation never overwrites manual edits. Generated once at first correlation run; never touched again unless absent.",
-      "file_path_pattern": "data/jobbankjobs/{year}/{month:02d}/{day:02d}/letter-{candidate}-{employer}-{title}.json",
+      "file_path_pattern": "data/job-listings/{year}/{month:02d}/{day:02d}/letter-{candidate}-{employer}-{title}.json",
       "required_fields": {
         "opening": "String. Must reference both job_title and employer. Construction rule: 'Dear Hiring Team at {employer}, I am writing to apply for the {job_title} position.'",
         "value_proposition": "String. 2-3 sentences. Construction rule: join the notes fields of the first two LEAD_STRENGTH correlations as declarative sentences. If fewer than two LEAD_STRENGTH entries exist, fall back to highlights[0] and highlights[1] joined as sentences. NOTE: auto-generated content is a starting point; the operator is expected to edit this field in the letter JSON before printing.",
@@ -203,9 +203,9 @@
       {
         "id": "1_ingest",
         "name": "Ingest",
-        "input": "HTML job posting files in data/jobbankjobs/{year}/{month:02d}/{day:02d}/",
+        "input": "HTML job posting files in data/job-listings/{year}/{month:02d}/{day:02d}/",
         "script": "src/data/py_extract_jobs.py — pure Python, invoked as module. No Node.js.",
-        "output": "One job JSON per posting at data/jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json. job_posting.specialization is populated from the HTML if present; the correlator does not write back to this field."
+        "output": "One job JSON per posting at data/job-listings/{year}/{month:02d}/{day:02d}/{slug}.json. job_posting.specialization is populated from the HTML if present; the correlator does not write back to this field."
       },
       {
         "id": "2_process",
@@ -218,7 +218,7 @@
       {
         "id": "3_ux",
         "name": "Browse & Print (UX)",
-        "input": "Correlation JSONs + letter JSONs in data/jobbankjobs/ + data/resume.source.json",
+        "input": "Correlation JSONs + letter JSONs in data/job-listings/ + data/resume.source.json",
         "server": "src/api/serve.py (Python stdlib). Exposes /api/years, /api/jobs, /api/resume, /api/correlation. /api/correlation merges correlation + letter JSON before responding, and includes metadata.candidate_name.",
         "html": "src/api/resume-machine.html (vanilla ES2020). Year populated via /api/years. allJobs[] maintained as module-level array for client-side filtering. Loading indicator on job select.",
         "output": "Operator print → PDF. document.title constructed from metadata.candidate_name + employer + job_title."
@@ -252,9 +252,9 @@
       "src/api/serve.py": "stdlib HTTP server. Four API endpoints.",
       "src/api/resume-machine.html": "Single-page browser interface.",
       "scripts/process.py": "Batch orchestration CLI.",
-      "config/config.yaml": "candidate_name, jobbankjobs_dir, skills_index_path, resume_source_path, role_templates_dir, log_level.",
+      "config/config.yaml": "candidate_name, job-listings_dir, skills_index_path, resume_source_path, role_templates_dir, log_level.",
       "data/role-based-templates/": "{domain}.json — one per known domain.",
-      "data/jobbankjobs/": "Source HTML and derived JSONs by {year}/{month:02d}/{day:02d}/.",
+      "data/job-listings/": "Source HTML and derived JSONs by {year}/{month:02d}/{day:02d}/.",
       "data/skills-index.json": "v2.3.0 facet_catalog skill catalog.",
       "data/resume.source.json": "Base candidate data.",
       "tests/unit/": "Unit tests per module.",
@@ -274,12 +274,12 @@
     "ingest_workflow": {
       "description": "Operator step 1. Parse HTML job postings and write one job JSON per file.",
       "entry_point": "python -m src.data.py_extract_jobs <input_dir>",
-      "output": "job JSON files at data/jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json"
+      "output": "job JSON files at data/job-listings/{year}/{month:02d}/{day:02d}/{slug}.json"
     },
     "process_workflow": {
       "description": "Operator step 2. Correlate, adapt, and write two output files. Correlation JSON always overwritten. Letter JSON written only if absent.",
       "entry_point_single": "python -m src.data.py_skill_job_correlator <job_json_path>",
-      "entry_point_batch": "python scripts/process.py --dir data/jobbankjobs/{year}/{month:02d}/{day:02d}",
+      "entry_point_batch": "python scripts/process.py --dir data/job-listings/{year}/{month:02d}/{day:02d}",
       "flags": [
         "--dry-run: print intended output paths without writing",
         "--name <candidate>: override candidate name (slugified before use in paths)"
@@ -335,10 +335,10 @@
     "ux_server_api": {
       "description": "serve.py exposes four read-only GET endpoints plus static file serving. No authentication. No mutation endpoints. Access-Control-Allow-Origin: * on all /api/* responses.",
       "endpoints": {
-        "GET /api/years": "Returns JSON array of year strings present as subdirectories under data/jobbankjobs/ (e.g. ['2024', '2025', '2026']), sorted descending. Used to populate the year <select>. Returns [] if data/jobbankjobs/ does not exist.",
+        "GET /api/years": "Returns JSON array of year strings present as subdirectories under data/job-listings/ (e.g. ['2024', '2025', '2026']), sorted descending. Used to populate the year <select>. Returns [] if data/job-listings/ does not exist.",
         "GET /api/jobs?year=YYYY[&month=MM]": "Returns JSON array: [{path, job_title, employer, location, domain}]. path is relative to project root and used as-is in /api/correlation requests. domain is read from each correlation JSON (O(N) file reads for N jobs). Sorted newest-first by directory date.",
         "GET /api/resume": "Returns full content of data/resume.source.json. 404 if absent.",
-        "GET /api/correlation?path=data/jobbankjobs/YYYY/MM/DD/resume-*.json": "Validates path is within data/jobbankjobs/ (path-traversal guard — HTTP 400 on violation). Reads correlation JSON. Derives companion letter path (replace 'resume-' prefix with 'letter-'). Merges letter fields if present. Includes metadata.candidate_name in the response for document.title construction. Returns correlation without cover letter fields if letter is absent."
+        "GET /api/correlation?path=data/job-listings/YYYY/MM/DD/resume-*.json": "Validates path is within data/job-listings/ (path-traversal guard — HTTP 400 on violation). Reads correlation JSON. Derives companion letter path (replace 'resume-' prefix with 'letter-'). Merges letter fields if present. Includes metadata.candidate_name in the response for document.title construction. Returns correlation without cover letter fields if letter is absent."
       },
       "error_handling": "All endpoints return 500 on file read or parse failure. Errors logged; generic 500 returned to client."
     },

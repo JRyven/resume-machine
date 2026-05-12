@@ -2,14 +2,14 @@
 project_name: Resume Machine
 title: Unified Development Roadmap
 description: Comprehensive roadmap for all project development phases from inception through production launch and ongoing maintenance.
-last_updated: [2026-04-29]
+last_updated: 2026-05-12
 cleardoc_version: 2.3.0
 keywords: [roadmap, development, planning, maintenance, growth]
 ---
 
 # Unified Development Roadmap
 
-All projects required to achieve the Unified Email Routing Schema implementation are tracked in this section using the Development Goals tracking system. For complete documentation of the tracking structure, metadata requirements, and modification rules, see the [Roadmap Specification](../writing-documentation/roadmap-specification.md).
+All projects required to achieve the Resume Machine implementation are tracked in this section using the Development Goals tracking system. For complete documentation of the tracking structure, metadata requirements, and modification rules, see the [Roadmap Specification](../writing-documentation/roadmap-specification.md).
 
 ## Special Implementation Notes
 

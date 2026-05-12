@@ -69,7 +69,7 @@
         "steps": [
           "Add import for logging_manager.get_logger('resume-machine.ingest') and replace any print() calls with logger.info() / logger.error().",
           "Add import for naming_utils.job_json_path() and use it for output path generation instead of any inline path construction.",
-          "Add import for config_manager.load_config() and use config['jobbankjobs_dir'] as the base_dir for job_json_path().",
+          "Add import for config_manager.load_config() and use config['job-listings_dir'] as the base_dir for job_json_path().",
           "Verify the output JSON structure matches job_json_schema required_fields exactly: job_title, employer, location, job_posting.required_skills (array), job_posting.additional_skills (array), job_posting.responsibilities (array), job_posting.overview (string), job_posting.specialization (string). Add or rename fields as needed to match the schema.",
           "Derive year/month/day integers from the three rightmost path components of input_dir for use in job_json_path().",
           "Ensure the script accepts a single positional argument (input_dir) via argparse and exits with code 1 if no HTML files are found."
@@ -102,8 +102,8 @@
       "what_exists": "A config_manager.py exists in scripts/utilities/. The current config.yaml uses keys: input_dir, output_dir, queue_file, role_templates_dir, unique_data_file, skip_extract, dry_run, log_level, pdf_naming_template, candidate_name, theme.",
       "how_to_port": {
         "steps": [
-          "Update config.yaml to use the sprint-spec key names: replace 'input_dir' with 'jobbankjobs_dir'; replace 'output_dir' with 'artifacts_dir' (or remove if unused by sprint); remove 'queue_file', 'unique_data_file', 'pdf_naming_template', 'theme' — these belong to the dropped Node.js pipeline. Add 'skills_index_path' and 'resume_source_path' if not present.",
-          "Implement load_config() → dict in scripts/utilities/config_manager.py: resolve the resume-machine/ root as Path(__file__).parents[2]; load config.yaml with yaml.safe_load(); resolve the four path values (jobbankjobs_dir, skills_index_path, resume_source_path, role_templates_dir) to absolute strings; raise FileNotFoundError if config.yaml is absent.",
+          "Update config.yaml to use the sprint-spec key names: replace 'input_dir' with 'job-listings_dir'; replace 'output_dir' with 'artifacts_dir' (or remove if unused by sprint); remove 'queue_file', 'unique_data_file', 'pdf_naming_template', 'theme' — these belong to the dropped Node.js pipeline. Add 'skills_index_path' and 'resume_source_path' if not present.",
+          "Implement load_config() → dict in scripts/utilities/config_manager.py: resolve the resume-machine/ root as Path(__file__).parents[2]; load config.yaml with yaml.safe_load(); resolve the four path values (job-listings_dir, skills_index_path, resume_source_path, role_templates_dir) to absolute strings; raise FileNotFoundError if config.yaml is absent.",
           "The existing scripts/config_manager.py shim at the scripts/ root can be deleted after all callers are updated to import from scripts.utilities.config_manager."
         ]
       }

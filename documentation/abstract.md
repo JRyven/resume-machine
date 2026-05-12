@@ -2,7 +2,7 @@
 project_name: Resume Machine
 title: Development Guide (Index)
 description: Index and overview of development documentation covering setup, workflow, standards, and best practices.
-last_updated: 2025-12-17
+last_updated: 2026-05-12
 cleardoc_version: 2.3.0
 keywords: [development, index, guide, workflow, standards]
 ---
@@ -34,7 +34,7 @@ documentation/
 └── ... (more topics)
 ```
 
-**To understand this organization:** Read [Documentation Structure Guide](./STRUCTURE.md)
+**To understand this organization:** Read [Documentation Writing Guide](./writing-documentation/structure.md)
 
 ## Hierarchy Pattern
 

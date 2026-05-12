@@ -197,7 +197,7 @@ class TestE2E(unittest.TestCase):
     def test_traversal_nested_dotdot_blocked(self):
         status, data = _get(
             self.port,
-            '/api/correlation?path=data/jobbankjobs/../../../etc/passwd',
+            '/api/correlation?path=data/job-listings/../../../etc/passwd',
         )
         self.assertEqual(status, 400)
         self.assertIn('error', data)

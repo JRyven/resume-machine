@@ -5,7 +5,7 @@ from typing import Any
 _PROJECT_ROOT = Path(__file__).parents[2]
 _CONFIG_PATH = _PROJECT_ROOT / 'config' / 'config.yaml'
 
-_PATH_KEYS = ('jobbankjobs_dir', 'skills_index_path', 'resume_source_path', 'role_templates_dir')
+_PATH_KEYS = ('job-listings_dir', 'skills_index_path', 'resume_source_path', 'role_templates_dir')
 
 
 def load_config() -> dict[str, Any]:

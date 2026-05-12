@@ -38,7 +38,7 @@
           "id": "p0-t2",
           "title": "Delete root-level script shims",
           "what": "Remove the three root-level shim files in scripts/ that redirect to subdirectory implementations (migration-manifest.json drop-007). These cause os.execv loops and import confusion once the subdirectory versions are the canonical implementations.",
-          "how": "Delete scripts/py_skill_job_correlator.py, scripts/py_adapter_correlator_to_template.py, and scripts/config_manager.py (root-level shims). Then create the src/ directory structure and move implementations to their canonical locations: move scripts/data_processing/py_extract_jobs.py → src/data/py_extract_jobs.py; move scripts/data_processing/py_skill_job_correlator.py → src/data/py_skill_job_correlator.py; move scripts/template_management/py_adapter_correlator_to_template.py → src/models/py_adapter_correlator_to_template.py; move scripts/utilities/config_manager.py → src/utils/config_manager.py; move scripts/utilities/naming_utils.py → src/utils/naming_utils.py; move config.yaml → config/config.yaml; move skills-index.json → data/skills-index.json; move resume.source.json → data/resume.source.json; move role-based-templates/ → data/role-based-templates/; move jobbankjobs/ → data/jobbankjobs/; move ux/resume-machine.html → src/api/resume-machine.html. Remove empty remnant directories (scripts/data_processing/, scripts/utilities/, scripts/template_management/, scripts/orchestration/, ux/).",
+          "how": "Delete scripts/py_skill_job_correlator.py, scripts/py_adapter_correlator_to_template.py, and scripts/config_manager.py (root-level shims). Then create the src/ directory structure and move implementations to their canonical locations: move scripts/data_processing/py_extract_jobs.py → src/data/py_extract_jobs.py; move scripts/data_processing/py_skill_job_correlator.py → src/data/py_skill_job_correlator.py; move scripts/template_management/py_adapter_correlator_to_template.py → src/models/py_adapter_correlator_to_template.py; move scripts/utilities/config_manager.py → src/utils/config_manager.py; move scripts/utilities/naming_utils.py → src/utils/naming_utils.py; move config.yaml → config/config.yaml; move skills-index.json → data/skills-index.json; move resume.source.json → data/resume.source.json; move role-based-templates/ → data/role-based-templates/; move job-listings/ → data/job-listings/; move ux/resume-machine.html → src/api/resume-machine.html. Remove empty remnant directories (scripts/data_processing/, scripts/utilities/, scripts/template_management/, scripts/orchestration/, ux/).",
           "module": "scripts/",
           "priority": "high",
           "depends_on": [
@@ -86,18 +86,18 @@
           "what": "Update config.yaml to use the key names expected by the sprint spec and drop keys that belong to the eliminated Node.js pipeline.",
           "how": {
             "steps": [
-              "Rename 'input_dir' → 'jobbankjobs_dir'.",
+              "Rename 'input_dir' → 'job-listings_dir'.",
               "Add 'skills_index_path: data/skills-index.json' if not present.",
               "Add 'resume_source_path: data/resume.source.json' if not present.",
               "Remove or comment out: 'output_dir' (replaced by artifacts_dir if needed), 'queue_file', 'unique_data_file', 'skip_extract', 'dry_run', 'pdf_naming_template', 'theme' — all belong to the dropped pipeline.",
               "Keep: 'candidate_name', 'role_templates_dir', 'log_level'.",
-              "Verify config/config.yaml has exactly these top-level keys: candidate_name, jobbankjobs_dir, skills_index_path, resume_source_path, role_templates_dir, log_level."
+              "Verify config/config.yaml has exactly these top-level keys: candidate_name, job-listings_dir, skills_index_path, resume_source_path, role_templates_dir, log_level."
             ]
           },
           "module": "config/config.yaml",
           "priority": "high",
           "depends_on": [],
-          "done_when": "config/config.yaml contains candidate_name, jobbankjobs_dir, skills_index_path, resume_source_path, role_templates_dir, and log_level as top-level keys. No pipeline-specific keys (queue_file, theme, pdf_naming_template, unique_data_file) remain.",
+          "done_when": "config/config.yaml contains candidate_name, job-listings_dir, skills_index_path, resume_source_path, role_templates_dir, and log_level as top-level keys. No pipeline-specific keys (queue_file, theme, pdf_naming_template, unique_data_file) remain.",
           "status": "todo"
         },
         {
@@ -159,7 +159,7 @@
             "steps": [
               "Resolve the project root using pathlib.Path(__file__).parents[2] (three levels up from src/utils/).",
               "Load YAML with yaml.safe_load(). Do not use yaml.load().",
-              "For each of the four path keys (jobbankjobs_dir, skills_index_path, resume_source_path, role_templates_dir), resolve the value against the project root and return the absolute path string.",
+              "For each of the four path keys (job-listings_dir, skills_index_path, resume_source_path, role_templates_dir), resolve the value against the project root and return the absolute path string.",
               "Raise FileNotFoundError with a descriptive message including the expected path if config/config.yaml is absent.",
               "Log the resolved config dict at DEBUG via logging_manager.get_logger('resume-machine.config')."
             ]
@@ -254,7 +254,7 @@
             "p1-t2",
             "p1-t3"
           ],
-          "done_when": "python -m src.data.py_extract_jobs data/jobbankjobs/2025/05/01 exits with code 0; one .json output file is written per .html file in the directory; every output JSON contains all required_fields from job_json_schema with non-null string or array values; extra extracted fields are present in the output JSON; no Node.js process is invoked at any point.",
+          "done_when": "python -m src.data.py_extract_jobs data/job-listings/2025/05/01 exits with code 0; one .json output file is written per .html file in the directory; every output JSON contains all required_fields from job_json_schema with non-null string or array values; extra extracted fields are present in the output JSON; no Node.js process is invoked at any point.",
           "status": "todo"
         },
         {
@@ -299,7 +299,7 @@
           "how": {
             "steps": [
               "Parse CLI with argparse: --dir (directory path), --file (single job JSON path), --dry-run (boolean flag), --name (string, optional). Exactly one of --dir or --file must be supplied; raise a usage error otherwise.",
-              "File discovery for --dir: --dir targets a day-level directory only (e.g. data/jobbankjobs/2026/05/01). Does not recurse into subdirectories. Collect all *.json files in the given directory whose filename does not start with 'resume-' or 'letter-' (job JSONs only, excluding correlation and cover letter outputs).",
+              "File discovery for --dir: --dir targets a day-level directory only (e.g. data/job-listings/2026/05/01). Does not recurse into subdirectories. Collect all *.json files in the given directory whose filename does not start with 'resume-' or 'letter-' (job JSONs only, excluding correlation and cover letter outputs).",
               "If --dry-run: print each discovered file path, print total count, exit 0 without writing any files.",
               "For each discovered job JSON: call correlate_job(path, args.name) imported from src.data.py_skill_job_correlator. Catch and log all exceptions at ERROR without halting the batch.",
               "Log batch start (file count) and completion (success count, error count) at INFO via logging_manager.get_logger('resume-machine.orchestration').",
@@ -313,7 +313,7 @@
             "p3-t1",
             "p3-t2"
           ],
-          "done_when": "python scripts/process.py --dir data/jobbankjobs/2025/05/01 exits 0 and writes correlation and cover letter files for all job JSONs in the target directory; python scripts/process.py --dry-run --dir data/jobbankjobs/2025/05/01 prints paths and exits 0 without writing any files; python scripts/process.py --file data/jobbankjobs/2025/05/01/sample.json processes exactly one file; no subprocess or shell invocation appears in the source.",
+          "done_when": "python scripts/process.py --dir data/job-listings/2025/05/01 exits 0 and writes correlation and cover letter files for all job JSONs in the target directory; python scripts/process.py --dry-run --dir data/job-listings/2025/05/01 prints paths and exits 0 without writing any files; python scripts/process.py --file data/job-listings/2025/05/01/sample.json processes exactly one file; no subprocess or shell invocation appears in the source.",
           "status": "todo"
         }
       ]
@@ -326,16 +326,16 @@
         {
           "id": "p5-t1",
           "title": "Create serve.py",
-          "what": "Implement a stdlib-only Python HTTP server on localhost:8080 serving resume-machine.html as the root and exposing GET /api/years, GET /api/jobs, GET /api/resume, and GET /api/correlation. /api/correlation must validate that the supplied path resolves within data/jobbankjobs/ before reading.",
+          "what": "Implement a stdlib-only Python HTTP server on localhost:8080 serving resume-machine.html as the root and exposing GET /api/years, GET /api/jobs, GET /api/resume, and GET /api/correlation. /api/correlation must validate that the supplied path resolves within data/job-listings/ before reading.",
           "how": {
             "steps": [
               "Use http.server.BaseHTTPRequestHandler. No third-party HTTP framework.",
               "Accept optional --port argument defaulting to 8080. Log the bound address at INFO on startup.",
               "GET /: Read src/api/resume-machine.html relative to the project root. Respond 200 with Content-Type: text/html; charset=utf-8.",
-              "GET /api/years: Walk data/jobbankjobs/ and collect all direct subdirectory names that are 4-digit year strings. Sort descending. Return as a JSON array of strings (e.g. ['2026', '2025']). Return [] if data/jobbankjobs/ does not exist.",
-              "GET /api/jobs?year=YYYY[&month=MM]: Walk data/jobbankjobs/{year}/{month:02d}/ (or all months under {year}/ when month is absent). Collect all files matching the resume-* pattern. For each correlation JSON, read the file and extract: path (relative to project root — used as-is in /api/correlation requests), job_title and employer from metadata, location from metadata, and domain from the top-level domain field (this is why /api/jobs requires O(N) file reads). Return a JSON array sorted by date directory descending (newest first). Content-Type: application/json.",
+              "GET /api/years: Walk data/job-listings/ and collect all direct subdirectory names that are 4-digit year strings. Sort descending. Return as a JSON array of strings (e.g. ['2026', '2025']). Return [] if data/job-listings/ does not exist.",
+              "GET /api/jobs?year=YYYY[&month=MM]: Walk data/job-listings/{year}/{month:02d}/ (or all months under {year}/ when month is absent). Collect all files matching the resume-* pattern. For each correlation JSON, read the file and extract: path (relative to project root — used as-is in /api/correlation requests), job_title and employer from metadata, location from metadata, and domain from the top-level domain field (this is why /api/jobs requires O(N) file reads). Return a JSON array sorted by date directory descending (newest first). Content-Type: application/json.",
               "GET /api/resume: Read data/resume.source.json. Return its content as JSON.",
-              "GET /api/correlation?path=...: Resolve the path parameter against the project root using pathlib.Path.resolve(). Reject with HTTP 400 if the resolved path does not begin with the resolved data/jobbankjobs/ directory (path-traversal guard). Load correlation JSON. Derive the companion cover letter path by replacing the 'resume-' filename prefix with 'letter-' (e.g. data/jobbankjobs/2025/05/01/resume-x-y-z.json → data/jobbankjobs/2025/05/01/letter-x-y-z.json). If the cover letter file exists, merge its fields (opening, value_proposition, relevant_experience, closing) into the response dict. The response always includes metadata.candidate_name so the client can construct document.title without parsing the file path. Return unified JSON.",
+              "GET /api/correlation?path=...: Resolve the path parameter against the project root using pathlib.Path.resolve(). Reject with HTTP 400 if the resolved path does not begin with the resolved data/job-listings/ directory (path-traversal guard). Load correlation JSON. Derive the companion cover letter path by replacing the 'resume-' filename prefix with 'letter-' (e.g. data/job-listings/2025/05/01/resume-x-y-z.json → data/job-listings/2025/05/01/letter-x-y-z.json). If the cover letter file exists, merge its fields (opening, value_proposition, relevant_experience, closing) into the response dict. The response always includes metadata.candidate_name so the client can construct document.title without parsing the file path. Return unified JSON.",
               "Set Access-Control-Allow-Origin: * on all /api/* responses.",
               "Log each request method and path at INFO via logging_manager.get_logger('resume-machine.server').",
               "Return 404 for unrecognized paths. Return 400 for path-traversal attempts."
@@ -349,7 +349,7 @@
             "p0-t6",
             "p3-t2"
           ],
-          "done_when": "python -m src.api.serve starts and logs 'Serving on localhost:8080'; GET /api/years returns a JSON array of year strings sorted descending; GET /api/jobs?year=2025 returns a valid JSON array where each entry has path, job_title, employer, location, and domain; GET /api/resume returns JSON containing a basics.name field; GET /api/correlation?path=data/jobbankjobs/2025/05/01/resume-x-y-z.json returns a merged object containing both correlation fields and cover letter fields and includes metadata.candidate_name; GET /api/correlation?path=../../etc/passwd returns HTTP 400; the implementation contains no third-party imports beyond the stdlib.",
+          "done_when": "python -m src.api.serve starts and logs 'Serving on localhost:8080'; GET /api/years returns a JSON array of year strings sorted descending; GET /api/jobs?year=2025 returns a valid JSON array where each entry has path, job_title, employer, location, and domain; GET /api/resume returns JSON containing a basics.name field; GET /api/correlation?path=data/job-listings/2025/05/01/resume-x-y-z.json returns a merged object containing both correlation fields and cover letter fields and includes metadata.candidate_name; GET /api/correlation?path=../../etc/passwd returns HTTP 400; the implementation contains no third-party imports beyond the stdlib.",
           "status": "todo"
         },
         {

@@ -71,7 +71,7 @@ def _error(handler, status: int, message: str) -> None:
 
 def _api_years(handler) -> None:
     cfg = _get_config()
-    base = Path(cfg['jobbankjobs_dir'])
+    base = Path(cfg['job-listings_dir'])
     if not base.is_dir():
         _json_response(handler, [])
         return
@@ -84,7 +84,7 @@ def _api_years(handler) -> None:
 
 def _api_jobs(handler, params: dict) -> None:
     cfg = _get_config()
-    base = Path(cfg['jobbankjobs_dir'])
+    base = Path(cfg['job-listings_dir'])
 
     year = params.get('year', [None])[0]
     month = params.get('month', [None])[0]
@@ -142,10 +142,10 @@ def _api_correlation(handler, params: dict) -> None:
         _error(handler, 400, 'path parameter required')
         return
 
-    # Path-traversal guard: resolve and confirm it lives under jobbankjobs_dir
+    # Path-traversal guard: resolve and confirm it lives under job-listings_dir
     try:
         abs_path = (_PROJECT_ROOT / path_param).resolve()
-        base_resolved = Path(cfg['jobbankjobs_dir']).resolve()
+        base_resolved = Path(cfg['job-listings_dir']).resolve()
         abs_path.relative_to(base_resolved)   # raises ValueError if outside
     except ValueError:
         _error(handler, 400, 'path is outside permitted directory')

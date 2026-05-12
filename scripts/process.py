@@ -2,8 +2,8 @@
 Batch orchestration CLI for resume-machine.
 
 Usage:
-  python scripts/process.py --dir data/jobbankjobs/2026/05/01
-  python scripts/process.py --file data/jobbankjobs/2026/05/01/sample.json
+  python scripts/process.py --dir data/job-listings/2026/05/01
+  python scripts/process.py --file data/job-listings/2026/05/01/sample.json
   python scripts/process.py --dir ... --dry-run
   python scripts/process.py --file ... --name "Jane Doe"
 """

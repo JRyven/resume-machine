@@ -45,7 +45,7 @@ package-lock.json
 
 # Artifacts
 resume-machine/artifacts/
-resume-machine/jobbankjobs/
+resume-machine/job-listings/
 resume-machine/narratives/
 
 build/
@@ -198,12 +198,12 @@ mock-source-data/
 CLEARDocsV*
 
 # Generated pipeline outputs (per-run artifacts, not committed)
-data/jobbankjobs/**/resume-*.json
-data/jobbankjobs/**/letter-*.json
+data/job-listings/**/resume-*.json
+data/job-listings/**/letter-*.json
 
 # Browser-saved HTML companion directories (job bank saves)
-data/jobbankjobs/**/*_files/
-jobbankjobs/**/*_files/
+data/job-listings/**/*_files/
+job-listings/**/*_files/
 
 # Scratchpad and temporary notes
 scratchpad.md
@@ -212,10 +212,10 @@ scratchpad.md
 /zbak-*
 
 # Job Data
-/jobbankjobs
+/job-listings
 
 resume-machine/resume-machine-queue.json
 
 .voyante
 data/role-based-templates/manager.json
-data/jobbankjobs/
+data/job-listings/
