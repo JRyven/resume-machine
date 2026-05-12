@@ -197,11 +197,13 @@ mock-source-data/
 # CLEARDoc Versions
 CLEARDocsV*
 
-# Configuration and sensitive files
-config/
+# Generated pipeline outputs (per-run artifacts, not committed)
+data/jobbankjobs/**/resume-*.json
+data/jobbankjobs/**/letter-*.json
 
-# Local test and development data (transient)
-data/
+# Browser-saved HTML companion directories (job bank saves)
+data/jobbankjobs/**/*_files/
+jobbankjobs/**/*_files/
 
 # Scratchpad and temporary notes
 scratchpad.md
@@ -215,3 +217,5 @@ scratchpad.md
 resume-machine/resume-machine-queue.json
 
 .voyante
+data/role-based-templates/manager.json
+data/jobbankjobs/

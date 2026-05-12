@@ -17,6 +17,26 @@ _PROJECT_ROOT = Path(__file__).parent.parent
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
+
+def _require_venv() -> None:
+    """Abort immediately if not running inside the project .venv."""
+    if sys.prefix == sys.base_prefix:
+        sys.exit(
+            "resume-machine: must run inside the project .venv.\n"
+            "  python -m venv .venv\n"
+            "  source .venv/bin/activate\n"
+            "  pip install -r requirements.txt"
+        )
+    expected = (_PROJECT_ROOT / '.venv').resolve()
+    active   = Path(sys.prefix).resolve()
+    if active != expected:
+        sys.exit(
+            f"resume-machine: wrong virtual environment.\n"
+            f"  Expected: {expected}\n"
+            f"  Active:   {active}"
+        )
+
+
 from src.utils.logging_manager import get_logger, set_level
 from src.utils.config_manager import load_config
 from src.data.py_skill_job_correlator import correlate_job
@@ -52,6 +72,7 @@ def run(
 
 
 def main(argv: list[str] | None = None) -> int:
+    _require_venv()
     parser = argparse.ArgumentParser(description='Batch-process job JSONs through the correlator')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--dir', metavar='DIR', help='Process all job JSONs in this day-level directory')

@@ -1,0 +1,6 @@
+candidate_name: "james-valeii"
+jobbankjobs_dir: data/jobbankjobs
+skills_index_path: data/skills-index.json
+resume_source_path: data/resume.source.json
+role_templates_dir: data/role-based-templates
+log_level: info

@@ -1,0 +1,43 @@
+{
+  "domain": "backend",
+  "keywords": [
+    "node.js",
+    "django",
+    "flask",
+    "fastapi",
+    "spring boot",
+    ".net",
+    "express",
+    "rest api",
+    "graphql",
+    "microservices",
+    "php",
+    "wordpress",
+    "api design",
+    "server-side",
+    "backend",
+    "authentication",
+    "authorization",
+    "middleware",
+    "caching",
+    "redis",
+    "queue",
+    "message broker",
+    "webhooks"
+  ],
+  "facet_types": [
+    "language",
+    "framework",
+    "tool",
+    "practice",
+    "platform"
+  ],
+  "highlights": [
+    "RESTful and async API design; high-throughput, event-driven server architecture at production scale.",
+    "Database optimization; query design, indexing, caching strategies with Redis and Varnish.",
+    "WordPress and PHP platform expertise; custom plugins, WooCommerce, CMS architecture, and integrations.",
+    "Performance and scalability; load testing, profiling, horizontal scaling, and bottleneck elimination.",
+    "Authentication and security; OAuth, session management, RBAC, and OWASP-aligned secure coding.",
+    "Software testing and quality; PHPUnit, Jest, TDD practices, and CI/CD-integrated code coverage."
+  ]
+}

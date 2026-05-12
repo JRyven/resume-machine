@@ -23,6 +23,26 @@ from urllib.parse import parse_qs, urlparse
 _PROJECT_ROOT = Path(__file__).parents[2]
 _HTML_FILE = Path(__file__).parent / 'resume-machine.html'
 
+
+def _require_venv() -> None:
+    """Abort immediately if not running inside a virtual environment."""
+    if sys.prefix == sys.base_prefix:
+        sys.exit(
+            "resume-machine: must run inside the project .venv.\n"
+            "  python -m venv .venv\n"
+            "  source .venv/bin/activate\n"
+            "  pip install -r requirements.txt"
+        )
+    expected = (_PROJECT_ROOT / '.venv').resolve()
+    active   = Path(sys.prefix).resolve()
+    if active != expected:
+        sys.exit(
+            f"resume-machine: wrong virtual environment.\n"
+            f"  Expected: {expected}\n"
+            f"  Active:   {active}"
+        )
+
+
 # Deferred import to allow module load without config
 _config: dict | None = None
 
@@ -195,6 +215,7 @@ class ResumeHandler(BaseHTTPRequestHandler):
 
 
 def main(argv: list[str] | None = None) -> int:
+    _require_venv()
     parser = argparse.ArgumentParser(description='Resume machine local server')
     parser.add_argument('--port', type=int, default=8080)
     args = parser.parse_args(argv)

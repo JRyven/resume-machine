@@ -1,4 +1,0 @@
-Example usage:
-python scripts/py_orchestrate_correlation_to_pdf.py jobbankjobs/2026/04/05/correlation_web_developer_saint_antoine_abbe.json
-python scripts/py_orchestrate_correlation_to_pdf.py jobbankjobs/2026/04/05/correlation_web_developer_saint_antoine_abbe.json --dry-run
-python scripts/py_orchestrate_correlation_to_pdf.py jobbankjobs/2026/04/05/correlation_web_developer_saint_antoine_abbe.json --name "John Doe" --template "my-template"

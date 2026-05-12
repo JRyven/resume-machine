@@ -1,0 +1,41 @@
+{
+  "domain": "devops",
+  "keywords": [
+    "docker",
+    "kubernetes",
+    "terraform",
+    "ansible",
+    "ci/cd",
+    "aws",
+    "azure",
+    "gcp",
+    "prometheus",
+    "grafana",
+    "jenkins",
+    "helm",
+    "infrastructure",
+    "cloudflare",
+    "linux",
+    "bash",
+    "monitoring",
+    "alerting",
+    "devops",
+    "sre",
+    "pipeline"
+  ],
+  "facet_types": [
+    "language",
+    "tool",
+    "platform",
+    "practice",
+    "cloud_provider"
+  ],
+  "highlights": [
+    "Containerized and orchestrated platforms; Docker, Kubernetes, Helm, automated rollouts, secured secrets.",
+    "Architectural platform design; defined topologies, DNS and Cloudflare failover strategies.",
+    "Observability and reliability; implemented Prometheus, Grafana, tracing, alerts, and runbooks.",
+    "Capacity planning; modeled resources, autoscaling thresholds, and tuned caching layers.",
+    "Cross-functional alignment; translated constraints into SLOs, runbooks, and release windows.",
+    "Technology evaluation; led build-vs-buy analyses and selected cost-effective stacks."
+  ]
+}
