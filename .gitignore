@@ -43,6 +43,10 @@ yarn-error.log*
 pnpm-lock.yaml
 package-lock.json
 
+# Private data
+data/resume.source.json
+narratives/
+
 # Artifacts
 resume-machine/artifacts/
 resume-machine/job-listings/
