@@ -1,0 +1,167 @@
+[
+  {
+    "title": "Web Developer",
+    "company": "Save Max Bulls Realty",
+    "description": "Education: College/CEGEP. Tasks: Consult with clients to develop and document Website requirements. Design and integrate website related code. Develop website architecture. Write, modify and test website related code. Write, modify, integrate and test software code. Maintain existing computer programs by making modifications as required. Communicate technical problems, processes and solutions. Create and optimize content for Website using a variety of graphics, database, animation and other software. Research and evaluate a variety of interactive media software products. Lead and co-ordinate multidisciplinary teams to develop Website graphics, content, capacity and interactivity. Research and evaluate a variety of software products. Conduct tests and perform security and quality controls. Work conditions and physical capabilities: Fast-paced environment. Work under pressure. Tight deadlines. Repetitive tasks. Attention to detail. Personal suitability: Accurate. Client focus. Dependability. Efficient interpersonal skills. Excellent oral communication. Excellent written communication. Initiative. Organized. Team player. Experience: 1 year to less than 2 years.",
+    "matched": {
+      "titleSelector": ".job-posting-details-body .title-header [property=\"title\"]",
+      "companySelector": ".job-posting-details-body .title-header p .business strong",
+      "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
+    },
+    "source_url": "https://www.jobbank.gc.ca/jobsearch/jobposting/48526137",
+    "role-template": "auto",
+    "generated": true,
+    "cover-letter": true,
+    "date": "2026-04-05"
+  },
+  {
+    "title": "Web Developer",
+    "company": "PRINCE LOGISTIC SERVICES",
+    "description": "Education: College, CEGEP or other non-university certificate or diploma from a program of 3 months to less than 1 year. Tasks: Determine hardware and software requirements to achieve optimal server performance. Write, modify and test website related code. Maintain existing computer programs by making modifications as required. Communicate technical problems, processes and solutions. Prepare reports, manuals and other documentation on the status, operation and maintenance of software. Assist in the collection and documentation of user's requirements. Conduct tests and perform security and quality controls. Write, modify, integrate and test software code for e-commerce and other Internet applications. Employment terms options: Shift. Experience: 2 years to less than 3 years. Employment terms options: Flexible hours. Day. Weekend.",
+    "matched": {
+      "titleSelector": ".job-posting-details-body .title-header [property=\"title\"]",
+      "companySelector": "span[property=\"hiringOrganization\"] [property=\"name\"] a",
+      "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
+    },
+    "source_url": "https://www.jobbank.gc.ca/jobsearch/jobposting/47906845",
+    "role-template": "auto",
+    "generated": true,
+    "cover-letter": true,
+    "date": "2026-04-05"
+  },
+  {
+    "title": "Application Programmer",
+    "company": "IP Infusion Canada Inc",
+    "description": "Education: Bachelor's degree. Work setting: Telecommunications industry. Software company. Information technology (IT) service provider. Tasks: Write, modify, integrate and test software code. Maintain existing computer programs by making modifications as required. Communicate technical problems, processes and solutions. Prepare reports, manuals and other documentation on the status, operation and maintenance of software. Assist in the collection and documentation of user's requirements. Assist in the development of logical and physical specifications. Research and evaluate a variety of software products. Write, modify, integrate and test software code for e-commerce and other Internet applications. Computer and technology knowledge: Jenkins. Jira. Shell script. Subversion (SVN). Linux. C. Unix. C++. Device drivers. Networking software. Networking hardware. Networking security. Extranet. Intranet. Internet. XML Technology (XSL,XSD,DTD). Servers. File management software. Word processing software. Object-Oriented programming languages. Presentation software. Communication software. Project management software. Programming software. Database software. Software development. MS Office. MS Windows. Spreadsheet. API. TCP/IP. Git. Python. XML. Firmware development. Software quality assurance. Ubuntu. Unix Shell Scripting. MS Excel. Area of work experience: Embedded systems. Design. Protocol. Area of specialization: Development. Work conditions and physical capabilities: Fast-paced environment. Tight deadlines. Attention to detail. Personal suitability: Accurate. Client focus. Efficient interpersonal skills. Excellent oral communication. Excellent written communication. Initiative. Judgement. Organized. Team player. Accountability. Dependability. Resourcefulness. Experience: 5 years or more. Workplace information: Hybrid. Health benefits: Dental plan. Disability benefits. Health care plan. Paramedical services coverage. Vision care benefits. Financial benefits: Group insurance benefits. Life insurance. Registered Retirement Savings Plan (RRSP). Long term benefits: Long-term care insurance. Other benefits: Free parking available. Learning/training paid by employer. On-site amenities. On-site recreation and activities. Other benefits. Paid time off (volunteering or personal days). Team building opportunities. Travel insurance. Wellness program. Support for persons with disabilities: Provides physical accessibility accommodations (for example: ramps, elevators, etc.). Applies accessible and inclusive recruitment policies that accommodate persons with disabilities . Support for newcomers and refugees: Assists with immediate settlement needs of newcomers and/or refugees (for example: housing, transportation, storage, childcare, winter clothing, etc.). Offers mentorship programs that pair newcomers and/or refugees with experienced employees . Does not require Canadian work experience.",
+    "matched": {
+      "titleSelector": ".job-posting-details-body .title-header [property=\"title\"]",
+      "companySelector": "span[property=\"hiringOrganization\"] [property=\"name\"] a",
+      "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
+    },
+    "source_url": "https://www.jobbank.gc.ca/jobsearch/jobposting/47496156",
+    "role-template": "auto",
+    "generated": true,
+    "cover-letter": true,
+    "date": "2026-04-05"
+  },
+  {
+    "title": "Full Stack Developer",
+    "company": "Chapeau!",
+    "description": "Education: College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years. or equivalent experience. Tasks: Design and integrate website related code. Determine hardware and software requirements to achieve optimal server performance. Develop website architecture. Write, modify and test website related code. Write, modify, integrate and test software code. Maintain existing computer programs by making modifications as required. Communicate technical problems, processes and solutions. Prepare reports, manuals and other documentation on the status, operation and maintenance of software. Create and optimize content for Website using a variety of graphics, database, animation and other software. Assist in the development of logical and physical specifications. Conduct tests and perform security and quality controls. Write, modify, integrate and test software code for e-commerce and other Internet applications. Manage incidents. Personal suitability: Accurate. Dependability. Organized. Experience: 1 year to less than 2 years.",
+    "matched": {
+      "titleSelector": ".job-posting-details-body .title-header [property=\"title\"]",
+      "companySelector": "span[property=\"hiringOrganization\"] [property=\"name\"] a",
+      "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
+    },
+    "source_url": "https://www.jobbank.gc.ca/jobsearch/jobposting/48159667",
+    "role-template": "auto",
+    "generated": true,
+    "cover-letter": true,
+    "date": "2026-04-05"
+  },
+  {
+    "title": "Senior Software Developer",
+    "company": "IP Infusion Canada Inc",
+    "description": "Education: Bachelor's degree. Work setting: Telecommunications industry. Software company. Information technology (IT) service provider. Tasks: Write, modify, integrate and test software code. Maintain existing computer programs by making modifications as required. Communicate technical problems, processes and solutions. Prepare reports, manuals and other documentation on the status, operation and maintenance of software. Assist in the collection and documentation of user's requirements. Assist in the development of logical and physical specifications. Research and evaluate a variety of software products. Write, modify, integrate and test software code for e-commerce and other Internet applications. Computer and technology knowledge: Jenkins. Jira. Shell script. Subversion (SVN). Linux. C. C++. Device drivers. Networking software. Networking hardware. Networking security. Extranet. Intranet. Internet. XML Technology (XSL,XSD,DTD). Servers. File management software. Word processing software. Object-Oriented programming languages. Presentation software. Communication software. Project management software. Programming software. Database software. Software development. MS Office. MS Windows. Spreadsheet. API. TCP/IP. Git. Python. Firmware development. Software quality assurance. Unix Shell Scripting. MS Excel. Area of work experience: Embedded systems. Design. Protocol. Area of specialization: Development. Work conditions and physical capabilities: Fast-paced environment. Tight deadlines. Attention to detail. Personal suitability: Accurate. Client focus. Efficient interpersonal skills. Excellent oral communication. Excellent written communication. Initiative. Judgement. Organized. Team player. Accountability. Dependability. Resourcefulness. Experience: 5 years or more. Workplace information: Hybrid. Health benefits: Dental plan. Disability benefits. Health care plan. Paramedical services coverage. Vision care benefits. Financial benefits: Group insurance benefits. Life insurance. Registered Retirement Savings Plan (RRSP). Long term benefits: Long-term care insurance. Other benefits: Free parking available. Learning/training paid by employer. On-site amenities. On-site recreation and activities. Other benefits. Paid time off (volunteering or personal days). Team building opportunities. Travel insurance. Wellness program. Support for persons with disabilities: Provides physical accessibility accommodations (for example: ramps, elevators, etc.). Applies accessible and inclusive recruitment policies that accommodate persons with disabilities . Support for newcomers and refugees: Assists with immediate settlement needs of newcomers and/or refugees (for example: housing, transportation, storage, childcare, winter clothing, etc.). Offers mentorship programs that pair newcomers and/or refugees with experienced employees . Does not require Canadian work experience.",
+    "matched": {
+      "titleSelector": ".job-posting-details-body .title-header [property=\"title\"]",
+      "companySelector": "span[property=\"hiringOrganization\"] [property=\"name\"] a",
+      "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
+    },
+    "source_url": "https://www.jobbank.gc.ca/jobsearch/jobposting/47496155",
+    "role-template": "auto",
+    "generated": true,
+    "cover-letter": true,
+    "date": "2026-04-05"
+  },
+  {
+    "title": "Software Developer",
+    "company": "IP Infusion Canada Inc",
+    "description": "Education: Bachelor's degree. Computer science. Engineering, other. Work setting: Telecommunications industry. Software company. Information technology (IT) service provider. Tasks: Write, modify, integrate and test software code. Maintain existing computer programs by making modifications as required. Communicate technical problems, processes and solutions. Prepare reports, manuals and other documentation on the status, operation and maintenance of software. Assist in the collection and documentation of user's requirements. Assist in the development of logical and physical specifications. Research and evaluate a variety of software products. Write, modify, integrate and test software code for e-commerce and other Internet applications. Computer and technology knowledge: Jenkins. Jira. Shell script. Subversion (SVN). Linux. C. C++. Device drivers. Networking software. Networking hardware. Networking security. Extranet. Intranet. Internet. XML Technology (XSL,XSD,DTD). Servers. File management software. Word processing software. Object-Oriented programming languages. Communication software. Project management software. Programming software. Database software. Software development. MS Office. MS Windows. Spreadsheet. API. TCP/IP. Git. Python. Firmware development. Software quality assurance. Unix Shell Scripting. MS Excel. Area of work experience: Embedded systems. Design. Protocol. Area of specialization: Development. Work conditions and physical capabilities: Fast-paced environment. Tight deadlines. Attention to detail. Personal suitability: Accurate. Client focus. Efficient interpersonal skills. Excellent oral communication. Excellent written communication. Initiative. Judgement. Organized. Team player. Accountability. Dependability. Resourcefulness. Experience: 5 years or more. Workplace information: Hybrid. Health benefits: Dental plan. Disability benefits. Health care plan. Paramedical services coverage. Vision care benefits. Financial benefits: Group insurance benefits. Life insurance. Registered Retirement Savings Plan (RRSP). Long term benefits: Long-term care insurance. Other benefits: Free parking available. Learning/training paid by employer. On-site amenities. On-site recreation and activities. Other benefits. Paid time off (volunteering or personal days). Team building opportunities. Travel insurance. Wellness program. Support for persons with disabilities: Provides physical accessibility accommodations (for example: ramps, elevators, etc.). Applies accessible and inclusive recruitment policies that accommodate persons with disabilities . Support for newcomers and refugees: Assists with immediate settlement needs of newcomers and/or refugees (for example: housing, transportation, storage, childcare, winter clothing, etc.). Offers mentorship programs that pair newcomers and/or refugees with experienced employees . Does not require Canadian work experience.",
+    "matched": {
+      "titleSelector": ".job-posting-details-body .title-header [property=\"title\"]",
+      "companySelector": "span[property=\"hiringOrganization\"] [property=\"name\"] a",
+      "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
+    },
+    "source_url": "https://www.jobbank.gc.ca/jobsearch/jobposting/47495078",
+    "role-template": "auto",
+    "generated": true,
+    "cover-letter": true,
+    "date": "2026-04-05"
+  },
+  {
+    "title": "Software Developer",
+    "company": "Software And Process Design",
+    "description": "Education: Bachelor's degree. Computer science. Computer software engineering. Tasks: Write, modify, integrate and test software code. Maintain existing computer programs by making modifications as required. Communicate technical problems, processes and solutions. Assist in the development of logical and physical specifications. Research and evaluate a variety of software products. Computer and technology knowledge: Development and operations (DevOps). ASP. JavaScript. SQL. C#. Angular.js. React.js. Work conditions and physical capabilities: Work under pressure. Tight deadlines. Attention to detail. Sitting. Personal suitability: Accurate. Efficient interpersonal skills. Organized. Dependability. Employment terms options: Early morning. Evening. Shift. Morning. Experience: 5 years or more. Employment terms options: Day. Workplace information: Hybrid.",
+    "matched": {
+      "titleSelector": ".job-posting-details-body .title-header [property=\"title\"]",
+      "companySelector": "span[property=\"hiringOrganization\"] [property=\"name\"] a",
+      "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
+    },
+    "source_url": "https://www.jobbank.gc.ca/jobsearch/jobposting/49036748",
+    "role-template": "auto",
+    "generated": true,
+    "cover-letter": true,
+    "date": "2026-04-05"
+  },
+  {
+    "title": "Software Developer",
+    "company": "Sync.com",
+    "description": "Education: Bachelor's degree. Computer and technology knowledge: Java. PHP. Angular.js. MySQL. React.js. TypeScript. Vue.js. Linux - VxWorks RTOS. Cloud. Screening questions: Do you have experience working in this field?. Experience: 5 years or more. Health benefits: Dental plan. Health care plan. Paramedical services coverage. Vision care benefits. Financial benefits: Group insurance benefits. Long term benefits: Maternity and parental benefits. Other benefits: Wellness program.",
+    "matched": {
+      "titleSelector": ".job-posting-details-body .title-header [property=\"title\"]",
+      "companySelector": ".job-posting-details-body .title-header p .business strong",
+      "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
+    },
+    "source_url": "https://www.jobbank.gc.ca/jobsearch/jobposting/48896603",
+    "role-template": "auto",
+    "generated": true,
+    "cover-letter": true,
+    "date": "2026-04-05"
+  },
+  {
+    "title": "Software Engineer",
+    "company": "SYNCHRONIUM INNOVATIONS INC.",
+    "description": "Education: Bachelor's degree. Tasks: Collect and document user's requirements. Coordinate the development, installation, integration and operation of computer-based systems. Define system functionality. Develop flowcharts, layouts and documentation to identify solutions. Develop process and network models to optimize architecture. Develop software solutions by studying systems flow, data usage and work processes. Evaluate the performance and reliability of system designs. Evaluate user feedback. Execute full lifecycle software development. Plan every step of the integration of a computer-based system. Prepare plan to maintain software. Research technical information to design, develop and test computer-based systems. Synthesize technical information for every phase of the cycle of a computer-based system. Upgrade and maintain software. Lead and co-ordinate teams of information systems professionals in the development of software and integrated information systems, process control software and other embedded software control systems. Usability testing. Operate automatic or other testing equipment to ensure product quality. Consult with clients after sale to provide ongoing support. Conduct tests and perform security and quality controls. Execute and document results of software application tests and information and telecommunication systems tests. Work conditions and physical capabilities: Fast-paced environment. Work under pressure. Tight deadlines. Repetitive tasks. Handling heavy loads. Physically demanding. Manual dexterity. Attention to detail. Ability to distinguish between colours. Sound discrimination. Sitting. Combination of sitting, standing, walking. Standing for extended periods. Bending, crouching, kneeling. Personal suitability: Accurate. Client focus. Efficient interpersonal skills. Excellent oral communication. Excellent written communication. Initiative. Judgement. Organized. Team player. Dedication. Analytical. Proactive. Quick learner. Experience: 7 months to less than 1 year.",
+    "matched": {
+      "titleSelector": ".job-posting-details-body .title-header [property=\"title\"]",
+      "companySelector": ".job-posting-details-body .title-header p .business strong",
+      "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
+    },
+    "source_url": "https://www.jobbank.gc.ca/jobsearch/jobposting/47713248",
+    "role-template": "auto",
+    "generated": true,
+    "cover-letter": true,
+    "date": "2026-04-05"
+  },
+  {
+    "title": "Software Project Manager",
+    "company": "Thoughtstorm Incorporated",
+    "description": "Education: College/CEGEP. Work setting: Consulting firm. Tasks: Collect and document user's requirements. Coordinate the development, installation, integration and operation of computer-based systems. Develop flowcharts, layouts and documentation to identify solutions. Develop software solutions by studying systems flow, data usage and work processes. Evaluate the performance and reliability of system designs. Evaluate user feedback. Execute full lifecycle software development. Plan every step of the integration of a computer-based system. Prepare plan to maintain software. Research technical information to design, develop and test computer-based systems. Lead and co-ordinate teams of information systems professionals in the development of software and integrated information systems, process control software and other embedded software control systems. Consult with clients after sale to provide ongoing support. Work conditions and physical capabilities: Fast-paced environment. Work under pressure. Tight deadlines. Repetitive tasks. Manual dexterity. Attention to detail. Personal suitability: Accurate. Client focus. Efficient interpersonal skills. Initiative. Judgement. Organized. Team player. Analytical. Proactive. Quick learner. Experience: 3 years to less than 5 years. Employment terms options: Morning. Day. Workplace information: Hybrid. Health benefits: Dental plan. Health care plan. Vision care benefits.",
+    "matched": {
+      "titleSelector": ".job-posting-details-body .title-header [property=\"title\"]",
+      "companySelector": "span[property=\"hiringOrganization\"] [property=\"name\"] a",
+      "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
+    },
+    "source_url": "https://www.jobbank.gc.ca/jobsearch/jobposting/47312600",
+    "role-template": "auto",
+    "generated": true,
+    "cover-letter": true,
+    "date": "2026-04-05"
+  },
+  {
+    "title": "Software Technical Architect",
+    "company": "IBS Software Canada",
+    "description": "Education: Bachelor's degree. Work setting: Software company. Information technology (IT) service provider. Aerospace. Tasks: Collect and document user's requirements. Coordinate the development, installation, integration and operation of computer-based systems. Define system functionality. Develop flowcharts, layouts and documentation to identify solutions. Develop process and network models to optimize architecture. Evaluate the performance and reliability of system designs. Evaluate user feedback. Execute full lifecycle software development. Plan every step of the integration of a computer-based system. Prepare plan to maintain software. Research technical information to design, develop and test computer-based systems. Synthesize technical information for every phase of the cycle of a computer-based system. Upgrade and maintain software. Lead and co-ordinate teams of information systems professionals in the development of software and integrated information systems, process control software and other embedded software control systems. JavaScript Object Notation (JSON). Usability testing. Operate automatic or other testing equipment to ensure product quality. Consult with clients after sale to provide ongoing support. Conduct tests and perform security and quality controls. Execute and document results of software application tests and information and telecommunication systems tests. Computer and technology knowledge: Agile. Cloud. Information Technology Infrastructure Library (ITIL). Jenkins. Jira. Shell script. Spring Framework. Subversion (SVN). Java. JavaScript. JSP. Servlet. Software development. XML. Area of work experience: Project implementation. Airline company. Design. Quality assurance or control. Area of specialization: Development of computer applications. User experience design. Testing. Screening questions: Are you authorized to work in Canada?. Are you available for shift or on-call work?. Are you available to start on the date listed in the job posting?. Are you willing to relocate for this position?. Do you have experience working in this field?. Do you have the required certifications listed in the job posting?. Employment terms options: Flexible hours. Experience: 5 years or more. Health benefits: Dental plan. Disability benefits. Health care plan. Vision care benefits. Financial benefits: Bonus. Group insurance benefits. Pension plan. Registered Retirement Savings Plan (RRSP). Long term benefits: Long-term care insurance. Maternity and parental benefits. Other benefits: Deferred Profit Sharing Plan (DPSP). Learning/training paid by employer. Paid time off (volunteering or personal days). Team building opportunities. Travel insurance.",
+    "matched": {
+      "titleSelector": ".job-posting-details-body .title-header [property=\"title\"]",
+      "companySelector": "span[property=\"hiringOrganization\"] [property=\"name\"] a",
+      "descriptionSelector": ".job-posting-details-body [property=\"description\"]"
+    },
+    "source_url": "https://www.jobbank.gc.ca/jobsearch/jobposting/47364284",
+    "role-template": "auto",
+    "generated": true,
+    "cover-letter": true,
+    "date": "2026-04-05"
+  }
+]

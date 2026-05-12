@@ -38,20 +38,35 @@
       }
     ]
   },
-
   "tech_stack_rationale": {
     "python": {
       "choice": "Python 3.10+ for all processing scripts and the UX server",
-      "roles": ["extraction", "correlation", "adaptation", "orchestration", "http server"],
-      "external_dependencies": ["beautifulsoup4 (HTML parsing)", "lxml (HTML parsing backend)"]
+      "roles": [
+        "extraction",
+        "correlation",
+        "adaptation",
+        "orchestration",
+        "http server"
+      ],
+      "external_dependencies": [
+        "beautifulsoup4 (HTML parsing)",
+        "lxml (HTML parsing backend)"
+      ]
     },
     "html_css_js": {
       "choice": "Vanilla HTML/CSS/ES2020 for resume-machine.html",
-      "roles": ["UX rendering", "job search and selection", "print-to-PDF"],
-      "properties": ["No build step", "Served directly from filesystem", "Plain ES2020, no framework"]
+      "roles": [
+        "UX rendering",
+        "job search and selection",
+        "print-to-PDF"
+      ],
+      "properties": [
+        "No build step",
+        "Served directly from filesystem",
+        "Plain ES2020, no framework"
+      ]
     }
   },
-
   "data_schemas": {
     "job_json_schema": {
       "description": "Output of extraction stage. One file per job posting. Co-located with source HTML.",
@@ -67,7 +82,6 @@
         "job_posting.specialization": "String. Domain hint (e.g., 'backend', 'devops', 'fullstack')."
       }
     },
-
     "correlation_json_schema": {
       "description": "Canonical per-job record containing facet correlations, domain inference, and highlights. Co-located with source job JSON. Does NOT contain the cover letter — that lives in the companion letter JSON. Always overwritten on re-correlation. Manually editable post-generation.",
       "file_path_pattern": "jobbankjobs/{year}/{month:02d}/{day:02d}/resume-{candidate}-{employer}-{title}.json",
@@ -92,7 +106,6 @@
         "highlights": "Array of plain-text strings (max 6). Domain-matched highlights from role template. Top 3 rendered in the resume summary panel. No HTML."
       }
     },
-
     "cover_letter_json_schema": {
       "description": "Operator-editable cover letter content. Stored separately from the correlation JSON so re-correlation never overwrites manual edits. Generated once at first correlation run; never touched again by the pipeline unless the file is absent.",
       "file_path_pattern": "jobbankjobs/{year}/{month:02d}/{day:02d}/letter-{candidate}-{employer}-{title}.json",
@@ -104,11 +117,19 @@
       },
       "generation_rule": "Written once when the correlation JSON is first generated. Never overwritten by subsequent correlator runs. Operator edits this file directly to refine cover letter content. If the file is absent when the correlator runs, it is regenerated from correlation data."
     },
-
     "role_template_schema": {
       "description": "Single file per job domain. Single source of truth consumed by the adapter at runtime.",
       "file_path_pattern": "role-based-templates/{domain}.json",
-      "known_domains": ["devops", "backend", "frontend", "fullstack", "manager", "ai", "database", "sted"],
+      "known_domains": [
+        "devops",
+        "backend",
+        "frontend",
+        "fullstack",
+        "manager",
+        "ai",
+        "database",
+        "sted"
+      ],
       "required_fields": {
         "domain": "String. Must match filename and be one of known_domains.",
         "keywords": "Array of strings. Terms from job postings that indicate this domain.",
@@ -116,7 +137,6 @@
         "highlights": "Array of 6+ plain-text strings. Domain strengths used to populate correlation.highlights[]."
       }
     },
-
     "skills_index_schema": {
       "description": "Personal skill catalog: resume-machine/skills-index.json. Faceted normalized format v2.3.0. Operator decision C: the v2.3.0 schema is the source of truth. The correlator adapts via _build_facet_lookup() — not a flat array. Manually maintained.",
       "file_path": "resume-machine/skills-index.json",
@@ -148,7 +168,6 @@
       },
       "note": "pd-004 (flat array format) is superseded by operator decision C. The flat-array format described in pd-004 is not implemented. pd-004 in _meta.permanent_decisions is retained as a record of the original intent but is overridden by this schema entry."
     },
-
     "resume_source_schema": {
       "description": "Base candidate data. Served by serve.py as /api/resume. Consumed by resume-machine.html to populate the resume section.",
       "file_path": "resume-machine/resume.source.json",
@@ -166,7 +185,6 @@
       }
     }
   },
-
   "architecture_diagram": {
     "_comment": "Top-to-bottom pipeline. Each stage has one canonical input and one canonical output.",
     "stages": [
@@ -195,11 +213,13 @@
       }
     ]
   },
-
   "infrastructure": {
     "runtime": "Python 3.10+ on macOS (primary). Single-threaded, no containerisation required. Runs on operator's local machine only.",
     "dependencies": {
-      "python_packages": ["beautifulsoup4 (HTML parsing)", "lxml (HTML parsing backend)"],
+      "python_packages": [
+        "beautifulsoup4 (HTML parsing)",
+        "lxml (HTML parsing backend)"
+      ],
       "node_packages": [],
       "system": []
     },
@@ -217,19 +237,15 @@
       "resume-machine/resume.source.json": "Base candidate data. Served as /api/resume."
     }
   },
-
   "capability_layer": {
     "_note": "Intentionally not detailed here. Capabilities are fully described in architecture_diagram.stages and workflow_layer."
   },
-
   "role_definitions": {
     "_note": "Not applicable. See permanent_decision pd-005."
   },
-
   "agent_graphs": {
     "_note": "Not applicable. See permanent_decision pd-005."
   },
-
   "workflow_layer": {
     "ingest_workflow": {
       "description": "Operator step 1. Parse HTML job postings in a given directory and write one job JSON per posting alongside the source HTML.",
@@ -260,11 +276,9 @@
       ]
     }
   },
-
   "control_layer": {
     "_note": "Config via config.yaml (application settings) and skills-index.json (skill catalog). Both documented in infrastructure.filesystem_layout and data_schemas respectively."
   },
-
   "wiring": {
     "python_module_structure": {
       "description": "All scripts are Python modules that import each other directly. No circular dependencies. No subprocess calls between local modules. Scripts run from resume-machine root.",
@@ -356,19 +370,15 @@
       }
     }
   },
-
   "data_strategy": {
     "_note": "Data schemas are the authoritative source. See data_schemas. File organization follows infrastructure.filesystem_layout."
   },
-
   "operability": {
     "_note": "Operational commands belong in the README. See workflow_layer for executable entry points and flags."
   },
-
   "environments": {
     "_note": "Develop vs. production configuration (mock data paths, dry-run defaults) belongs in config YAML files and the README, not the north-star."
   },
-
   "technical_debt_tracker": {
     "items": [
       {
