@@ -70,7 +70,7 @@
   "data_schemas": {
     "job_json_schema": {
       "description": "Output of extraction stage. One file per job posting. Co-located with source HTML.",
-      "file_path_pattern": "jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json",
+      "file_path_pattern": "data/jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json",
       "required_fields": {
         "job_title": "String. Title of the job position.",
         "employer": "String. Company or organization name.",
@@ -84,7 +84,7 @@
     },
     "correlation_json_schema": {
       "description": "Canonical per-job record containing facet correlations, domain inference, and highlights. Co-located with source job JSON. Does NOT contain the cover letter — that lives in the companion letter JSON. Always overwritten on re-correlation. Manually editable post-generation.",
-      "file_path_pattern": "jobbankjobs/{year}/{month:02d}/{day:02d}/resume-{candidate}-{employer}-{title}.json",
+      "file_path_pattern": "data/jobbankjobs/{year}/{month:02d}/{day:02d}/resume-{candidate}-{employer}-{title}.json",
       "required_fields": {
         "metadata": {
           "job_title": "String. Populated from job JSON. Used in UX job list and cover letter.",
@@ -108,7 +108,7 @@
     },
     "cover_letter_json_schema": {
       "description": "Operator-editable cover letter content. Stored separately from the correlation JSON so re-correlation never overwrites manual edits. Generated once at first correlation run; never touched again by the pipeline unless the file is absent.",
-      "file_path_pattern": "jobbankjobs/{year}/{month:02d}/{day:02d}/letter-{candidate}-{employer}-{title}.json",
+      "file_path_pattern": "data/jobbankjobs/{year}/{month:02d}/{day:02d}/letter-{candidate}-{employer}-{title}.json",
       "required_fields": {
         "opening": "String. Salutation + opening statement. Must reference job_title and employer.",
         "value_proposition": "String. 2-3 sentences derived from LEAD_STRENGTH facets.",
@@ -119,7 +119,7 @@
     },
     "role_template_schema": {
       "description": "Single file per job domain. Single source of truth consumed by the adapter at runtime.",
-      "file_path_pattern": "role-based-templates/{domain}.json",
+      "file_path_pattern": "data/role-based-templates/{domain}.json",
       "known_domains": [
         "devops",
         "backend",
@@ -138,8 +138,8 @@
       }
     },
     "skills_index_schema": {
-      "description": "Personal skill catalog: resume-machine/skills-index.json. Faceted normalized format v2.3.0. Operator decision C: the v2.3.0 schema is the source of truth. The correlator adapts via _build_facet_lookup() — not a flat array. Manually maintained.",
-      "file_path": "resume-machine/skills-index.json",
+      "description": "Personal skill catalog: data/skills-index.json. Faceted normalized format v2.3.0. Operator decision C: the v2.3.0 schema is the source of truth. The correlator adapts via _build_facet_lookup() — not a flat array. Manually maintained.",
+      "file_path": "data/skills-index.json",
       "schema_version": "2.3.0",
       "structure": "Object with top-level keys: @context, $schema, metadata, venues_catalog, skills_catalog, facet_catalog, skills. The correlator reads from facet_catalog only.",
       "facet_catalog": {
@@ -170,7 +170,7 @@
     },
     "resume_source_schema": {
       "description": "Base candidate data. Served by serve.py as /api/resume. Consumed by resume-machine.html to populate the resume section.",
-      "file_path": "resume-machine/resume.source.json",
+      "file_path": "data/resume.source.json",
       "required_sections": {
         "basics": {
           "name": "String. Full name.",
@@ -191,24 +191,24 @@
       {
         "id": "1_ingest",
         "name": "Ingest",
-        "input": "HTML job posting files in jobbankjobs/{year}/{month:02d}/{day:02d}/",
-        "script": "scripts/data_processing/py_extract_jobs.py — pure Python, invoked directly. No Node.js wrapper.",
-        "output": "One job JSON per posting at jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json containing job_title, employer, location, and all job_posting sub-fields."
+        "input": "HTML job posting files in data/jobbankjobs/{year}/{month:02d}/{day:02d}/",
+        "script": "src/data/py_extract_jobs.py — pure Python, invoked directly. No Node.js wrapper.",
+        "output": "One job JSON per posting at data/jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json containing job_title, employer, location, and all job_posting sub-fields."
       },
       {
         "id": "2_process",
         "name": "Process (Correlate & Adapt)",
-        "input": "job JSON + skills-index.json + role-based-templates/*.json",
+        "input": "job JSON + data/skills-index.json + data/role-based-templates/*.json",
         "operator_action": "Explicit operator step. Run per-job or batch via orchestrator. Correlation JSON is always overwritten on re-run. Letter JSON is written only if absent.",
-        "script": "scripts/data_processing/py_skill_job_correlator.py (imports py_adapter_correlator_to_template as module). Writes two output files.",
+        "script": "src/data/py_skill_job_correlator.py (imports src.models.py_adapter_correlator_to_template as module). Writes two output files.",
         "output": "Two co-located files: resume-{candidate}-{employer}-{title}.json (correlation, domain, highlights — always overwritten) and letter-{candidate}-{employer}-{title}.json (cover letter — written once, never overwritten)."
       },
       {
         "id": "3_ux",
         "name": "Browse & Print (UX)",
-        "input": "Correlation JSONs + letter JSONs in jobbankjobs/ + resume.source.json",
-        "server": "scripts/utilities/serve.py (Python stdlib http.server). Listens on localhost:8080. Serves ux/resume-machine.html and exposes /api/jobs, /api/resume, /api/correlation (read-only). /api/correlation merges the correlation JSON and its companion letter JSON before responding.",
-        "html": "ux/resume-machine.html (vanilla ES2020). Year selector (defaults to current year) + optional month filter + keyword search field. Results list updates in real time as operator types — month is an additive filter, not a gate. Selecting a job hydrates the cover letter panel and resume panel.",
+        "input": "Correlation JSONs + letter JSONs in data/jobbankjobs/ + data/resume.source.json",
+        "server": "src/api/serve.py (Python stdlib http.server). Listens on localhost:8080. Serves src/api/resume-machine.html and exposes /api/jobs, /api/resume, /api/correlation (read-only). /api/correlation merges the correlation JSON and its companion letter JSON before responding.",
+        "html": "src/api/resume-machine.html (vanilla ES2020). Year selector (defaults to current year) + optional month filter + keyword search field. Results list updates in real time as operator types — month is an additive filter, not a gate. Selecting a job hydrates the cover letter panel and resume panel.",
         "output": "Operator-triggered browser print → PDF. document.title pre-set to the output filename. Print layout: cover letter page 1 (if toggle checked) + resume page 2+."
       }
     ]
@@ -224,17 +224,20 @@
       "system": []
     },
     "filesystem_layout": {
-      "resume-machine/": "Application root. All scripts run from this directory.",
-      "resume-machine/scripts/data_processing/": "Extraction (py_extract_jobs.py) and correlation (py_skill_job_correlator.py).",
-      "resume-machine/scripts/template_management/": "Domain adapter (py_adapter_correlator_to_template.py). Imported as module by py_skill_job_correlator.py.",
-      "resume-machine/scripts/orchestration/": "process.py — primary batch/directory processing entry point.",
-      "resume-machine/scripts/utilities/": "config_manager.py, naming_utils.py, serve.py, logging_manager.py.",
-      "resume-machine/ux/": "resume-machine.html (main browsing and print interface).",
-      "resume-machine/role-based-templates/": "{domain}.json files. Single source of truth for keywords, facet_types, and highlights.",
-      "resume-machine/jobbankjobs/": "Source HTML and derived JSONs, organised by {year}/{month:02d}/{day:02d}/. Each processed job produces two JSON siblings: resume-*.json (correlation) and letter-*.json (cover letter).",
-      "resume-machine/config.yaml": "Application config: input_dir, output_dir, role_templates_dir, candidate_name, log_level.",
-      "resume-machine/skills-index.json": "Personal skill catalog. Array of skill objects. Manually maintained.",
-      "resume-machine/resume.source.json": "Base candidate data. Served as /api/resume."
+      "src/": "Python package root. All application modules live here.",
+      "src/data/": "Extraction and correlation scripts: py_extract_jobs.py, py_skill_job_correlator.py.",
+      "src/models/": "Domain adapter: py_adapter_correlator_to_template.py. Imported as module by py_skill_job_correlator.py.",
+      "src/utils/": "Shared utilities: config_manager.py, naming_utils.py, logging_manager.py.",
+      "src/api/": "HTTP server (serve.py) and browser UX (resume-machine.html).",
+      "scripts/": "Top-level operator-facing entry points. process.py: primary batch orchestration CLI.",
+      "config/": "Application configuration directory.",
+      "config/config.yaml": "Application config: candidate_name, jobbankjobs_dir, skills_index_path, resume_source_path, role_templates_dir, log_level.",
+      "data/": "Operator-maintained and derived data files.",
+      "data/role-based-templates/": "{domain}.json files. Single source of truth for keywords, facet_types, and highlights.",
+      "data/jobbankjobs/": "Source HTML and derived JSONs, organised by {year}/{month:02d}/{day:02d}/. Each processed job produces two JSON siblings: resume-*.json (correlation) and letter-*.json (cover letter).",
+      "data/skills-index.json": "Personal skill catalog. Faceted normalized format v2.3.0. Manually maintained.",
+      "data/resume.source.json": "Base candidate data. Served as /api/resume.",
+      "tests/": "Test suite: tests/unit/ and tests/integration/."
     }
   },
   "capability_layer": {
@@ -249,24 +252,24 @@
   "workflow_layer": {
     "ingest_workflow": {
       "description": "Operator step 1. Parse HTML job postings in a given directory and write one job JSON per posting alongside the source HTML.",
-      "entry_point": "python scripts/data_processing/py_extract_jobs.py <input_dir>",
-      "output": "job JSON files at jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json"
+      "entry_point": "python -m src.data.py_extract_jobs <input_dir>",
+      "output": "job JSON files at data/jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json"
     },
     "process_workflow": {
       "description": "Operator step 2. Correlates a job JSON against skills-index.json, infers domain, populates highlights. Always overwrites the correlation JSON. Writes the letter JSON only if it does not already exist.",
-      "entry_point_single": "python scripts/data_processing/py_skill_job_correlator.py <job_json_path>",
-      "entry_point_batch": "python scripts/orchestration/process.py --dir jobbankjobs/{year}/{month:02d}/{day:02d}",
+      "entry_point_single": "python -m src.data.py_skill_job_correlator <job_json_path>",
+      "entry_point_batch": "python scripts/process.py --dir data/jobbankjobs/{year}/{month:02d}/{day:02d}",
       "flags": [
         "--dry-run: print intended output paths without writing",
         "--name <candidate>: override candidate name in output filename (default: read from config.yaml)"
       ],
-      "output": "resume-{candidate}-{employer}-{title}.json and letter-{candidate}-{employer}-{title}.json, co-located in the job's date directory. Filesystem is the state — no external queue or manifest."
+      "output": "resume-{candidate}-{employer}-{title}.json and letter-{candidate}-{employer}-{title}.json, co-located in the job's date directory under data/jobbankjobs/. Filesystem is the state — no external queue or manifest."
     },
     "ux_workflow": {
       "description": "Operator launches local server, opens resume-machine.html, searches or filters for a job, selects it, reviews the rendered cover letter and resume, and prints to PDF.",
-      "entry_point": "python scripts/utilities/serve.py [--port 8080]",
+      "entry_point": "python -m src.api.serve [--port 8080]",
       "steps": [
-        "Server starts on localhost:8080. Serves ux/resume-machine.html as index.",
+        "Server starts on localhost:8080. Serves src/api/resume-machine.html as index.",
         "Page load: year selector defaults to current year. Month selector blank (no filter). Keyword field empty. /api/jobs?year=YYYY fetched and results list populated.",
         "Operator types a keyword: results list filtered client-side by job_title and employer (case-insensitive substring match). No server request.",
         "Operator optionally selects a month: /api/jobs?year=YYYY&month=MM fetched; results list repopulated. Keyword filter reapplied client-side over the new result set.",
@@ -283,22 +286,23 @@
     "python_module_structure": {
       "description": "All scripts are Python modules that import each other directly. No circular dependencies. No subprocess calls between local modules. Scripts run from resume-machine root.",
       "dependency_hierarchy": {
-        "scripts/data_processing/": "→ scripts/utilities/, scripts/template_management/",
-        "scripts/template_management/": "→ scripts/utilities/",
-        "scripts/orchestration/": "→ scripts/data_processing/, scripts/template_management/, scripts/utilities/",
-        "scripts/utilities/": "→ no internal dependencies"
+        "src/data/": "→ src/utils/, src/models/",
+        "src/models/": "→ src/utils/",
+        "scripts/process.py": "→ src/data/, src/models/, src/utils/",
+        "src/utils/": "→ no internal dependencies",
+        "src/api/": "→ src/utils/"
       }
     },
     "adapter_wiring_specifics": {
-      "call_pattern": "from scripts.template_management.py_adapter_correlator_to_template import infer_domain",
+      "call_pattern": "from src.models.py_adapter_correlator_to_template import infer_domain",
       "function_signature": "infer_domain(correlation_data: dict, role_templates_dir: str) → dict with keys: domain (str), featured_languages (list[str]), highlights (list[str], max 6)",
       "template_loading": "infer_domain() reads all *.json files from role_templates_dir at call time. Each must conform to role_template_schema.",
       "output_merge": "Returned dict merged into correlation_data before writing: correlation_data.update(infer_domain(...)). Cover letter data is written separately to the letter JSON — not merged here."
     },
     "cli_orchestrator_wiring": {
-      "entry_point": "python scripts/orchestration/process.py [--dir <dir>] [--file <file>] [--dry-run] [--name <candidate>]",
+      "entry_point": "python scripts/process.py [--dir <dir>] [--file <file>] [--dry-run] [--name <candidate>]",
       "flags": {
-        "--dir <dir>": "Process all job JSONs in the given directory. Default: resume-machine/jobbankjobs/",
+        "--dir <dir>": "Process all job JSONs in the given directory. Default: data/jobbankjobs/",
         "--file <file>": "Process a single job JSON. Mutually exclusive with --dir.",
         "--dry-run": "Print intended output paths and skip writing.",
         "--name <candidate>": "Override candidate name in output filename. Default: read from config.yaml."
@@ -308,9 +312,9 @@
     "ux_server_api": {
       "description": "serve.py exposes three read-only GET endpoints plus static file serving. No authentication. No mutation endpoints.",
       "endpoints": {
-        "GET /api/jobs?year=YYYY[&month=MM]": "Returns JSON array: [{path, job_title, employer, location, domain}] for all correlation JSONs under jobbankjobs/YYYY/ (or jobbankjobs/YYYY/MM/ if month supplied). Sorted newest-first by directory date. Includes domain to support client-side domain-based filtering in future.",
+        "GET /api/jobs?year=YYYY[&month=MM]": "Returns JSON array: [{path, job_title, employer, location, domain}] for all correlation JSONs under data/jobbankjobs/YYYY/ (or data/jobbankjobs/YYYY/MM/ if month supplied). Sorted newest-first by directory date. Includes domain to support client-side domain-based filtering in future.",
         "GET /api/resume": "Returns full content of resume.source.json. Returns 404 if file not found.",
-        "GET /api/correlation?path=jobbankjobs/YYYY/MM/DD/resume-*.json": "Reads the correlation JSON at the given path and its companion letter JSON (same directory, letter-* prefix). Merges and returns as a single object. Path validated to be within jobbankjobs/ (no directory traversal). Returns 404 if correlation file not found. Returns correlation without cover letter fields if the letter file is absent."
+        "GET /api/correlation?path=data/jobbankjobs/YYYY/MM/DD/resume-*.json": "Reads the correlation JSON at the given path and its companion letter JSON (same directory, letter-* prefix). Merges and returns as a single object. Path validated to be within data/jobbankjobs/ (no directory traversal). Returns 404 if correlation file not found. Returns correlation without cover letter fields if the letter file is absent."
       },
       "error_handling": "All endpoints return 500 on file read or parse failure. Errors logged internally; generic 500 returned to client."
     },
@@ -319,7 +323,7 @@
         "filters_panel": {
           "description": "Non-printable control panel. Hidden via @media print { display: none }.",
           "controls": {
-            "year_select": "Dropdown. Defaults to current year on page load. Populated from available year-level subdirectories in jobbankjobs/. Changing year triggers /api/jobs?year=YYYY fetch.",
+            "year_select": "Dropdown. Defaults to current year on page load. Populated from available year-level subdirectories in data/jobbankjobs/. Changing year triggers /api/jobs?year=YYYY fetch.",
             "month_select": "Dropdown. Blank by default (no month filter). Options: Jan–Dec. Selecting a month triggers /api/jobs?year=YYYY&month=MM fetch. Clearing it returns to full-year view.",
             "keyword_search": "Text input. Filters the loaded results list client-side by job_title and employer (case-insensitive substring). No server request. Active regardless of month selection state.",
             "cover_letter_toggle": "Checkbox, checked by default. When unchecked, cover_letter_section is hidden in screen and print views. No server request."
