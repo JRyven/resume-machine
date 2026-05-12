@@ -1,0 +1,367 @@
+{
+  "_meta": {
+    "name": "resume-machine",
+    "version": "1.1.0",
+    "description": "Standalone local application that ingests HTML job postings, correlates them against a personal skills index, and produces tailored resume PDFs — all driven through a browser-based UX served locally. No cloud dependency. No JSON Resume toolchain required at runtime. No Node.js dependency.",
+    "reading_order": [
+      "data_schemas",
+      "architecture_diagram",
+      "infrastructure",
+      "workflow_layer",
+      "wiring"
+    ],
+    "permanent_decisions": [
+      {
+        "id": "pd-001",
+        "decision": "Pure Python pipeline — no Node.js",
+        "rationale": "HTML job postings are static. BeautifulSoup4 + lxml handles all parsing without browser automation. Eliminates the only non-Python runtime, the cross-process ingest call, and the node_modules dependency surface."
+      },
+      {
+        "id": "pd-002",
+        "decision": "Cover letter stored in a separate file from the correlation JSON",
+        "rationale": "Cover letter content is operator-edited (volatile lifecycle); correlation facets are auto-generated (derived lifecycle). Separating them means the correlator can always overwrite its own output without risking manual edits. Eliminates the --force flag and the skip-if-present preservation logic."
+      },
+      {
+        "id": "pd-003",
+        "decision": "UX navigation: year (defaulted to current) + optional month filter + keyword text search. Month does not gate search.",
+        "rationale": "Operators know the employer or job title, not necessarily the processing date. All jobs for the current year are discoverable by default. Month is a refinement, not a prerequisite. Keyword filtering is client-side and always active regardless of month state. Eliminates the cascading day-select, two API endpoints, and two round-trips."
+      },
+      {
+        "id": "pd-004",
+        "decision": "skills-index.json is an array of structured skill objects",
+        "rationale": "Eliminates the flat-map vs. object-array ambiguity from v1.0. Structured objects support the proficiency, domain, years_experience, and verified fields needed for reliable facet matching."
+      },
+      {
+        "id": "pd-005",
+        "decision": "Deterministic pipeline — no agent graph, no operability section",
+        "rationale": "All stages are scripted, sequential, and stateless between runs. Agent orchestration adds no value. Operational commands belong in the README."
+      }
+    ]
+  },
+
+  "tech_stack_rationale": {
+    "python": {
+      "choice": "Python 3.10+ for all processing scripts and the UX server",
+      "roles": ["extraction", "correlation", "adaptation", "orchestration", "http server"],
+      "external_dependencies": ["beautifulsoup4 (HTML parsing)", "lxml (HTML parsing backend)"]
+    },
+    "html_css_js": {
+      "choice": "Vanilla HTML/CSS/ES2020 for resume-machine.html",
+      "roles": ["UX rendering", "job search and selection", "print-to-PDF"],
+      "properties": ["No build step", "Served directly from filesystem", "Plain ES2020, no framework"]
+    }
+  },
+
+  "data_schemas": {
+    "job_json_schema": {
+      "description": "Output of extraction stage. One file per job posting. Co-located with source HTML.",
+      "file_path_pattern": "jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json",
+      "required_fields": {
+        "job_title": "String. Title of the job position.",
+        "employer": "String. Company or organization name.",
+        "location": "String. Geographic location or 'Remote'.",
+        "job_posting.required_skills": "Array of strings. Skills explicitly marked as required.",
+        "job_posting.additional_skills": "Array of strings. Nice-to-have or preferred skills.",
+        "job_posting.responsibilities": "Array of strings. Key responsibilities and duties.",
+        "job_posting.overview": "String. 1-2 sentence summary of the role.",
+        "job_posting.specialization": "String. Domain hint (e.g., 'backend', 'devops', 'fullstack')."
+      }
+    },
+
+    "correlation_json_schema": {
+      "description": "Canonical per-job record containing facet correlations, domain inference, and highlights. Co-located with source job JSON. Does NOT contain the cover letter — that lives in the companion letter JSON. Always overwritten on re-correlation. Manually editable post-generation.",
+      "file_path_pattern": "jobbankjobs/{year}/{month:02d}/{day:02d}/resume-{candidate}-{employer}-{title}.json",
+      "required_fields": {
+        "metadata": {
+          "job_title": "String. Populated from job JSON. Used in UX job list and cover letter.",
+          "employer": "String. Populated from job JSON. Used in UX job list and cover letter.",
+          "location": "String. Populated from job JSON.",
+          "generated_at": "String. ISO 8601 UTC timestamp of last correlation run.",
+          "job_json": "String. Absolute path to the source job JSON file.",
+          "skills_index": "String. Absolute path to the skills-index.json used during this correlation."
+        },
+        "summary": {
+          "total_correlations": "Integer. Count of all matched facets.",
+          "hard_gaps_count": "Integer. Count of distinct HARD_GAP terms. NOTE: derivable from correlations[]; stored for human readability. See technical_debt_tracker.",
+          "tag_distribution": "Object. Map of tag → count. NOTE: derivable from correlations[]; stored for human readability. See technical_debt_tracker."
+        },
+        "correlations": "Array of objects. Each: { term (string), type (string: facet type from role template), tag (one of: LEAD_STRENGTH | SOLID_MATCH | PARTIAL_MATCH | UNTESTED_CLAIM | GAP_ADJACENCY | HARD_GAP), notes (string) }",
+        "hard_gaps": "Array of objects. Each: { term (string), context (string: where the term appeared, e.g. 'required_skills') }. NOTE: derivable from correlations[]; stored for human readability.",
+        "domain": "String. Inferred by adapter. One of: devops | backend | frontend | fullstack | manager | ai | database | sted.",
+        "featured_languages": "Array of strings. Primary programming languages and platforms derived from matched role template keywords.",
+        "highlights": "Array of plain-text strings (max 6). Domain-matched highlights from role template. Top 3 rendered in the resume summary panel. No HTML."
+      }
+    },
+
+    "cover_letter_json_schema": {
+      "description": "Operator-editable cover letter content. Stored separately from the correlation JSON so re-correlation never overwrites manual edits. Generated once at first correlation run; never touched again by the pipeline unless the file is absent.",
+      "file_path_pattern": "jobbankjobs/{year}/{month:02d}/{day:02d}/letter-{candidate}-{employer}-{title}.json",
+      "required_fields": {
+        "opening": "String. Salutation + opening statement. Must reference job_title and employer.",
+        "value_proposition": "String. 2-3 sentences derived from LEAD_STRENGTH facets.",
+        "relevant_experience": "Array of strings (max 5). One per top SOLID_MATCH or LEAD_STRENGTH facet.",
+        "closing": "String. Call to action referencing employer."
+      },
+      "generation_rule": "Written once when the correlation JSON is first generated. Never overwritten by subsequent correlator runs. Operator edits this file directly to refine cover letter content. If the file is absent when the correlator runs, it is regenerated from correlation data."
+    },
+
+    "role_template_schema": {
+      "description": "Single file per job domain. Single source of truth consumed by the adapter at runtime.",
+      "file_path_pattern": "role-based-templates/{domain}.json",
+      "known_domains": ["devops", "backend", "frontend", "fullstack", "manager", "ai", "database", "sted"],
+      "required_fields": {
+        "domain": "String. Must match filename and be one of known_domains.",
+        "keywords": "Array of strings. Terms from job postings that indicate this domain.",
+        "facet_types": "Array of strings. Categories of skills/concepts (e.g., 'language', 'framework', 'practice', 'tool', 'platform').",
+        "highlights": "Array of 6+ plain-text strings. Domain strengths used to populate correlation.highlights[]."
+      }
+    },
+
+    "skills_index_schema": {
+      "description": "Personal skill catalog: resume-machine/skills-index.json. Array of structured skill objects. Drives correlation scoring. Manually maintained.",
+      "file_path": "resume-machine/skills-index.json",
+      "structure": "Array of skill objects. Each entry conforms to skill_object_format.",
+      "skill_object_format": {
+        "name": "String. Required. Skill or technology name (e.g., 'React', 'PostgreSQL', 'Terraform').",
+        "proficiency": "String. Required. One of: expert | proficient | familiar.",
+        "domain": "String. Optional. Domain tag (e.g., 'frontend', 'devops').",
+        "years_experience": "Integer. Optional.",
+        "verified": "Boolean. Optional. True if demonstrated in a production context."
+      },
+      "usage": "Correlator reads this array at runtime. For each job posting term, searches by name prefix matching. Matched skills tagged per facet type and proficiency."
+    },
+
+    "resume_source_schema": {
+      "description": "Base candidate data. Served by serve.py as /api/resume. Consumed by resume-machine.html to populate the resume section.",
+      "file_path": "resume-machine/resume.source.json",
+      "required_sections": {
+        "basics": {
+          "name": "String. Full name.",
+          "email": "String.",
+          "phone": "String.",
+          "location": "String or object: { address, postalCode, city, countryCode }.",
+          "profiles": "Array of { network (string), username (string), url (string, optional) }."
+        },
+        "work": "Array of { company, position, startDate (YYYY-MM-DD), endDate (YYYY-MM-DD or null if current), summary }. Sorted reverse chronological.",
+        "education": "Array of { institution, studyType, area, startDate (optional), endDate (optional) }.",
+        "skills": "Array of { name, level (optional), keywords (optional array) }."
+      }
+    }
+  },
+
+  "architecture_diagram": {
+    "_comment": "Top-to-bottom pipeline. Each stage has one canonical input and one canonical output.",
+    "stages": [
+      {
+        "id": "1_ingest",
+        "name": "Ingest",
+        "input": "HTML job posting files in jobbankjobs/{year}/{month:02d}/{day:02d}/",
+        "script": "scripts/data_processing/py_extract_jobs.py — pure Python, invoked directly. No Node.js wrapper.",
+        "output": "One job JSON per posting at jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json containing job_title, employer, location, and all job_posting sub-fields."
+      },
+      {
+        "id": "2_process",
+        "name": "Process (Correlate & Adapt)",
+        "input": "job JSON + skills-index.json + role-based-templates/*.json",
+        "operator_action": "Explicit operator step. Run per-job or batch via orchestrator. Correlation JSON is always overwritten on re-run. Letter JSON is written only if absent.",
+        "script": "scripts/data_processing/py_skill_job_correlator.py (imports py_adapter_correlator_to_template as module). Writes two output files.",
+        "output": "Two co-located files: resume-{candidate}-{employer}-{title}.json (correlation, domain, highlights — always overwritten) and letter-{candidate}-{employer}-{title}.json (cover letter — written once, never overwritten)."
+      },
+      {
+        "id": "3_ux",
+        "name": "Browse & Print (UX)",
+        "input": "Correlation JSONs + letter JSONs in jobbankjobs/ + resume.source.json",
+        "server": "scripts/utilities/serve.py (Python stdlib http.server). Listens on localhost:8080. Serves ux/resume-machine.html and exposes /api/jobs, /api/resume, /api/correlation (read-only). /api/correlation merges the correlation JSON and its companion letter JSON before responding.",
+        "html": "ux/resume-machine.html (vanilla ES2020). Year selector (defaults to current year) + optional month filter + keyword search field. Results list updates in real time as operator types — month is an additive filter, not a gate. Selecting a job hydrates the cover letter panel and resume panel.",
+        "output": "Operator-triggered browser print → PDF. document.title pre-set to the output filename. Print layout: cover letter page 1 (if toggle checked) + resume page 2+."
+      }
+    ]
+  },
+
+  "infrastructure": {
+    "runtime": "Python 3.10+ on macOS (primary). Single-threaded, no containerisation required. Runs on operator's local machine only.",
+    "dependencies": {
+      "python_packages": ["beautifulsoup4 (HTML parsing)", "lxml (HTML parsing backend)"],
+      "node_packages": [],
+      "system": []
+    },
+    "filesystem_layout": {
+      "resume-machine/": "Application root. All scripts run from this directory.",
+      "resume-machine/scripts/data_processing/": "Extraction (py_extract_jobs.py) and correlation (py_skill_job_correlator.py).",
+      "resume-machine/scripts/template_management/": "Domain adapter (py_adapter_correlator_to_template.py). Imported as module by py_skill_job_correlator.py.",
+      "resume-machine/scripts/orchestration/": "process.py — primary batch/directory processing entry point.",
+      "resume-machine/scripts/utilities/": "config_manager.py, naming_utils.py, serve.py, logging_manager.py.",
+      "resume-machine/ux/": "resume-machine.html (main browsing and print interface).",
+      "resume-machine/role-based-templates/": "{domain}.json files. Single source of truth for keywords, facet_types, and highlights.",
+      "resume-machine/jobbankjobs/": "Source HTML and derived JSONs, organised by {year}/{month:02d}/{day:02d}/. Each processed job produces two JSON siblings: resume-*.json (correlation) and letter-*.json (cover letter).",
+      "resume-machine/config.yaml": "Application config: input_dir, output_dir, role_templates_dir, candidate_name, log_level.",
+      "resume-machine/skills-index.json": "Personal skill catalog. Array of skill objects. Manually maintained.",
+      "resume-machine/resume.source.json": "Base candidate data. Served as /api/resume."
+    }
+  },
+
+  "capability_layer": {
+    "_note": "Intentionally not detailed here. Capabilities are fully described in architecture_diagram.stages and workflow_layer."
+  },
+
+  "role_definitions": {
+    "_note": "Not applicable. See permanent_decision pd-005."
+  },
+
+  "agent_graphs": {
+    "_note": "Not applicable. See permanent_decision pd-005."
+  },
+
+  "workflow_layer": {
+    "ingest_workflow": {
+      "description": "Operator step 1. Parse HTML job postings in a given directory and write one job JSON per posting alongside the source HTML.",
+      "entry_point": "python scripts/data_processing/py_extract_jobs.py <input_dir>",
+      "output": "job JSON files at jobbankjobs/{year}/{month:02d}/{day:02d}/{slug}.json"
+    },
+    "process_workflow": {
+      "description": "Operator step 2. Correlates a job JSON against skills-index.json, infers domain, populates highlights. Always overwrites the correlation JSON. Writes the letter JSON only if it does not already exist.",
+      "entry_point_single": "python scripts/data_processing/py_skill_job_correlator.py <job_json_path>",
+      "entry_point_batch": "python scripts/orchestration/process.py --dir jobbankjobs/{year}/{month:02d}/{day:02d}",
+      "flags": [
+        "--dry-run: print intended output paths without writing",
+        "--name <candidate>: override candidate name in output filename (default: read from config.yaml)"
+      ],
+      "output": "resume-{candidate}-{employer}-{title}.json and letter-{candidate}-{employer}-{title}.json, co-located in the job's date directory. Filesystem is the state — no external queue or manifest."
+    },
+    "ux_workflow": {
+      "description": "Operator launches local server, opens resume-machine.html, searches or filters for a job, selects it, reviews the rendered cover letter and resume, and prints to PDF.",
+      "entry_point": "python scripts/utilities/serve.py [--port 8080]",
+      "steps": [
+        "Server starts on localhost:8080. Serves ux/resume-machine.html as index.",
+        "Page load: year selector defaults to current year. Month selector blank (no filter). Keyword field empty. /api/jobs?year=YYYY fetched and results list populated.",
+        "Operator types a keyword: results list filtered client-side by job_title and employer (case-insensitive substring match). No server request.",
+        "Operator optionally selects a month: /api/jobs?year=YYYY&month=MM fetched; results list repopulated. Keyword filter reapplied client-side over the new result set.",
+        "Operator selects a job: /api/correlation?path=... fetched (server merges correlation JSON + letter JSON) and /api/resume fetched (cached after first call). Cover letter panel and resume panel hydrated.",
+        "Operator may toggle the cover letter checkbox: hides/shows cover_letter_section in screen and print. No server request.",
+        "Operator presses Cmd+P or Ctrl+P: document.title set to resume-{candidate}-{employer}-{title} before window.print(). Browser print dialog opens with filename pre-populated. Operator confirms; PDF saved."
+      ]
+    }
+  },
+
+  "control_layer": {
+    "_note": "Config via config.yaml (application settings) and skills-index.json (skill catalog). Both documented in infrastructure.filesystem_layout and data_schemas respectively."
+  },
+
+  "wiring": {
+    "python_module_structure": {
+      "description": "All scripts are Python modules that import each other directly. No circular dependencies. No subprocess calls between local modules. Scripts run from resume-machine root.",
+      "dependency_hierarchy": {
+        "scripts/data_processing/": "→ scripts/utilities/, scripts/template_management/",
+        "scripts/template_management/": "→ scripts/utilities/",
+        "scripts/orchestration/": "→ scripts/data_processing/, scripts/template_management/, scripts/utilities/",
+        "scripts/utilities/": "→ no internal dependencies"
+      }
+    },
+    "adapter_wiring_specifics": {
+      "call_pattern": "from scripts.template_management.py_adapter_correlator_to_template import infer_domain",
+      "function_signature": "infer_domain(correlation_data: dict, role_templates_dir: str) → dict with keys: domain (str), featured_languages (list[str]), highlights (list[str], max 6)",
+      "template_loading": "infer_domain() reads all *.json files from role_templates_dir at call time. Each must conform to role_template_schema.",
+      "output_merge": "Returned dict merged into correlation_data before writing: correlation_data.update(infer_domain(...)). Cover letter data is written separately to the letter JSON — not merged here."
+    },
+    "cli_orchestrator_wiring": {
+      "entry_point": "python scripts/orchestration/process.py [--dir <dir>] [--file <file>] [--dry-run] [--name <candidate>]",
+      "flags": {
+        "--dir <dir>": "Process all job JSONs in the given directory. Default: resume-machine/jobbankjobs/",
+        "--file <file>": "Process a single job JSON. Mutually exclusive with --dir.",
+        "--dry-run": "Print intended output paths and skip writing.",
+        "--name <candidate>": "Override candidate name in output filename. Default: read from config.yaml."
+      },
+      "implementation": "Loops over target job JSONs. Calls correlator logic as imported function (not subprocess). Writes correlation JSON (always) and letter JSON (if absent). Exits 0 on success, non-zero on error."
+    },
+    "ux_server_api": {
+      "description": "serve.py exposes three read-only GET endpoints plus static file serving. No authentication. No mutation endpoints.",
+      "endpoints": {
+        "GET /api/jobs?year=YYYY[&month=MM]": "Returns JSON array: [{path, job_title, employer, location, domain}] for all correlation JSONs under jobbankjobs/YYYY/ (or jobbankjobs/YYYY/MM/ if month supplied). Sorted newest-first by directory date. Includes domain to support client-side domain-based filtering in future.",
+        "GET /api/resume": "Returns full content of resume.source.json. Returns 404 if file not found.",
+        "GET /api/correlation?path=jobbankjobs/YYYY/MM/DD/resume-*.json": "Reads the correlation JSON at the given path and its companion letter JSON (same directory, letter-* prefix). Merges and returns as a single object. Path validated to be within jobbankjobs/ (no directory traversal). Returns 404 if correlation file not found. Returns correlation without cover letter fields if the letter file is absent."
+      },
+      "error_handling": "All endpoints return 500 on file read or parse failure. Errors logged internally; generic 500 returned to client."
+    },
+    "ux_design": {
+      "layout": {
+        "filters_panel": {
+          "description": "Non-printable control panel. Hidden via @media print { display: none }.",
+          "controls": {
+            "year_select": "Dropdown. Defaults to current year on page load. Populated from available year-level subdirectories in jobbankjobs/. Changing year triggers /api/jobs?year=YYYY fetch.",
+            "month_select": "Dropdown. Blank by default (no month filter). Options: Jan–Dec. Selecting a month triggers /api/jobs?year=YYYY&month=MM fetch. Clearing it returns to full-year view.",
+            "keyword_search": "Text input. Filters the loaded results list client-side by job_title and employer (case-insensitive substring). No server request. Active regardless of month selection state.",
+            "cover_letter_toggle": "Checkbox, checked by default. When unchecked, cover_letter_section is hidden in screen and print views. No server request."
+          }
+        },
+        "results_list": {
+          "description": "Scrollable list of jobs matching current year + optional month + keyword filters. Each row: job_title, employer, date. Selecting a row fetches and hydrates the printable area.",
+          "empty_state": "If no jobs match filters, display inline: 'No results for current filters.'"
+        },
+        "printable_area": {
+          "cover_letter_section": {
+            "visibility": "Controlled by cover_letter_toggle. display:none when unchecked — hidden in both screen and print.",
+            "page_break": "page-break-after: always — cover letter occupies its own printed page.",
+            "data_sources": {
+              "candidate_header": "basics.name, basics.email, basics.phone, basics.location — from /api/resume",
+              "date": "Current date formatted as 'Month DD, YYYY' — generated client-side",
+              "recipient": "metadata.employer — from merged /api/correlation response",
+              "cover_letter_fields": "opening, value_proposition, relevant_experience[], closing — from merged /api/correlation response"
+            }
+          },
+          "resume_section": {
+            "visibility": "Always visible in the printable area.",
+            "data_sources": {
+              "contact": "basics.name, basics.email, basics.phone, basics.location, basics.profiles[] — from /api/resume",
+              "summary": "highlights[0..2] (top 3 plain-text strings) — from merged /api/correlation response",
+              "work_history": "work[] — from /api/resume, reverse chronological",
+              "skills": "skills[].name — from /api/resume",
+              "education": "education[] — from /api/resume"
+            }
+          }
+        }
+      },
+      "data_flow": {
+        "on_page_load": "Fetch /api/jobs?year={current_year}. Populate results list. Year select defaults to current year. Month select blank. Keyword field empty.",
+        "on_year_change": "Fetch /api/jobs?year=YYYY. Repopulate results list. Reapply keyword filter client-side over new result set.",
+        "on_month_change": "If month selected: fetch /api/jobs?year=YYYY&month=MM. If cleared: fetch /api/jobs?year=YYYY. Reapply keyword filter client-side over new result set.",
+        "on_keyword_input": "Filter current results list client-side by job_title and employer. No server request.",
+        "on_job_select": "Fetch /api/correlation?path=... and /api/resume (cache after first fetch). Hydrate cover_letter_section and resume_section.",
+        "on_cover_letter_toggle": "Toggle CSS class on cover_letter_section. No server request.",
+        "on_print": "Set document.title = 'resume-{candidate}-{employer}-{title}' to pre-populate browser save dialog filename. Call window.print(). @media print applied: filters_panel hidden, cover_letter_section page-break-after:always."
+      },
+      "print_requirements": {
+        "page_size": "Letter (8.5in × 11in)",
+        "margins": "0.7in on all sides",
+        "cover_letter_page_break": "page-break-after: always on cover_letter_section",
+        "filters_hidden": "@media print { .filters-panel { display: none; } }",
+        "fonts": "Source Serif Pro for body text, Inter for UI controls"
+      }
+    }
+  },
+
+  "data_strategy": {
+    "_note": "Data schemas are the authoritative source. See data_schemas. File organization follows infrastructure.filesystem_layout."
+  },
+
+  "operability": {
+    "_note": "Operational commands belong in the README. See workflow_layer for executable entry points and flags."
+  },
+
+  "environments": {
+    "_note": "Develop vs. production configuration (mock data paths, dry-run defaults) belongs in config YAML files and the README, not the north-star."
+  },
+
+  "technical_debt_tracker": {
+    "items": [
+      {
+        "id": "td-001",
+        "description": "summary.hard_gaps_count, summary.tag_distribution, and hard_gaps[] are all derivable from correlations[] at read time. Currently stored redundantly in the correlation JSON for human readability of the raw file. Risk: these fields can drift out of sync if the file is manually edited.",
+        "severity": "low",
+        "options": [
+          "Accept the redundancy and document it as intentional (current stance).",
+          "Remove the fields and derive them in serve.py's /api/correlation handler before returning to the client."
+        ]
+      }
+    ]
+  }
+}

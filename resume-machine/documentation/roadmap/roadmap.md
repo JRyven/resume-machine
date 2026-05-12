@@ -36,7 +36,7 @@ Ensure that we're developing a robust representation of test data in `/mock-data
 
 ⚠️ LIMIT: Only 2 project allowed in this section
 
-#### [Optimizations]
+#### Project: [Optimizations]
 '''
 Establishing better organization system within /scripts/ that makes the role of each file clearer, adding a shared naming helper used by batch-process.sh so both runners behave identically, updating py_skill_job_correlator.py to populate metadata.job_title and metadata.employer upstream, and refactoring DOMAIN_PATTERNS to use template files.
 '''
@@ -92,7 +92,7 @@ The current implementation has domain patterns hardcoded within the Python scrip
 - [ ] [Test that the refactored approach maintains performance and portability]: Verify that the refactored approach works correctly.
 - [ ] [Update documentation to reflect the new hybrid approach]: Update any relevant documentation.
 
-#### [Migrate to a system modifyable system]
+#### Project: [Migrate to a modifyable system]
 
 Output correlated resume data as json
 - json with resume file name (EG: resume-James-software-developer-Kanata-ON-Job-posting-Job-Bank.json)
@@ -111,7 +111,7 @@ Duplicate manual-cover-letter.html as resume-machine.html.
 
 ### Backlog
 
-#### [Keyword Analysis]
+#### Project: [Keyword Analysis]
 
 https://github.com/srbhr/Resume-Matcher
 
@@ -165,17 +165,17 @@ priority: high
 
 ### Complete
 
-#### [Batch Processing System for Resumes]
+#### Project: [Batch Processing System for Resumes]
 
 Building a batch processing system to ingest HTML job postings, preprocess resume data, and generate tailored cover letter/resume PDFs. Currently setting up HTML data extraction using Puppeteer and configuring the workflow with Bash scripts.
 
-#### [HTML Data Extraction]
+#### Project: [HTML Data Extraction]
 
 Extract key data from each HTML job posting file and save it into preprocess-batch-export-resume.json.
 
 [Install Puppeteer]: Set up Node.js environment and install Puppeteer.
 
-#### [Batch Processing System for Resumes]
+#### Project: [Batch Processing System for Resumes]
 
 #### Project: Environment Setup & Dependencies
 
@@ -203,7 +203,7 @@ python --version  # Should show 3.10+
 resumed --version  # Should show current version
 ```
 
-#### [Environment Setup & Dependencies]
+#### Project: [Environment Setup & Dependencies]
 
 #### Project: Theme Selection & Baseline
 

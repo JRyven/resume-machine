@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Voyante North Star Schema",
+  "type": "object",
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "reading_order": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "permanent_decisions": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "description",
+        "reading_order",
+        "permanent_decisions"
+      ]
+    },
+    "tech_stack_rationale": {
+      "type": "object"
+    },
+    "architecture_diagram": {
+      "type": "object"
+    },
+    "infrastructure": {
+      "type": "object"
+    },
+    "capability_layer": {
+      "type": "object"
+    },
+    "role_definitions": {
+      "type": "object"
+    },
+    "agent_graphs": {
+      "type": "object"
+    },
+    "workflow_layer": {
+      "type": "object"
+    },
+    "control_layer": {
+      "type": "object"
+    },
+    "wiring": {
+      "type": "object"
+    },
+    "data_strategy": {
+      "type": "object"
+    },
+    "operability": {
+      "type": "object"
+    },
+    "environments": {
+      "type": "object"
+    },
+    "technical_debt_tracker": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "_meta",
+    "tech_stack_rationale",
+    "architecture_diagram",
+    "infrastructure",
+    "capability_layer",
+    "role_definitions",
+    "agent_graphs",
+    "workflow_layer",
+    "control_layer",
+    "wiring",
+    "data_strategy",
+    "operability",
+    "environments",
+    "technical_debt_tracker"
+  ]
+}

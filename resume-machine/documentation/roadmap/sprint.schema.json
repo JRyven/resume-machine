@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sprint Manifest Schema",
+  "type": "object",
+  "properties": {
+    "_meta": {
+      "type": "object"
+    },
+    "phases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "what": {
+                  "type": "string"
+                },
+                "how": {
+                  "type": [
+                    "string",
+                    "object"
+                  ]
+                },
+                "vars": {
+                  "type": "object"
+                },
+                "priority": {
+                  "type": "string"
+                },
+                "depends_on": {
+                  "type": "array"
+                },
+                "module": {
+                  "type": "string"
+                },
+                "done_when": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "notes": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "what"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "tasks"
+        ]
+      }
+    }
+  },
+  "required": [
+    "phases"
+  ]
+}
