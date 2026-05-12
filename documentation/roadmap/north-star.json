@@ -127,8 +127,7 @@
         "fullstack",
         "manager",
         "ai",
-        "database",
-        "sted"
+        "database"
       ],
       "required_fields": {
         "domain": "String. Must match filename and be one of known_domains.",
@@ -297,12 +296,14 @@
       "call_pattern": "from src.models.py_adapter_correlator_to_template import infer_domain",
       "function_signature": "infer_domain(correlation_data: dict, role_templates_dir: str) → dict with keys: domain (str), featured_languages (list[str]), highlights (list[str], max 6)",
       "template_loading": "infer_domain() reads all *.json files from role_templates_dir at call time. Each must conform to role_template_schema.",
+      "domain_scoring": "Score each template by counting how many of its keywords appear as term values in correlation_data['correlations'][]. All tags count toward the score — not just LEAD_STRENGTH. Higher score wins; ties broken alphabetically by domain name.",
+      "featured_languages_list": "Python, JavaScript, TypeScript, Go, Java, Rust, C++, SQL, Bash, Ruby, PHP. Matched case-insensitively against term values in correlations[]. SQL is matched as an exact token only — not as a substring of SQL/MySQL.",
       "output_merge": "Returned dict merged into correlation_data before writing: correlation_data.update(infer_domain(...)). Cover letter data is written separately to the letter JSON — not merged here."
     },
     "cli_orchestrator_wiring": {
       "entry_point": "python scripts/process.py [--dir <dir>] [--file <file>] [--dry-run] [--name <candidate>]",
       "flags": {
-        "--dir <dir>": "Process all job JSONs in the given directory. Default: data/jobbankjobs/",
+        "--dir <dir>": "Process all job JSONs in the given day-level directory (e.g. data/jobbankjobs/YYYY/MM/DD). Does not recurse into subdirectories.",
         "--file <file>": "Process a single job JSON. Mutually exclusive with --dir.",
         "--dry-run": "Print intended output paths and skip writing.",
         "--name <candidate>": "Override candidate name in output filename. Default: read from config.yaml."

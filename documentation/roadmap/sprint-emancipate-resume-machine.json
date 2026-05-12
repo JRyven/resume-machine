@@ -6,7 +6,7 @@
     "authored_from": "north-star.json v1.1.0",
     "companion": "migration-manifest.json v1.0.0",
     "sprint_goal": "Deliver a fully operational local resume-machine that ingests HTML job postings, correlates them against a structured skills index, adapts output to domain-specific role templates, and exposes a browser-based UX with year/month/keyword navigation and print-to-PDF — all in pure Python with no Node.js runtime.",
-    "pd-004-override": "skills-index.json remains in v2.3.0 facet_catalog format (operator decision C). The correlator adapts via _build_facet_lookup(). north-star skills_index_schema requires a follow-up update to reflect this."
+    "pd-004-override": "skills-index.json remains in v2.3.0 facet_catalog format (operator decision C). The correlator adapts via _build_facet_lookup(). north-star skills_index_schema updated in commit 63a3b20."
   },
   "phases": [
     {
@@ -50,14 +50,14 @@
         {
           "id": "p0-t3",
           "title": "Restructure role-based-templates to sprint format",
-          "what": "Convert the 5 existing role template files from the {featured_languages, highlight_1...N} format to the sprint's {domain, keywords[], facet_types[], highlights[]} format. Rename files from resume.{domain}.json to {domain}.json. Drop crm, defaults, and YAML siblings. Note: backend, frontend, fullstack templates are ABSENT — they are created in p2-t1, not here.",
+          "what": "Convert the 4 existing role template files from the {featured_languages, highlight_1...N} format to the sprint's {domain, keywords[], facet_types[], highlights[]} format. Rename files from resume.{domain}.json to {domain}.json. Drop crm, defaults, and YAML siblings. Note: backend, frontend, fullstack templates are ABSENT — they are created in p2-t1, not here. sted is dropped per operator decision.",
           "how": {
             "steps": [
-              "For each of ai (from resume.ai.json), database, devops, manager, sted: create a new data/role-based-templates/{domain}.json with: domain = filename stem; keywords = sorted array from DOMAIN_PATTERNS in src/models/py_adapter_correlator_to_template.py (for ai use ml_ai entry); facet_types = sorted array from DOMAIN_PATTERNS; highlights = array built from resume.{domain}.json highlight_1..N values with all <strong> and </strong> tags stripped. If the file has fewer than 6 highlights, add de-HTML'd strings from DOMAIN_PATTERNS highlights until 6 are present.",
-              "For sted: no DOMAIN_PATTERNS entry exists. Use resume.sted.json highlights as-is (strip HTML). Add a '_note' field: 'keywords and facet_types require operator input; sted domain detection will fall back to DEFAULT_DOMAIN until populated.'",
+              "For each of ai (from resume.ai.json), database, devops, manager: create a new data/role-based-templates/{domain}.json with: domain = filename stem; keywords = sorted array from DOMAIN_PATTERNS in src/models/py_adapter_correlator_to_template.py (for ai use ml_ai entry); facet_types = sorted array from DOMAIN_PATTERNS; highlights = array built from resume.{domain}.json highlight_1..N values with all <strong> and </strong> tags stripped. If the file has fewer than 6 highlights, add de-HTML'd strings from DOMAIN_PATTERNS highlights until 6 are present.",
+              "For sted: delete resume.sted.json (drop per operator decision — sted domain is removed from known_domains).",
               "Delete resume.crm.json (drop-010), resume.defaults.json, resume.defaults.yaml, resume.ai.yaml, resume.database.yaml (drop-011).",
               "Delete the source resume.*.json files after the new {domain}.json files are written and verified as valid JSON.",
-              "Verify: exactly 5 .json files exist under data/role-based-templates/ (ai.json, database.json, devops.json, manager.json, sted.json). No resume.*.json, no .yaml files, no default/ subdirectory."
+              "Verify: exactly 4 .json files exist under data/role-based-templates/ (ai.json, database.json, devops.json, manager.json). No resume.*.json, no .yaml files, no default/ subdirectory."
             ]
           },
           "module": "data/role-based-templates/",
@@ -138,19 +138,8 @@
     {
       "id": "p1",
       "title": "Foundation — Utilities, Configuration, and Static Data",
-      "description": "Establish the shared utility layer (logging, config, naming), application configuration, the structured skills catalog (pd-004), and base candidate data. All downstream phases import from this layer. utilities/ has no internal dependencies.",
+      "description": "Implement the two new shared utility modules: logging_manager.py and config_manager.py. config/config.yaml is reconciled in p0-t5, naming_utils.py is extended in p0-t6, data/skills-index.json is kept as-is (v2.3.0 facet_catalog format), and data/resume.source.json has placeholders stripped in p0-t4. All downstream phases import from this layer.",
       "tasks": [
-        {
-          "id": "p1-t1",
-          "title": "Create config.yaml",
-          "what": "Write the application configuration file recording candidate_name, jobbankjobs_dir, skills_index_path, resume_source_path, and role_templates_dir.",
-          "how": "Define exactly five top-level YAML keys. All path values are relative to the project root. candidate_name defaults to an empty string (overridable at runtime via --name flag).",
-          "module": "config/config.yaml",
-          "priority": "high",
-          "depends_on": [],
-          "done_when": "config/config.yaml exists under the config/ directory and contains all five keys; the four path fields have non-empty string values.",
-          "status": "todo"
-        },
         {
           "id": "p1-t2",
           "title": "Create logging_manager.py",
@@ -178,52 +167,10 @@
           "module": "src/utils/config_manager.py",
           "priority": "high",
           "depends_on": [
-            "p1-t1",
+            "p0-t5",
             "p1-t2"
           ],
           "done_when": "load_config() returns a dict with all five keys; all four path values are absolute pathlib-resolved strings; calling it when config.yaml is absent raises FileNotFoundError whose message contains the expected path.",
-          "status": "todo"
-        },
-        {
-          "id": "p1-t4",
-          "title": "Create naming_utils.py",
-          "what": "Implement four pure functions for consistent slug and output-path generation used by the extractor, correlator, and server.",
-          "how": {
-            "steps": [
-              "slugify(text: str) → str: lowercase; replace all non-alphanumeric characters with hyphens; collapse consecutive hyphens into one; strip leading and trailing hyphens.",
-              "job_json_path(base_dir: str, year: int, month: int, day: int, slug: str) → str: returns '{base_dir}/{year}/{month:02d}/{day:02d}/{slug}.json'.",
-              "correlation_json_path(base_dir: str, year: int, month: int, day: int, candidate: str, employer: str, title: str) → str: applies slugify to employer and title; returns path to 'resume-{candidate}-{slugified_employer}-{slugified_title}.json' inside the datestamped directory.",
-              "cover_letter_json_path(base_dir: str, year: int, month: int, day: int, candidate: str, employer: str, title: str) → str: identical structure to correlation_json_path but with the 'letter-' prefix instead of 'resume-'."
-            ]
-          },
-          "module": "src/utils/naming_utils.py",
-          "priority": "high",
-          "depends_on": [
-            "p1-t2"
-          ],
-          "done_when": "slugify('Software Engineer (Senior)') returns 'software-engineer-senior'; correlation_json_path and cover_letter_json_path return paths in the correct datestamped directory with their respective prefixes; all four functions are importable from src.utils.naming_utils and produce correct output without any filesystem access.",
-          "status": "todo"
-        },
-        {
-          "id": "p1-t5",
-          "title": "Create skills-index.json",
-          "what": "Populate the skills catalog as a JSON array of structured skill objects per pd-004. Every object must carry name and proficiency; domain, years_experience, and verified are optional.",
-          "how": "Write a representative initial array covering multiple domains. Each object: { \"name\": string, \"proficiency\": \"expert\"|\"proficient\"|\"familiar\", \"domain\": string (optional), \"years_experience\": integer (optional), \"verified\": boolean (optional) }. Include at least 20 entries spanning devops, backend, frontend, and ai domains.",
-          "module": "data/skills-index.json",
-          "priority": "high",
-          "depends_on": [],
-          "done_when": "data/skills-index.json is a valid JSON array with at least 20 entries; every object has a non-empty name string and a proficiency value of exactly 'expert', 'proficient', or 'familiar'; no other proficiency values are present.",
-          "status": "todo"
-        },
-        {
-          "id": "p1-t6",
-          "title": "Create resume.source.json",
-          "what": "Write the base candidate data file containing basics, work, education, and skills sections per resume_source_schema. This file is returned verbatim by GET /api/resume.",
-          "how": "Populate all required_sections: basics (name, email, phone, location, profiles array of {network, username, url}); work (array of {company, position, startDate, endDate, summary}); education (array of {institution, studyType, area, startDate, endDate}); skills (array of {name, level, keywords[]}).",
-          "module": "data/resume.source.json",
-          "priority": "high",
-          "depends_on": [],
-          "done_when": "data/resume.source.json is valid JSON containing all four required_sections; basics.name and basics.email are non-empty strings; work and education are non-empty arrays.",
           "status": "todo"
         }
       ]
@@ -235,21 +182,21 @@
       "tasks": [
         {
           "id": "p2-t1",
-          "title": "Create role-based-templates for all 8 domains",
-          "what": "Write one JSON file per known domain (devops, backend, frontend, fullstack, manager, ai, database, sted) conforming to role_template_schema: domain string, keywords array, facet_types array, highlights array of 6+ plain-text strings (no HTML).",
+          "title": "Create role-based-templates for all 7 domains",
+          "what": "Write one JSON file per known domain (devops, backend, frontend, fullstack, manager, ai, database) conforming to role_template_schema: domain string, keywords array, facet_types array, highlights array of 6+ plain-text strings (no HTML).",
           "how": {
             "steps": [
-              "For each of the 8 domains, create data/role-based-templates/{domain}.json.",
+              "For each of the 7 domains, create data/role-based-templates/{domain}.json.",
               "domain field must exactly match the filename stem (e.g. 'devops' in devops.json).",
-              "keywords: 10 or more domain-relevant technology and skill terms that the adapter will match against correlation term values.",
+              "keywords: 10 or more domain-relevant technology and skill terms that the adapter will match against correlation term values. Use logical placeholder/draft content reflecting the candidate's PHP/WordPress/Python/DevOps/E-Commerce background.",
               "facet_types: list the correlation tag labels most relevant to this domain, chosen from LEAD_STRENGTH, SOLID_MATCH, PARTIAL_MATCH, UNTESTED_CLAIM, GAP_ADJACENCY, HARD_GAP.",
-              "highlights: 6 to 10 plain-text strings describing candidate strengths for this domain. No HTML tags. No markdown. No bracketed placeholders."
+              "highlights: 6 to 10 plain-text strings describing candidate strengths for this domain. Use logical placeholder/draft content based on the candidate's skillset. No HTML tags. No markdown. No bracketed placeholders."
             ]
           },
           "module": "data/role-based-templates/",
           "priority": "high",
           "depends_on": [],
-          "done_when": "Exactly 8 JSON files exist under data/role-based-templates/, one for each known domain. Each file is valid JSON; domain matches the filename stem; keywords, facet_types, and highlights are non-empty arrays; highlights has at least 6 entries; no HTML appears in any highlights string.",
+          "done_when": "Exactly 7 JSON files exist under data/role-based-templates/, one for each known domain. Each file is valid JSON; domain matches the filename stem; keywords, facet_types, and highlights are non-empty arrays; highlights has at least 6 entries; no HTML appears in any highlights string.",
           "status": "todo"
         },
         {
@@ -259,9 +206,9 @@
           "how": {
             "steps": [
               "Load all *.json files from role_templates_dir at call time (no module-level cache); raise FileNotFoundError if the directory is empty.",
-              "Score each template by counting how many of its keywords appear as term values in correlation_data['correlations'][]. Higher score wins.",
+              "Score each template by counting how many of its keywords appear as term values in correlation_data['correlations'][]. Scoring counts all correlation entries regardless of tag value (not just LEAD_STRENGTH). Higher score wins; ties broken alphabetically by domain name.",
               "On tie, select the alphabetically first domain name.",
-              "featured_languages: collect unique term values from correlations whose tag is LEAD_STRENGTH or SOLID_MATCH and whose term case-insensitively matches a hardcoded language list: Python, JavaScript, TypeScript, Go, Java, Rust, C++, SQL, Bash, Ruby.",
+              "featured_languages: collect unique term values from correlations (any tag) whose term case-insensitively matches the hardcoded language list exactly: Python, JavaScript, TypeScript, Go, Java, Rust, C++, SQL, Bash, Ruby, PHP. SQL is matched as an exact token — not as a substring of SQL/MySQL.",
               "highlights: return up to 6 strings from the winning template's highlights array.",
               "Return { 'domain': str, 'featured_languages': list, 'highlights': list }."
             ]
@@ -296,43 +243,43 @@
               "Generate slug = naming_utils.slugify(job_title).",
               "Write output JSON to naming_utils.job_json_path(base_dir, year, month, day, slug). Create parent directories with exist_ok=True.",
               "Log each file at INFO via logging_manager.get_logger('resume-machine.ingest'). Log parse errors at ERROR and continue to the next file.",
+              "Include any additional fields extracted from the HTML beyond the required job_json_schema fields in the output JSON (e.g. raw_html snippet, salary_range, contract_type). Extra fields are stored as-is but not consumed by downstream scripts.",
               "Exit 0 if all files succeed."
             ]
           },
           "module": "src/data/py_extract_jobs.py",
           "priority": "high",
           "depends_on": [
+            "p0-t6",
             "p1-t2",
-            "p1-t3",
-            "p1-t4"
+            "p1-t3"
           ],
-          "done_when": "python -m src.data.py_extract_jobs data/jobbankjobs/2025/05/01 exits with code 0; one .json output file is written per .html file in the directory; every output JSON contains all required_fields from job_json_schema with non-null string or array values; no Node.js process is invoked at any point.",
+          "done_when": "python -m src.data.py_extract_jobs data/jobbankjobs/2025/05/01 exits with code 0; one .json output file is written per .html file in the directory; every output JSON contains all required_fields from job_json_schema with non-null string or array values; extra extracted fields are present in the output JSON; no Node.js process is invoked at any point.",
           "status": "todo"
         },
         {
           "id": "p3-t2",
-          "title": "Create py_skill_job_correlator.py",
-          "what": "Implement the correlator that reads a job JSON and skills-index.json (array of skill objects per pd-004), generates correlation facets, calls infer_domain, and writes exactly two output files per pd-002: correlation JSON (always overwritten) and cover letter JSON (written only when absent).",
+          "title": "Port py_skill_job_correlator.py",
+          "what": "Port scripts/data_processing/py_skill_job_correlator.py to src/data/ per migration-manifest.json port-001. The source file is corrupted: os.execv shim code was accidentally embedded inside build_correlation_report(), truncating the second pass. Constants (ALIASES, ADJACENCY_MAP, SECTION_WEIGHTS, FACET_TYPE_WEIGHTS, TAG_ORDER) and first-pass helpers are intact. Reconstruct the second pass (tag computation, deduplication, output dict assembly). The correlator reads skills-index.json via _build_facet_lookup() (v2.3.0 facet_catalog format) — not a flat array.",
           "how": {
             "steps": [
-              "Accept positional argument job_json_path. Accept --name flag to override candidate_name from config.",
-              "Load job JSON, skills-index.json array, and config via config_manager.load_config().",
+              "Accept positional argument job_json_path. Accept --name flag to override candidate_name from config. Apply naming_utils.slugify() to candidate_name before using it in output filenames.",
+              "Load job JSON, skills-index.json (via _build_facet_lookup() which reads from facet_catalog in the v2.3.0 format), and config via config_manager.load_config().",
               "Correlate: for each skill in skills-index.json, check whether skill.name (or its prefix) appears in job_posting.required_skills or job_posting.additional_skills. Assign tag: LEAD_STRENGTH (required + expert), SOLID_MATCH (required + proficient), PARTIAL_MATCH (additional, any proficiency), UNTESTED_CLAIM (required + familiar), GAP_ADJACENCY (adjacent domain skill not directly required), HARD_GAP (required skill absent from index entirely).",
               "Derive summary: total_correlations = len(correlations); hard_gaps_count = count of entries where tag == 'HARD_GAP'; tag_distribution = dict mapping each tag to its count; hard_gaps = list of { term, context } for each HARD_GAP entry.",
               "Call infer_domain(correlation_data, config['role_templates_dir']) imported from py_adapter_correlator_to_template. Merge returned domain, featured_languages, highlights into correlation_data.",
               "Populate metadata: job_title, employer, location (from job JSON), generated_at = datetime.utcnow().isoformat() + 'Z', job_json = absolute path to source job JSON, skills_index = absolute path to skills-index.json.",
               "Write correlation JSON to naming_utils.correlation_json_path(...). Always overwrite without checking existence.",
-              "Resolve cover letter path via naming_utils.cover_letter_json_path(...). If the file does not exist: generate cover letter JSON with opening (string), value_proposition (string), relevant_experience (array of up to 5 strings derived from highlights), closing (string). Write it. If the file already exists: do nothing — do not read, do not modify.",
+              "Resolve cover letter path via naming_utils.cover_letter_json_path(...). If the file does not exist: generate cover letter JSON with opening = 'Dear Hiring Manager,' (boilerplate), value_proposition = string derived from top LEAD_STRENGTH highlights, relevant_experience = array of up to 5 strings from highlights[], closing = 'Thank you for your consideration.' (boilerplate). Write it. If the file already exists: do nothing — do not read, do not modify.",
               "Expose correlate_job(job_json_path: str, candidate_name: str | None = None) → None as an importable function for use by process.py."
             ]
           },
           "module": "src/data/py_skill_job_correlator.py",
           "priority": "high",
           "depends_on": [
+            "p0-t6",
             "p1-t2",
             "p1-t3",
-            "p1-t4",
-            "p1-t5",
             "p2-t2"
           ],
           "done_when": "Running the script against a job JSON exits 0; correlation JSON is written and contains all required_fields from correlation_json_schema; cover letter JSON is written on the first run and contains opening, value_proposition, relevant_experience, and closing; running the script a second time does not alter the cover letter JSON (verified by mtime or SHA-256 before and after); correlate_job is importable as a standalone function.",
@@ -352,7 +299,7 @@
           "how": {
             "steps": [
               "Parse CLI with argparse: --dir (directory path), --file (single job JSON path), --dry-run (boolean flag), --name (string, optional). Exactly one of --dir or --file must be supplied; raise a usage error otherwise.",
-              "File discovery for --dir: collect all *.json files in the given directory whose filename does not start with 'resume-' or 'letter-' (job JSONs only, excluding correlation and cover letter outputs).",
+              "File discovery for --dir: --dir targets a day-level directory only (e.g. data/jobbankjobs/2026/05/01). Does not recurse into subdirectories. Collect all *.json files in the given directory whose filename does not start with 'resume-' or 'letter-' (job JSONs only, excluding correlation and cover letter outputs).",
               "If --dry-run: print each discovered file path, print total count, exit 0 without writing any files.",
               "For each discovered job JSON: call correlate_job(path, args.name) imported from src.data.py_skill_job_correlator. Catch and log all exceptions at ERROR without halting the batch.",
               "Log batch start (file count) and completion (success count, error count) at INFO via logging_manager.get_logger('resume-machine.orchestration').",
@@ -398,7 +345,7 @@
           "depends_on": [
             "p1-t2",
             "p1-t3",
-            "p1-t4",
+            "p0-t6",
             "p3-t2"
           ],
           "done_when": "python -m src.api.serve starts and logs 'Serving on localhost:8080'; GET /api/jobs?year=2025 returns a valid JSON array; GET /api/resume returns JSON containing a basics.name field; GET /api/correlation?path=data/jobbankjobs/2025/05/01/resume-x-y-z.json returns a merged object containing both correlation fields and cover letter fields; GET /api/correlation?path=../../etc/passwd returns HTTP 400; the implementation contains no third-party imports beyond the stdlib.",
