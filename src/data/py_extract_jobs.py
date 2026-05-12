@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 
 from src.utils.logging_manager import get_logger, set_level
 from src.utils.config_manager import load_config
-from src.utils.naming_utils import slugify, job_json_path
+from src.utils.naming_utils import slugify, job_details_json_path, employer_short_slug
 
 _logger = get_logger('resume-machine.ingest')
 
@@ -151,7 +151,7 @@ def extract_job_posting(html_path: Path) -> dict:
     return output
 
 
-def process_directory(input_dir: Path, base_dir: str, year: int, month: int, day: int) -> int:
+def process_directory(input_dir: Path, base_dir: str, year: int, month: int, day: int, candidate: str = 'candidate') -> int:
     html_files = sorted(input_dir.glob('*.html'))
     if not html_files:
         _logger.error('No HTML files found in %s', input_dir)
@@ -160,13 +160,19 @@ def process_directory(input_dir: Path, base_dir: str, year: int, month: int, day
     success = 0
     for html_file in html_files:
         try:
+            import secrets
             job_data = extract_job_posting(html_file)
             title = job_data.get('job_title', '') or html_file.stem
             location = job_data.get('location', '')
             city = location.split(',')[0].strip() if location else ''
             slug_source = f'{title} {city}'.strip() if city else title
             slug = slugify(slug_source) or slugify(html_file.stem)
-            out_path = Path(job_json_path(base_dir, year, month, day, slug))
+            uid = secrets.token_hex(3)
+            employer = job_data.get('employer', '')
+            emp_short = employer_short_slug(employer)
+            job_data['_uid'] = uid
+            job_data['_slug'] = slug
+            out_path = Path(job_details_json_path(base_dir, year, month, day, slug, emp_short, candidate, uid))
             out_path.parent.mkdir(parents=True, exist_ok=True)
             with open(out_path, 'w') as f:
                 json.dump(job_data, f, indent=2)
@@ -200,8 +206,9 @@ def main(argv: list[str] | None = None) -> int:
 
     cfg = load_config()
     set_level(cfg.get('log_level', 'info'))
+    candidate = cfg.get('candidate_name', 'candidate')
 
-    return process_directory(input_dir, cfg['job-listings_dir'], year, month, day)
+    return process_directory(input_dir, cfg['job-listings_dir'], year, month, day, candidate)
 
 
 if __name__ == '__main__':

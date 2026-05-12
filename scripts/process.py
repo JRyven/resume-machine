@@ -48,7 +48,10 @@ def discover_job_jsons(directory: Path) -> list[Path]:
     """Return all job JSON files in directory (not recursive; excludes correlation and letter files)."""
     return sorted(
         p for p in directory.glob('*.json')
-        if not p.name.startswith('resume-') and not p.name.startswith('letter-')
+        if '_resume_' not in p.name
+        and '_letter_' not in p.name
+        and not p.name.startswith('resume-')
+        and not p.name.startswith('letter-')
     )
 
 
@@ -57,17 +60,24 @@ def run(
     candidate_name: str | None,
     dry_run: bool,
 ) -> int:
+    import json as _json
     success = 0
     failure = 0
+    skipped = 0
     for job_file in job_files:
         try:
+            raw = _json.loads(job_file.read_text())
+            if raw.get('locked', False):
+                _logger.info('Skipping locked job: %s', job_file.name)
+                skipped += 1
+                continue
             correlate_job(str(job_file), candidate_name=candidate_name, dry_run=dry_run)
             success += 1
         except Exception as exc:
             _logger.error('Failed to process %s: %s', job_file, exc, exc_info=True)
             failure += 1
 
-    _logger.info('Done: %d succeeded, %d failed', success, failure)
+    _logger.info('Done: %d succeeded, %d skipped, %d failed', success, skipped, failure)
     return 0 if failure == 0 else 1
 
 

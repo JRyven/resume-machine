@@ -19,7 +19,7 @@ from typing import Optional
 
 from src.utils.logging_manager import get_logger, set_level
 from src.utils.config_manager import load_config
-from src.utils.naming_utils import slugify, correlation_json_path, cover_letter_json_path
+from src.utils.naming_utils import slugify, correlation_json_path, cover_letter_json_path, employer_short_slug
 from src.models.py_adapter_correlator_to_template import infer_domain
 
 _logger = get_logger('resume-machine.correlator')
@@ -263,8 +263,12 @@ def correlate_job(
     except (ValueError, IndexError):
         year, month, day = now.year, now.month, now.day
 
-    corr_path = correlation_json_path(job_listings_dir, year, month, day, candidate, employer, job_title)
-    letter_path = cover_letter_json_path(job_listings_dir, year, month, day, candidate, employer, job_title)
+    job_slug = job_data.get('_slug') or slugify(f'{job_title} {location}'.strip())
+    uid = job_data.get('_uid') or __import__('secrets').token_hex(3)
+    emp_short = employer_short_slug(employer)
+
+    corr_path = correlation_json_path(job_listings_dir, year, month, day, job_slug, emp_short, candidate, uid)
+    letter_path = cover_letter_json_path(job_listings_dir, year, month, day, job_slug, emp_short, candidate, uid)
 
     if not dry_run:
         Path(corr_path).parent.mkdir(parents=True, exist_ok=True)

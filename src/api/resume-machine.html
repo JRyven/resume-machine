@@ -258,6 +258,9 @@
     .resume-header .contact {
       font-size: 8.5pt;
       color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.15em 0;
     }
 
     .resume-header .contact span {
@@ -395,13 +398,13 @@
         width: 100%;
         min-height: 0;
         box-shadow: none;
-        padding: var(--margin);
+        padding: 0;
         margin: 0;
       }
 
       @page {
         size: letter;
-        margin: 0;
+        margin: var(--margin);
       }
     }
 

@@ -9,7 +9,7 @@ import sys
 
 
 _DROP_PHRASES = re.compile(
-    r'\bgovernment\s+du\s+canada\b',
+    r'\bgovernment\s+du\s+gourvernment\s+canada\b',
     re.IGNORECASE,
 )
 
@@ -51,28 +51,31 @@ def job_json_path(base_dir: str, year: int, month: int, day: int, slug: str) -> 
     return f'{base_dir}/{year}/{month:02d}/{day:02d}/{slug}.json'
 
 
-def _uid() -> str:
-    return secrets.token_hex(3)  # 6 hex characters
+def employer_short_slug(employer: str) -> str:
+    """Slugify only the first segment of a bilingual employer name (split on '/')."""
+    first_part = employer.split('/')[0].strip()
+    return slugify(first_part) or slugify(employer)
+
+
+def job_details_json_path(
+    base_dir: str, year: int, month: int, day: int,
+    job_slug: str, employer_short: str, candidate: str, uid: str
+) -> str:
+    return f'{base_dir}/{year}/{month:02d}/{day:02d}/{job_slug}_job-details_{employer_short}_{candidate}_{uid}.json'
 
 
 def correlation_json_path(
     base_dir: str, year: int, month: int, day: int,
-    candidate: str, employer: str, title: str
+    job_slug: str, employer_short: str, candidate: str, uid: str
 ) -> str:
-    employer_slug = slugify(employer)
-    title_slug = slugify(title)
-    uid = _uid()
-    return f'{base_dir}/{year}/{month:02d}/{day:02d}/resume-{candidate}-{employer_slug}-{title_slug}-{uid}.json'
+    return f'{base_dir}/{year}/{month:02d}/{day:02d}/{job_slug}_resume_{employer_short}_{candidate}_{uid}.json'
 
 
 def cover_letter_json_path(
     base_dir: str, year: int, month: int, day: int,
-    candidate: str, employer: str, title: str
+    job_slug: str, employer_short: str, candidate: str, uid: str
 ) -> str:
-    employer_slug = slugify(employer)
-    title_slug = slugify(title)
-    uid = _uid()
-    return f'{base_dir}/{year}/{month:02d}/{day:02d}/letter-{candidate}-{employer_slug}-{title_slug}-{uid}.json'
+    return f'{base_dir}/{year}/{month:02d}/{day:02d}/{job_slug}_letter_{employer_short}_{candidate}_{uid}.json'
 
 
 if __name__ == '__main__':
