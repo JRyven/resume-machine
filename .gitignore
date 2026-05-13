@@ -45,6 +45,8 @@ package-lock.json
 
 # Private data
 data/resume.source.json
+data/skills-index.json
+data/cover-letter.source.json
 narratives/
 
 # Artifacts

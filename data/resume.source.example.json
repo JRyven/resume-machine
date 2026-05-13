@@ -9,7 +9,7 @@
     "summary": [
       {
         "name": "Abstract",
-        "value": "A brief professional summary."
+        "value": "A brief professional summary highlighting your key strengths and career focus."
       }
     ],
     "location": {
@@ -26,66 +26,66 @@
       {
         "network": "GitHub",
         "username": "your-username",
-        "url": "https://github.com/in/your-username"
+        "url": "https://github.com/your-username"
       },
       {
         "network": "Stack Overflow",
         "username": "your-username",
-        "url": "https://stack overflow.com/in/your-username"
+        "url": "https://stackoverflow.com/users/0000000"
       }
     ]
   },
   "work": [
     {
-      "name": "Goop",
-      "position": "Technical Lead, PHP Engineer",
+      "name": "Company A",
+      "position": "Senior Engineer / Technical Lead",
       "url": "",
       "startDate": "2022",
       "endDate": "",
-      "summary": "Lifestyle/wellness e-commerce brand with sophisticated, high-traffic platform handling 70M+ annual pageviews across WordPress/PHP, React, legacy systems, SaaS/API integrations, and REST endpoints. Hired to eliminate a multi-year editorial\u2013engineering content bottleneck. Delivered self-service CMS tools and led WordPress\u2013Shopify replatform; owned WordPress codebase, platform reliability, and cross-functional alignment.",
+      "summary": "High-traffic e-commerce platform. Hired to eliminate a long-standing content bottleneck, deliver self-service CMS tooling, and lead a major platform migration.",
       "highlights": [
-        "<strong>Ended decade-long content bottleneck</strong>; architected modular self-service CMS component library; achieved 100% editorial adoption in 3 months (vs. prior failed attempts). Reclaimed 97% of engineering bandwidth, freeing 2 engineers and 1 PM for strategic work; tripled content output without added headcount.",
-        "<strong>Drove record e-commerce growth</strong>; designed content-gating auth layer that sparked 625% surge in account creations, 84% login growth, and $35 AOV uplift among converted users. Lifted site-wide conversion rate from 2.5% to 4.2% (Labor Day 2024 vs. 2025, per Shopify metrics) and slashed load times from 3s to sub-1s (above gold standard).",
-        "<strong>Led zero-downtime Shopify migration</strong>; engineered WordPress\u2013Shopify integration; custom real-time sync plugin preserved inventory/data integrity across 70M+ pageviews with zero revenue loss.",
-        "<strong>Built cross-functional velocity</strong>; embedded with product, science, and editorial teams; bring high curiosity across business domains (formulations, supply chain, and content strategy), informing priority queue, realistic deadlines, and feature design that users love. Turned siloed teams into true collaborators.",
-        "<strong>Mentored & scaled talent</strong>; transformed junior developer from HTML/CSS to autonomous full-stack contributor in 6 months via pair-programming and rigorous code reviews; increased team capacity 20%.",
-        "<strong>Institutionalized quality & speed</strong>; rolled out PHPUnit/Cypress and Rollbar/Grafana monitoring; cut MTTD from hours to minutes and caught 85% of issues pre-production. Created documentation system (PHPDocumentor, Confluence, and README standards)"
+        "<strong>Eliminated multi-year content bottleneck</strong>; architected modular self-service CMS component library; achieved full editorial adoption in [N] months. Reclaimed engineering bandwidth, freeing [N] engineers for strategic work; multiplied content output without added headcount.",
+        "<strong>Drove measurable e-commerce growth</strong>; designed content-gating auth layer that produced significant increases in account creation, login rates, and average order value. Lifted site-wide conversion rate and slashed load times to sub-second performance.",
+        "<strong>Led zero-downtime platform migration</strong>; engineered CMS-to-commerce integration with a custom real-time sync plugin; preserved inventory and data integrity across millions of pageviews with zero revenue loss.",
+        "<strong>Built cross-functional velocity</strong>; embedded with product, science, and editorial teams; translated domain knowledge into prioritized features and realistic timelines. Turned siloed teams into true collaborators.",
+        "<strong>Mentored & scaled talent</strong>; transformed junior developer from markup to autonomous full-stack contributor in [N] months via pair-programming and rigorous code reviews; increased team capacity [N]%.",
+        "<strong>Institutionalized quality & speed</strong>; rolled out unit/e2e testing and error monitoring; cut mean-time-to-detect from hours to minutes and caught the majority of issues pre-production."
       ],
-      "location": "Santa Monica, California"
+      "location": "City, State"
     },
     {
-      "name": "No Borders Inc",
+      "name": "Company B",
       "position": "Senior Software Engineer",
       "url": "",
       "startDate": "2021",
       "endDate": "2022",
-      "summary": "Holding company scaling/selling e-commerce brands; 5 sites generated $5M+ revenue. Recruited as sole engineer to maintain/optimize full ecosystem of 5 e-commerce sites with 50K+ monthly visitors ($5M revenue); managed priorities, technical decisions, feature development, and maintenance.",
+      "summary": "Holding company scaling e-commerce brands. Sole engineer responsible for maintaining and optimizing a portfolio of sites generating multi-million dollar revenue.",
       "highlights": [
-        "<strong>Architected automated merchandising workflow</strong> via CSV-WooCommerce integration for 8K+ SKUs, variants, and subscriptions; slashed daily management from 10\u201325% (1\u20132 hours) to 5%.",
-        "<strong>Built custom Google/Shipstation/Twilio SaaS integrations</strong> via independent build-vs-buy analysis; saved $45K annually and cut order processing 60%.",
-        "<strong>Led product, design, and business collaboration</strong> to launch 2 conversion-optimized e-commerce sites."
+        "<strong>Architected automated merchandising workflow</strong> via integration of inventory feed with e-commerce platform for thousands of SKUs; reduced daily management time from hours to minutes.",
+        "<strong>Built custom SaaS integrations</strong> via independent build-vs-buy analysis; achieved significant annual savings and reduced order processing time.",
+        "<strong>Led product, design, and business collaboration</strong> to launch multiple conversion-optimized e-commerce sites."
       ],
-      "location": "Queen Creek, Arizona"
+      "location": "City, State"
     },
     {
-      "name": "Boiling Pot Media",
+      "name": "Your Agency Name",
       "position": "Founder & Software Engineer",
       "url": "",
       "startDate": "2011",
       "endDate": "2021",
-      "summary": "Full-service digital agency delivering self-service WordPress solutions, hosting, social automation, and e-commerce. Founded solo and scaled agency as lead salesperson, architect, engineer, and client liaison; delivered 125+ international projects while managing sales, hiring/firing, finances, and 24/7 VPS infrastructure for 25+ hosted sites; grew to $250K revenue and strategically exited in most profitable year to refocus on technical leadership.",
+      "summary": "Full-service digital agency delivering self-service CMS solutions, hosting, social automation, and e-commerce. Founded solo and scaled as lead salesperson, architect, engineer, and client liaison; delivered [N]+ international projects; grew to significant revenue and strategically exited to refocus on technical leadership.",
       "highlights": [
-        "<strong>Architected unified WordPress for Chegg's ecosystem</strong> (EasyBib, BibMe, CiteThisForMe, CitationMachine) serving millions daily; aligned content, graphics, SEO, ad/analytics, and engineering across legacy patchwork.",
-        "<strong>Built/mentored 3-engineer team</strong>; established standards, reviews, and workflows while leading technical contributions; delivered white-label platforms for True Focus Media, SELO Group, and K2 Creative.",
-        "<strong>Scaled high-traffic sites to 1M+ daily visits with <2s load times</strong> via CDN/caching/database optimization.",
-        "<strong>Expanded offerings to strategic marketing, social automation</strong>, print materials, and nonprofit digital-education programs; served as 5-year web department for NLI and 7-year design/web department for KYDNET."
+        "<strong>Architected unified CMS for a major client ecosystem</strong> serving millions of daily users; aligned content, SEO, ad/analytics, and engineering across legacy systems.",
+        "<strong>Built and mentored engineering team</strong>; established standards, reviews, and workflows while leading technical contributions; delivered white-label platforms for multiple clients.",
+        "<strong>Scaled high-traffic sites to 1M+ daily visits with <2s load times</strong> via CDN, caching, and database optimization.",
+        "<strong>Expanded offerings to strategic marketing, social automation</strong>, print materials, and nonprofit digital-education programs."
       ],
-      "location": "Kalamazoo, Michigan"
+      "location": "City, State"
     }
   ],
   "volunteer": [
     {
-      "organization": "Education for Employment Advisory Committee for KRESA",
+      "organization": "Industry Advisory Committee, Regional Education Authority",
       "position": "Web Development Committee Chair",
       "url": "",
       "startDate": "2017",
@@ -94,7 +94,7 @@
       "highlights": []
     },
     {
-      "organization": "Community Development Act Advisory Committee, City of Kalamazoo",
+      "organization": "City Advisory Committee",
       "position": "Board Member",
       "url": "",
       "startDate": "2012",
@@ -103,7 +103,7 @@
       "highlights": []
     },
     {
-      "organization": "North American Students of Cooperation (NASCO) Properties",
+      "organization": "National Cooperative Housing Organization",
       "position": "Board Member",
       "url": "",
       "startDate": "2007",
@@ -112,7 +112,7 @@
       "highlights": []
     },
     {
-      "organization": "Kalamazoo Collective Housing (KCH)",
+      "organization": "Local Cooperative Housing Organization",
       "position": "Co-Founder",
       "url": "",
       "startDate": "2006",
@@ -123,10 +123,10 @@
   ],
   "education": [
     {
-      "institution": "Western Michigan University",
+      "institution": "State University",
       "url": "",
-      "area": "Urban & Regional Planning, Rhetoric & Writing",
-      "studyType": "BS, Double Major",
+      "area": "Your Field of Study",
+      "studyType": "BS",
       "startDate": "",
       "endDate": "",
       "score": "",
@@ -240,7 +240,7 @@
         "Strategic Decision-Making",
         "E-Commerce Growth",
         "API & SaaS Integrations",
-        "Shopify Integration/Migration",
+        "Platform Integration/Migration",
         "Database Structuring",
         "Infrastructure & Hosting",
         "Talent Development/Mentor",
@@ -251,8 +251,8 @@
   "references": [],
   "projects": [
     {
-      "name": "Toggle Admin Toolbar WordPress Plugin",
-      "description": "Adds admin toolbar visibility toggle on WordPress frontend",
+      "name": "Your Open Source Project",
+      "description": "Brief description of the project and its purpose.",
       "highlights": [],
       "keywords": [
         "WordPress",
@@ -261,7 +261,7 @@
       ],
       "startDate": "",
       "endDate": "",
-      "url": "https://wordpress.org/plugins/toggle-admin-toolbar/",
+      "url": "https://example.com/your-project",
       "roles": [
         "Creator",
         "Maintainer"
@@ -273,6 +273,6 @@
   "meta": {
     "canonical": "https://raw.githubusercontent.com/jsonresume/resume-schema/master/resume.json",
     "version": "v1.0.0",
-    "lastModified": "2025-12-17"
+    "lastModified": "2026-05-12"
   }
 }
