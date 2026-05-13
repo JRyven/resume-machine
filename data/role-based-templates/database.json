@@ -1,4 +1,5 @@
 {
+  "$schema": "./schema.json",
   "domain": "database",
   "keywords": [
     "sql",
