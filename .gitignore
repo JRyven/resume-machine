@@ -43,9 +43,10 @@ yarn-error.log*
 pnpm-lock.yaml
 package-lock.json
 
-# JSON — only schema files are versioned
+# JSON — only schema files and anonymized example files are versioned
 *.json
 !*.schema.json
+!*.example.json
 
 # Private data
 narratives/

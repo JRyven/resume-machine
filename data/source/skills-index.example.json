@@ -1,0 +1,234 @@
+{
+  "@context": {
+    "schema": "http://schema.org/",
+    "skill": "schema:Skill",
+    "Organization": "schema:Organization"
+  },
+  "$schema": "./skills-index.schema.json",
+  "metadata": {
+    "version": "2.3.0",
+    "last_updated": "YYYY-MM-DDT00:00:00Z",
+    "structure": "faceted_normalized",
+    "note": "skill_training at facet level; centralized catalogs; see skills-index.schema.json for enums and field definitions"
+  },
+  "venues_catalog": [
+    {
+      "venue_id": "venue.self_taught",
+      "name": "Self-taught",
+      "role": "Independent Learner",
+      "start_year": 2010,
+      "end_year": 2026,
+      "location": ""
+    },
+    {
+      "venue_id": "venue.company_a",
+      "name": "Company A",
+      "role": "Senior Engineer / Technical Lead",
+      "start_year": 2022,
+      "end_year": 2026,
+      "location": "City, Province"
+    },
+    {
+      "venue_id": "venue.company_b",
+      "name": "Company B",
+      "role": "Senior Software Engineer",
+      "start_year": 2020,
+      "end_year": 2022,
+      "location": "City, Province"
+    },
+    {
+      "venue_id": "venue.agency_name",
+      "name": "Your Agency Name",
+      "role": "Founder & Software Engineer",
+      "start_year": 2012,
+      "end_year": 2020,
+      "location": "City, Province"
+    },
+    {
+      "venue_id": "venue.volunteer_org_a",
+      "name": "Volunteer Organization A",
+      "role": "Committee Chair",
+      "start_year": 2016,
+      "end_year": 2020,
+      "location": ""
+    }
+  ],
+  "skills_catalog": [
+    {
+      "skill_id": "skill.programming_languages.1",
+      "skill_key": "programming_languages",
+      "skill_name": "Programming Languages",
+      "description": "Core programming languages and syntax expertise"
+    },
+    {
+      "skill_id": "skill.web_frameworks.1",
+      "skill_key": "web_frameworks",
+      "skill_name": "Web Frameworks & Libraries",
+      "description": "Frontend and full-stack web frameworks and libraries"
+    },
+    {
+      "skill_id": "skill.cms_ecommerce_platforms.1",
+      "skill_key": "cms_ecommerce_platforms",
+      "skill_name": "CMS & E-Commerce Platforms",
+      "description": "Content management and e-commerce platforms with strategic architectural expertise"
+    },
+    {
+      "skill_id": "skill.leadership_skills.1",
+      "skill_key": "leadership_skills",
+      "skill_name": "Leadership Skills",
+      "description": "Leadership capability: mentoring, governance, policy, team development"
+    }
+  ],
+  "facet_catalog": [
+    {
+      "facet_id": "facet.language_a",
+      "facet_name": "Language A",
+      "facet_type": "hands_on_language",
+      "skill_group": "programming_languages"
+    },
+    {
+      "facet_id": "facet.language_b",
+      "facet_name": "Language B",
+      "facet_type": "hands_on_language",
+      "skill_group": "programming_languages"
+    },
+    {
+      "facet_id": "facet.language_c",
+      "facet_name": "Language C",
+      "facet_type": "hands_on_language",
+      "skill_group": "programming_languages"
+    },
+    {
+      "facet_id": "facet.framework_a",
+      "facet_name": "Framework A",
+      "facet_type": "hands_on_framework",
+      "skill_group": "web_frameworks"
+    },
+    {
+      "facet_id": "facet.framework_b",
+      "facet_name": "Framework B",
+      "facet_type": "hands_on_framework",
+      "skill_group": "web_frameworks"
+    },
+    {
+      "facet_id": "facet.platform_a",
+      "facet_name": "Platform A",
+      "facet_type": "hands_on_platform",
+      "skill_group": "cms_ecommerce_platforms"
+    },
+    {
+      "facet_id": "facet.leadership_skill_a",
+      "facet_name": "Leadership Skill A",
+      "facet_type": "leadership_soft_skill",
+      "skill_group": "leadership_skills"
+    }
+  ],
+  "skills": {
+    "programming_languages": [
+      {
+        "skill_name": "Programming Languages",
+        "description": "Core programming languages and syntax expertise",
+        "years_of_experience": 8,
+        "facets": {
+          "language_a": {
+            "facet_type": "hands_on_language",
+            "facet_name": "Language A",
+            "years_of_experience": 8,
+            "experience_level": "expert",
+            "proficiency": "expert",
+            "confidence_level": 9,
+            "last_used": "YYYY-Qn",
+            "skill_training": []
+          },
+          "language_b": {
+            "facet_type": "hands_on_language",
+            "facet_name": "Language B",
+            "years_of_experience": 5,
+            "experience_level": "advanced",
+            "proficiency": "advanced",
+            "confidence_level": 8,
+            "last_used": "YYYY-Qn",
+            "skill_training": []
+          },
+          "language_c": {
+            "facet_type": "hands_on_language",
+            "facet_name": "Language C",
+            "years_of_experience": 3,
+            "experience_level": "intermediate",
+            "proficiency": "intermediate",
+            "confidence_level": 7,
+            "last_used": "YYYY-Qn",
+            "skill_training": []
+          }
+        }
+      }
+    ],
+    "web_frameworks": [
+      {
+        "skill_name": "Web Frameworks & Libraries",
+        "description": "Frontend and full-stack web frameworks and libraries",
+        "years_of_experience": 5,
+        "facets": {
+          "framework_a": {
+            "facet_type": "hands_on_framework",
+            "facet_name": "Framework A",
+            "years_of_experience": 5,
+            "experience_level": "advanced",
+            "proficiency": "advanced",
+            "confidence_level": 8,
+            "last_used": "YYYY-Qn",
+            "skill_training": []
+          },
+          "framework_b": {
+            "facet_type": "hands_on_framework",
+            "facet_name": "Framework B",
+            "years_of_experience": 3,
+            "experience_level": "intermediate",
+            "proficiency": "intermediate",
+            "confidence_level": 7,
+            "last_used": "YYYY-Qn",
+            "skill_training": []
+          }
+        }
+      }
+    ],
+    "cms_ecommerce_platforms": [
+      {
+        "skill_name": "CMS & E-Commerce Platforms",
+        "description": "Content management and e-commerce platforms with strategic architectural expertise",
+        "years_of_experience": 6,
+        "facets": {
+          "platform_a": {
+            "facet_type": "hands_on_platform",
+            "facet_name": "Platform A",
+            "years_of_experience": 6,
+            "experience_level": "expert",
+            "proficiency": "expert",
+            "confidence_level": 9,
+            "last_used": "YYYY-Qn",
+            "skill_training": []
+          }
+        }
+      }
+    ],
+    "leadership_skills": [
+      {
+        "skill_name": "Leadership Skills",
+        "description": "Leadership capability: mentoring, governance, policy, team development",
+        "years_of_experience": 5,
+        "facets": {
+          "leadership_skill_a": {
+            "facet_type": "leadership_soft_skill",
+            "facet_name": "Leadership Skill A",
+            "years_of_experience": 5,
+            "experience_level": "advanced",
+            "proficiency": "advanced",
+            "confidence_level": 8,
+            "last_used": "YYYY-Qn",
+            "skill_training": []
+          }
+        }
+      }
+    ]
+  }
+}
