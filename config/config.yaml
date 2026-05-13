@@ -2,5 +2,6 @@ candidate_name: "james-valeii"
 job-listings_dir: data/job-listings
 skills_index_path: data/source/skills-index.json
 resume_source_path: data/source/resume.source.json
+letter_source_path: data/source/letter.source.json
 role_templates_dir: data/domains
 log_level: info

@@ -165,9 +165,19 @@ def correlate_job(
     role_templates_dir = cfg['role_templates_dir']
     job_listings_dir = cfg['job-listings_dir']
     resume_source_path = cfg.get('resume_source_path', 'data/source/resume.source.json')
+    letter_source_path = cfg.get('letter_source_path', 'data/source/letter.source.json')
 
     with open(resume_source_path) as f:
         resume_source = json.load(f)
+
+    letter_source: dict = {}
+    _letter_source_p = Path(letter_source_path)
+    if _letter_source_p.exists():
+        with open(_letter_source_p) as f:
+            letter_source = json.load(f)
+        _logger.debug('Loaded letter source: %s', letter_source_path)
+    else:
+        _logger.debug('No letter source found at %s; using built-in defaults', letter_source_path)
 
     job_json_path_obj = Path(job_json_path_str).resolve()
     with open(job_json_path_obj) as f:
@@ -280,20 +290,22 @@ def correlate_job(
             json.dump(correlation_data, f, indent=2)
         _logger.info('Wrote correlation: %s', corr_path)
 
-        if not Path(letter_path).exists():
-            domain = correlation_data.get('domain', 'fullstack')
-            letter_tmpl_path = Path(role_templates_dir) / f'{domain}-letter.json'
-            letter_tmpl: dict = {}
-            if letter_tmpl_path.exists():
-                with open(letter_tmpl_path) as f:
-                    letter_tmpl = json.load(f)
-            basics = resume_source.get('basics', {})
-            letter = _build_cover_letter(correlation_data, employer, job_title, letter_tmpl, basics)
-            with open(letter_path, 'w') as f:
-                json.dump(letter, f, indent=2)
-            _logger.info('Wrote cover letter: %s', letter_path)
-        else:
-            _logger.info('Cover letter already exists, skipping: %s', letter_path)
+        domain = correlation_data.get('domain', 'fullstack')
+        letter_tmpl_path = Path(role_templates_dir) / f'{domain}-letter.json'
+        # Start from the candidate default; domain file overrides non-empty fields.
+        letter_tmpl: dict = dict(letter_source)
+        if letter_tmpl_path.exists():
+            with open(letter_tmpl_path) as f:
+                domain_tmpl = json.load(f)
+            for key in ('opening_template', 'closing_template', 'intro'):
+                val = domain_tmpl.get(key)
+                if val:
+                    letter_tmpl[key] = val
+        basics = resume_source.get('basics', {})
+        letter = _build_cover_letter(correlation_data, employer, job_title, letter_tmpl, basics)
+        with open(letter_path, 'w') as f:
+            json.dump(letter, f, indent=2)
+        _logger.info('Wrote cover letter: %s', letter_path)
     else:
         _logger.info('[dry-run] Would write correlation: %s', corr_path)
         _logger.info('[dry-run] Would write cover letter: %s', letter_path)
@@ -322,7 +334,7 @@ def _build_cover_letter(correlation_data: dict, employer: str, job_title: str, l
     )
     closing_tmpl = letter_tmpl.get(
         'closing_template',
-        "I would welcome the opportunity to discuss how my experience contributes to {employer}'s goals. Thank you for your consideration.",
+        "I am currently based in Waterloo and can relocate if needed. I am excited about the possibility of contributing my communications and strategy experience to [organization’s] work and would welcome the chance to discuss the role further.",
     )
     intro = letter_tmpl.get('intro', '')
 

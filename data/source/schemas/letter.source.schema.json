@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "letter.source.schema.json",
+  "title": "Default Cover Letter Source",
+  "description": "Candidate's default cover letter template strings. Used as the base layer when generating cover letters. Domain letter files (e.g. ai-letter.json) override individual fields when the file exists and the field is a non-empty string.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "opening_template": {
+      "type": "string",
+      "description": "Default opening sentence template. Supports {employer} and {job_title} placeholders. Overridden by a domain letter file when that field is a non-empty string."
+    },
+    "closing_template": {
+      "type": "string",
+      "description": "Default closing sentence template. Supports {employer} placeholder. Overridden by a domain letter file when that field is a non-empty string."
+    },
+    "intro": {
+      "type": "string",
+      "description": "Candidate's personal introduction paragraph, inserted after the opening line and before the value proposition. Leave as empty string to omit. Overridden by a domain letter file when that field is a non-empty string."
+    }
+  }
+}

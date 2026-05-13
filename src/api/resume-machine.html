@@ -765,16 +765,7 @@
       txt('cl-role', basics.label || meta.job_title || '');
       const clContact = document.getElementById('cl-contact');
       clContact.innerHTML = '';
-      const contactParts = [basics.email, basics.phone].filter(Boolean);
-      if (basics.location) {
-        const loc = basics.location;
-        contactParts.push(typeof loc === 'string' ? loc : [loc.city, loc.region, loc.countryCode].filter(Boolean).join(', '));
-      }
-      if (basics.url) contactParts.push(basics.url.replace(/^https?:\/\//, ''));
-      for (const p of (basics.profiles || [])) {
-        if (p.url) contactParts.push(p.url.replace(/^https?:\/\//, ''));
-      }
-      for (const part of contactParts) {
+      for (const part of [basics.email, basics.phone].filter(Boolean)) {
         clContact.appendChild(el('span', null, part));
       }
 
@@ -797,16 +788,7 @@
 
       const rContact = document.getElementById('r-contact');
       rContact.innerHTML = '';
-      const headerParts = [basics.email, basics.phone].filter(Boolean);
-      if (basics.location) {
-        const loc = basics.location;
-        headerParts.push(typeof loc === 'string' ? loc : [loc.city, loc.region].filter(Boolean).join(', '));
-      }
-      if (basics.url) headerParts.push(basics.url.replace(/^https?:\/\//, ''));
-      for (const p of (basics.profiles || [])) {
-        if (p.url) headerParts.push(p.url.replace(/^https?:\/\//, ''));
-      }
-      for (const part of headerParts) {
+      for (const part of [basics.email, basics.phone].filter(Boolean)) {
         rContact.appendChild(el('span', null, part));
       }
 
