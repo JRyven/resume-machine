@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Domain-Specific Interests Schema",
+  "description": "Domain-specific keywords to replace generic expertise keywords in the resume",
+  "type": "object",
+  "required": [
+    "domain",
+    "keywords"
+  ],
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "Domain name (ai, backend, database, devops, frontend, manager, fullstack)",
+      "enum": [
+        "ai",
+        "backend",
+        "database",
+        "devops",
+        "frontend",
+        "manager",
+        "fullstack"
+      ]
+    },
+    "keywords": {
+      "type": "array",
+      "description": "Up to 4 domain-specific keywords to replace generic ones",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "maxItems": 4
+    }
+  }
+}

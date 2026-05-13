@@ -166,6 +166,58 @@
       color: var(--text);
       font-size: 0.78rem;
       margin-top: 0.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .job-domain-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      background: #dde3ed;
+      color: #3a4a6b;
+      line-height: 1.4;
+    }
+
+    .job-domain-badge.domain-ai {
+      background: #dce8fc;
+      color: #1a4a99;
+    }
+
+    .job-domain-badge.domain-backend {
+      background: #dff2e8;
+      color: #1a6640;
+    }
+
+    .job-domain-badge.domain-database {
+      background: #f3e8fd;
+      color: #5a1a99;
+    }
+
+    .job-domain-badge.domain-devops {
+      background: #fdeedd;
+      color: #7a4010;
+    }
+
+    .job-domain-badge.domain-frontend {
+      background: #fdf4dd;
+      color: #6b5010;
+    }
+
+    .job-domain-badge.domain-fullstack {
+      background: #eaeaea;
+      color: #333;
+    }
+
+    .job-domain-badge.domain-manager {
+      background: #fde0e0;
+      color: #991a1a;
     }
 
     .empty-state {
@@ -570,6 +622,12 @@
         <label for="cover-letter-toggle">Include cover letter</label>
       </div>
 
+      <div class="toggle-group" id="volunteer-toggle-group"
+        style="display:none; margin-top: 1rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 4px;">
+        <div style="font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem;">Open Source & Community</div>
+        <div id="volunteer-toggles"></div>
+      </div>
+
       <div class="job-list" id="job-list">
         <div class="empty-state">Loading jobs…</div>
       </div>
@@ -717,9 +775,12 @@
       jobList.innerHTML = '';
       for (const job of filtered) {
         const row = el('div', 'job-row' + (job.path === activeJobPath ? ' active' : ''));
+        const domainBadge = job.domain
+          ? `<span class="job-domain-badge domain-${job.domain}">${job.domain}</span>`
+          : '';
         row.innerHTML = `
         <div class="job-title">${job.job_title || 'Untitled'}</div>
-        <div class="job-meta">${job.employer || ''}${job.domain ? ' · ' + job.domain : ''}</div>`;
+        <div class="job-meta">${job.employer || ''}${domainBadge}</div>`;
         row.addEventListener('click', () => selectJob(job.path));
         jobList.appendChild(row);
       }
@@ -845,8 +906,26 @@
       // ── Areas of expertise ────────────────────────────────────────────────
       const expertiseDiv = document.getElementById('r-expertise');
       expertiseDiv.innerHTML = '';
+
+      // Use domain-specific interests if available and have keywords to swap
+      const domainInterests = corr.domain_interests || [];
       const interestGroup = (resume.interests || []).find(i => i.name === 'Areas of Expertise');
-      for (const kw of (interestGroup?.keywords || [])) {
+      let keywords = interestGroup?.keywords || [];
+
+      if (domainInterests.length > 0) {
+        // Identify which 4 keywords to replace (the swappable ones)
+        const replaceable = [
+          'PHP & JavaScript Development',
+          'PIM & CMS Architecture',
+          'E-Commerce Growth',
+          'Shopify Integration/Migration',
+        ];
+        // Keep permanent keywords, replace others with domain interests
+        const permanent = keywords.filter(kw => !replaceable.includes(kw));
+        keywords = permanent.concat(domainInterests.slice(0, 4 - permanent.length));
+      }
+
+      for (const kw of keywords) {
         expertiseDiv.appendChild(el('span', 'expertise-tag', kw));
       }
 
@@ -907,12 +986,48 @@
         entry.innerHTML = `<span class="org-name">${proj.name || ''}</span>${roleStr}${dateSpan}${descLink}`;
         communityDiv.appendChild(entry);
       }
+
+      // Load volunteer visibility state from localStorage
+      const volunteerStates = JSON.parse(localStorage.getItem('volunteerVisibility') || '{}');
+
       for (const vol of (resume.volunteer || [])) {
+        const volId = vol.id || vol.organization;
+        const isVisible = volunteerStates[volId] !== false; // default to true
         const entry = el('div', 'community-entry');
+        if (!isVisible) entry.style.display = 'none';
         const dateStr = [vol.startDate, vol.endDate].filter(Boolean).join('–');
         const dateSpan = dateStr ? ` <span class="org-dates">${dateStr}</span>` : '';
         entry.innerHTML = `<span class="org-name">${vol.organization || ''}</span>, <span class="org-role">${vol.position || ''}</span>${dateSpan}`;
         communityDiv.appendChild(entry);
+      }
+
+      // Populate volunteer toggles
+      const volunteerTogglesDiv = document.getElementById('volunteer-toggles');
+      volunteerTogglesDiv.innerHTML = '';
+      if ((resume.volunteer || []).length > 0) {
+        document.getElementById('volunteer-toggle-group').style.display = 'block';
+        for (const vol of (resume.volunteer || [])) {
+          const volId = vol.id || vol.organization;
+          const isVisible = volunteerStates[volId] !== false;
+          const checkbox = el('input', null, null);
+          checkbox.type = 'checkbox';
+          checkbox.id = `vol-toggle-${volId}`;
+          checkbox.checked = isVisible;
+          checkbox.addEventListener('change', () => {
+            volunteerStates[volId] = checkbox.checked;
+            localStorage.setItem('volunteerVisibility', JSON.stringify(volunteerStates));
+            hydratePage();
+          });
+          const label = el('label', null, vol.label || vol.organization);
+          label.htmlFor = `vol-toggle-${volId}`;
+          label.style.marginLeft = '0.3rem';
+          const row = el('div', null, null);
+          row.style.fontSize = '0.85rem';
+          row.style.marginBottom = '0.3rem';
+          row.appendChild(checkbox);
+          row.appendChild(label);
+          volunteerTogglesDiv.appendChild(row);
+        }
       }
 
       // ── Education ──────────────────────────────────────────────────────────

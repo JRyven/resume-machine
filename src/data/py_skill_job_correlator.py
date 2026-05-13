@@ -3,8 +3,9 @@ Skill–job correlator.
 
 Reads a job JSON, correlates required/additional skills against the v2.3.0
 facet_catalog in skills-index.json, writes:
-  - resume-{candidate}-{employer}-{title}.json  (always overwritten)
-  - letter-{candidate}-{employer}-{title}.json  (written only if absent)
+  - *_resume_*.json   (always overwritten)
+  - *_letter_*.json   (always overwritten)
+  - backfills metadata block into *_job-details_*.json
 
 Usage:
   python -m src.data.py_skill_job_correlator <job_json_path> [--name <candidate>]
@@ -16,6 +17,11 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
+
+# Domains whose reasoning entries are eligible for fullstack jobs
+_FULLSTACK_ELIGIBLE_DOMAINS: frozenset[str] = frozenset(
+    {'manager', 'frontend', 'devops', 'backend'}
+)
 
 from src.utils.logging_manager import get_logger, set_level
 from src.utils.config_manager import load_config
@@ -245,8 +251,23 @@ def correlate_job(
     for c in correlations:
         tag_distribution[c['tag']] = tag_distribution.get(c['tag'], 0) + 1
 
+    # Derive output paths from job directory before building correlation_data
+    job_dir = job_json_path_obj.parent
+    parts = job_dir.parts
+    try:
+        year, month, day = int(parts[-3]), int(parts[-2]), int(parts[-1])
+    except (ValueError, IndexError):
+        year, month, day = now.year, now.month, now.day
+
+    job_slug = job_data.get('_slug') or slugify(f'{job_title} {location}'.strip())
+    uid = job_data.get('_uid') or __import__('secrets').token_hex(3)
+    emp_short = employer_short_slug(employer)
+
+    # Build preliminary correlation_data (domain resolved below)
     correlation_data: dict = {
         'metadata': {
+            'uid': uid,
+            'slug': job_slug,
             'job_title': job_title,
             'employer': employer,
             'location': location,
@@ -266,34 +287,49 @@ def correlate_job(
 
     # Infer domain, languages, highlights
     adapter_result = infer_domain(correlation_data, role_templates_dir)
-    correlation_data['domain'] = adapter_result['domain']
+    domain = adapter_result['domain']
+    correlation_data['domain'] = domain
+    correlation_data['metadata']['domain'] = domain
     correlation_data['featured_languages'] = adapter_result['featured_languages']
     correlation_data['highlights'] = adapter_result['highlights']
 
-    # Derive output paths from job directory
-    job_dir = job_json_path_obj.parent
-    parts = job_dir.parts
-    try:
-        year, month, day = int(parts[-3]), int(parts[-2]), int(parts[-1])
-    except (ValueError, IndexError):
-        year, month, day = now.year, now.month, now.day
-
-    job_slug = job_data.get('_slug') or slugify(f'{job_title} {location}'.strip())
-    uid = job_data.get('_uid') or __import__('secrets').token_hex(3)
-    emp_short = employer_short_slug(employer)
+    # Load domain-specific interests if available
+    domain_interests_path = Path(role_templates_dir) / f'{domain}-interests.json'
+    if domain_interests_path.exists():
+        try:
+            with open(domain_interests_path) as f:
+                domain_interests = json.load(f)
+            correlation_data['domain_interests'] = domain_interests.get('keywords', [])
+        except Exception as exc:
+            _logger.debug('Failed to load domain interests for %s: %s', domain, exc)
+    else:
+        correlation_data['domain_interests'] = []
 
     corr_path = correlation_json_path(job_listings_dir, year, month, day, job_slug, emp_short, candidate, uid)
     letter_path = cover_letter_json_path(job_listings_dir, year, month, day, job_slug, emp_short, candidate, uid)
 
     if not dry_run:
+        # Backfill metadata into the job-details file (idempotent)
+        existing_meta = job_data.get('metadata', {})
+        if existing_meta.get('uid') != uid or existing_meta.get('domain') != domain:
+            job_data['metadata'] = {
+                'uid': uid,
+                'slug': job_slug,
+                'generated_at': now.isoformat(),
+                'domain': domain,
+                **{k: v for k, v in existing_meta.items()
+                   if k not in ('uid', 'slug', 'generated_at', 'domain')},
+            }
+            with open(job_json_path_obj, 'w') as f:
+                json.dump(job_data, f, indent=2)
+            _logger.debug('Backfilled metadata into job-details: %s', job_json_path_obj.name)
+
         Path(corr_path).parent.mkdir(parents=True, exist_ok=True)
         with open(corr_path, 'w') as f:
             json.dump(correlation_data, f, indent=2)
         _logger.info('Wrote correlation: %s', corr_path)
 
-        domain = correlation_data.get('domain', 'fullstack')
         letter_tmpl_path = Path(role_templates_dir) / f'{domain}-letter.json'
-        # Start from the candidate default; domain file overrides non-empty fields.
         letter_tmpl: dict = dict(letter_source)
         if letter_tmpl_path.exists():
             with open(letter_tmpl_path) as f:
@@ -302,12 +338,18 @@ def correlate_job(
                 val = domain_tmpl.get(key)
                 if val:
                     letter_tmpl[key] = val
-            # reasoning_paragraphs: domain list overrides source only when non-empty
-            domain_refs = domain_tmpl.get('reasoning_paragraphs', [])
-            if domain_refs:
-                letter_tmpl['reasoning_paragraphs'] = domain_refs
+
         basics = resume_source.get('basics', {})
-        letter = _build_cover_letter(correlation_data, employer, job_title, letter_tmpl, basics, reasoning_dir)
+
+        # Collect job correlation terms (lower-cased) for facet matching
+        correlation_terms = {
+            c['term'].lower() for c in correlations
+        }
+
+        letter = _build_cover_letter(
+            correlation_data, employer, job_title, letter_tmpl, basics,
+            reasoning_dir, domain, correlation_terms, uid, job_slug, now,
+        )
         with open(letter_path, 'w') as f:
             json.dump(letter, f, indent=2)
         _logger.info('Wrote cover letter: %s', letter_path)
@@ -318,7 +360,61 @@ def correlate_job(
     return correlation_data
 
 
-def _build_cover_letter(correlation_data: dict, employer: str, job_title: str, letter_tmpl: dict, basics: dict, reasoning_dir: 'Path') -> dict:
+def _select_reasonings(
+    domain: str,
+    correlation_terms: set[str],
+    reasoning_dir: Path,
+    max_count: int = 3,
+) -> list[str]:
+    """Load all reasoning JSONs and return up to max_count content strings.
+
+    Eligibility:
+      - Exact domain match for all domains except 'fullstack'.
+      - 'fullstack' jobs may draw from manager, frontend, devops, backend.
+
+    Ranking: descending facet-overlap score with job correlation terms.
+    Tiebreak: alphabetical slug (stable).
+    """
+    eligible_domains: frozenset[str] = (
+        _FULLSTACK_ELIGIBLE_DOMAINS
+        if domain == 'fullstack'
+        else frozenset({domain})
+    )
+
+    scored: list[tuple[int, str, str]] = []
+    for json_path in reasoning_dir.glob('*.json'):
+        try:
+            with open(json_path) as fh:
+                data = json.load(fh)
+            meta = data.get('metadata', {})
+            r_domain = meta.get('domain', '')
+            if r_domain not in eligible_domains:
+                continue
+            facets = {f.lower() for f in meta.get('facet', [])}
+            score = len(facets & correlation_terms)
+            content = data.get('content', '').strip()
+            if content:
+                scored.append((score, json_path.stem, content))
+        except Exception as exc:
+            _logger.warning('Skipping reasoning file %s: %s', json_path.name, exc)
+
+    scored.sort(key=lambda x: (-x[0], x[1]))
+    return [content for _, _, content in scored[:max_count]]
+
+
+def _build_cover_letter(
+    correlation_data: dict,
+    employer: str,
+    job_title: str,
+    letter_tmpl: dict,
+    basics: dict,
+    reasoning_dir: Path,
+    domain: str,
+    correlation_terms: set[str],
+    uid: str,
+    slug: str,
+    now: datetime,
+) -> dict:
     opening_tmpl = letter_tmpl.get(
         'opening_template',
         'I am applying for the {job_title} at {employer}.',
@@ -328,15 +424,7 @@ def _build_cover_letter(correlation_data: dict, employer: str, job_title: str, l
         'Thank you for your consideration.',
     )
 
-    # Resolve reasoning paragraph .txt files
-    reasoning_refs = letter_tmpl.get('reasoning_paragraphs', [])
-    reasoning_paragraphs = []
-    for ref in reasoning_refs:
-        txt_path = reasoning_dir / ref
-        if txt_path.exists():
-            reasoning_paragraphs.append(txt_path.read_text().strip())
-        else:
-            _logger.warning('Reasoning paragraph not found: %s', txt_path)
+    reasoning_paragraphs = _select_reasonings(domain, correlation_terms, reasoning_dir)
 
     signature = {
         'name': basics.get('name', ''),
@@ -346,6 +434,12 @@ def _build_cover_letter(correlation_data: dict, employer: str, job_title: str, l
     }
 
     return {
+        'metadata': {
+            'uid': uid,
+            'slug': slug,
+            'generated_at': now.isoformat(),
+            'domain': domain,
+        },
         'opening': opening_tmpl.format(employer=employer, job_title=job_title),
         'reasoning_paragraphs': reasoning_paragraphs,
         'closing': closing_tmpl.format(employer=employer),
