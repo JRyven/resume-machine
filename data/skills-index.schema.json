@@ -1,0 +1,244 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "skills-index.schema.json",
+  "title": "Skills Index",
+  "description": "Faceted skills inventory for resume-machine v2.3.0",
+  "type": "object",
+  "required": [
+    "metadata",
+    "venues_catalog",
+    "skills_catalog",
+    "facet_catalog",
+    "skills"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "@context": {
+      "type": "string"
+    },
+    "$schema": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "version",
+        "last_updated",
+        "structure"
+      ],
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "structure": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "venues_catalog": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "venue_id",
+          "name",
+          "role"
+        ],
+        "properties": {
+          "venue_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "start_year": {
+            "type": "integer"
+          },
+          "end_year": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "location": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "skills_catalog": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "skill_id",
+          "skill_key",
+          "skill_name"
+        ],
+        "properties": {
+          "skill_id": {
+            "type": "string"
+          },
+          "skill_key": {
+            "type": "string"
+          },
+          "skill_name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "facet_catalog": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "facet_id",
+          "facet_name",
+          "facet_type",
+          "skill_group"
+        ],
+        "properties": {
+          "facet_id": {
+            "type": "string"
+          },
+          "facet_name": {
+            "type": "string"
+          },
+          "facet_type": {
+            "type": "string",
+            "enum": [
+              "hands_on_language",
+              "hands_on_framework",
+              "hands_on_tool",
+              "hands_on_platform",
+              "hands_on_skill",
+              "strategic_domain",
+              "leadership_soft_skill"
+            ]
+          },
+          "skill_group": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "skills": {
+      "type": "object",
+      "description": "Keyed by skill_group name (e.g. programming_languages)",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "skill_name",
+            "facets"
+          ],
+          "properties": {
+            "skill_name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "years_of_experience": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "facets": {
+              "type": "object",
+              "description": "Keyed by lowercase facet name",
+              "additionalProperties": {
+                "type": "object",
+                "required": [
+                  "facet_name",
+                  "facet_type"
+                ],
+                "properties": {
+                  "facet_name": {
+                    "type": "string"
+                  },
+                  "facet_type": {
+                    "type": "string"
+                  },
+                  "years_of_experience": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "experience_level": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "beginner",
+                      "intermediate",
+                      "advanced",
+                      "expert",
+                      null
+                    ]
+                  },
+                  "proficiency": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "enum": [
+                      "novice",
+                      "beginner",
+                      "intermediate",
+                      "proficient",
+                      "expert",
+                      null
+                    ]
+                  },
+                  "confidence_level": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "last_used": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "skill_training": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

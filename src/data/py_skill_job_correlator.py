@@ -164,6 +164,10 @@ def correlate_job(
     skills_index_path = cfg['skills_index_path']
     role_templates_dir = cfg['role_templates_dir']
     job_listings_dir = cfg['job-listings_dir']
+    cover_letter_source_path = cfg.get('cover_letter_source_path', 'data/cover-letter.source.json')
+
+    with open(cover_letter_source_path) as f:
+        cover_letter_source = json.load(f)
 
     job_json_path_obj = Path(job_json_path_str).resolve()
     with open(job_json_path_obj) as f:
@@ -277,7 +281,7 @@ def correlate_job(
         _logger.info('Wrote correlation: %s', corr_path)
 
         if not Path(letter_path).exists():
-            letter = _build_cover_letter(correlation_data, employer, job_title)
+            letter = _build_cover_letter(correlation_data, employer, job_title, cover_letter_source)
             with open(letter_path, 'w') as f:
                 json.dump(letter, f, indent=2)
             _logger.info('Wrote cover letter: %s', letter_path)
@@ -290,7 +294,7 @@ def correlate_job(
     return correlation_data
 
 
-def _build_cover_letter(correlation_data: dict, employer: str, job_title: str) -> dict:
+def _build_cover_letter(correlation_data: dict, employer: str, job_title: str, cover_letter_source: dict) -> dict:
     lead_strengths = [c for c in correlation_data['correlations'] if c['tag'] == 'LEAD_STRENGTH']
     highlights = correlation_data.get('highlights', [])
 
@@ -305,11 +309,24 @@ def _build_cover_letter(correlation_data: dict, employer: str, job_title: str) -
 
     relevant_experience = highlights[:5] if highlights else []
 
+    opening_tmpl = cover_letter_source.get(
+        'opening_template',
+        'Dear Hiring Team at {employer}, I am writing to apply for the {job_title} position.',
+    )
+    closing_tmpl = cover_letter_source.get(
+        'closing_template',
+        "I would welcome the opportunity to discuss how my experience contributes to {employer}'s goals. Thank you for your consideration.",
+    )
+    intro = cover_letter_source.get('intro', '')
+    signature = cover_letter_source.get('signature', {})
+
     return {
-        'opening': f"Dear Hiring Team at {employer}, I am writing to apply for the {job_title} position.",
+        'opening': opening_tmpl.format(employer=employer, job_title=job_title),
+        'intro': intro,
         'value_proposition': value_proposition,
         'relevant_experience': relevant_experience,
-        'closing': f"I would welcome the opportunity to discuss how my experience contributes to {employer}'s goals. Thank you for your consideration.",
+        'closing': closing_tmpl.format(employer=employer),
+        'signature': signature,
     }
 
 

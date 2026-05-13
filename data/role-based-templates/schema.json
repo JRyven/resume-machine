@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "role-based-template.schema.json",
+  "title": "Role-Based Resume Template",
+  "description": "Domain-specific keyword and highlight template used by the resume-machine correlator adapter",
+  "type": "object",
+  "required": [
+    "domain",
+    "keywords",
+    "facet_types",
+    "highlights"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "Canonical domain identifier matching the template filename stem",
+      "examples": [
+        "fullstack",
+        "backend",
+        "frontend",
+        "devops",
+        "database",
+        "ml_ai",
+        "manager"
+      ]
+    },
+    "keywords": {
+      "type": "array",
+      "description": "Lowercase skill/technology keywords used for domain inference scoring",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "facet_types": {
+      "type": "array",
+      "description": "Facet type labels relevant to this domain (used for correlation scoring)",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "examples": [
+          "language",
+          "framework",
+          "tool",
+          "practice",
+          "platform"
+        ]
+      }
+    },
+    "highlights": {
+      "type": "array",
+      "description": "Pre-written resume highlight bullets for this domain; may contain HTML strong tags",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
