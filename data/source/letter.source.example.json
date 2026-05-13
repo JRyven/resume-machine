@@ -1,6 +1,8 @@
 {
   "$schema": "./schemas/letter.source.schema.json",
   "opening_template": "I am applying for the {job_title} at {employer} because [reason]. Insert data point or something about the organization and alignment. ",
-  "closing_template": "I am currently based in Waterloo and can relocate if needed. I am excited about the possibility of contributing my communications and strategy experience to [organization’s] work and would welcome the chance to discuss the role further.",
-  "intro": "Intro Content Resume Letter"
+  "closing_template": "I am currently based in [City] and can relocate if needed. I am excited about the possibility of contributing my experience to {employer}'s work and would welcome the chance to discuss the role further.",
+  "reasoning_paragraphs": [
+    "{domain}-{skill}-{facets}.txt"
+  ]
 }

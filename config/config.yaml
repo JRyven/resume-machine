@@ -3,5 +3,6 @@ job-listings_dir: data/job-listings
 skills_index_path: data/source/skills-index.json
 resume_source_path: data/source/resume.source.json
 letter_source_path: data/source/letter.source.json
+reasoning_dir: data/source/reasoning
 role_templates_dir: data/domains
 log_level: info

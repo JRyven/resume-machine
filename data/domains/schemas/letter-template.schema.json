@@ -5,9 +5,7 @@
   "description": "Domain-specific cover letter template strings used by the resume-machine correlator to generate per-job letter JSON files.",
   "type": "object",
   "required": [
-    "domain",
-    "opening_template",
-    "closing_template"
+    "domain"
   ],
   "additionalProperties": false,
   "properties": {
@@ -35,9 +33,13 @@
       "type": "string",
       "description": "Closing sentence template. Supports {employer} placeholder."
     },
-    "intro": {
-      "type": "string",
-      "description": "Optional fixed personal paragraph inserted between the opening and value proposition. Leave empty to omit."
+    "reasoning_paragraphs": {
+      "type": "array",
+      "description": "Ordered list of .txt filenames (relative to the reasoning/ directory) whose contents are inserted as body paragraphs. When non-empty, overrides the default set from letter.source.json. Naming convention: {domain}-{skill}-{facets}.txt.",
+      "items": {
+        "type": "string"
+      },
+      "default": []
     }
   }
 }

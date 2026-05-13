@@ -166,6 +166,7 @@ def correlate_job(
     job_listings_dir = cfg['job-listings_dir']
     resume_source_path = cfg.get('resume_source_path', 'data/source/resume.source.json')
     letter_source_path = cfg.get('letter_source_path', 'data/source/letter.source.json')
+    reasoning_dir = Path(cfg.get('reasoning_dir', 'data/source/reasoning'))
 
     with open(resume_source_path) as f:
         resume_source = json.load(f)
@@ -297,12 +298,16 @@ def correlate_job(
         if letter_tmpl_path.exists():
             with open(letter_tmpl_path) as f:
                 domain_tmpl = json.load(f)
-            for key in ('opening_template', 'closing_template', 'intro'):
+            for key in ('opening_template', 'closing_template'):
                 val = domain_tmpl.get(key)
                 if val:
                     letter_tmpl[key] = val
+            # reasoning_paragraphs: domain list overrides source only when non-empty
+            domain_refs = domain_tmpl.get('reasoning_paragraphs', [])
+            if domain_refs:
+                letter_tmpl['reasoning_paragraphs'] = domain_refs
         basics = resume_source.get('basics', {})
-        letter = _build_cover_letter(correlation_data, employer, job_title, letter_tmpl, basics)
+        letter = _build_cover_letter(correlation_data, employer, job_title, letter_tmpl, basics, reasoning_dir)
         with open(letter_path, 'w') as f:
             json.dump(letter, f, indent=2)
         _logger.info('Wrote cover letter: %s', letter_path)
@@ -313,44 +318,36 @@ def correlate_job(
     return correlation_data
 
 
-def _build_cover_letter(correlation_data: dict, employer: str, job_title: str, letter_tmpl: dict, basics: dict) -> dict:
-    lead_strengths = [c for c in correlation_data['correlations'] if c['tag'] == 'LEAD_STRENGTH']
-    highlights = correlation_data.get('highlights', [])
-
-    if len(lead_strengths) >= 2:
-        value_proposition = ' '.join(
-            f"{c['term']} expertise brings proven impact." for c in lead_strengths[:2]
-        )
-    elif highlights:
-        value_proposition = ' '.join(str(h) for h in highlights[:2])
-    else:
-        value_proposition = 'Extensive technical experience directly relevant to this role.'
-
-    relevant_experience = highlights[:5] if highlights else []
-
+def _build_cover_letter(correlation_data: dict, employer: str, job_title: str, letter_tmpl: dict, basics: dict, reasoning_dir: 'Path') -> dict:
     opening_tmpl = letter_tmpl.get(
         'opening_template',
-        'Dear Hiring Team at {employer}, I am writing to apply for the {job_title} position.',
+        'I am applying for the {job_title} at {employer}.',
     )
     closing_tmpl = letter_tmpl.get(
         'closing_template',
-        "I am currently based in Waterloo and can relocate if needed. I am excited about the possibility of contributing my communications and strategy experience to [organization’s] work and would welcome the chance to discuss the role further.",
+        'Thank you for your consideration.',
     )
-    intro = letter_tmpl.get('intro', '')
+
+    # Resolve reasoning paragraph .txt files
+    reasoning_refs = letter_tmpl.get('reasoning_paragraphs', [])
+    reasoning_paragraphs = []
+    for ref in reasoning_refs:
+        txt_path = reasoning_dir / ref
+        if txt_path.exists():
+            reasoning_paragraphs.append(txt_path.read_text().strip())
+        else:
+            _logger.warning('Reasoning paragraph not found: %s', txt_path)
 
     signature = {
         'name': basics.get('name', ''),
         'title': basics.get('label', ''),
         'email': basics.get('email', ''),
         'phone': basics.get('phone', ''),
-        'url': basics.get('url', ''),
     }
 
     return {
         'opening': opening_tmpl.format(employer=employer, job_title=job_title),
-        'intro': intro,
-        'value_proposition': value_proposition,
-        'relevant_experience': relevant_experience,
+        'reasoning_paragraphs': reasoning_paragraphs,
         'closing': closing_tmpl.format(employer=employer),
         'signature': signature,
     }

@@ -17,9 +17,13 @@
       "type": "string",
       "description": "Default closing sentence template. Supports {employer} placeholder. Overridden by a domain letter file when that field is a non-empty string."
     },
-    "intro": {
-      "type": "string",
-      "description": "Candidate's personal introduction paragraph, inserted after the opening line and before the value proposition. Leave as empty string to omit. Overridden by a domain letter file when that field is a non-empty string."
+    "reasoning_paragraphs": {
+      "type": "array",
+      "description": "Ordered list of .txt filenames (relative to the reasoning/ directory) whose contents are inserted as body paragraphs between the opening and closing. Naming convention: {domain}-{skill}-{facets}.txt. Domain letter files may override this list entirely.",
+      "items": {
+        "type": "string"
+      },
+      "default": []
     }
   }
 }

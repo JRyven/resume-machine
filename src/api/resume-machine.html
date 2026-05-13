@@ -245,6 +245,26 @@
       margin-bottom: 0.3em;
     }
 
+    .cl-signature {
+      margin-top: 2em;
+      font-size: var(--fs-body);
+      line-height: 1.6;
+    }
+
+    .cl-signature .sig-name {
+      font-weight: 700;
+    }
+
+    .cl-signature .sig-title {
+      color: var(--muted);
+      font-size: var(--fs-meta);
+    }
+
+    .cl-signature .sig-contact {
+      color: var(--muted);
+      font-size: var(--fs-small);
+    }
+
     /* ── Resume page ─────────────────────────────────────────────────────── */
     .resume-header {
       border-bottom: 2px solid var(--text);
@@ -571,10 +591,10 @@
         <div class="cl-recipient" id="cl-recipient"></div>
         <div class="cl-body">
           <p id="cl-opening"></p>
-          <p id="cl-value"></p>
-          <ul id="cl-experience"></ul>
+          <div id="cl-reasoning"></div>
           <p id="cl-closing"></p>
         </div>
+        <div class="cl-signature" id="cl-signature"></div>
       </div>
 
       <!-- Resume page -->
@@ -773,14 +793,22 @@
       txt('cl-date', now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
       txt('cl-recipient', meta.employer || '');
       txt('cl-opening', corr.opening || '');
-      txt('cl-value', corr.value_proposition || '');
 
-      const clExp = document.getElementById('cl-experience');
-      clExp.innerHTML = '';
-      for (const line of (corr.relevant_experience || []).slice(0, 5)) {
-        clExp.appendChild(el('li', null, line));
+      const clReasoning = document.getElementById('cl-reasoning');
+      clReasoning.innerHTML = '';
+      for (const para of (corr.reasoning_paragraphs || [])) {
+        clReasoning.appendChild(el('p', null, para));
       }
+
       txt('cl-closing', corr.closing || '');
+
+      const clSig = document.getElementById('cl-signature');
+      clSig.innerHTML = '';
+      const sig = corr.signature || {};
+      if (sig.name) clSig.appendChild(el('div', 'sig-name', sig.name));
+      if (sig.title) clSig.appendChild(el('div', 'sig-title', sig.title));
+      if (sig.email) clSig.appendChild(el('div', 'sig-contact', sig.email));
+      if (sig.phone) clSig.appendChild(el('div', 'sig-contact', sig.phone));
 
       // ── Resume header ──────────────────────────────────────────────────────
       txt('r-name', basics.name);
