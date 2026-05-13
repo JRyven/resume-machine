@@ -18,50 +18,106 @@ An automated resume generation pipeline that analyzes job postings, correlates t
 Resume Machine removes the manual work from tailoring resumes. It scrapes job postings, matches them against your skills, infers the most relevant domain (fullstack, backend, devops, etc.), selects the appropriate resume template, and exports a polished PDF — all from a single command.
 
 ```
-RESUME MACHINE — PIPELINE MAP
-══════════════════════════════════════════════════════════════
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║  DATA SOURCES                          RENDERED SECTIONS                        ║
+╠══════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                 ║
+║  ┌─────────────────────┐   ┌──────────────────────────────────────────────────┐ ║
+║  │ resume.source.json  │   │  PAGE 1 — COVER LETTER                           │ ║
+║  │  basics.name        │──▶│  ┌─────────────────────────────────────────────┐ │ ║
+║  │  basics.email       │   │  │ [name]                          cl-name      │ │ ║
+║  │  basics.phone       │──▶│  │ email · phone · city, region    cl-contact   │ │ ║
+║  │  basics.location    │   │  └─────────────────────────────────────────────┘ │ ║
+║  └─────────────────────┘   │  ┌─────────────────────────────────────────────┐ │ ║
+║                             │  │ May 13, 2026               cl-date (runtime)│ │ ║
+║  ┌─────────────────────┐   │  └─────────────────────────────────────────────┘ │ ║
+║  │ *_resume_*.json     │   │  ┌─────────────────────────────────────────────┐ │ ║
+║  │  metadata.employer  │──▶│  │ [Employer Name]             cl-recipient     │ │ ║
+║  └─────────────────────┘   │  └─────────────────────────────────────────────┘ │ ║
+║                             │                                                  │ ║
+║  ┌─────────────────────┐   │  ┌─────────────────────────────────────────────┐ │ ║
+║  │ *_letter_*.json     │   │  │ Dear Hiring Team at {employer}…  cl-opening  │ │ ║
+║  │  opening            │──▶│  │                                              │ │ ║
+║  │  (from              │   │  │ [value proposition sentence]   cl-value      │ │ ║
+║  │  opening_template   │   │  │                                              │ │ ║
+║  │  + employer sub)    │   │  │  • highlight 1               cl-experience   │ │ ║
+║  │  value_proposition  │──▶│  │  • highlight 2                    (up to 5)  │ │ ║
+║  │  relevant_experience│──▶│  │  • highlight 3                              │ │ ║
+║  │  closing            │──▶│  │                                              │ │ ║
+║  │  (from              │   │  │ I would welcome the opportunity… cl-closing  │ │ ║
+║  │  closing_template   │   │  └─────────────────────────────────────────────┘ │ ║
+║  │  + employer sub)    │   └──────────────────────────────────────────────────┘ ║
+║  └─────────────────────┘                                                        ║
+║         ▲                  ┌──────────────────────────────────────────────────┐ ║
+║         │ built by         │  PAGE 2 — RESUME                                 │ ║
+║  ┌──────┴──────────────┐   │  ┌─────────────────────────────────────────────┐ │ ║
+║  │cover-letter.source  │   │  │ [Name]                      r-name           │ │ ║
+║  │.json                │   │  │ [basics.label OR job_title] r-role           │ │ ║
+║  │  opening_template   │   │  │ email · phone · city        r-contact        │ │ ║
+║  │  closing_template   │   │  └─────────────────────────────────────────────┘ │ ║
+║  └─────────────────────┘   │                                                  │ ║
+║                             │  ┌─────────────────────────────────────────────┐ │ ║
+║  ┌─────────────────────┐   │  │ ABSTRACT                                     │ │ ║
+║  │ resume.source.json  │   │  │ [summary[0].value narrative ¶] r-abstract    │ │ ║
+║  │  basics.summary     │──▶│  │  ▸ highlight 1              r-summary        │ │ ║
+║  │    [0].value        │   │  │  ▸ highlight 2              (up to 4,        │ │ ║
+║  │                     │   │  │  ▸ highlight 3               from corr.)     │ │ ║
+║  │ *_resume_*.json     │   │  │  ▸ highlight 4                               │ │ ║
+║  │  highlights[]       │──▶│  └─────────────────────────────────────────────┘ │ ║
+║  └─────────────────────┘   │                                                  │ ║
+║                             │  ┌─────────────────────────────────────────────┐ │ ║
+║  ┌─────────────────────┐   │  │ AREAS OF EXPERTISE                           │ │ ║
+║  │ resume.source.json  │   │  │ Full-Stack Dev · PHP & JS · CMS · …          │ │ ║
+║  │  interests[0]       │──▶│  │                              r-expertise      │ │ ║
+║  │  .keywords[]        │   │  └─────────────────────────────────────────────┘ │ ║
+║  └─────────────────────┘   │                                                  │ ║
+║                             │  ┌─────────────────────────────────────────────┐ │ ║
+║  ┌─────────────────────┐   │  │ EXPERIENCE                                   │ │ ║
+║  │ resume.source.json  │   │  │ Company ──────────────────────────── 20XX    │ │ ║
+║  │  work[].name        │──▶│  │ Position (italic)                            │ │ ║
+║  │  work[].position    │   │  │ Summary paragraph                            │ │ ║
+║  │  work[].startDate   │   │  │  • highlight                  r-work         │ │ ║
+║  │  work[].endDate     │   │  │  • highlight                                 │ │ ║
+║  │  work[].summary     │   │  └─────────────────────────────────────────────┘ │ ║
+║  │  work[].highlights  │   │                                                  │ ║
+║  └─────────────────────┘   │  ┌─────────────────────────────────────────────┐ │ ║
+║                             │  │ SKILLS  (priority groups first per domain)  │ │ ║
+║  ┌─────────────────────┐   │  │ Languages & Frameworks (accent if priority)  │ │ ║
+║  │ resume.source.json  │   │  │ PHP · JS · Node.js · React · …              │ │ ║
+║  │  skills[].name      │──▶│  │ DevOps, Infrastructure & Development        │ │ ║
+║  │  skills[].keywords  │   │  │ Docker · AWS · CI/CD · …      r-skills       │ │ ║
+║  │                     │   │  └─────────────────────────────────────────────┘ │ ║
+║  │ *_resume_*.json     │   │          ▲                                       │ ║
+║  │  domain             │──▶│  sort order decided by domain                   │ ║
+║  └─────────────────────┘   │                                                  │ ║
+║                             │  ┌─────────────────────────────────────────────┐ │ ║
+║  ┌─────────────────────┐   │  │ OPEN SOURCE & COMMUNITY LEADERSHIP           │ │ ║
+║  │ resume.source.json  │   │  │ Project Name  Creator, Maintainer            │ │ ║
+║  │  projects[]         │──▶│  │ Description · link           r-community     │ │ ║
+║  │  volunteer[]        │──▶│  │ Organization, Role  2012–2014                │ │ ║
+║  └─────────────────────┘   │  └─────────────────────────────────────────────┘ │ ║
+║                             │                                                  │ ║
+║  ┌─────────────────────┐   │  ┌─────────────────────────────────────────────┐ │ ║
+║  │ resume.source.json  │   │  │ EDUCATION                                    │ │ ║
+║  │  education[]        │──▶│  │ Institution — Degree, Area    r-education    │ │ ║
+║  └─────────────────────┘   │  └─────────────────────────────────────────────┘ │ ║
+║                             │                                                  │ ║
+║  ┌─────────────────────┐   │  ┌─────────────────────────────────────────────┐ │ ║
+║  │ resume.source.json  │   │  │ jamesvaleii.com · linkedin.com/… · github… │ │ ║
+║  │  basics.url         │──▶│  │                               r-footer       │ │ ║
+║  │  basics.profiles[]  │   │  └─────────────────────────────────────────────┘ │ ║
+║  └─────────────────────┘   └──────────────────────────────────────────────────┘ ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
 
-INPUT                         PROCESSING                      DATA / CONFIG
-─────                         ────────────                    ───────────
-
-[Job Bank HTML files]
-        │
-        ▼
-                    [src/data/py_extract_jobs.py]
-                    HTML → structured job JSON
-                                │
-                                ▼
-                    [job JSON files]           ----╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
-                                │             ╎ data/skills-index.json     ╎
-                                │╌╌╌╌╌╌╌╌╌╌╌╌╎ (skills inventory)         ╎
-                                │              ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
-                                ▼
-                    [src/data/py_skill_job_correlator.py]
-                    Skill–job correlation + tag assignment
-                                │
-                    ┌───────────┴───────────┐
-                    ▼                       ▼
-         [correlation-*.json]       [letter-*.json]
-          always overwritten         written once
-                    └───────────┬───────────┘
-                                │
-                                ▼
-                    [src/models/py_adapter_correlator_to_template.py]
-                    Domain inference         ----╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
-                                       ╌╌╌╌╌╌╌╎ data/role-based-templates/ ╎
-                                               ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
-
-──────────────────────────────────────────────────────────────
-ORCHESTRATION
-  scripts/process.py          ← batch orchestrator (--dir / --file)
-  python -m src.api.serve     ← local HTTP server (resume selection UX)
-──────────────────────────────────────────────────────────────
-LEGEND
-  [name]        script or orchestrator
-  ╎ name ╎      data / config file (side input)
-  ──────        main flow
-  ╌╌╌╌╌╌        supporting / fallback input
-──────────────────────────────────────────────────────────────
+  KEY
+  ──────────────────────────────────────────────────────────────────────────────
+  resume.source.json   static candidate data, edited manually, never overwritten
+  *_resume_*.json      per-job correlation output, written by process.py
+  *_letter_*.json      per-job cover letter output, written by process.py
+  cover-letter.source  templates with {employer}/{job_title} placeholders
+  domain               one of: ai · backend · database · devops · frontend
+                               fullstack · manager  (controls skill sort order)
+  highlights[]         drawn from the matched role-based-template (ai.json etc.)
 ```
 
 ---
