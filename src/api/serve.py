@@ -118,6 +118,7 @@ def _api_jobs(handler, params: dict) -> None:
                 'employer': meta.get('employer', ''),
                 'location': meta.get('location', ''),
                 'domain': data.get('domain', ''),
+                'uid': data.get('uid', '') or meta.get('uid', ''),
             })
         except Exception:
             pass

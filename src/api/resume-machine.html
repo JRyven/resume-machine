@@ -215,6 +215,18 @@
       color: #333;
     }
 
+    .job-uid {
+      display: inline-block;
+      font-size: 0.66rem;
+      font-family: var(--font-ui);
+      color: #555;
+      border: 1px solid #d3d6dc;
+      border-radius: 3px;
+      padding: 0.06rem 0.28rem;
+      background: #fafbfc;
+      line-height: 1.4;
+    }
+
     .job-domain-badge.domain-manager {
       background: #fde0e0;
       color: #991a1a;
@@ -778,9 +790,12 @@
         const domainBadge = job.domain
           ? `<span class="job-domain-badge domain-${job.domain}">${job.domain}</span>`
           : '';
+        const uidBadge = (job.domain === 'fullstack' && job.uid)
+          ? `<span class="job-uid">${job.uid}</span>`
+          : '';
         row.innerHTML = `
         <div class="job-title">${job.job_title || 'Untitled'}</div>
-        <div class="job-meta">${job.employer || ''}${domainBadge}</div>`;
+        <div class="job-meta">${job.employer || ''}${domainBadge}${uidBadge}</div>`;
         row.addEventListener('click', () => selectJob(job.path));
         jobList.appendChild(row);
       }
