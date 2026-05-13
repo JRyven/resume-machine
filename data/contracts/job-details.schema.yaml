@@ -1,0 +1,103 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+$id: "job-details.schema.yaml"
+title: Job Details
+description: >
+  Extracted job posting data for a single role. Produced by the extraction
+  pipeline and consumed by py_skill_job_correlator. Filename convention:
+  {job-slug}_job-details_{employer-short}_{candidate}_{uid}.json
+type: object
+required:
+  - job_title
+  - employer
+  - _uid
+  - _slug
+additionalProperties: false
+
+properties:
+  $schema:
+    type: string
+
+  metadata:
+    type: object
+    description: Pipeline-injected tracking fields.
+    additionalProperties: false
+    properties:
+      job_id:
+        type: string
+        description: Alias for _uid; short hex identifier shared across companion files.
+
+  job_title:
+    type: string
+    description: Exact job title as posted.
+
+  employer:
+    type: string
+    description: Full employer name as posted.
+
+  location:
+    type: string
+    description: City, province/state, or remote designation as posted.
+
+  salary:
+    type: string
+    description: Salary range or compensation string as posted (unparsed).
+
+  employment_type:
+    type: string
+    description: Employment classification as posted (e.g. Permanent employment Full time).
+
+  job_posting:
+    type: object
+    description: Structured content extracted from the job posting body.
+    additionalProperties: false
+    properties:
+      required_skills:
+        type: array
+        description: Skills explicitly listed as required.
+        items:
+          type: string
+      additional_skills:
+        type: array
+        description: Skills listed as nice-to-have or additional assets.
+        items:
+          type: string
+      responsibilities:
+        type: array
+        description: Duty/responsibility bullets from the posting.
+        items:
+          type: string
+      overview:
+        type: string
+        description: Experience level or general overview statement as posted.
+      specialization:
+        type: string
+        description: Language, domain specialization, or area of focus as posted.
+
+  benefits:
+    type: object
+    description: >
+      Benefit categories keyed by category name (e.g. "Health benefits").
+      Values are arrays of individual benefit strings.
+    additionalProperties:
+      type: array
+      items:
+        type: string
+
+  _uid:
+    type: string
+    description: Short hex identifier shared with companion resume and letter files.
+    pattern: "^[0-9a-f]{6}$"
+
+  _slug:
+    type: string
+    description: >
+      URL-safe slug derived from the job title and location.
+      Used in the output filename convention.
+    pattern: "^[a-z0-9-]+$"
+
+  locked:
+    type: boolean
+    description: >
+      When true, the correlator skips re-processing this job. Set manually
+      after the output files have been reviewed and finalized.
+    default: false

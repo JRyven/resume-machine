@@ -1,0 +1,57 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+$id: "letter.schema.yaml"
+title: Cover Letter Output
+description: >
+  Generated cover letter for a single job application. Produced by
+  py_skill_job_correlator._build_cover_letter and written alongside the
+  resume correlation file. Filename convention:
+  {job-slug}_letter_{employer-short}_{candidate}_{uid}.json
+type: object
+required:
+  - opening
+  - value_proposition
+  - relevant_experience
+  - closing
+additionalProperties: false
+
+properties:
+  $schema:
+    type: string
+
+  metadata:
+    type: object
+    description: Pipeline-injected tracking fields echoed from the source job details.
+    additionalProperties: false
+    properties:
+      job_id:
+        type: string
+        description: Short hex identifier shared across companion job-details and resume files.
+
+  opening:
+    type: string
+    description: >
+      Salutation and introductory sentence addressed to the hiring team.
+      Interpolated from cover-letter.source.json opening_template.
+
+  value_proposition:
+    type: string
+    description: >
+      One or two sentences summarising the candidate's primary value for this
+      role. Derived from the matched role-based-template highlights.
+
+  relevant_experience:
+    type: array
+    description: >
+      Bullet-ready experience statements drawn from the role-based-template
+      highlights and/or LEAD_STRENGTH correlations. Rendered as a list in the
+      cover letter body.
+    minItems: 1
+    maxItems: 6
+    items:
+      type: string
+
+  closing:
+    type: string
+    description: >
+      Closing paragraph and call to action. Interpolated from
+      cover-letter.source.json closing_template with employer name substituted.

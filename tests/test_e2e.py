@@ -1,5 +1,5 @@
 """
-End-to-end integration test for resume-machine.
+E2E integration test for resume-machine.
 
 Starts a real HTTPServer on an ephemeral port and exercises every API
 endpoint, including path-traversal guard, using only stdlib.

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "letter-template.schema.json",
+  "title": "Role-Based Cover Letter Template",
+  "description": "Domain-specific cover letter template strings used by the resume-machine correlator to generate per-job letter JSON files.",
+  "type": "object",
+  "required": [
+    "domain",
+    "opening_template",
+    "closing_template"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string",
+      "description": "Canonical domain identifier matching the resume template filename stem",
+      "examples": [
+        "fullstack",
+        "backend",
+        "frontend",
+        "devops",
+        "database",
+        "ai",
+        "manager"
+      ]
+    },
+    "opening_template": {
+      "type": "string",
+      "description": "Opening sentence template. Supports {employer} and {job_title} placeholders."
+    },
+    "closing_template": {
+      "type": "string",
+      "description": "Closing sentence template. Supports {employer} placeholder."
+    },
+    "intro": {
+      "type": "string",
+      "description": "Optional fixed personal paragraph inserted between the opening and value proposition. Leave empty to omit."
+    }
+  }
+}

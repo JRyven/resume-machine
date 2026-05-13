@@ -1,0 +1,168 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+$id: "resume.schema.yaml"
+title: Resume Correlation Output
+description: >
+  Skill correlation and domain inference result for a single job application.
+  Produced by py_skill_job_correlator.correlate_job and served by the
+  resume-machine API at /api/correlation. Filename convention:
+  {job-slug}_resume_{employer-short}_{candidate}_{uid}.json
+type: object
+required:
+  - metadata
+  - summary
+  - correlations
+  - hard_gaps
+  - domain
+  - featured_languages
+  - highlights
+additionalProperties: false
+
+properties:
+  $schema:
+    type: string
+
+  metadata:
+    type: object
+    description: Job and pipeline provenance fields.
+    required:
+      - job_title
+      - employer
+      - candidate_name
+      - generated_at
+      - job_json
+      - skills_index
+    additionalProperties: false
+    properties:
+      job_id:
+        type: string
+        description: Short hex identifier; alias for _uid in the source job-details file.
+      job_title:
+        type: string
+        description: Job title copied from the source job-details file.
+      employer:
+        type: string
+        description: Employer name copied from the source job-details file.
+      location:
+        type: string
+        description: Location copied from the source job-details file.
+      candidate_name:
+        type: string
+        description: Slugified candidate name (e.g. james-valeii).
+      generated_at:
+        type: string
+        format: date-time
+        description: ISO 8601 timestamp when the correlation was generated.
+      job_json:
+        type: string
+        description: Absolute path to the source job-details JSON file.
+      skills_index:
+        type: string
+        description: Absolute path to the skills-index JSON file used during correlation.
+
+  summary:
+    type: object
+    description: Aggregate counts from the correlation pass.
+    required:
+      - total_correlations
+      - hard_gaps_count
+      - tag_distribution
+    additionalProperties: false
+    properties:
+      total_correlations:
+        type: integer
+        minimum: 0
+        description: Total number of skill terms evaluated against the skills index.
+      hard_gaps_count:
+        type: integer
+        minimum: 0
+        description: Number of required skills with no match in the skills index.
+      tag_distribution:
+        type: object
+        description: >
+          Count of each tag assigned during correlation.
+          Keys are tag values (LEAD_STRENGTH, GAP_ADJACENCY, HARD_GAP).
+        additionalProperties:
+          type: integer
+          minimum: 0
+
+  correlations:
+    type: array
+    description: Per-term correlation results for all required and additional skills.
+    items:
+      type: object
+      required:
+        - term
+        - tag
+      additionalProperties: false
+      properties:
+        term:
+          type: string
+          description: The skill term from the job posting.
+        type:
+          type: string
+          description: Facet type resolved from the skills index (e.g. language, framework, tool).
+        tag:
+          type: string
+          description: Correlation strength tag assigned by the correlator.
+          enum:
+            - LEAD_STRENGTH
+            - GAP_ADJACENCY
+            - HARD_GAP
+        notes:
+          type: string
+          description: >
+            Human-readable qualification note (e.g. "10y exp, last used 2024-Q2").
+            Empty string when no notes are available.
+
+  hard_gaps:
+    type: array
+    description: >
+      Subset of correlations where required skills have no match in the skills
+      index. Used for gap analysis and surfacing on the UI.
+    items:
+      type: object
+      required:
+        - term
+        - context
+      additionalProperties: false
+      properties:
+        term:
+          type: string
+          description: The unmatched required skill term.
+        context:
+          type: string
+          description: Source section the gap was found in.
+          enum:
+            - required_skills
+            - additional_skills
+
+  domain:
+    type: string
+    description: >
+      Inferred role domain matched by py_skill_job_correlator.infer_domain
+      against the role-based-templates directory.
+    enum:
+      - ai
+      - backend
+      - database
+      - devops
+      - frontend
+      - fullstack
+      - manager
+
+  featured_languages:
+    type: array
+    description: Primary programming languages inferred for this role from the correlation.
+    items:
+      type: string
+
+  highlights:
+    type: array
+    description: >
+      Ordered highlight statements drawn from the matched role-based-template.
+      Rendered as abstract bullets in the resume (up to 4) and as the
+      value_proposition / relevant_experience in the cover letter.
+    minItems: 1
+    maxItems: 8
+    items:
+      type: string

@@ -82,7 +82,7 @@ def _is_stale(last_used_str: Optional[str], now: datetime) -> bool:
 
 def _load_template_keywords(role_templates_dir: str) -> set[str]:
     keywords: set[str] = set()
-    for path in Path(role_templates_dir).glob('*.json'):
+    for path in Path(role_templates_dir).glob('*-resume.json'):
         try:
             with open(path) as f:
                 tmpl = json.load(f)
@@ -164,10 +164,10 @@ def correlate_job(
     skills_index_path = cfg['skills_index_path']
     role_templates_dir = cfg['role_templates_dir']
     job_listings_dir = cfg['job-listings_dir']
-    cover_letter_source_path = cfg.get('cover_letter_source_path', 'data/cover-letter.source.json')
+    resume_source_path = cfg.get('resume_source_path', 'data/source/resume.source.json')
 
-    with open(cover_letter_source_path) as f:
-        cover_letter_source = json.load(f)
+    with open(resume_source_path) as f:
+        resume_source = json.load(f)
 
     job_json_path_obj = Path(job_json_path_str).resolve()
     with open(job_json_path_obj) as f:
@@ -281,7 +281,14 @@ def correlate_job(
         _logger.info('Wrote correlation: %s', corr_path)
 
         if not Path(letter_path).exists():
-            letter = _build_cover_letter(correlation_data, employer, job_title, cover_letter_source)
+            domain = correlation_data.get('domain', 'fullstack')
+            letter_tmpl_path = Path(role_templates_dir) / f'{domain}-letter.json'
+            letter_tmpl: dict = {}
+            if letter_tmpl_path.exists():
+                with open(letter_tmpl_path) as f:
+                    letter_tmpl = json.load(f)
+            basics = resume_source.get('basics', {})
+            letter = _build_cover_letter(correlation_data, employer, job_title, letter_tmpl, basics)
             with open(letter_path, 'w') as f:
                 json.dump(letter, f, indent=2)
             _logger.info('Wrote cover letter: %s', letter_path)
@@ -294,7 +301,7 @@ def correlate_job(
     return correlation_data
 
 
-def _build_cover_letter(correlation_data: dict, employer: str, job_title: str, cover_letter_source: dict) -> dict:
+def _build_cover_letter(correlation_data: dict, employer: str, job_title: str, letter_tmpl: dict, basics: dict) -> dict:
     lead_strengths = [c for c in correlation_data['correlations'] if c['tag'] == 'LEAD_STRENGTH']
     highlights = correlation_data.get('highlights', [])
 
@@ -309,16 +316,23 @@ def _build_cover_letter(correlation_data: dict, employer: str, job_title: str, c
 
     relevant_experience = highlights[:5] if highlights else []
 
-    opening_tmpl = cover_letter_source.get(
+    opening_tmpl = letter_tmpl.get(
         'opening_template',
         'Dear Hiring Team at {employer}, I am writing to apply for the {job_title} position.',
     )
-    closing_tmpl = cover_letter_source.get(
+    closing_tmpl = letter_tmpl.get(
         'closing_template',
         "I would welcome the opportunity to discuss how my experience contributes to {employer}'s goals. Thank you for your consideration.",
     )
-    intro = cover_letter_source.get('intro', '')
-    signature = cover_letter_source.get('signature', {})
+    intro = letter_tmpl.get('intro', '')
+
+    signature = {
+        'name': basics.get('name', ''),
+        'title': basics.get('label', ''),
+        'email': basics.get('email', ''),
+        'phone': basics.get('phone', ''),
+        'url': basics.get('url', ''),
+    }
 
     return {
         'opening': opening_tmpl.format(employer=employer, job_title=job_title),

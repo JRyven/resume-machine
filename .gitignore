@@ -43,10 +43,11 @@ yarn-error.log*
 pnpm-lock.yaml
 package-lock.json
 
+# JSON — only schema files are versioned
+*.json
+!*.schema.json
+
 # Private data
-data/resume.source.json
-data/skills-index.json
-data/cover-letter.source.json
 narratives/
 
 # Artifacts
@@ -61,8 +62,6 @@ dist/
 *.zip
 *.tar.gz
 *.tar.zst
-*-meta.json
-
 # Editor settings
 .vscode/
 .idea/
@@ -203,10 +202,6 @@ mock-source-data/
 # CLEARDoc Versions
 CLEARDocsV*
 
-# Generated pipeline outputs (per-run artifacts, not committed)
-data/job-listings/**/resume-*.json
-data/job-listings/**/letter-*.json
-
 # Browser-saved HTML companion directories (job bank saves)
 data/job-listings/**/*_files/
 job-listings/**/*_files/
@@ -220,8 +215,5 @@ scratchpad.md
 # Job Data
 /job-listings
 
-resume-machine/resume-machine-queue.json
-
 .voyante
-data/role-based-templates/manager.json
 data/job-listings/

@@ -27,7 +27,7 @@ def _load_templates(role_templates_dir: str) -> List[dict]:
         return _template_cache[role_templates_dir]
 
     templates_path = Path(role_templates_dir)
-    files = sorted(templates_path.glob('*.json'))
+    files = sorted(templates_path.glob('*-resume.json'))
     if not files:
         raise FileNotFoundError(
             f'No role template JSON files found in: {role_templates_dir}'

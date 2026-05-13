@@ -152,7 +152,7 @@ priority: high
 - [ ] [Configure MCP server to read from `content/` directory]: Set up the MCP server to properly read and process content from the content directory.
 - [ ] [Test CRUD operations on resume sections]: Validate that Create, Read, Update, and Delete operations work correctly on resume sections.
 - [ ] [Verify AI assistant can modify structured fields]: Ensure the AI assistant can properly modify structured fields in the resume.
-- [ ] [Test end-to-end: AI edit → composition → PDF generation]: Run a complete workflow test from AI editing through to PDF generation.
+- [ ] [Test E2E: AI edit → composition → PDF generation]: Run a complete workflow test from AI editing through to PDF generation.
 - [ ] [Document MCP usage patterns]: Create documentation for common usage patterns and workflows.
 - [ ] [Create example AI prompts for common edits]: Develop example prompts for common editing tasks.
 - [ ] [Write integration tests]: Implement tests to verify the integration works correctly.

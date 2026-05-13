@@ -28,11 +28,27 @@
       --border: #d6dae1;
       --text: #1a1f2b;
       --muted: #5a6072;
+      /* Labels/navigation = UI font; all readable content = body font */
       --font-body: 'Source Serif 4', Georgia, serif;
       --font-ui: 'Inter', system-ui, sans-serif;
       --page-w: 8.5in;
       --page-h: 11in;
       --margin: 0.7in;
+      /* ── Type scale (print) ───────────────────────────── */
+      --fs-name: 16pt;
+      /* name, cl-name                            */
+      --fs-body: 12pt;
+      /* abstract bullets, cl-date                */
+      --fs-highlight: 10pt;
+      /* positions, abstract ¶, org names, edu    */
+      --fs-meta: 9pt;
+      /* positions, abstract ¶, org names, edu    */
+      --fs-copy: 8.5pt;
+      /* highlights, expertise, skills, cl-copy   */
+      --fs-small: 8pt;
+      /* dates, contact line, org-desc            */
+      --fs-label: 9pt;
+      /* skill-group-name                         */
     }
 
     /* ── Layout ──────────────────────────────────────────────────────────── */
@@ -65,7 +81,7 @@
     .filters-panel h1 {
       font-size: 1.1rem;
       font-weight: 600;
-      color: var(--accent);
+      color: var(--text);
     }
 
     .filter-group {
@@ -77,9 +93,9 @@
     .filter-group label {
       font-size: 0.78rem;
       font-weight: 500;
-      color: var(--muted);
+      color: var(--text);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
     }
 
     .filter-group select,
@@ -105,13 +121,13 @@
       align-items: center;
       gap: 0.5rem;
       font-size: 0.88rem;
-      color: var(--muted);
+      color: var(--text);
     }
 
     .toggle-row input[type="checkbox"] {
       width: 1rem;
       height: 1rem;
-      accent-color: var(--accent);
+      accent-color: var(--text);
     }
 
     /* ── Job list ────────────────────────────────────────────────────────── */
@@ -137,7 +153,7 @@
 
     .job-row.active {
       background: #e3eaf6;
-      border-left: 3px solid var(--accent);
+      border-left: 3px solid var(--text);
       padding-left: calc(0.5rem - 3px);
     }
 
@@ -147,14 +163,14 @@
     }
 
     .job-row .job-meta {
-      color: var(--muted);
+      color: var(--text);
       font-size: 0.78rem;
       margin-top: 0.15rem;
     }
 
     .empty-state {
       padding: 1rem 0.5rem;
-      color: var(--muted);
+      color: var(--text);
       font-size: 0.85rem;
       font-style: italic;
     }
@@ -171,7 +187,7 @@
 
     .placeholder-msg {
       margin-top: 4rem;
-      color: var(--muted);
+      color: var(--text);
       font-size: 1rem;
       font-style: italic;
       text-align: center;
@@ -179,7 +195,7 @@
 
     .loading-msg {
       margin-top: 4rem;
-      color: var(--accent);
+      color: var(--text);
       font-size: 1rem;
       text-align: center;
     }
@@ -193,6 +209,7 @@
       padding: var(--margin);
       font-family: var(--font-body);
       font-size: 10.5pt;
+      line-height: 1.55;
       color: var(--text);
     }
 
@@ -201,24 +218,13 @@
       break-after: page;
     }
 
-    .cl-header {
+    #cover-letter-section .resume-header {
       margin-bottom: 2em;
-    }
-
-    .cl-header .candidate-name {
-      font-size: 18pt;
-      font-weight: 700;
-      margin-bottom: 0.25em;
-    }
-
-    .cl-header .contact-line {
-      font-size: 9pt;
-      color: var(--muted);
     }
 
     .cl-date {
       margin-bottom: 1.5em;
-      font-size: 10pt;
+      font-size: var(--fs-body);
     }
 
     .cl-recipient {
@@ -237,35 +243,48 @@
 
     .cl-body ul li {
       margin-bottom: 0.3em;
-      line-height: 1.5;
     }
 
     /* ── Resume page ─────────────────────────────────────────────────────── */
-    #resume-section {}
-
     .resume-header {
-      border-bottom: 2px solid var(--accent);
-      padding-bottom: 0.6em;
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 0.5em;
       margin-bottom: 1em;
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0 0.9em;
     }
 
     .resume-header h1 {
-      font-size: 20pt;
+      font-size: var(--fs-name);
       font-weight: 700;
-      margin-bottom: 0.15em;
+      white-space: nowrap;
+    }
+
+    .resume-header .role {
+      font-weight: 400;
+      color: var(--text);
+      white-space: nowrap;
     }
 
     .resume-header .contact {
-      font-size: 8.5pt;
-      color: var(--muted);
+      font-size: var(--fs-small);
+      color: var(--text);
       display: flex;
       flex-wrap: wrap;
-      gap: 0.15em 0;
+      gap: 0;
+      margin-left: auto;
+      align-items: baseline;
     }
 
     .resume-header .contact span {
-      margin-right: 1em;
       white-space: nowrap;
+    }
+
+    .resume-header .contact span:not(:last-child)::after {
+      content: '  ·  ';
+      white-space: pre;
     }
 
     .section {
@@ -273,14 +292,15 @@
     }
 
     .section h2 {
-      font-size: 8pt;
+      font-size: var(--fs-highlight);
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--accent);
+      text-align: center;
+      color: var(--text);
       border-bottom: 1px solid var(--border);
-      padding-bottom: 0.2em;
-      margin-bottom: 0.5em;
+      padding-bottom: 0.25em;
+      margin-bottom: 0.55em;
     }
 
     .summary-list {
@@ -290,13 +310,17 @@
 
     .summary-list li {
       padding: 0.2em 0;
-      line-height: 1.55;
-      font-size: 10pt;
+      font-size: var(--fs-highlight);
+    }
+
+    .abstract-narrative {
+      font-size: var(--fs-meta);
+      margin-bottom: 0.55em;
     }
 
     .summary-list li::before {
       content: '▸ ';
-      color: var(--accent);
+      color: var(--text);
       font-size: 8pt;
     }
 
@@ -306,32 +330,30 @@
 
     .work-header {
       display: flex;
-      justify-content: space-between;
       align-items: baseline;
+      gap: 0.5em;
     }
 
     .work-company {
       font-weight: 700;
-      font-size: 10.5pt;
+      white-space: nowrap;
     }
 
     .work-dates {
-      font-size: 8.5pt;
-      color: var(--muted);
+      font-size: var(--fs-small);
+      color: var(--text);
       white-space: nowrap;
-      margin-left: 1em;
     }
 
     .work-position {
       font-style: italic;
-      font-size: 9.5pt;
-      color: var(--muted);
-      margin-bottom: 0.25em;
+      font-size: var(--fs-meta);
+      color: var(--text);
+      flex: 1;
     }
 
     .work-summary {
-      font-size: 9pt;
-      line-height: 1.5;
+      font-size: var(--fs-copy);
       margin-bottom: 0.3em;
     }
 
@@ -341,33 +363,19 @@
     }
 
     .work-highlights li {
-      font-size: 9pt;
-      line-height: 1.5;
+      font-size: var(--fs-copy);
       padding: 0.15em 0 0.15em 0.9em;
       text-indent: -0.9em;
     }
 
     .work-highlights li::before {
       content: '• ';
-      color: var(--accent);
-    }
-
-    .skills-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.25em;
-    }
-
-    .skill-tag {
-      /* background: var(--surface); border: 1px solid var(--border); */
-      border-radius: 3px;
-      padding: 0.15em 0.5em;
-      font-size: 8.5pt;
+      color: var(--text);
     }
 
     .edu-entry {
       margin-bottom: 0.5em;
-      font-size: 9.5pt;
+      font-size: var(--fs-meta);
     }
 
     .edu-entry .institution {
@@ -375,8 +383,94 @@
     }
 
     .edu-entry .degree {
-      color: var(--muted);
+      color: var(--text);
       font-style: italic;
+    }
+
+    /* ── Areas of expertise ──────────────────────────────────────────────────── */
+    .expertise-tags {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 0;
+    }
+
+    .expertise-tag {
+      font-size: var(--fs-copy);
+      color: var(--text);
+    }
+
+    .expertise-tag:not(:last-child)::after {
+      content: '  ·  ';
+      color: var(--text);
+      white-space: pre;
+    }
+
+    /* ── Skills grouped ──────────────────────────────────────────────────────── */
+    .skill-group {
+      margin-bottom: 0.45em;
+    }
+
+    .skill-group-name {
+      font-size: var(--fs-label);
+      font-weight: 600;
+      font-family: var(--font-ui);
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.1em;
+    }
+
+    .skill-keywords {
+      font-size: var(--fs-copy);
+      font-family: var(--font-body);
+      color: var(--text);
+    }
+
+    /* ── Open source & community ─────────────────────────────────────────────── */
+    .community-entry {
+      margin-bottom: 0.45em;
+    }
+
+    .community-entry .org-name {
+      font-weight: 600;
+      font-size: var(--fs-meta);
+    }
+
+    .community-entry .org-role {
+      font-style: italic;
+      color: var(--text);
+      font-size: var(--fs-copy);
+    }
+
+    .community-entry .org-dates {
+      font-size: var(--fs-small);
+      color: var(--text);
+    }
+
+    .community-entry .org-desc {
+      font-size: var(--fs-small);
+      margin-top: 0.1em;
+    }
+
+    .community-entry .org-link {
+      font-size: 8pt;
+      color: var(--accent-light);
+    }
+
+    /* ── Resume footer ───────────────────────────────────────────────────────── */
+    .resume-footer {
+      margin-top: 1.2em;
+      padding-top: 0.4em;
+      border-top: 1px solid var(--border);
+      font-size: 8pt;
+      color: var(--text);
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    .resume-footer a {
+      color: var(--text);
+      text-decoration: none;
     }
 
     /* ── Print styles ────────────────────────────────────────────────────── */
@@ -468,9 +562,10 @@
 
       <!-- Cover letter page -->
       <div class="page hidden" id="cover-letter-section">
-        <div class="cl-header">
-          <div class="candidate-name" id="cl-name"></div>
-          <div class="contact-line" id="cl-contact"></div>
+        <div class="resume-header">
+          <h1 id="cl-name"></h1>
+          <div class="role" id="cl-role"></div>
+          <div class="contact" id="cl-contact"></div>
         </div>
         <div class="cl-date" id="cl-date"></div>
         <div class="cl-recipient" id="cl-recipient"></div>
@@ -486,12 +581,19 @@
       <div class="page hidden" id="resume-section">
         <div class="resume-header">
           <h1 id="r-name"></h1>
+          <div class="role" id="r-role"></div>
           <div class="contact" id="r-contact"></div>
         </div>
 
         <div class="section" id="summary-section">
-          <h2>Summary</h2>
+          <h2>Abstract</h2>
+          <p class="abstract-narrative" id="r-abstract-narrative"></p>
           <ul class="summary-list" id="r-summary"></ul>
+        </div>
+
+        <div class="section" id="expertise-section">
+          <h2>Areas of Expertise</h2>
+          <div class="expertise-tags" id="r-expertise"></div>
         </div>
 
         <div class="section" id="work-section">
@@ -501,13 +603,20 @@
 
         <div class="section" id="skills-section">
           <h2>Skills</h2>
-          <div class="skills-grid" id="r-skills"></div>
+          <div id="r-skills"></div>
+        </div>
+
+        <div class="section" id="community-section">
+          <h2>Open Source &amp; Community Leadership</h2>
+          <div id="r-community"></div>
         </div>
 
         <div class="section" id="education-section">
           <h2>Education</h2>
           <div id="r-education"></div>
         </div>
+
+        <div class="resume-footer" id="r-footer"></div>
       </div>
     </main>
   </div>
@@ -634,19 +743,40 @@
       }
     }
 
+    // ── Domain → priority skill groups ──────────────────────────────────────
+    const DOMAIN_SKILL_PRIORITY = {
+      fullstack: ['Languages & Frameworks', 'DevOps, Infrastructure & Development'],
+      backend: ['Languages & Frameworks', 'DevOps, Infrastructure & Development', 'Testing, QA & Observability'],
+      frontend: ['Languages & Frameworks', 'Platforms, Tools & Build Systems'],
+      devops: ['DevOps, Infrastructure & Development', 'Testing, QA & Observability'],
+      manager: ['Project Management & Collaboration'],
+      ai: ['Languages & Frameworks', 'DevOps, Infrastructure & Development'],
+      database: ['DevOps, Infrastructure & Development', 'Platforms, Tools & Build Systems'],
+    };
+
     // ── Hydrate pages ────────────────────────────────────────────────────────
     function hydratePages(corr, resume) {
       const basics = resume.basics || {};
       const meta = corr.metadata || {};
+      const domain = corr.domain || '';
 
       // ── Cover letter ───────────────────────────────────────────────────────
       txt('cl-name', basics.name);
+      txt('cl-role', basics.label || meta.job_title || '');
+      const clContact = document.getElementById('cl-contact');
+      clContact.innerHTML = '';
       const contactParts = [basics.email, basics.phone].filter(Boolean);
       if (basics.location) {
         const loc = basics.location;
         contactParts.push(typeof loc === 'string' ? loc : [loc.city, loc.region, loc.countryCode].filter(Boolean).join(', '));
       }
-      txt('cl-contact', contactParts.join('  ·  '));
+      if (basics.url) contactParts.push(basics.url.replace(/^https?:\/\//, ''));
+      for (const p of (basics.profiles || [])) {
+        if (p.url) contactParts.push(p.url.replace(/^https?:\/\//, ''));
+      }
+      for (const part of contactParts) {
+        clContact.appendChild(el('span', null, part));
+      }
 
       const now = new Date();
       txt('cl-date', now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
@@ -663,22 +793,51 @@
 
       // ── Resume header ──────────────────────────────────────────────────────
       txt('r-name', basics.name);
+      txt('r-role', basics.label || meta.job_title || '');
+
       const rContact = document.getElementById('r-contact');
       rContact.innerHTML = '';
-      for (const part of [basics.email, basics.phone].filter(Boolean)) {
+      const headerParts = [basics.email, basics.phone].filter(Boolean);
+      if (basics.location) {
+        const loc = basics.location;
+        headerParts.push(typeof loc === 'string' ? loc : [loc.city, loc.region].filter(Boolean).join(', '));
+      }
+      if (basics.url) headerParts.push(basics.url.replace(/^https?:\/\//, ''));
+      for (const p of (basics.profiles || [])) {
+        if (p.url) headerParts.push(p.url.replace(/^https?:\/\//, ''));
+      }
+      for (const part of headerParts) {
         rContact.appendChild(el('span', null, part));
       }
-      for (const p of (basics.profiles || [])) {
-        if (p.url || p.username) {
-          rContact.appendChild(el('span', null, p.network + ': ' + (p.url || p.username)));
-        }
-      }
 
-      // ── Summary (highlights[0..2]) ─────────────────────────────────────────
+      // ── Abstract — narrative paragraph + template highlights, up to 4 ──────
+      const abstractNarrative = document.getElementById('r-abstract-narrative');
+      const summaryBlocks = basics.summary || [];
+      const abstractBlock = Array.isArray(summaryBlocks)
+        ? summaryBlocks.find(b => b.name === 'Abstract')
+        : null;
+      abstractNarrative.textContent = abstractBlock?.value
+        || (typeof summaryBlocks === 'string' ? summaryBlocks : '');
+
       const summaryList = document.getElementById('r-summary');
       summaryList.innerHTML = '';
-      for (const h of (corr.highlights || []).slice(0, 3)) {
-        summaryList.appendChild(el('li', null, h));
+      for (const h of (corr.highlights || []).slice(0, 4)) {
+        const li = document.createElement('li');
+        const semi = h.indexOf(';');
+        if (semi !== -1) {
+          li.innerHTML = `<strong>${h.slice(0, semi + 1)}</strong>${h.slice(semi + 1)}`;
+        } else {
+          li.textContent = h;
+        }
+        summaryList.appendChild(li);
+      }
+
+      // ── Areas of expertise ────────────────────────────────────────────────
+      const expertiseDiv = document.getElementById('r-expertise');
+      expertiseDiv.innerHTML = '';
+      const interestGroup = (resume.interests || []).find(i => i.name === 'Areas of Expertise');
+      for (const kw of (interestGroup?.keywords || [])) {
+        expertiseDiv.appendChild(el('span', 'expertise-tag', kw));
       }
 
       // ── Work experience ────────────────────────────────────────────────────
@@ -691,9 +850,9 @@
         entry.innerHTML = `
         <div class="work-header">
           <span class="work-company">${job.company || job.name || ''}</span>
+          <span class="work-position">${job.position || ''}</span>
           <span class="work-dates">${startY}–${endY}</span>
         </div>
-        <div class="work-position">${job.position || ''}</div>
         <div class="work-summary">${job.summary || ''}</div>`;
         if ((job.highlights || []).length) {
           const ul = el('ul', 'work-highlights');
@@ -705,13 +864,45 @@
         workDiv.appendChild(entry);
       }
 
-      // ── Skills ─────────────────────────────────────────────────────────────
-      const skillsGrid = document.getElementById('r-skills');
-      skillsGrid.innerHTML = '';
-      for (const group of (resume.skills || [])) {
-        for (const kw of (group.keywords || [])) {
-          skillsGrid.appendChild(el('span', 'skill-tag', kw));
-        }
+      // ── Skills — grouped, priority groups sorted first ─────────────────────
+      const skillsDiv = document.getElementById('r-skills');
+      skillsDiv.innerHTML = '';
+      const priorityNames = DOMAIN_SKILL_PRIORITY[domain] || [];
+      const allGroups = resume.skills || [];
+      const orderedGroups = [
+        ...allGroups.filter(g => priorityNames.includes(g.name)),
+        ...allGroups.filter(g => !priorityNames.includes(g.name)),
+      ];
+      for (const group of orderedGroups) {
+        const isPriority = priorityNames.includes(group.name);
+        const groupDiv = el('div', 'skill-group' + (isPriority ? ' priority' : ''));
+        groupDiv.appendChild(el('div', 'skill-group-name', group.name));
+        groupDiv.appendChild(el('div', 'skill-keywords', (group.keywords || []).join('  ·  ')));
+        skillsDiv.appendChild(groupDiv);
+      }
+
+      // ── Open Source & Community Leadership ────────────────────────────────
+      const communityDiv = document.getElementById('r-community');
+      communityDiv.innerHTML = '';
+      for (const proj of (resume.projects || [])) {
+        const entry = el('div', 'community-entry');
+        const dateStr = [proj.startDate, proj.endDate].filter(Boolean).join('–');
+        const roleStr = (proj.roles || []).length ? ` <span class="org-role">${proj.roles.join(', ')}</span>` : '';
+        const dateSpan = dateStr ? ` <span class="org-dates">${dateStr}</span>` : '';
+        const linkHtml = proj.url ? `<a class="org-link" href="${proj.url}">${proj.url}</a>` : '';
+        const sep = proj.description && proj.url ? ' — ' : '';
+        const descLink = (proj.description || proj.url)
+          ? `<div class="org-desc">${proj.description || ''}${sep}${linkHtml}</div>`
+          : '';
+        entry.innerHTML = `<span class="org-name">${proj.name || ''}</span>${roleStr}${dateSpan}${descLink}`;
+        communityDiv.appendChild(entry);
+      }
+      for (const vol of (resume.volunteer || [])) {
+        const entry = el('div', 'community-entry');
+        const dateStr = [vol.startDate, vol.endDate].filter(Boolean).join('–');
+        const dateSpan = dateStr ? ` <span class="org-dates">${dateStr}</span>` : '';
+        entry.innerHTML = `<span class="org-name">${vol.organization || ''}</span>, <span class="org-role">${vol.position || ''}</span>${dateSpan}`;
+        communityDiv.appendChild(entry);
       }
 
       // ── Education ──────────────────────────────────────────────────────────
@@ -722,6 +913,15 @@
         entry.innerHTML = `<span class="institution">${e.institution || ''}</span> — <span class="degree">${e.studyType || ''}, ${e.area || ''}</span>`;
         eduDiv.appendChild(entry);
       }
+
+      // ── Footer — profile URLs ──────────────────────────────────────────────
+      const footerDiv = document.getElementById('r-footer');
+      const footerLinks = [];
+      if (basics.url) footerLinks.push({ label: basics.url.replace(/^https?:\/\//, ''), url: basics.url });
+      for (const p of (basics.profiles || [])) {
+        if (p.url) footerLinks.push({ label: p.url.replace(/^https?:\/\//, ''), url: p.url });
+      }
+      footerDiv.innerHTML = footerLinks.map(l => `<a href="${l.url}">${l.label}</a>`).join('  ·  ');
 
       // ── Visibility ─────────────────────────────────────────────────────────
       placeholder.classList.add('hidden');

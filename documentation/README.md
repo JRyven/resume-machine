@@ -159,7 +159,7 @@ Reads `correlation_*.json` output from the correlator, infers the best-fit resum
   "featured_languages": "PHP, BASH, JavaScript",
   "domain_inference": "fullstack",
   "job_title": "software developer",
-  "highlight_1": "<strong>End-to-end feature ownership</strong>; database → API → UI...",
+  "highlight_1": "<strong>E2E feature ownership</strong>; database → API → UI...",
   "highlight_2": "...",
   ...
 }
