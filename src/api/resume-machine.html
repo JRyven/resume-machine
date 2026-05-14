@@ -63,6 +63,11 @@
       min-height: 100vh;
     }
 
+    a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
     .filters-panel {
       width: 320px;
       min-width: 280px;
@@ -225,6 +230,15 @@
       padding: 0.06rem 0.28rem;
       background: #fafbfc;
       line-height: 1.4;
+      cursor: copy;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+      user-select: none;
+    }
+
+    .job-uid.copied {
+      background: #dff2e8;
+      color: #1a6640;
+      border-color: #9fd0b6;
     }
 
     .job-domain-badge.domain-manager {
@@ -552,11 +566,6 @@
       line-height: 1.8;
     }
 
-    .resume-footer a {
-      color: var(--text);
-      text-decoration: none;
-    }
-
     /* ── Print styles ────────────────────────────────────────────────────── */
     @media print {
       body {
@@ -768,6 +777,23 @@
       return res.json();
     }
 
+    async function copyText(text) {
+      if (!text) return;
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+
     // ── Job list rendering ──────────────────────────────────────────────────
     function filterJobs() {
       const kw = keywordInput.value.trim().toLowerCase();
@@ -796,6 +822,21 @@
         row.innerHTML = `
         <div class="job-title">${job.job_title || 'Untitled'}</div>
         <div class="job-meta">${job.employer || ''}${domainBadge}${uidBadge}</div>`;
+        const uidEl = row.querySelector('.job-uid');
+        if (uidEl) {
+          uidEl.title = 'Click to copy uid';
+          uidEl.addEventListener('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            try {
+              await copyText(uidEl.textContent || '');
+              uidEl.classList.add('copied');
+              setTimeout(() => uidEl.classList.remove('copied'), 900);
+            } catch (err) {
+              console.error('Failed to copy uid:', err);
+            }
+          });
+        }
         row.addEventListener('click', () => selectJob(job.path));
         jobList.appendChild(row);
       }
@@ -1009,6 +1050,7 @@
         const volId = vol.id || vol.organization;
         const isVisible = volunteerStates[volId] !== false; // default to true
         const entry = el('div', 'community-entry');
+        entry.id = `volunteer-entry-${volId}`;
         if (!isVisible) entry.style.display = 'none';
         const dateStr = [vol.startDate, vol.endDate].filter(Boolean).join('–');
         const dateSpan = dateStr ? ` <span class="org-dates">${dateStr}</span>` : '';
@@ -1031,7 +1073,10 @@
           checkbox.addEventListener('change', () => {
             volunteerStates[volId] = checkbox.checked;
             localStorage.setItem('volunteerVisibility', JSON.stringify(volunteerStates));
-            hydratePage();
+            const entryEl = document.getElementById(`volunteer-entry-${volId}`);
+            if (entryEl) {
+              entryEl.style.display = checkbox.checked ? '' : 'none';
+            }
           });
           const label = el('label', null, vol.label || vol.organization);
           label.htmlFor = `vol-toggle-${volId}`;
