@@ -2,7 +2,7 @@
 project_name: Resume Machine
 title: Resume Machine
 description: Pipeline architecture, components, configuration, and operating commands for Resume Machine.
-last_updated: 2026-05-12
+last_updated: 2026-05-15
 cleardoc_version: 2.3.0
 keywords: [resume-machine, pipeline, commands, configuration, components, src]
 ---
@@ -133,9 +133,12 @@ Resume Machine reads all settings from `config/config.yaml`. Override candidate 
 ```yaml
 candidate_name: "james-valeii"
 job-listings_dir: data/job-listings
-skills_index_path: data/skills-index.json
-resume_source_path: data/resume.source.json
-role_templates_dir: data/role-based-templates
+skills_catalog_path: data/source/skills-catalog.json
+skills_index_path: data/source/skills-index.json
+resume_source_path: data/source/resume.source.json
+letter_source_path: data/source/letter.source.json
+reasoning_dir: data/source/reasoning
+role_templates_dir: data/domains
 log_level: info
 ```
 
@@ -165,11 +168,11 @@ Dry-run preview:
 python scripts/process.py --dir data/job-listings/2026/05/01 --dry-run
 ```
 
-Start the UX server:
+Start the UX server (defaults to port 8080):
 
 ```bash
 python -m src.api.serve
-python -m src.api.serve --port 8080
+python -m src.api.serve --port 9000  # custom port
 ```
 
 ---
@@ -260,15 +263,19 @@ python scripts/process.py --dir data/job-listings/2026/05/01 --dry-run
 
 ## Template Files
 
-Role-based templates live in `data/role-based-templates/`:
+Domain templates live in `data/domains/`. Each domain has three files:
 
-- `fullstack.json`
-- `backend.json`
-- `frontend.json`
-- `devops.json`
-- `database.json`
-- `ai.json`
-- `manager.json`
+| Domain | Resume template | Letter template | Interests template |
+|--------|----------------|-----------------|--------------------|
+| `ai` | `ai-resume.json` | `ai-letter.json` | `ai-interests.json` |
+| `backend` | `backend-resume.json` | `backend-letter.json` | `backend-interests.json` |
+| `database` | `database-resume.json` | `database-letter.json` | `database-interests.json` |
+| `devops` | `devops-resume.json` | `devops-letter.json` | `devops-interests.json` |
+| `frontend` | `frontend-resume.json` | `frontend-letter.json` | `frontend-interests.json` |
+| `fullstack` | `fullstack-resume.json` | `fullstack-letter.json` | `fullstack-interests.json` |
+| `manager` | `manager-resume.json` | `manager-letter.json` | `manager-interests.json` |
+
+Shared letter and resume source templates also live here: `letter.source.json`, `resume.source.json`.
 
 ---
 
@@ -276,8 +283,8 @@ Role-based templates live in `data/role-based-templates/`:
 
 ### Add a new domain
 
-1. Create a new JSON file in `data/role-based-templates/your_domain.json` with a `domain` field set to `"your_domain"` and a `keywords` array listing trigger terms.
-2. The adapter (`src/models/py_adapter_correlator_to_template.py`) loads all templates at startup and scores each domain by keyword overlap with the correlation terms — no code changes required.
+1. Create three files in `data/domains/`: `your_domain-resume.json`, `your_domain-letter.json`, `your_domain-interests.json`. The resume template must include a `domain` field set to `"your_domain"` and a `keywords` array listing trigger terms.
+2. The adapter (`src/models/py_adapter_correlator_to_template.py`) loads all `*-resume.json` templates at startup and scores each domain by keyword overlap with the correlation terms — no code changes required.
 
 ### Extend the skills inventory
 
@@ -292,7 +299,7 @@ Add or update facets directly in `data/skills-index.json` under the `facet_catal
 | `ModuleNotFoundError: No module named 'src'` | Run from the project root: `cd /path/to/0-career-cv && python -m src.api.serve` |
 | "Adapter output is not valid JSON" | Validate the correlation file: `cat correlation-*.json \| jq .` |
 | "Correlator unavailable; falling back to manual" | Confirm job JSON exists: `find data/job-listings -name "*.json"` |
-| All jobs map to `fullstack` domain | Review keyword coverage in `data/role-based-templates/`; inspect correlation scores in output JSON |
+| All jobs map to `fullstack` domain | Review keyword coverage in `data/domains/`; inspect correlation scores in output JSON |
 | `resumed` not found | Ensure the `resumed` CLI is installed and available on `PATH` |
 | Domain inference incorrect | Add or update keywords in the relevant template in `data/role-based-templates/` |
 
@@ -316,10 +323,7 @@ Add or update facets directly in `data/skills-index.json` under the `facet_catal
 
 | File | Description |
 |------|-------------|
-| `ANALYZER.md` | Analyzer pipeline architecture and API reference |
-| `ANALYZER_USAGE_EXAMPLES.py` | 8 working usage examples |
-| `ADAPTER_README.md` | Adapter architecture, domains, and data flow |
-| `BATCH_PROCESS_V2_GUIDE.md` | Complete batch processor v2 reference |
-| `BATCH_PROCESS_V2_QUICKSTART.md` | 3-minute setup guide |
-| `INTEGRATION_GUIDE.sh` | Code snippets for custom integration |
-| `composition.md` | Composition engine usage |
+| `documentation/README.md` | This document — pipeline architecture, components, configuration, and commands |
+| `documentation/abstract.md` | Abstract and design intent |
+| `documentation/composition.md` | Composition engine usage |
+| `documentation/roadmap/roadmap.md` | Project roadmap and sprint history |

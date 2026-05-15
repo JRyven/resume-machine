@@ -8,7 +8,7 @@ Resume Machine removes the manual work from tailoring resumes. It scrapes job po
 
 ## Detailed Guide
 
-See [CLEAR Docs](/documentation/README.md) for complete useage guidelines.
+See [documentation/README.md](/documentation/README.md) for complete usage guidelines.
 
 ## License
 
