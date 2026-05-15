@@ -996,6 +996,9 @@
               "facet_name": "CI/CD Pipelines",
               "facet_type": "hands_on_skill",
               "synonyms": [
+                "Development and operations (DevOps)",
+                "DevOps",
+                "DebOps",
                 "continuous integration",
                 "continuous deployment",
                 "GitHub Actions",
@@ -1604,6 +1607,14 @@
               "facet_name": "Outlines",
               "facet_type": "hands_on_tool",
               "synonyms": []
+            },
+            {
+              "facet_id": "facet.ml",
+              "facet_name": "ML",
+              "facet_type": "hands_on_skill",
+              "synonyms": [
+                "Machine Learning"
+              ]
             },
             {
               "facet_id": "facet.prompt_engineering",
