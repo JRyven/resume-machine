@@ -1,8 +1,8 @@
 """
 Skill–job correlator.
 
-Reads a job JSON, correlates required/additional skills against the v2.3.0
-facet_catalog in skills-index.json, writes:
+Reads a job JSON, correlates required/additional skills against skills-catalog
+definitions plus skills-index proficiency data, writes:
   - *_resume_*.json   (always overwritten)
   - *_letter_*.json   (always overwritten)
   - backfills metadata block into *_job-details_*.json
@@ -40,28 +40,86 @@ _WEAK_EXPERIENCE_LEVELS = {'beginner'}
 _WEAK_PROFICIENCIES = {'novice', 'beginner'}
 
 
-def _build_facet_lookup(skills_index: dict) -> dict[str, dict]:
-    facet_lookup: dict[str, dict] = {}
+def _build_facet_lookup(catalog: dict, skills_index: dict) -> tuple[dict[str, dict], set[str]]:
+    def _norm(value: str) -> str:
+        return (value or '').lower().strip()
 
-    for entry in skills_index.get('facet_catalog', []):
-        key = entry.get('facet_name', '').lower().strip()
-        if not key:
-            continue
-        facet_lookup[key] = {
-            **entry,
-            'proficiency': None,
-            'confidence_level': None,
-            'years_of_experience': None,
-            'last_used': None,
-            'experience_level': None,
-        }
+    facet_by_id: dict[str, dict] = {}
+    term_to_facet_id: dict[str, str] = {}
+
+    for group in catalog.get('groups', []):
+        group_id = group.get('group_id')
+        group_name = group.get('group_name')
+        for subgroup in group.get('subgroups', []):
+            subgroup_id = subgroup.get('subgroup_id')
+            subgroup_name = subgroup.get('subgroup_name')
+            for facet in subgroup.get('facets', []):
+                fid = facet.get('facet_id')
+                if not fid:
+                    continue
+
+                facet_by_id[fid] = {
+                    **facet,
+                    'group_id': group_id,
+                    'group_name': group_name,
+                    'subgroup_id': subgroup_id,
+                    'subgroup_name': subgroup_name,
+                    'proficiency': None,
+                    'confidence_level': None,
+                    'years_of_experience': None,
+                    'last_used': None,
+                    'experience_level': None,
+                }
+
+                facet_name_key = _norm(facet.get('facet_name', ''))
+                if facet_name_key:
+                    term_to_facet_id[facet_name_key] = fid
+                for synonym in facet.get('synonyms', []):
+                    syn_key = _norm(synonym)
+                    if syn_key:
+                        term_to_facet_id[syn_key] = fid
+
+    # Backward compatibility: if no catalog groups are available yet,
+    # seed lookup terms from skills-index facet_catalog.
+    if not facet_by_id:
+        for entry in skills_index.get('facet_catalog', []):
+            fid = entry.get('facet_id')
+            if not fid:
+                continue
+
+            facet_by_id[fid] = {
+                **entry,
+                'group_id': None,
+                'group_name': None,
+                'subgroup_id': None,
+                'subgroup_name': None,
+                'proficiency': None,
+                'confidence_level': None,
+                'years_of_experience': None,
+                'last_used': None,
+                'experience_level': None,
+            }
+
+            facet_name_key = _norm(entry.get('facet_name', ''))
+            if facet_name_key:
+                term_to_facet_id[facet_name_key] = fid
+            for synonym in entry.get('synonyms', []):
+                syn_key = _norm(synonym)
+                if syn_key:
+                    term_to_facet_id[syn_key] = fid
 
     for skill_group_list in skills_index.get('skills', {}).values():
         for skill_group in skill_group_list:
-            for facet_data in skill_group.get('facets', {}).values():
-                fname = facet_data.get('facet_name', '').lower().strip()
-                if fname in facet_lookup:
-                    facet_lookup[fname].update({
+            for facet_key, facet_data in skill_group.get('facets', {}).items():
+                fid = facet_data.get('facet_id')
+                if not fid:
+                    fname_key = _norm(facet_data.get('facet_name', ''))
+                    fid = term_to_facet_id.get(fname_key)
+                    if not fid:
+                        fid = term_to_facet_id.get(_norm(facet_key))
+
+                if fid and fid in facet_by_id:
+                    facet_by_id[fid].update({
                         'proficiency': facet_data.get('proficiency'),
                         'confidence_level': facet_data.get('confidence_level'),
                         'years_of_experience': facet_data.get('years_of_experience'),
@@ -69,7 +127,8 @@ def _build_facet_lookup(skills_index: dict) -> dict[str, dict]:
                         'experience_level': facet_data.get('experience_level'),
                     })
 
-    return facet_lookup
+    facet_lookup = {term: facet_by_id[fid] for term, fid in term_to_facet_id.items() if fid in facet_by_id}
+    return facet_lookup, set(term_to_facet_id.keys())
 
 
 def _is_stale(last_used_str: Optional[str], now: datetime) -> bool:
@@ -103,6 +162,7 @@ def _assign_tag(
     term: str,
     section: str,
     facet_entry: Optional[dict],
+    known_catalog_terms: set[str],
     template_keywords: set[str],
     now: datetime,
 ) -> Optional[str]:
@@ -131,6 +191,9 @@ def _assign_tag(
         return 'SOLID_MATCH'
 
     # No facet match
+    if term_lower in known_catalog_terms:
+        return 'GAP_ADJACENCY'
+
     if term_lower in template_keywords:
         return 'GAP_ADJACENCY'
 
@@ -143,7 +206,7 @@ def _assign_tag(
 
 def _infer_facet_type(facet_entry: Optional[dict], domain_facet_types: list[str]) -> str:
     if facet_entry:
-        ft = facet_entry.get('facet_type', '')
+        ft = str(facet_entry.get('facet_type', '') or '')
         # Map internal facet_type to role-template-style category labels
         mapping = {
             'hands_on_language': 'language',
@@ -154,7 +217,7 @@ def _infer_facet_type(facet_entry: Optional[dict], domain_facet_types: list[str]
             'strategic_domain': 'domain',
             'leadership_soft_skill': 'leadership',
         }
-        return mapping.get(ft, ft)
+        return mapping.get(ft, ft) or 'unknown'
     return 'unknown'
 
 
@@ -167,6 +230,7 @@ def correlate_job(
     set_level(cfg.get('log_level', 'info'))
 
     candidate = slugify(candidate_name or cfg.get('candidate_name', 'candidate'))
+    skills_catalog_path = cfg.get('skills_catalog_path', 'data/source/skills-catalog.json')
     skills_index_path = cfg['skills_index_path']
     role_templates_dir = cfg['role_templates_dir']
     job_listings_dir = cfg['job-listings_dir']
@@ -190,10 +254,18 @@ def correlate_job(
     with open(job_json_path_obj) as f:
         job_data = json.load(f)
 
+    skills_catalog: dict = {}
+    catalog_path_obj = Path(skills_catalog_path)
+    if catalog_path_obj.exists():
+        with open(catalog_path_obj) as f:
+            skills_catalog = json.load(f)
+    else:
+        _logger.warning('No skills catalog found at %s; using legacy facet_catalog fallback', skills_catalog_path)
+
     with open(skills_index_path) as f:
         skills_index = json.load(f)
 
-    facet_lookup = _build_facet_lookup(skills_index)
+    facet_lookup, known_catalog_terms = _build_facet_lookup(skills_catalog, skills_index)
     _logger.info('Loaded %d facets', len(facet_lookup))
 
     template_keywords = _load_template_keywords(role_templates_dir)
@@ -217,7 +289,7 @@ def correlate_job(
         seen_terms.add(key)
 
         facet_entry = facet_lookup.get(key)
-        tag = _assign_tag(term, section, facet_entry, template_keywords, now)
+        tag = _assign_tag(term, section, facet_entry, known_catalog_terms, template_keywords, now)
         if tag is None:
             return
 
@@ -235,6 +307,8 @@ def correlate_job(
             'term': term,
             'type': corr_type,
             'tag': tag,
+            'group': facet_entry.get('group_name') if facet_entry else None,
+            'subgroup': facet_entry.get('subgroup_name') if facet_entry else None,
             'notes': notes,
         })
 
@@ -274,6 +348,7 @@ def correlate_job(
             'candidate_name': candidate,
             'generated_at': now.isoformat(),
             'job_json': str(job_json_path_obj),
+            'skills_catalog': str(skills_catalog_path),
             'skills_index': str(skills_index_path),
         },
         'summary': {

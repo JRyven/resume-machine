@@ -1,0 +1,2157 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "description": "Comprehensive skills catalog",
+    "levels": [
+      "group",
+      "subgroup",
+      "facet"
+    ],
+    "note": "Proficiency, years_of_experience, confidence_level, and last_used are set per-person in the skills index. This file is a flat catalog only — prune in-app to produce an individual profile."
+  },
+  "groups": [
+    {
+      "group_id": "group.languages",
+      "group_name": "Programming Languages",
+      "subgrouped": true,
+      "subgroups": [
+        {
+          "subgroup_id": "sg.languages.server_side",
+          "subgroup_name": "Server-Side Languages",
+          "facets": [
+            {
+              "facet_id": "facet.php",
+              "facet_name": "PHP",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "PHP 8",
+                "PHP 7"
+              ]
+            },
+            {
+              "facet_id": "facet.python",
+              "facet_name": "Python",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "Python 3"
+              ]
+            },
+            {
+              "facet_id": "facet.ruby",
+              "facet_name": "Ruby",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "Ruby on Rails",
+                "Rails"
+              ]
+            },
+            {
+              "facet_id": "facet.go",
+              "facet_name": "Go",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "Golang"
+              ]
+            },
+            {
+              "facet_id": "facet.java",
+              "facet_name": "Java",
+              "facet_type": "hands_on_language",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.csharp",
+              "facet_name": "C#",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                ".NET",
+                "dotnet"
+              ]
+            },
+            {
+              "facet_id": "facet.rust",
+              "facet_name": "Rust",
+              "facet_type": "hands_on_language",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.languages.client_side",
+          "subgroup_name": "Client-Side Languages",
+          "facets": [
+            {
+              "facet_id": "facet.javascript",
+              "facet_name": "JavaScript",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "JS",
+                "ES6",
+                "ES2020",
+                "Vanilla JS"
+              ]
+            },
+            {
+              "facet_id": "facet.typescript",
+              "facet_name": "TypeScript",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "TS"
+              ]
+            },
+            {
+              "facet_id": "facet.dart",
+              "facet_name": "Dart",
+              "facet_type": "hands_on_language",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.swift",
+              "facet_name": "Swift",
+              "facet_type": "hands_on_language",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.kotlin",
+              "facet_name": "Kotlin",
+              "facet_type": "hands_on_language",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.languages.query_data",
+          "subgroup_name": "Query & Data Languages",
+          "facets": [
+            {
+              "facet_id": "facet.sql",
+              "facet_name": "SQL",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "MySQL",
+                "PostgreSQL",
+                "SQL Server",
+                "T-SQL"
+              ]
+            },
+            {
+              "facet_id": "facet.graphql",
+              "facet_name": "GraphQL",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "GQL"
+              ]
+            },
+            {
+              "facet_id": "facet.xml",
+              "facet_name": "XML",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "XSL",
+                "XSD",
+                "DTD",
+                "XSLT"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.languages.scripting_config",
+          "subgroup_name": "Scripting & Config",
+          "facets": [
+            {
+              "facet_id": "facet.bash",
+              "facet_name": "BASH",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "Shell",
+                "Shell scripting",
+                "zsh"
+              ]
+            },
+            {
+              "facet_id": "facet.powershell",
+              "facet_name": "PowerShell",
+              "facet_type": "hands_on_language",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.yaml",
+              "facet_name": "YAML",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "YAML config",
+                "docker-compose YAML",
+                "CI YAML"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.languages.markup_styling",
+          "subgroup_name": "Markup & Styling",
+          "facets": [
+            {
+              "facet_id": "facet.html5",
+              "facet_name": "HTML5",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "HTML",
+                "semantic HTML"
+              ]
+            },
+            {
+              "facet_id": "facet.css",
+              "facet_name": "CSS / SASS",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "CSS3",
+                "SCSS",
+                "SASS",
+                "LESS",
+                "PostCSS"
+              ]
+            },
+            {
+              "facet_id": "facet.markdown",
+              "facet_name": "Markdown",
+              "facet_type": "hands_on_language",
+              "synonyms": [
+                "MDX"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group_id": "group.frameworks",
+      "group_name": "Frameworks & Libraries",
+      "subgrouped": true,
+      "subgroups": [
+        {
+          "subgroup_id": "sg.frameworks.frontend_spa",
+          "subgroup_name": "Frontend / SPA",
+          "facets": [
+            {
+              "facet_id": "facet.react",
+              "facet_name": "React",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "React.js",
+                "ReactJS"
+              ]
+            },
+            {
+              "facet_id": "facet.vuejs",
+              "facet_name": "Vue.js",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "Vue",
+                "Vue 3"
+              ]
+            },
+            {
+              "facet_id": "facet.angular",
+              "facet_name": "Angular",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "AngularJS"
+              ]
+            },
+            {
+              "facet_id": "facet.svelte",
+              "facet_name": "Svelte",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "SvelteKit"
+              ]
+            },
+            {
+              "facet_id": "facet.alpinejs",
+              "facet_name": "Alpine.js",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "Alpine"
+              ]
+            },
+            {
+              "facet_id": "facet.htmx",
+              "facet_name": "HTMX",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.jquery",
+              "facet_name": "jQuery",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.frameworks.frontend_meta",
+          "subgroup_name": "Meta-Frameworks & SSR",
+          "facets": [
+            {
+              "facet_id": "facet.nextjs",
+              "facet_name": "Next.js",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "Next"
+              ]
+            },
+            {
+              "facet_id": "facet.nuxtjs",
+              "facet_name": "Nuxt.js",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "Nuxt"
+              ]
+            },
+            {
+              "facet_id": "facet.remix",
+              "facet_name": "Remix",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.astro",
+              "facet_name": "Astro",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.gatsby",
+              "facet_name": "Gatsby",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.frameworks.backend",
+          "subgroup_name": "Backend Frameworks",
+          "facets": [
+            {
+              "facet_id": "facet.nodejs",
+              "facet_name": "Node.js",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "Node"
+              ]
+            },
+            {
+              "facet_id": "facet.expressjs",
+              "facet_name": "Express.js",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "Express"
+              ]
+            },
+            {
+              "facet_id": "facet.nestjs",
+              "facet_name": "NestJS",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.fastapi",
+              "facet_name": "FastAPI",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.flask",
+              "facet_name": "Flask",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.django",
+              "facet_name": "Django",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "Django REST Framework",
+                "DRF"
+              ]
+            },
+            {
+              "facet_id": "facet.laravel",
+              "facet_name": "Laravel",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.symfony",
+              "facet_name": "Symfony",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.slim",
+              "facet_name": "Slim",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "Slim Framework"
+              ]
+            },
+            {
+              "facet_id": "facet.codeigniter",
+              "facet_name": "CodeIgniter",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "CI4"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.frameworks.mobile_desktop",
+          "subgroup_name": "Mobile & Desktop",
+          "facets": [
+            {
+              "facet_id": "facet.flutter",
+              "facet_name": "Flutter",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.react_native",
+              "facet_name": "React Native",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "RN"
+              ]
+            },
+            {
+              "facet_id": "facet.tauri",
+              "facet_name": "Tauri",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.electron",
+              "facet_name": "Electron",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.ionic",
+              "facet_name": "Ionic",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.capacitor",
+              "facet_name": "Capacitor",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.frameworks.css_ui",
+          "subgroup_name": "CSS & UI Libraries",
+          "facets": [
+            {
+              "facet_id": "facet.tailwind",
+              "facet_name": "Tailwind CSS",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "Tailwind"
+              ]
+            },
+            {
+              "facet_id": "facet.bootstrap",
+              "facet_name": "Bootstrap",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.mui",
+              "facet_name": "Material UI",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "MUI",
+                "Material Design"
+              ]
+            },
+            {
+              "facet_id": "facet.shadcnui",
+              "facet_name": "shadcn/ui",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "shadcn"
+              ]
+            },
+            {
+              "facet_id": "facet.chakraui",
+              "facet_name": "Chakra UI",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.ant_design",
+              "facet_name": "Ant Design",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "antd"
+              ]
+            },
+            {
+              "facet_id": "facet.bulma",
+              "facet_name": "Bulma",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.radix_ui",
+              "facet_name": "Radix UI",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group_id": "group.build_tooling",
+      "group_name": "Build Tooling & Utilities",
+      "subgrouped": true,
+      "subgroups": [
+        {
+          "subgroup_id": "sg.build.package_managers",
+          "subgroup_name": "Package Managers",
+          "facets": [
+            {
+              "facet_id": "facet.composer",
+              "facet_name": "Composer",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.npm",
+              "facet_name": "NPM",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.yarn",
+              "facet_name": "Yarn",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.pnpm",
+              "facet_name": "pnpm",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.pip",
+              "facet_name": "pip",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "pip3"
+              ]
+            },
+            {
+              "facet_id": "facet.poetry",
+              "facet_name": "Poetry",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.uv",
+              "facet_name": "uv",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "astral uv"
+              ]
+            },
+            {
+              "facet_id": "facet.cargo",
+              "facet_name": "Cargo",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.build.bundlers",
+          "subgroup_name": "Bundlers & Build Systems",
+          "facets": [
+            {
+              "facet_id": "facet.webpack",
+              "facet_name": "Webpack",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.vite",
+              "facet_name": "Vite",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.rollup",
+              "facet_name": "Rollup",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.esbuild",
+              "facet_name": "esbuild",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.turbopack",
+              "facet_name": "Turbopack",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.parcel",
+              "facet_name": "Parcel",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.gulp",
+              "facet_name": "Gulp",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.grunt",
+              "facet_name": "Grunt",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.build.process_servers",
+          "subgroup_name": "Process & App Servers",
+          "facets": [
+            {
+              "facet_id": "facet.gunicorn",
+              "facet_name": "Gunicorn",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.uvicorn",
+              "facet_name": "Uvicorn",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.pm2",
+              "facet_name": "PM2",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.supervisor",
+              "facet_name": "Supervisor",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "supervisord"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.build.data_validation",
+          "subgroup_name": "Data Validation & Schema",
+          "facets": [
+            {
+              "facet_id": "facet.pydantic",
+              "facet_name": "Pydantic",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.zod",
+              "facet_name": "Zod",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.yup",
+              "facet_name": "Yup",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.joi",
+              "facet_name": "Joi",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.build.cli_task_utilities",
+          "subgroup_name": "CLI, Task & Utility Libraries",
+          "facets": [
+            {
+              "facet_id": "facet.click_typer",
+              "facet_name": "Click / Typer",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Click",
+                "Typer"
+              ]
+            },
+            {
+              "facet_id": "facet.apscheduler",
+              "facet_name": "APScheduler",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.celery",
+              "facet_name": "Celery",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.beautifulsoup4",
+              "facet_name": "BeautifulSoup4",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "bs4"
+              ]
+            },
+            {
+              "facet_id": "facet.requests",
+              "facet_name": "Requests",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Python Requests",
+                "httpx"
+              ]
+            },
+            {
+              "facet_id": "facet.axios",
+              "facet_name": "Axios",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.make",
+              "facet_name": "Make / Makefile",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Makefile"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group_id": "group.infrastructure",
+      "group_name": "Infrastructure & DevOps",
+      "subgrouped": true,
+      "subgroups": [
+        {
+          "subgroup_id": "sg.infra.cloud_hosting",
+          "subgroup_name": "Cloud & Hosting Platforms",
+          "facets": [
+            {
+              "facet_id": "facet.aws",
+              "facet_name": "AWS",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "Amazon Web Services",
+                "EC2",
+                "S3",
+                "Lambda",
+                "RDS",
+                "CloudFront"
+              ]
+            },
+            {
+              "facet_id": "facet.gcp",
+              "facet_name": "GCP",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "Google Cloud Platform",
+                "Google Cloud"
+              ]
+            },
+            {
+              "facet_id": "facet.azure",
+              "facet_name": "Azure",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "Microsoft Azure"
+              ]
+            },
+            {
+              "facet_id": "facet.cloudflare",
+              "facet_name": "Cloudflare",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "Cloudflare Workers",
+                "Cloudflare Pages"
+              ]
+            },
+            {
+              "facet_id": "facet.vps_hosting",
+              "facet_name": "VPS Hosting",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "Linux server admin",
+                "bare metal",
+                "Linode",
+                "DigitalOcean",
+                "Hetzner",
+                "Vultr"
+              ]
+            },
+            {
+              "facet_id": "facet.proxmox",
+              "facet_name": "Proxmox",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "Proxmox VE"
+              ]
+            },
+            {
+              "facet_id": "facet.vercel",
+              "facet_name": "Vercel",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.netlify",
+              "facet_name": "Netlify",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.fly_io",
+              "facet_name": "Fly.io",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.railway",
+              "facet_name": "Railway",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.render",
+              "facet_name": "Render",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.infra.containerization",
+          "subgroup_name": "Containerization & Orchestration",
+          "facets": [
+            {
+              "facet_id": "facet.docker",
+              "facet_name": "Docker",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "containerization"
+              ]
+            },
+            {
+              "facet_id": "facet.docker_compose",
+              "facet_name": "Docker Compose",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.kubernetes",
+              "facet_name": "Kubernetes",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "K8s"
+              ]
+            },
+            {
+              "facet_id": "facet.helm",
+              "facet_name": "Helm",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Helm charts"
+              ]
+            },
+            {
+              "facet_id": "facet.podman",
+              "facet_name": "Podman",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.infra.web_servers",
+          "subgroup_name": "Web Servers & Reverse Proxies",
+          "facets": [
+            {
+              "facet_id": "facet.nginx",
+              "facet_name": "Nginx",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.apache",
+              "facet_name": "Apache",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Apache HTTP Server"
+              ]
+            },
+            {
+              "facet_id": "facet.traefik",
+              "facet_name": "Traefik",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.caddy",
+              "facet_name": "Caddy",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.varnish",
+              "facet_name": "Varnish",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Varnish Cache"
+              ]
+            },
+            {
+              "facet_id": "facet.haproxy",
+              "facet_name": "HAProxy",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.infra.version_control",
+          "subgroup_name": "Version Control & CI/CD",
+          "facets": [
+            {
+              "facet_id": "facet.git",
+              "facet_name": "Git",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.github",
+              "facet_name": "GitHub",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "GitHub Actions"
+              ]
+            },
+            {
+              "facet_id": "facet.gitlab",
+              "facet_name": "GitLab",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "GitLab CI/CD"
+              ]
+            },
+            {
+              "facet_id": "facet.bitbucket",
+              "facet_name": "Bitbucket",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Bitbucket Pipelines"
+              ]
+            },
+            {
+              "facet_id": "facet.svn",
+              "facet_name": "SVN",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Subversion"
+              ]
+            },
+            {
+              "facet_id": "facet.gitpython",
+              "facet_name": "GitPython",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.ci_cd",
+              "facet_name": "CI/CD Pipelines",
+              "facet_type": "hands_on_skill",
+              "synonyms": [
+                "continuous integration",
+                "continuous deployment",
+                "GitHub Actions",
+                "CircleCI",
+                "Jenkins"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.infra.caching_messaging",
+          "subgroup_name": "Caching & Message Queues",
+          "facets": [
+            {
+              "facet_id": "facet.redis",
+              "facet_name": "Redis",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "caching",
+                "key-value store",
+                "Redis Cache"
+              ]
+            },
+            {
+              "facet_id": "facet.memcached",
+              "facet_name": "Memcached",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.rabbitmq",
+              "facet_name": "RabbitMQ",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "message broker",
+                "AMQP"
+              ]
+            },
+            {
+              "facet_id": "facet.kafka",
+              "facet_name": "Kafka",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Apache Kafka",
+                "event streaming"
+              ]
+            },
+            {
+              "facet_id": "facet.nats",
+              "facet_name": "NATS",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.infra.databases",
+          "subgroup_name": "Databases",
+          "facets": [
+            {
+              "facet_id": "facet.postgresql",
+              "facet_name": "PostgreSQL",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Postgres"
+              ]
+            },
+            {
+              "facet_id": "facet.mysql",
+              "facet_name": "MySQL",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "MariaDB"
+              ]
+            },
+            {
+              "facet_id": "facet.sqlite",
+              "facet_name": "SQLite",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.mongodb",
+              "facet_name": "MongoDB",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Mongo",
+                "NoSQL"
+              ]
+            },
+            {
+              "facet_id": "facet.dynamodb",
+              "facet_name": "DynamoDB",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "AWS DynamoDB"
+              ]
+            },
+            {
+              "facet_id": "facet.supabase",
+              "facet_name": "Supabase",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.planetscale",
+              "facet_name": "PlanetScale",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.elasticsearch",
+              "facet_name": "Elasticsearch",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "OpenSearch",
+                "full-text search"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.infra.observability",
+          "subgroup_name": "Monitoring & Observability",
+          "facets": [
+            {
+              "facet_id": "facet.grafana",
+              "facet_name": "Grafana",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.prometheus",
+              "facet_name": "Prometheus",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.structlog",
+              "facet_name": "Structlog",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "structured logging"
+              ]
+            },
+            {
+              "facet_id": "facet.rollbar",
+              "facet_name": "Rollbar",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.sentry",
+              "facet_name": "Sentry",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.datadog",
+              "facet_name": "Datadog",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.new_relic",
+              "facet_name": "New Relic",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.google_analytics",
+              "facet_name": "Google Analytics",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "GA4",
+                "GA"
+              ]
+            },
+            {
+              "facet_id": "facet.looker",
+              "facet_name": "Looker",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Looker Studio"
+              ]
+            },
+            {
+              "facet_id": "facet.mixpanel",
+              "facet_name": "Mixpanel",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.segment",
+              "facet_name": "Segment",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group_id": "group.testing_qa",
+      "group_name": "Testing & Quality Assurance",
+      "subgrouped": true,
+      "subgroups": [
+        {
+          "subgroup_id": "sg.testing.unit_integration",
+          "subgroup_name": "Unit & Integration Testing",
+          "facets": [
+            {
+              "facet_id": "facet.phpunit",
+              "facet_name": "PHPUnit",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.pytest",
+              "facet_name": "Pytest",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.jest",
+              "facet_name": "Jest",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.vitest",
+              "facet_name": "Vitest",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.mocha",
+              "facet_name": "Mocha",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.testing.e2e_browser",
+          "subgroup_name": "E2E & Browser Testing",
+          "facets": [
+            {
+              "facet_id": "facet.cypress",
+              "facet_name": "Cypress",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.playwright",
+              "facet_name": "Playwright",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.selenium",
+              "facet_name": "Selenium",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.puppeteer",
+              "facet_name": "Puppeteer",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.testing.static_analysis",
+          "subgroup_name": "Linting, Formatting & Static Analysis",
+          "facets": [
+            {
+              "facet_id": "facet.phpdoc",
+              "facet_name": "PHPDoc",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.phpstan",
+              "facet_name": "PHPStan",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.phpcs",
+              "facet_name": "PHPCS",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "PHP CodeSniffer"
+              ]
+            },
+            {
+              "facet_id": "facet.mypy",
+              "facet_name": "Mypy",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.ruff",
+              "facet_name": "Ruff",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.black",
+              "facet_name": "Black",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.eslint",
+              "facet_name": "ESLint",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.prettier",
+              "facet_name": "Prettier",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.testing.debugging_api",
+          "subgroup_name": "Debugging & API Tools",
+          "facets": [
+            {
+              "facet_id": "facet.xdebug",
+              "facet_name": "XDebug",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.postman",
+              "facet_name": "Postman",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.insomnia",
+              "facet_name": "Insomnia",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.chrome_devtools",
+              "facet_name": "Chrome DevTools",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "browser devtools"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.testing.load_performance",
+          "subgroup_name": "Load & Performance Testing",
+          "facets": [
+            {
+              "facet_id": "facet.k6",
+              "facet_name": "k6",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.locust",
+              "facet_name": "Locust",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.jmeter",
+              "facet_name": "Apache JMeter",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "JMeter"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group_id": "group.ai_ml",
+      "group_name": "AI, ML & LLM Tooling",
+      "subgrouped": true,
+      "subgroups": [
+        {
+          "subgroup_id": "sg.ai.local_inference",
+          "subgroup_name": "Local Inference & Hardware",
+          "facets": [
+            {
+              "facet_id": "facet.ollama",
+              "facet_name": "Ollama",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.lm_studio",
+              "facet_name": "LM Studio",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.llama_cpp",
+              "facet_name": "llama.cpp",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.amd_rocm",
+              "facet_name": "AMD ROCm",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "ROCm"
+              ]
+            },
+            {
+              "facet_id": "facet.cuda",
+              "facet_name": "CUDA",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "NVIDIA CUDA"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.ai.cloud_apis",
+          "subgroup_name": "Cloud AI APIs",
+          "facets": [
+            {
+              "facet_id": "facet.openai_api",
+              "facet_name": "OpenAI API",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "GPT-4",
+                "GPT API"
+              ]
+            },
+            {
+              "facet_id": "facet.anthropic_api",
+              "facet_name": "Anthropic API",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "Claude API"
+              ]
+            },
+            {
+              "facet_id": "facet.gemini_api",
+              "facet_name": "Google Gemini API",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "Gemini",
+                "Vertex AI"
+              ]
+            },
+            {
+              "facet_id": "facet.mistral_api",
+              "facet_name": "Mistral API",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.cohere_api",
+              "facet_name": "Cohere API",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.huggingface",
+              "facet_name": "Hugging Face",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "HuggingFace Hub",
+                "Transformers"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.ai.orchestration_agents",
+          "subgroup_name": "Orchestration & Agents",
+          "facets": [
+            {
+              "facet_id": "facet.langchain",
+              "facet_name": "LangChain",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.langgraph",
+              "facet_name": "LangGraph",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.hatchet",
+              "facet_name": "Hatchet",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.mcp",
+              "facet_name": "Model Context Protocol",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "MCP",
+                "tool use",
+                "AI integrations"
+              ]
+            },
+            {
+              "facet_id": "facet.autogen",
+              "facet_name": "AutoGen",
+              "facet_type": "hands_on_framework",
+              "synonyms": [
+                "Microsoft AutoGen"
+              ]
+            },
+            {
+              "facet_id": "facet.crewai",
+              "facet_name": "CrewAI",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.dspy",
+              "facet_name": "DSPy",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.haystack",
+              "facet_name": "Haystack",
+              "facet_type": "hands_on_framework",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.ai.vector_search",
+          "subgroup_name": "Vector Search & Embeddings",
+          "facets": [
+            {
+              "facet_id": "facet.qdrant",
+              "facet_name": "Qdrant",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.pinecone",
+              "facet_name": "Pinecone",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.weaviate",
+              "facet_name": "Weaviate",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.chroma",
+              "facet_name": "Chroma",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "ChromaDB"
+              ]
+            },
+            {
+              "facet_id": "facet.pgvector",
+              "facet_name": "pgvector",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.sentence_transformers",
+              "facet_name": "sentence-transformers",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "embeddings"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.ai.structured_output",
+          "subgroup_name": "Structured Output & Prompt Engineering",
+          "facets": [
+            {
+              "facet_id": "facet.instructor",
+              "facet_name": "Instructor",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.outlines",
+              "facet_name": "Outlines",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.prompt_engineering",
+              "facet_name": "Prompt Engineering",
+              "facet_type": "hands_on_skill",
+              "synonyms": [
+                "few-shot prompting",
+                "chain-of-thought",
+                "RAG"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group_id": "group.platforms",
+      "group_name": "Platforms & Design Tools",
+      "subgrouped": true,
+      "subgroups": [
+        {
+          "subgroup_id": "sg.platforms.cms",
+          "subgroup_name": "Content Management Systems",
+          "facets": [
+            {
+              "facet_id": "facet.wordpress",
+              "facet_name": "WordPress",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "WP",
+                "wp-admin"
+              ]
+            },
+            {
+              "facet_id": "facet.drupal",
+              "facet_name": "Drupal",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.contentful",
+              "facet_name": "Contentful",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "headless CMS"
+              ]
+            },
+            {
+              "facet_id": "facet.sanity",
+              "facet_name": "Sanity",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.strapi",
+              "facet_name": "Strapi",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.ghost",
+              "facet_name": "Ghost",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.webflow",
+              "facet_name": "Webflow",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.craft_cms",
+              "facet_name": "Craft CMS",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.statamic",
+              "facet_name": "Statamic",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.platforms.ecommerce",
+          "subgroup_name": "E-Commerce Platforms",
+          "facets": [
+            {
+              "facet_id": "facet.shopify",
+              "facet_name": "Shopify",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "Shopify Plus",
+                "Liquid"
+              ]
+            },
+            {
+              "facet_id": "facet.woocommerce",
+              "facet_name": "WooCommerce",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.magento",
+              "facet_name": "Magento",
+              "facet_type": "hands_on_platform",
+              "synonyms": [
+                "Adobe Commerce"
+              ]
+            },
+            {
+              "facet_id": "facet.bigcommerce",
+              "facet_name": "BigCommerce",
+              "facet_type": "hands_on_platform",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.platforms.design",
+          "subgroup_name": "Design & Creative Tools",
+          "facets": [
+            {
+              "facet_id": "facet.figma",
+              "facet_name": "Figma",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Figma Dev Mode",
+                "Figma Prototyping"
+              ]
+            },
+            {
+              "facet_id": "facet.adobe_suite",
+              "facet_name": "Adobe Creative Suite",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Photoshop",
+                "Illustrator",
+                "InDesign",
+                "After Effects",
+                "Premiere Pro"
+              ]
+            },
+            {
+              "facet_id": "facet.sketch",
+              "facet_name": "Sketch",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.invision",
+              "facet_name": "InVision",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.zeplin",
+              "facet_name": "Zeplin",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.canva",
+              "facet_name": "Canva",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.platforms.architecture",
+          "subgroup_name": "Architecture Patterns",
+          "facets": [
+            {
+              "facet_id": "facet.pim_cms_architecture",
+              "facet_name": "PIM & CMS Architecture",
+              "facet_type": "strategic_domain",
+              "synonyms": [
+                "content modeling",
+                "Akeneo",
+                "Pimcore"
+              ]
+            },
+            {
+              "facet_id": "facet.headless_architecture",
+              "facet_name": "Headless Architecture",
+              "facet_type": "strategic_domain",
+              "synonyms": [
+                "headless CMS",
+                "API-first",
+                "composable architecture"
+              ]
+            },
+            {
+              "facet_id": "facet.rest_api_design",
+              "facet_name": "REST API Design",
+              "facet_type": "strategic_domain",
+              "synonyms": [
+                "RESTful API",
+                "API design"
+              ]
+            },
+            {
+              "facet_id": "facet.microservices",
+              "facet_name": "Microservices",
+              "facet_type": "strategic_domain",
+              "synonyms": [
+                "service-oriented architecture",
+                "SOA"
+              ]
+            },
+            {
+              "facet_id": "facet.jamstack",
+              "facet_name": "JAMstack",
+              "facet_type": "strategic_domain",
+              "synonyms": [
+                "static site generation",
+                "SSG",
+                "SSR"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group_id": "group.collaboration",
+      "group_name": "Collaboration & Project Management",
+      "subgrouped": true,
+      "subgroups": [
+        {
+          "subgroup_id": "sg.collab.project_management",
+          "subgroup_name": "Project Management",
+          "facets": [
+            {
+              "facet_id": "facet.jira",
+              "facet_name": "Jira",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.confluence",
+              "facet_name": "Confluence",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.trello",
+              "facet_name": "Trello",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.asana",
+              "facet_name": "Asana",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.monday",
+              "facet_name": "Monday.com",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.linear",
+              "facet_name": "Linear",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.clickup",
+              "facet_name": "ClickUp",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.notion",
+              "facet_name": "Notion",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.basecamp",
+              "facet_name": "Basecamp",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.shortcut",
+              "facet_name": "Shortcut",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "Clubhouse"
+              ]
+            },
+            {
+              "facet_id": "facet.scrum_agile",
+              "facet_name": "SCRUM/Agile",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "Scrum",
+                "sprint planning",
+                "agile ceremonies",
+                "retrospectives",
+                "kanban"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.collab.communication",
+          "subgroup_name": "Communication Platforms",
+          "facets": [
+            {
+              "facet_id": "facet.slack",
+              "facet_name": "Slack",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.teams",
+              "facet_name": "Microsoft Teams",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.discord",
+              "facet_name": "Discord",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.zoom",
+              "facet_name": "Zoom",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.google_workspace",
+              "facet_name": "Google Workspace",
+              "facet_type": "hands_on_tool",
+              "synonyms": [
+                "G Suite",
+                "Google Meet",
+                "Google Docs",
+                "Google Drive"
+              ]
+            },
+            {
+              "facet_id": "facet.loom",
+              "facet_name": "Loom",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.gather",
+              "facet_name": "Gather",
+              "facet_type": "hands_on_tool",
+              "synonyms": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group_id": "group.professional_skills",
+      "group_name": "Professional & Leadership Skills",
+      "subgrouped": true,
+      "subgroups": [
+        {
+          "subgroup_id": "sg.prof.communication",
+          "subgroup_name": "Communication",
+          "facets": [
+            {
+              "facet_id": "facet.presentations",
+              "facet_name": "Presentations",
+              "facet_type": "hands_on_skill",
+              "synonyms": [
+                "public speaking",
+                "slide decks"
+              ]
+            },
+            {
+              "facet_id": "facet.meeting_facilitation",
+              "facet_name": "Meeting Facilitation",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.consensus_building",
+              "facet_name": "Consensus Building",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "stakeholder alignment"
+              ]
+            },
+            {
+              "facet_id": "facet.technical_writing",
+              "facet_name": "Technical Writing",
+              "facet_type": "hands_on_skill",
+              "synonyms": [
+                "documentation",
+                "runbooks",
+                "ADRs"
+              ]
+            },
+            {
+              "facet_id": "facet.client_onboarding",
+              "facet_name": "Client Onboarding",
+              "facet_type": "hands_on_skill",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.rfp_proposals",
+              "facet_name": "RFP / Proposal Writing",
+              "facet_type": "hands_on_skill",
+              "synonyms": [
+                "RFP",
+                "SOW",
+                "scope of work"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.prof.leadership",
+          "subgroup_name": "Leadership & Management",
+          "facets": [
+            {
+              "facet_id": "facet.mentoring",
+              "facet_name": "Mentoring",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "coaching",
+                "developer growth"
+              ]
+            },
+            {
+              "facet_id": "facet.company_policy",
+              "facet_name": "Company Policy & Governance",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.team_building",
+              "facet_name": "Team Building",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.performance_reviews",
+              "facet_name": "Performance Reviews",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "1:1s"
+              ]
+            },
+            {
+              "facet_id": "facet.hiring_recruiting",
+              "facet_name": "Hiring & Recruiting",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "technical interviews",
+                "candidate evaluation"
+              ]
+            },
+            {
+              "facet_id": "facet.vendor_management",
+              "facet_name": "Vendor Management",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "contractor management",
+                "third-party vendors"
+              ]
+            }
+          ]
+        },
+        {
+          "subgroup_id": "sg.prof.business_development",
+          "subgroup_name": "Business Development & Agency",
+          "facets": [
+            {
+              "facet_id": "facet.sales_meetings",
+              "facet_name": "Sales Meetings",
+              "facet_type": "hands_on_skill",
+              "synonyms": [
+                "discovery calls",
+                "demos"
+              ]
+            },
+            {
+              "facet_id": "facet.project_scoping",
+              "facet_name": "Project Scoping",
+              "facet_type": "hands_on_skill",
+              "synonyms": [
+                "estimation",
+                "project estimation",
+                "T-shirt sizing"
+              ]
+            },
+            {
+              "facet_id": "facet.contract_negotiation",
+              "facet_name": "Contract Negotiation",
+              "facet_type": "hands_on_skill",
+              "synonyms": []
+            },
+            {
+              "facet_id": "facet.account_management",
+              "facet_name": "Account Management",
+              "facet_type": "hands_on_skill",
+              "synonyms": [
+                "client management",
+                "client retention"
+              ]
+            },
+            {
+              "facet_id": "facet.business_development",
+              "facet_name": "Business Development",
+              "facet_type": "hands_on_skill",
+              "synonyms": [
+                "biz dev",
+                "partnerships"
+              ]
+            },
+            {
+              "facet_id": "facet.budget_management",
+              "facet_name": "Budget Management",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "P&L",
+                "financial oversight"
+              ]
+            },
+            {
+              "facet_id": "facet.strategic_planning",
+              "facet_name": "Strategic Planning",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "roadmapping",
+                "OKRs"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
