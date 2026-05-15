@@ -2161,6 +2161,104 @@
               ]
             }
           ]
+        },
+        {
+          "subgroup_id": "sg.prof.personal_attributes",
+          "subgroup_name": "Personal Attributes & Work Style",
+          "facets": [
+            {
+              "facet_id": "facet.analytical_thinking",
+              "facet_name": "Analytical Thinking",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "Analytical",
+                "problem-solving",
+                "critical thinking"
+              ]
+            },
+            {
+              "facet_id": "facet.proactive",
+              "facet_name": "Proactive",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "Proactive",
+                "self-starter",
+                "initiative"
+              ]
+            },
+            {
+              "facet_id": "facet.quick_learner",
+              "facet_name": "Quick Learner",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "Quick learner",
+                "adaptable",
+                "learning agility"
+              ]
+            },
+            {
+              "facet_id": "facet.attention_to_detail",
+              "facet_name": "Attention to Detail",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "Attention to detail",
+                "meticulous",
+                "precision"
+              ]
+            },
+            {
+              "facet_id": "facet.teamwork",
+              "facet_name": "Teamwork",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "Team player",
+                "collaboration",
+                "collective work"
+              ]
+            },
+            {
+              "facet_id": "facet.pressure_management",
+              "facet_name": "Pressure Management",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "Work under pressure",
+                "tight deadlines",
+                "fast-paced environment",
+                "stress management"
+              ]
+            },
+            {
+              "facet_id": "facet.client_focus",
+              "facet_name": "Client Focus",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "Client focus",
+                "customer-centric",
+                "user empathy"
+              ]
+            },
+            {
+              "facet_id": "facet.interpersonal_skills",
+              "facet_name": "Interpersonal Skills",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "Efficient interpersonal skills",
+                "communication",
+                "relationship building",
+                "people skills"
+              ]
+            },
+            {
+              "facet_id": "facet.dedication",
+              "facet_name": "Dedication",
+              "facet_type": "leadership_soft_skill",
+              "synonyms": [
+                "Dedication",
+                "commitment",
+                "reliability"
+              ]
+            }
+          ]
         }
       ]
     }

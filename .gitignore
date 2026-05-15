@@ -207,9 +207,6 @@ CLEARDocsV*
 data/job-listings/**/*_files/
 job-listings/**/*_files/
 
-# Scratchpad and temporary notes
-scratchpad.md
-
 # Backup Initial Project
 /zbak-*
 

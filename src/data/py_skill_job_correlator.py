@@ -30,7 +30,7 @@ from src.models.py_adapter_correlator_to_template import infer_domain
 
 _logger = get_logger('resume-machine.correlator')
 
-_STALENESS_MONTHS = 24
+_STALENESS_MONTHS = 48
 
 _LEAD_EXPERIENCE_LEVELS = {'advanced', 'expert'}
 _LEAD_PROFICIENCIES = {'expert'}
@@ -277,6 +277,13 @@ def correlate_job(
     jp = job_data.get('job_posting', {})
     required_skills: list[str] = jp.get('required_skills', [])
     additional_skills: list[str] = jp.get('additional_skills', [])
+
+    # Flatten additional_info (rich text categories) into a flat trait list
+    additional_traits: list[str] = []
+    for category_items in job_data.get('additional_info', {}).values():
+        if isinstance(category_items, list):
+            additional_traits.extend(category_items)
+    additional_skills.extend(additional_traits)
 
     now = datetime.now(timezone.utc)
     correlations: list[dict] = []

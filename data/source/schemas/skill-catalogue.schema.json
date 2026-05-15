@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Skills Catalog",
+  "description": "A catalog of skills and facets used for job correlation",
+  "type": "object",
+  "properties": {
+    "groups": {
+      "type": "array",
+      "description": "List of skill groups",
+      "items": {
+        "type": "object",
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "description": "Unique identifier for the group"
+          },
+          "group_name": {
+            "type": "string",
+            "description": "Display name for the group"
+          },
+          "subgrouped": {
+            "type": "boolean",
+            "description": "Whether the group has subgroups"
+          },
+          "subgroups": {
+            "type": "array",
+            "description": "List of subgroups (only present if subgrouped is true)",
+            "items": {
+              "type": "object",
+              "properties": {
+                "subgroup_id": {
+                  "type": "string",
+                  "description": "Unique identifier for the subgroup"
+                },
+                "subgroup_name": {
+                  "type": "string",
+                  "description": "Display name for the subgroup"
+                },
+                "facets": {
+                  "type": "array",
+                  "description": "List of facets in this subgroup",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "facet_id": {
+                        "type": "string",
+                        "description": "Unique identifier for the facet"
+                      },
+                      "facet_name": {
+                        "type": "string",
+                        "description": "Display name for the facet"
+                      },
+                      "facet_type": {
+                        "type": "string",
+                        "description": "Type of the facet (e.g., 'hands_on_skill', 'leadership_soft_skill')",
+                        "enum": [
+                          "hands_on_skill",
+                          "leadership_soft_skill"
+                        ]
+                      },
+                      "synonyms": {
+                        "type": "array",
+                        "description": "List of synonyms for this facet",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "facet_id",
+                      "facet_name",
+                      "facet_type"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "subgroup_id",
+                "subgroup_name",
+                "facets"
+              ]
+            }
+          }
+        },
+        "required": [
+          "group_id",
+          "group_name",
+          "subgrouped"
+        ]
+      }
+    }
+  },
+  "required": [
+    "groups"
+  ]
+}
